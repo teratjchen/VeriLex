@@ -1,3 +1,4 @@
+import base64
 import datetime
 import html as html_lib
 import io
@@ -124,24 +125,77 @@ async def analyze(req: AnalyzeRequest):
 async def extract_pdf(file: UploadFile = File(...)):
     if not (file.filename or "").lower().endswith(".pdf"):
         raise HTTPException(status_code=400, detail="File must be a PDF.")
+
+    content = await file.read()
+
+    # ── Step 1: Fast text extraction for digital PDFs ─────────────────────────
     try:
         import pdfplumber
-    except ImportError:
-        raise HTTPException(status_code=500, detail="PDF support unavailable on this server.")
-
-    try:
-        content = await file.read()
         with pdfplumber.open(io.BytesIO(content)) as pdf:
+            num_pages = len(pdf.pages)
             pages = [page.extract_text() or "" for page in pdf.pages]
         text = "\n\n".join(pages).strip()
-        if not text:
+        if text:
+            return {"text": text[:60_000], "pages": num_pages, "method": "text"}
+    except Exception:
+        num_pages = 0
+
+    # ── Step 2: Claude Vision OCR for scanned / handwritten PDFs ─────────────
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        raise HTTPException(
+            status_code=400,
+            detail="Could not extract text — PDF appears to be scanned or handwritten. Try copying and pasting the text instead."
+        )
+
+    try:
+        import fitz  # PyMuPDF — no system-level dependencies required
+
+        pdf_doc = fitz.open(stream=content, filetype="pdf")
+        num_pages = len(pdf_doc)
+
+        # Convert pages to images (cap at 10 pages to keep costs reasonable)
+        vision_content = []
+        for i, page in enumerate(pdf_doc):
+            if i >= 10:
+                break
+            mat = fitz.Matrix(2.0, 2.0)  # 2× zoom for better handwriting recognition
+            pix = page.get_pixmap(matrix=mat)
+            img_b64 = base64.standard_b64encode(pix.tobytes("png")).decode()
+            vision_content.append({
+                "type": "image",
+                "source": {"type": "base64", "media_type": "image/png", "data": img_b64},
+            })
+
+        vision_content.append({
+            "type": "text",
+            "text": (
+                "This is a scanned or handwritten document. "
+                "Transcribe all visible text exactly as written, preserving the document's structure and layout. "
+                "Return only the transcribed text — no commentary, no explanation."
+            ),
+        })
+
+        client = anthropic.Anthropic(api_key=api_key)
+        ocr_response = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=4096,
+            messages=[{"role": "user", "content": vision_content}],
+        )
+
+        extracted = ocr_response.content[0].text.strip()
+        if not extracted:
             raise HTTPException(
                 status_code=400,
-                detail="Could not extract text — PDF may be a scanned image. Try copying and pasting instead."
+                detail="Could not read text — image quality may be too low. Try a clearer scan."
             )
-        return {"text": text[:60_000], "pages": len(pages)}
+
+        return {"text": extracted[:60_000], "pages": num_pages, "method": "ocr"}
+
     except HTTPException:
         raise
+    except ImportError:
+        raise HTTPException(status_code=500, detail="PDF vision support unavailable on this server.")
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Failed to read PDF: {e}")
 

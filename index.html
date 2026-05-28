@@ -1373,17 +1373,31 @@ function onDrop(e) {
 async function onPdfFile(file) {
   if (!file) return;
   const st = document.getElementById('pdfStatus');
-  st.style.color = '#64748b'; st.textContent = '⏳ Extracting text…';
+  st.style.color = '#64748b'; st.textContent = '⏳ Reading document…';
+
+  // After 4 s with no result, hint that AI OCR may be running
+  const ocrHint = setTimeout(() => {
+    if (st.textContent.includes('Reading')) {
+      st.textContent = '⏳ Scanning with AI — handwritten PDFs take ~20 s…';
+    }
+  }, 4000);
+
   const fd = new FormData();
   fd.append('file', file);
   try {
     const res = await fetch('/extract-pdf', { method: 'POST', body: fd });
+    clearTimeout(ocrHint);
     const data = await res.json();
     if (!res.ok) throw new Error(data.detail);
     pdfText = data.text;
     st.style.color = 'var(--low)';
-    st.textContent = `✓ ${data.pages} page${data.pages !== 1 ? 's' : ''} extracted — ready to analyze`;
+    if (data.method === 'ocr') {
+      st.textContent = `✓ ${data.pages} page${data.pages !== 1 ? 's' : ''} scanned with AI ✦ review the text before analyzing`;
+    } else {
+      st.textContent = `✓ ${data.pages} page${data.pages !== 1 ? 's' : ''} extracted — ready to analyze`;
+    }
   } catch (e) {
+    clearTimeout(ocrHint);
     st.style.color = 'var(--crit)'; st.textContent = '✗ ' + e.message; pdfText = '';
   }
 }
