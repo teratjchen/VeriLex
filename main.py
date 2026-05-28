@@ -62,6 +62,7 @@ class AnalyzeRequest(BaseModel):
 
 class FeedbackRequest(BaseModel):
     name: str = ""
+    email: str = ""
     category: str = "general"
     message: str
 
@@ -101,7 +102,7 @@ async def analyze(req: AnalyzeRequest):
     try:
         response = client.messages.create(
             model="claude-sonnet-4-6",
-            max_tokens=4096,
+            max_tokens=8192,
             system=[{"type": "text", "text": SYSTEM_PROMPT, "cache_control": {"type": "ephemeral"}}],
             messages=[{"role": "user", "content": user_msg}],
         )
@@ -152,6 +153,7 @@ async def submit_feedback(req: FeedbackRequest):
     feedback_db.append({
         "id": len(feedback_db) + 1,
         "name": req.name.strip() or "Anonymous",
+        "email": req.email.strip(),
         "category": req.category,
         "message": req.message.strip(),
         "timestamp": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
@@ -184,7 +186,7 @@ async def admin_view(key: str = ""):
             </span>
           </div>
           <p style="margin:0 0 10px;line-height:1.6">{html_lib.escape(item['message'])}</p>
-          <small style="color:#94a3b8">{item['timestamp']}</small>
+          <small style="color:#94a3b8">{item['timestamp']}{(' &nbsp;·&nbsp; <a href="mailto:' + html_lib.escape(item['email']) + '" style="color:#3b82f6">' + html_lib.escape(item['email']) + '</a>') if item.get('email') else ''}</small>
         </div>"""
 
     if not rows:

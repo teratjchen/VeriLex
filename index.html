@@ -683,7 +683,7 @@
              ondragover="onDragOver(event)" ondragleave="onDragLeave()" ondrop="onDrop(event)">
           <div class="dz-icon">📎</div>
           <p class="dz-text"><strong>Click to upload</strong> or drag a PDF here</p>
-          <p class="dz-note">Scanned / image PDFs may not extract text — copy-paste works better for those</p>
+          <p class="dz-note">Works with typed/digital PDFs only. Scanned or handwritten documents cannot be read — take a photo and transcribe, or copy-paste the text instead.</p>
           <div class="pdf-status" id="pdfStatus"></div>
           <input type="file" id="pdfInput" accept=".pdf" onchange="onPdfFile(this.files[0])">
         </div>
@@ -800,6 +800,13 @@
             <option value="other">Other</option>
           </select>
         </div>
+      </div>
+
+      <div style="margin-bottom:14px">
+        <label style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px">Email (optional — if you'd like a reply)</label>
+        <input id="fb-email" type="email" placeholder="your@email.com"
+          style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit"
+          onfocus="this.style.borderColor='var(--amber)'" onblur="this.style.borderColor='var(--border)'">
       </div>
 
       <div style="margin-bottom:18px">
@@ -1596,6 +1603,7 @@ function jumpGloss(term) {
 // ── Feedback ───────────────────────────────────────────────────────────────────
 async function submitFeedback() {
   const name = document.getElementById('fb-name').value.trim();
+  const email = document.getElementById('fb-email').value.trim();
   const category = document.getElementById('fb-category').value;
   const message = document.getElementById('fb-message').value.trim();
   const status = document.getElementById('fb-status');
@@ -1607,10 +1615,11 @@ async function submitFeedback() {
     const res = await fetch('/feedback', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, category, message }),
+      body: JSON.stringify({ name, email, category, message }),
     });
     if (!res.ok) throw new Error();
     document.getElementById('fb-name').value = '';
+    document.getElementById('fb-email').value = '';
     document.getElementById('fb-message').value = '';
     status.style.color = '#16a34a';
     status.textContent = 'Thank you — message received!';
