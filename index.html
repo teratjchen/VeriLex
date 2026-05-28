@@ -56,6 +56,31 @@
       border: 1px solid rgba(255,255,255,.2); border-radius: 20px;
       padding: 3px 10px; font-weight: 500;
     }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .ui-lang-wrap { position: relative; }
+    .ui-lang-btn {
+      display: flex; align-items: center; gap: 5px;
+      background: transparent; border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px; padding: 3px 10px; cursor: pointer;
+      color: rgba(255,255,255,.65); font-size: 12px; font-weight: 500;
+      transition: border-color .2s, color .2s;
+    }
+    .ui-lang-btn:hover { border-color: rgba(255,255,255,.5); color: #fff; }
+    .ui-lang-dropdown {
+      display: none; position: absolute; top: calc(100% + 8px); right: 0;
+      background: #1e293b; border: 1px solid rgba(255,255,255,.12);
+      border-radius: 10px; overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,.35); min-width: 170px; z-index: 200;
+    }
+    .ui-lang-dropdown.open { display: block; }
+    .ui-lang-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 14px; background: none; border: none; cursor: pointer;
+      color: rgba(255,255,255,.75); font-size: 13px;
+      transition: background .15s;
+    }
+    .ui-lang-opt:hover { background: rgba(255,255,255,.07); color: #fff; }
+    .ui-lang-opt.active { color: var(--amber); }
 
     /* ── HERO ────────────────────────────────────────── */
     .hero {
@@ -82,7 +107,7 @@
       letter-spacing: -1.5px;
       animation: fadeInUp .7s .1s ease both;
     }
-    .hero h1 span { color: var(--amber); }
+    .hero h1 #ht2 { color: var(--amber); }
     .hero p {
       font-size: clamp(16px, 2vw, 19px); color: rgba(255,255,255,.65);
       max-width: 620px; margin: 0 auto 36px; line-height: 1.65;
@@ -521,13 +546,44 @@
     </div>
     <span class="logo-name">LawLight</span>
   </a>
-  <div class="nav-badge">Legal Information Only</div>
+  <div class="nav-right">
+    <div class="ui-lang-wrap" id="uiLangWrap">
+      <button class="ui-lang-btn" onclick="toggleUILang()" title="Change website language">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="8" cy="8" r="6.5"/>
+          <ellipse cx="8" cy="8" rx="3" ry="6.5"/>
+          <line x1="1.5" y1="8" x2="14.5" y2="8"/>
+          <line x1="2.5" y1="5.2" x2="13.5" y2="5.2"/>
+          <line x1="2.5" y1="10.8" x2="13.5" y2="10.8"/>
+        </svg>
+        <span id="uiLangLabel">EN</span>
+      </button>
+      <div class="ui-lang-dropdown" id="uiLangDropdown">
+        <button class="ui-lang-opt active" onclick="chooseUILang('en',this)">English</button>
+        <button class="ui-lang-opt" onclick="chooseUILang('es',this)">Español</button>
+        <button class="ui-lang-opt" onclick="chooseUILang('zh',this)">中文 (简体)</button>
+        <button class="ui-lang-opt" onclick="chooseUILang('zh-TW',this)">中文 (繁體)</button>
+        <button class="ui-lang-opt" onclick="chooseUILang('vi',this)">Tiếng Việt</button>
+        <button class="ui-lang-opt" onclick="chooseUILang('tl',this)">Tagalog</button>
+        <button class="ui-lang-opt" onclick="chooseUILang('ko',this)">한국어</button>
+        <button class="ui-lang-opt" onclick="chooseUILang('ar',this)">العربية</button>
+        <button class="ui-lang-opt" onclick="chooseUILang('hi',this)">हिन्दी</button>
+        <button class="ui-lang-opt" onclick="chooseUILang('pt',this)">Português</button>
+        <button class="ui-lang-opt" onclick="chooseUILang('ru',this)">Русский</button>
+        <button class="ui-lang-opt" onclick="chooseUILang('fr',this)">Français</button>
+        <button class="ui-lang-opt" onclick="chooseUILang('ht',this)">Kreyòl Ayisyen</button>
+        <button class="ui-lang-opt" onclick="chooseUILang('pa',this)">ਪੰਜਾਬੀ</button>
+        <button class="ui-lang-opt" onclick="chooseUILang('am',this)">አማርኛ</button>
+      </div>
+    </div>
+    <div class="nav-badge" id="navBadge">Legal Information Only</div>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-eyebrow">✦ Free · No account required · 15 languages</div>
-  <h1>Legal documents,<br><span>finally in plain English.</span></h1>
+  <h1><span id="ht1">Legal documents,</span><br><span id="ht2">finally in plain English.</span></h1>
   <p>Upload or paste any legal notice, lease, court summons, or contract. Get an instant explanation with cited laws, case references, and deadlines highlighted.</p>
   <a href="#app" class="hero-cta">Try it now ↓</a>
   <div class="hero-chips">
@@ -584,8 +640,8 @@
     <div class="input-card">
       <div class="input-card-top">
         <div class="input-tabs">
-          <button class="input-tab active" onclick="switchInput('paste',this)">Paste Text</button>
-          <button class="input-tab" onclick="switchInput('pdf',this)">Upload PDF</button>
+          <button id="itab-paste" class="input-tab active" onclick="switchInput('paste',this)">Paste Text</button>
+          <button id="itab-pdf" class="input-tab" onclick="switchInput('pdf',this)">Upload PDF</button>
         </div>
       </div>
 
@@ -690,19 +746,19 @@
       <div class="result-section">
         <div class="pill-tabs-wrap">
           <button class="pill-tab active" onclick="switchTab('breakdown',this)">
-            Plain Language <span class="pill-count" id="cnt-breakdown">0</span>
+            <span id="ptab-breakdown">Plain Language</span> <span class="pill-count" id="cnt-breakdown">0</span>
           </button>
           <button class="pill-tab" onclick="switchTab('laws',this)">
-            Laws &amp; Statutes <span class="pill-count" id="cnt-laws">0</span>
+            <span id="ptab-laws">Laws &amp; Statutes</span> <span class="pill-count" id="cnt-laws">0</span>
           </button>
           <button class="pill-tab" onclick="switchTab('cases',this)">
-            Case Law <span class="pill-count" id="cnt-cases">0</span>
+            <span id="ptab-cases">Case Law</span> <span class="pill-count" id="cnt-cases">0</span>
           </button>
           <button class="pill-tab" onclick="switchTab('glossary',this)">
-            Glossary <span class="pill-count" id="cnt-glossary">0</span>
+            <span id="ptab-glossary">Glossary</span> <span class="pill-count" id="cnt-glossary">0</span>
           </button>
           <button class="pill-tab" onclick="switchTab('rights',this)">
-            Rights &amp; Help
+            <span id="ptab-rights">Rights &amp; Help</span>
           </button>
         </div>
 
@@ -799,6 +855,419 @@ function setPersona(p, btn) {
   document.querySelectorAll('.persona-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 }
+
+// ── UI Language ───────────────────────────────────────────────────────────────
+const TRANSLATIONS = {
+  en: {
+    navBadge:'Legal Information Only', heroBadge:'✦ Free · No account required · 15 languages',
+    ht1:'Legal documents,', ht2:'finally in plain English.',
+    heroSub:'Upload or paste any legal notice, lease, court summons, or contract. Get an instant explanation with cited laws, case references, and deadlines highlighted.',
+    heroCta:'Try it now ↓', howLabel:'How it works', howTitle:'Three steps to clarity',
+    howSub:'No legal background needed. No account. No cost.',
+    step1Title:'Paste or upload', step1Desc:'Drop a PDF or paste the text of any legal document — any format, any type.',
+    step2Title:'AI reads the law', step2Desc:'Our AI identifies every applicable statute, case law precedent, and deadline.',
+    step3Title:'Read plain English', step3Desc:'Get a clear breakdown with sources you can verify — in any of 15 languages.',
+    appLabel:'Try it yourself', appTitle:'Paste your document below',
+    tabPaste:'Paste Text', tabUpload:'Upload PDF', sampleLabel:'Load a sample:',
+    personaQ:'How familiar are you with legal documents?',
+    noviceTitle:'New to this', noviceDesc:'Explain everything simply, no jargon',
+    interTitle:'Know the basics', interDesc:'Plain English, some terms are fine',
+    expertTitle:'Work in law', expertDesc:'Full depth, technical language welcome',
+    outputLangLabel:'Output language', analyzeBtn:'Explain Document →',
+    tabBreakdown:'Plain Language', tabLaws:'Laws & Statutes', tabCases:'Case Law',
+    tabGlossary:'Glossary', tabRights:'Rights & Help',
+    btnNew:'← Analyze Another Document', loadingMsg:'Reading your document…',
+    loadingSub:'Identifying laws, cases, and deadlines',
+    placeholder:'Paste the text of your legal document here…',
+  },
+  es: {
+    navBadge:'Solo información legal', heroBadge:'✦ Gratis · Sin cuenta · 15 idiomas',
+    ht1:'Documentos legales,', ht2:'por fin en lenguaje claro.',
+    heroSub:'Sube o pega cualquier aviso legal, contrato de arrendamiento, citación judicial o contrato. Obtén una explicación instantánea con leyes citadas, referencias de casos y fechas límite resaltadas.',
+    heroCta:'Pruébalo ahora ↓', howLabel:'Cómo funciona', howTitle:'Tres pasos hacia la claridad',
+    howSub:'No necesitas conocimientos legales. Sin cuenta. Sin costo.',
+    step1Title:'Pega o sube', step1Desc:'Sube un PDF o pega el texto de cualquier documento legal.',
+    step2Title:'La IA lee la ley', step2Desc:'Nuestra IA identifica cada ley aplicable, precedente legal y fecha límite.',
+    step3Title:'Lee en lenguaje claro', step3Desc:'Obtén un desglose claro con fuentes verificables en 15 idiomas.',
+    appLabel:'Pruébalo tú mismo', appTitle:'Pega tu documento aquí',
+    tabPaste:'Pegar texto', tabUpload:'Subir PDF', sampleLabel:'Cargar un ejemplo:',
+    personaQ:'¿Qué tan familiarizado estás con documentos legales?',
+    noviceTitle:'Soy nuevo', noviceDesc:'Explica todo de forma simple, sin jerga',
+    interTitle:'Conozco lo básico', interDesc:'Lenguaje simple, algunos términos están bien',
+    expertTitle:'Trabajo en derecho', expertDesc:'Profundidad total, jerga técnica bienvenida',
+    outputLangLabel:'Idioma de salida', analyzeBtn:'Explicar documento →',
+    tabBreakdown:'Lenguaje claro', tabLaws:'Leyes y estatutos', tabCases:'Jurisprudencia',
+    tabGlossary:'Glosario', tabRights:'Derechos y ayuda',
+    btnNew:'← Analizar otro documento', loadingMsg:'Leyendo tu documento…',
+    loadingSub:'Identificando leyes, casos y fechas límite',
+    placeholder:'Pega el texto de tu documento legal aquí…',
+  },
+  zh: {
+    navBadge:'仅供法律信息', heroBadge:'✦ 免费 · 无需账户 · 15种语言',
+    ht1:'法律文件，', ht2:'终于看懂了。',
+    heroSub:'上传或粘贴任何法律通知、租约、法院传票或合同，立即获取引用法规、案例参考和截止日期的清晰解释。',
+    heroCta:'立即试用 ↓', howLabel:'使用方法', howTitle:'三步轻松读懂',
+    howSub:'无需法律背景。无需账户。完全免费。',
+    step1Title:'粘贴或上传', step1Desc:'上传PDF或粘贴任何法律文件的文本，格式不限。',
+    step2Title:'AI解读法律', step2Desc:'我们的AI识别每一条适用法规、判例法先例和截止日期。',
+    step3Title:'读懂清晰解释', step3Desc:'获得带有可验证来源的清晰分析，支持15种语言。',
+    appLabel:'亲自试试', appTitle:'在下方粘贴您的文件',
+    tabPaste:'粘贴文本', tabUpload:'上传PDF', sampleLabel:'加载示例：',
+    personaQ:'您对法律文件有多了解？',
+    noviceTitle:'完全陌生', noviceDesc:'用简单语言解释，无术语',
+    interTitle:'了解基础', interDesc:'通俗语言，一些术语可接受',
+    expertTitle:'从事法律工作', expertDesc:'深度分析，专业术语欢迎',
+    outputLangLabel:'输出语言', analyzeBtn:'解释文件 →',
+    tabBreakdown:'通俗解释', tabLaws:'法律与法规', tabCases:'判例法',
+    tabGlossary:'术语表', tabRights:'权利与帮助',
+    btnNew:'← 分析另一份文件', loadingMsg:'正在阅读您的文件…',
+    loadingSub:'识别法律、案例和截止日期',
+    placeholder:'在此粘贴法律文件的文本…',
+  },
+  'zh-TW': {
+    navBadge:'僅供法律資訊', heroBadge:'✦ 免費 · 無需帳戶 · 15種語言',
+    ht1:'法律文件，', ht2:'終於看懂了。',
+    heroSub:'上傳或貼上任何法律通知、租約、法院傳票或合約，立即獲取引用法規、案例參考和截止日期的清晰說明。',
+    heroCta:'立即試用 ↓', howLabel:'使用方法', howTitle:'三步輕鬆讀懂',
+    howSub:'無需法律背景。無需帳戶。完全免費。',
+    step1Title:'貼上或上傳', step1Desc:'上傳PDF或貼上任何法律文件的文本，格式不限。',
+    step2Title:'AI解讀法律', step2Desc:'我們的AI識別每一條適用法規、判例法先例和截止日期。',
+    step3Title:'閱讀清晰說明', step3Desc:'獲得帶有可驗證來源的清晰分析，支援15種語言。',
+    appLabel:'親自試試', appTitle:'在下方貼上您的文件',
+    tabPaste:'貼上文字', tabUpload:'上傳PDF', sampleLabel:'載入範例：',
+    personaQ:'您對法律文件有多了解？',
+    noviceTitle:'完全陌生', noviceDesc:'用簡單語言解釋，無術語',
+    interTitle:'了解基礎', interDesc:'通俗語言，一些術語可接受',
+    expertTitle:'從事法律工作', expertDesc:'深度分析，專業術語歡迎',
+    outputLangLabel:'輸出語言', analyzeBtn:'解釋文件 →',
+    tabBreakdown:'通俗解釋', tabLaws:'法律與法規', tabCases:'判例法',
+    tabGlossary:'術語表', tabRights:'權利與幫助',
+    btnNew:'← 分析另一份文件', loadingMsg:'正在閱讀您的文件…',
+    loadingSub:'識別法律、案例和截止日期',
+    placeholder:'在此貼上法律文件的文本…',
+  },
+  vi: {
+    navBadge:'Chỉ thông tin pháp lý', heroBadge:'✦ Miễn phí · Không cần tài khoản · 15 ngôn ngữ',
+    ht1:'Văn bản pháp lý,', ht2:'cuối cùng đã rõ ràng.',
+    heroSub:'Tải lên hoặc dán bất kỳ thông báo pháp lý, hợp đồng thuê nhà, giấy triệu tập hoặc hợp đồng nào. Nhận giải thích tức thì với các luật được trích dẫn và thời hạn được đánh dấu.',
+    heroCta:'Thử ngay ↓', howLabel:'Cách thức hoạt động', howTitle:'Ba bước để hiểu rõ',
+    howSub:'Không cần kiến thức pháp lý. Không cần tài khoản. Miễn phí.',
+    step1Title:'Dán hoặc tải lên', step1Desc:'Tải lên PDF hoặc dán văn bản của bất kỳ tài liệu pháp lý nào.',
+    step2Title:'AI đọc luật', step2Desc:'AI của chúng tôi xác định mọi luật, tiền lệ án lệ và thời hạn áp dụng.',
+    step3Title:'Đọc giải thích rõ ràng', step3Desc:'Nhận phân tích rõ ràng với nguồn có thể xác minh, bằng 15 ngôn ngữ.',
+    appLabel:'Thử tự làm', appTitle:'Dán tài liệu của bạn bên dưới',
+    tabPaste:'Dán văn bản', tabUpload:'Tải lên PDF', sampleLabel:'Tải mẫu:',
+    personaQ:'Bạn quen thuộc với tài liệu pháp lý như thế nào?',
+    noviceTitle:'Hoàn toàn mới', noviceDesc:'Giải thích đơn giản, không thuật ngữ',
+    interTitle:'Biết cơ bản', interDesc:'Ngôn ngữ đơn giản, một số thuật ngữ ổn',
+    expertTitle:'Làm trong lĩnh vực luật', expertDesc:'Độ sâu đầy đủ, thuật ngữ chuyên môn được chào đón',
+    outputLangLabel:'Ngôn ngữ đầu ra', analyzeBtn:'Giải thích tài liệu →',
+    tabBreakdown:'Ngôn ngữ rõ ràng', tabLaws:'Luật & Quy chế', tabCases:'Án lệ',
+    tabGlossary:'Bảng thuật ngữ', tabRights:'Quyền & Hỗ trợ',
+    btnNew:'← Phân tích tài liệu khác', loadingMsg:'Đang đọc tài liệu của bạn…',
+    loadingSub:'Xác định luật, vụ án và thời hạn',
+    placeholder:'Dán văn bản tài liệu pháp lý của bạn vào đây…',
+  },
+  tl: {
+    navBadge:'Impormasyon sa Batas Lamang', heroBadge:'✦ Libre · Walang account · 15 wika',
+    ht1:'Mga legal na dokumento,', ht2:'sa wakas ay malinaw na.',
+    heroSub:'I-upload o i-paste ang anumang legal na abiso, lease, court summons, o kontrata. Makakuha ng agarang paliwanag na may mga cited na batas, sanggunian sa kaso, at mga deadline.',
+    heroCta:'Subukan ngayon ↓', howLabel:'Paano ito gumagana', howTitle:'Tatlong hakbang tungo sa kalinawan',
+    howSub:'Hindi kailangan ng kaalaman sa batas. Walang account. Walang bayad.',
+    step1Title:'I-paste o i-upload', step1Desc:'Mag-upload ng PDF o i-paste ang teksto ng anumang legal na dokumento.',
+    step2Title:'Binabasa ng AI ang batas', step2Desc:'Tinutukoy ng aming AI ang bawat naaangkop na batas, case law precedent, at deadline.',
+    step3Title:'Basahin ang malinaw na paliwanag', step3Desc:'Makakuha ng malinaw na breakdown na may mga mapagkakatiwalaang pinagkukunan sa 15 wika.',
+    appLabel:'Subukan mo mismo', appTitle:'I-paste ang iyong dokumento sa ibaba',
+    tabPaste:'I-paste ang Teksto', tabUpload:'Mag-upload ng PDF', sampleLabel:'Mag-load ng sample:',
+    personaQ:'Gaano ka pamilyar sa mga legal na dokumento?',
+    noviceTitle:'Bago sa ito', noviceDesc:'Ipaliwanag ang lahat nang simple, walang jargon',
+    interTitle:'Alam ang mga basic', interDesc:'Simpleng wika, okay lang ang ilang termino',
+    expertTitle:'Nagtatrabaho sa batas', expertDesc:'Buong lalim, welcome ang teknikal na wika',
+    outputLangLabel:'Wikang output', analyzeBtn:'Ipaliwanag ang Dokumento →',
+    tabBreakdown:'Malinaw na Wika', tabLaws:'Mga Batas at Regulasyon', tabCases:'Case Law',
+    tabGlossary:'Glosaryo', tabRights:'Mga Karapatan at Tulong',
+    btnNew:'← Suriin ang Isa Pang Dokumento', loadingMsg:'Binabasa ang iyong dokumento…',
+    loadingSub:'Tinutukoy ang mga batas, kaso, at deadline',
+    placeholder:'I-paste dito ang teksto ng iyong legal na dokumento…',
+  },
+  ko: {
+    navBadge:'법적 정보만 제공', heroBadge:'✦ 무료 · 계정 불필요 · 15개 언어',
+    ht1:'법률 문서,', ht2:'이제 쉽게 이해할 수 있습니다.',
+    heroSub:'어떤 법적 통지, 임대 계약서, 법원 소환장 또는 계약서든 업로드하거나 붙여넣으세요. 인용된 법률, 사례 참조 및 강조 표시된 마감일과 함께 즉각적인 설명을 받으세요.',
+    heroCta:'지금 사용해보기 ↓', howLabel:'사용 방법', howTitle:'명확함을 위한 세 단계',
+    howSub:'법률 지식 불필요. 계정 불필요. 무료.',
+    step1Title:'붙여넣기 또는 업로드', step1Desc:'PDF를 업로드하거나 법률 문서의 텍스트를 붙여넣으세요.',
+    step2Title:'AI가 법률을 읽습니다', step2Desc:'우리 AI는 적용 가능한 모든 법령, 판례법 선례 및 마감일을 식별합니다.',
+    step3Title:'쉽게 설명된 결과 읽기', step3Desc:'15개 언어로 검증 가능한 출처와 함께 명확한 분석을 받으세요.',
+    appLabel:'직접 사용해보기', appTitle:'아래에 문서를 붙여넣으세요',
+    tabPaste:'텍스트 붙여넣기', tabUpload:'PDF 업로드', sampleLabel:'샘플 불러오기:',
+    personaQ:'법률 문서에 얼마나 익숙하신가요?',
+    noviceTitle:'처음 접하는 분', noviceDesc:'모든 것을 간단하게, 전문 용어 없이',
+    interTitle:'기본을 아는 분', interDesc:'쉬운 언어, 일부 용어 괜찮음',
+    expertTitle:'법률 전문가', expertDesc:'전문 깊이, 기술 용어 환영',
+    outputLangLabel:'출력 언어', analyzeBtn:'문서 설명하기 →',
+    tabBreakdown:'쉬운 언어', tabLaws:'법률 및 법령', tabCases:'판례법',
+    tabGlossary:'용어집', tabRights:'권리 및 도움',
+    btnNew:'← 다른 문서 분석하기', loadingMsg:'문서를 읽는 중…',
+    loadingSub:'법률, 사례 및 마감일 식별 중',
+    placeholder:'법률 문서의 텍스트를 여기에 붙여넣으세요…',
+  },
+  ar: {
+    navBadge:'معلومات قانونية فقط', heroBadge:'✦ مجاني · بدون حساب · 15 لغة',
+    ht1:'المستندات القانونية،', ht2:'أخيراً بلغة واضحة.',
+    heroSub:'ارفع أو الصق أي إشعار قانوني، عقد إيجار، أمر استدعاء محكمة أو عقد. احصل على شرح فوري مع القوانين المستشهد بها ومراجع القضايا والمواعيد النهائية المميزة.',
+    heroCta:'جرّبه الآن ↓', howLabel:'كيف يعمل', howTitle:'ثلاث خطوات للوضوح',
+    howSub:'لا تحتاج خلفية قانونية. بدون حساب. مجاناً.',
+    step1Title:'الصق أو ارفع', step1Desc:'ارفع ملف PDF أو الصق نص أي مستند قانوني.',
+    step2Title:'الذكاء الاصطناعي يقرأ القانون', step2Desc:'يحدد ذكاؤنا الاصطناعي كل قانون معمول به وسابقة قانونية وموعد نهائي.',
+    step3Title:'اقرأ التفسير بلغة واضحة', step3Desc:'احصل على تحليل واضح مع مصادر قابلة للتحقق بـ 15 لغة.',
+    appLabel:'جربه بنفسك', appTitle:'الصق مستندك أدناه',
+    tabPaste:'لصق النص', tabUpload:'رفع PDF', sampleLabel:'تحميل نموذج:',
+    personaQ:'ما مدى إلمامك بالمستندات القانونية؟',
+    noviceTitle:'جديد على هذا', noviceDesc:'اشرح كل شيء ببساطة، بدون مصطلحات',
+    interTitle:'أعرف الأساسيات', interDesc:'لغة بسيطة، بعض المصطلحات مقبولة',
+    expertTitle:'أعمل في القانون', expertDesc:'عمق كامل، اللغة التقنية مرحب بها',
+    outputLangLabel:'لغة الإخراج', analyzeBtn:'← شرح المستند',
+    tabBreakdown:'لغة واضحة', tabLaws:'القوانين والأنظمة', tabCases:'قانون القضايا',
+    tabGlossary:'المسرد', tabRights:'الحقوق والمساعدة',
+    btnNew:'تحليل مستند آخر ←', loadingMsg:'جاري قراءة مستندك…',
+    loadingSub:'تحديد القوانين والقضايا والمواعيد النهائية',
+    placeholder:'الصق نص مستندك القانوني هنا…',
+  },
+  hi: {
+    navBadge:'केवल कानूनी जानकारी', heroBadge:'✦ मुफ़्त · कोई खाता नहीं · 15 भाषाएं',
+    ht1:'कानूनी दस्तावेज़,', ht2:'अब सरल भाषा में।',
+    heroSub:'कोई भी कानूनी नोटिस, लीज़, कोर्ट समन या कॉन्ट्रैक्ट अपलोड करें या पेस्ट करें। उद्धृत कानूनों, केस संदर्भों और हाइलाइट की गई डेडलाइन के साथ तुरंत स्पष्टीकरण पाएं।',
+    heroCta:'अभी आज़माएं ↓', howLabel:'यह कैसे काम करता है', howTitle:'स्पष्टता के लिए तीन कदम',
+    howSub:'कानूनी ज्ञान की जरूरत नहीं। कोई खाता नहीं। कोई शुल्क नहीं।',
+    step1Title:'पेस्ट करें या अपलोड करें', step1Desc:'PDF अपलोड करें या किसी भी कानूनी दस्तावेज़ का पाठ पेस्ट करें।',
+    step2Title:'AI कानून पढ़ता है', step2Desc:'हमारा AI हर लागू क़ानून, केस लॉ मिसाल और डेडलाइन की पहचान करता है।',
+    step3Title:'सरल स्पष्टीकरण पढ़ें', step3Desc:'15 भाषाओं में सत्यापन योग्य स्रोतों के साथ स्पष्ट विश्लेषण पाएं।',
+    appLabel:'खुद आज़माएं', appTitle:'नीचे अपना दस्तावेज़ पेस्ट करें',
+    tabPaste:'पाठ पेस्ट करें', tabUpload:'PDF अपलोड करें', sampleLabel:'नमूना लोड करें:',
+    personaQ:'आप कानूनी दस्तावेजों से कितने परिचित हैं?',
+    noviceTitle:'नया हूं', noviceDesc:'सब कुछ सरल में बताएं, कोई जार्गन नहीं',
+    interTitle:'बेसिक जानता हूं', interDesc:'सरल भाषा, कुछ शब्द ठीक हैं',
+    expertTitle:'कानून में काम करता हूं', expertDesc:'पूरी गहराई, तकनीकी भाषा स्वागत योग्य',
+    outputLangLabel:'आउटपुट भाषा', analyzeBtn:'दस्तावेज़ समझाएं →',
+    tabBreakdown:'सरल भाषा', tabLaws:'कानून और अधिनियम', tabCases:'केस कानून',
+    tabGlossary:'शब्दावली', tabRights:'अधिकार और सहायता',
+    btnNew:'← दूसरा दस्तावेज़ विश्लेषण करें', loadingMsg:'आपका दस्तावेज़ पढ़ा जा रहा है…',
+    loadingSub:'कानून, मामले और डेडलाइन की पहचान हो रही है',
+    placeholder:'यहाँ अपने कानूनी दस्तावेज़ का पाठ पेस्ट करें…',
+  },
+  pt: {
+    navBadge:'Apenas Informação Legal', heroBadge:'✦ Grátis · Sem conta · 15 idiomas',
+    ht1:'Documentos legais,', ht2:'finalmente em linguagem clara.',
+    heroSub:'Carregue ou cole qualquer aviso legal, contrato de arrendamento, intimação judicial ou contrato. Obtenha uma explicação instantânea com leis citadas, referências de casos e prazos destacados.',
+    heroCta:'Experimente agora ↓', howLabel:'Como funciona', howTitle:'Três passos para a clareza',
+    howSub:'Sem conhecimento jurídico necessário. Sem conta. Sem custo.',
+    step1Title:'Cole ou carregue', step1Desc:'Carregue um PDF ou cole o texto de qualquer documento legal.',
+    step2Title:'A IA lê a lei', step2Desc:'A nossa IA identifica cada lei aplicável, precedente de jurisprudência e prazo.',
+    step3Title:'Leia a explicação clara', step3Desc:'Obtenha uma análise clara com fontes verificáveis em 15 idiomas.',
+    appLabel:'Experimente você mesmo', appTitle:'Cole seu documento abaixo',
+    tabPaste:'Colar Texto', tabUpload:'Carregar PDF', sampleLabel:'Carregar amostra:',
+    personaQ:'Quão familiarizado você está com documentos legais?',
+    noviceTitle:'Sou novo nisso', noviceDesc:'Explique tudo de forma simples, sem jargão',
+    interTitle:'Conheço o básico', interDesc:'Linguagem simples, alguns termos são bem-vindos',
+    expertTitle:'Trabalho com direito', expertDesc:'Profundidade total, linguagem técnica bem-vinda',
+    outputLangLabel:'Idioma de saída', analyzeBtn:'Explicar Documento →',
+    tabBreakdown:'Linguagem Clara', tabLaws:'Leis e Estatutos', tabCases:'Jurisprudência',
+    tabGlossary:'Glossário', tabRights:'Direitos e Ajuda',
+    btnNew:'← Analisar Outro Documento', loadingMsg:'Lendo seu documento…',
+    loadingSub:'Identificando leis, casos e prazos',
+    placeholder:'Cole o texto do seu documento legal aqui…',
+  },
+  ru: {
+    navBadge:'Только правовая информация', heroBadge:'✦ Бесплатно · Без аккаунта · 15 языков',
+    ht1:'Юридические документы,', ht2:'наконец понятным языком.',
+    heroSub:'Загрузите или вставьте любое юридическое уведомление, договор аренды, судебную повестку или контракт. Получите мгновенное объяснение с цитируемыми законами, ссылками на дела и выделенными сроками.',
+    heroCta:'Попробовать сейчас ↓', howLabel:'Как это работает', howTitle:'Три шага к ясности',
+    howSub:'Юридические знания не нужны. Без аккаунта. Бесплатно.',
+    step1Title:'Вставьте или загрузите', step1Desc:'Загрузите PDF или вставьте текст любого юридического документа.',
+    step2Title:'ИИ читает закон', step2Desc:'Наш ИИ выявляет каждый применимый закон, прецедент и срок.',
+    step3Title:'Читайте понятное объяснение', step3Desc:'Получите чёткий анализ с проверяемыми источниками на 15 языках.',
+    appLabel:'Попробуйте сами', appTitle:'Вставьте документ ниже',
+    tabPaste:'Вставить текст', tabUpload:'Загрузить PDF', sampleLabel:'Загрузить пример:',
+    personaQ:'Насколько вы знакомы с юридическими документами?',
+    noviceTitle:'Впервые с этим', noviceDesc:'Объяснить всё просто, без терминов',
+    interTitle:'Знаю основы', interDesc:'Простой язык, некоторые термины приемлемы',
+    expertTitle:'Работаю в праве', expertDesc:'Полная глубина, профессиональные термины приветствуются',
+    outputLangLabel:'Язык вывода', analyzeBtn:'Объяснить документ →',
+    tabBreakdown:'Понятный язык', tabLaws:'Законы и статуты', tabCases:'Прецедентное право',
+    tabGlossary:'Глоссарий', tabRights:'Права и помощь',
+    btnNew:'← Анализировать другой документ', loadingMsg:'Читаем ваш документ…',
+    loadingSub:'Определяем законы, дела и сроки',
+    placeholder:'Вставьте текст вашего юридического документа сюда…',
+  },
+  fr: {
+    navBadge:'Informations juridiques uniquement', heroBadge:'✦ Gratuit · Sans compte · 15 langues',
+    ht1:'Documents juridiques,', ht2:'enfin expliqués clairement.',
+    heroSub:'Téléchargez ou collez tout avis juridique, bail, assignation ou contrat. Obtenez une explication instantanée avec des lois citées, des références de cas et des délais mis en évidence.',
+    heroCta:'Essayez maintenant ↓', howLabel:'Comment ça marche', howTitle:'Trois étapes vers la clarté',
+    howSub:'Aucune formation juridique requise. Pas de compte. Gratuit.',
+    step1Title:'Coller ou télécharger', step1Desc:'Téléchargez un PDF ou collez le texte de tout document juridique.',
+    step2Title:"L'IA lit la loi", step2Desc:'Notre IA identifie chaque loi applicable, précédent jurisprudentiel et délai.',
+    step3Title:"Lire l'explication claire", step3Desc:'Obtenez une analyse claire avec des sources vérifiables en 15 langues.',
+    appLabel:'Essayez vous-même', appTitle:'Collez votre document ci-dessous',
+    tabPaste:'Coller le texte', tabUpload:'Télécharger PDF', sampleLabel:'Charger un exemple:',
+    personaQ:'Quelle est votre familiarité avec les documents juridiques?',
+    noviceTitle:'Nouveau dans ce domaine', noviceDesc:'Tout expliquer simplement, sans jargon',
+    interTitle:'Je connais les bases', interDesc:'Langage simple, certains termes sont acceptables',
+    expertTitle:'Je travaille dans le droit', expertDesc:'Profondeur totale, langage technique bienvenu',
+    outputLangLabel:'Langue de sortie', analyzeBtn:'Expliquer le document →',
+    tabBreakdown:'Langage clair', tabLaws:'Lois et statuts', tabCases:'Jurisprudence',
+    tabGlossary:'Glossaire', tabRights:'Droits et aide',
+    btnNew:'← Analyser un autre document', loadingMsg:'Lecture de votre document…',
+    loadingSub:'Identification des lois, cas et délais',
+    placeholder:'Collez le texte de votre document juridique ici…',
+  },
+  ht: {
+    navBadge:'Enfòmasyon Legal Sèlman', heroBadge:'✦ Gratis · San kont · 15 lang',
+    ht1:'Dokiman legal yo,', ht2:'finalman an lang senp.',
+    heroSub:'Telechaje oswa kole nenpòt avi legal, kontra lwaye, konvokasyon tribinal oswa kontra. Jwenn eksplikasyon imedyat ak lwa site, referans ka, ak dat limit mete an valè.',
+    heroCta:'Eseye kounye a ↓', howLabel:'Kijan li travay', howTitle:'Twa etap pou klète',
+    howSub:'Pa bezwen konesans legal. Pa gen kont. Gratis.',
+    step1Title:'Kole oswa telechaje', step1Desc:'Telechaje PDF oswa kole tèks nenpòt dokiman legal.',
+    step2Title:'AI li lalwa', step2Desc:'AI nou idantifye chak lwa ki aplikab, presidan ka, ak dat limit.',
+    step3Title:'Li eksplikasyon ki klè', step3Desc:'Jwenn analiz ki klè ak sous verifiyab nan 15 lang.',
+    appLabel:'Eseye ou menm', appTitle:'Kole dokiman ou anba a',
+    tabPaste:'Kole Tèks', tabUpload:'Telechaje PDF', sampleLabel:'Chaje yon echantyon:',
+    personaQ:'Kijan ou familye ak dokiman legal?',
+    noviceTitle:'Nouvo nan sa', noviceDesc:'Eksplike tout bagay senp, san jargon',
+    interTitle:'Konnen baz yo', interDesc:'Lang senp, kèk tèm ka akseptab',
+    expertTitle:'Travay nan lalwa', expertDesc:'Pwofondè konplè, lang tèknik byenveni',
+    outputLangLabel:'Lang pou rezilta', analyzeBtn:'Eksplike Dokiman →',
+    tabBreakdown:'Lang Klè', tabLaws:'Lwa ak Règleman', tabCases:'Jwispridans',
+    tabGlossary:'Glosè', tabRights:'Dwa ak Èd',
+    btnNew:'← Analize Yon Lòt Dokiman', loadingMsg:'Ap li dokiman ou…',
+    loadingSub:'Idantifye lwa, ka ak dat limit',
+    placeholder:'Kole tèks dokiman legal ou isit la…',
+  },
+  pa: {
+    navBadge:'ਕੇਵਲ ਕਾਨੂੰਨੀ ਜਾਣਕਾਰੀ', heroBadge:'✦ ਮੁਫ਼ਤ · ਕੋਈ ਖਾਤਾ ਨਹੀਂ · 15 ਭਾਸ਼ਾਵਾਂ',
+    ht1:'ਕਾਨੂੰਨੀ ਦਸਤਾਵੇਜ਼,', ht2:'ਹੁਣ ਸਰਲ ਭਾਸ਼ਾ ਵਿੱਚ।',
+    heroSub:'ਕੋਈ ਵੀ ਕਾਨੂੰਨੀ ਨੋਟਿਸ, ਲੀਜ਼, ਕੋਰਟ ਸਮਨ ਜਾਂ ਕੰਟ੍ਰੈਕਟ ਅਪਲੋਡ ਕਰੋ ਜਾਂ ਪੇਸਟ ਕਰੋ। ਹਵਾਲਾ ਦਿੱਤੇ ਕਾਨੂੰਨਾਂ ਅਤੇ ਡੇਡਲਾਈਨਾਂ ਦੇ ਨਾਲ ਤੁਰੰਤ ਸਪਸ਼ਟੀਕਰਨ ਪ੍ਰਾਪਤ ਕਰੋ।',
+    heroCta:'ਹੁਣੇ ਅਜ਼ਮਾਓ ↓', howLabel:'ਇਹ ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ', howTitle:'ਸਪੱਸ਼ਟਤਾ ਲਈ ਤਿੰਨ ਕਦਮ',
+    howSub:'ਕਾਨੂੰਨੀ ਗਿਆਨ ਦੀ ਲੋੜ ਨਹੀਂ। ਕੋਈ ਖਾਤਾ ਨਹੀਂ। ਕੋਈ ਖਰਚਾ ਨਹੀਂ।',
+    step1Title:'ਪੇਸਟ ਜਾਂ ਅਪਲੋਡ ਕਰੋ', step1Desc:'PDF ਅਪਲੋਡ ਕਰੋ ਜਾਂ ਕਿਸੇ ਵੀ ਕਾਨੂੰਨੀ ਦਸਤਾਵੇਜ਼ ਦਾ ਪਾਠ ਪੇਸਟ ਕਰੋ।',
+    step2Title:'AI ਕਾਨੂੰਨ ਪੜ੍ਹਦਾ ਹੈ', step2Desc:'ਸਾਡਾ AI ਹਰ ਲਾਗੂ ਕਾਨੂੰਨ ਅਤੇ ਸਮਾਂ-ਸੀਮਾ ਦੀ ਪਛਾਣ ਕਰਦਾ ਹੈ।',
+    step3Title:'ਸਪੱਸ਼ਟ ਵਿਆਖਿਆ ਪੜ੍ਹੋ', step3Desc:'15 ਭਾਸ਼ਾਵਾਂ ਵਿੱਚ ਤਸਦੀਕਯੋਗ ਸਰੋਤਾਂ ਨਾਲ ਸਪੱਸ਼ਟ ਵਿਸ਼ਲੇਸ਼ਣ ਪ੍ਰਾਪਤ ਕਰੋ।',
+    appLabel:'ਆਪ ਅਜ਼ਮਾਓ', appTitle:'ਹੇਠਾਂ ਆਪਣਾ ਦਸਤਾਵੇਜ਼ ਪੇਸਟ ਕਰੋ',
+    tabPaste:'ਪਾਠ ਪੇਸਟ ਕਰੋ', tabUpload:'PDF ਅਪਲੋਡ ਕਰੋ', sampleLabel:'ਨਮੂਨਾ ਲੋਡ ਕਰੋ:',
+    personaQ:'ਤੁਸੀਂ ਕਾਨੂੰਨੀ ਦਸਤਾਵੇਜ਼ਾਂ ਤੋਂ ਕਿੰਨੇ ਜਾਣੂ ਹੋ?',
+    noviceTitle:'ਨਵਾਂ ਹਾਂ', noviceDesc:'ਸਭ ਕੁਝ ਸਰਲਤਾ ਨਾਲ ਸਮਝਾਓ',
+    interTitle:'ਮੂਲ ਜਾਣਦਾ ਹਾਂ', interDesc:'ਸਰਲ ਭਾਸ਼ਾ, ਕੁਝ ਸ਼ਬਦ ਠੀਕ ਹਨ',
+    expertTitle:'ਕਾਨੂੰਨ ਵਿੱਚ ਕੰਮ ਕਰਦਾ ਹਾਂ', expertDesc:'ਪੂਰੀ ਡੂੰਘਾਈ, ਤਕਨੀਕੀ ਭਾਸ਼ਾ ਦਾ ਸਵਾਗਤ',
+    outputLangLabel:'ਆਉਟਪੁੱਟ ਭਾਸ਼ਾ', analyzeBtn:'ਦਸਤਾਵੇਜ਼ ਸਮਝਾਓ →',
+    tabBreakdown:'ਸਰਲ ਭਾਸ਼ਾ', tabLaws:'ਕਾਨੂੰਨ ਅਤੇ ਧਾਰਾਵਾਂ', tabCases:'ਕੇਸ ਕਾਨੂੰਨ',
+    tabGlossary:'ਸ਼ਬਦਾਵਲੀ', tabRights:'ਅਧਿਕਾਰ ਅਤੇ ਸਹਾਇਤਾ',
+    btnNew:'← ਹੋਰ ਦਸਤਾਵੇਜ਼ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰੋ', loadingMsg:'ਤੁਹਾਡਾ ਦਸਤਾਵੇਜ਼ ਪੜ੍ਹਿਆ ਜਾ ਰਿਹਾ ਹੈ…',
+    loadingSub:'ਕਾਨੂੰਨ, ਮਾਮਲੇ ਅਤੇ ਸਮਾਂ-ਸੀਮਾਵਾਂ ਦੀ ਪਛਾਣ ਹੋ ਰਹੀ ਹੈ',
+    placeholder:'ਇੱਥੇ ਆਪਣੇ ਕਾਨੂੰਨੀ ਦਸਤਾਵੇਜ਼ ਦਾ ਪਾਠ ਪੇਸਟ ਕਰੋ…',
+  },
+  am: {
+    navBadge:'ሕጋዊ መረጃ ብቻ', heroBadge:'✦ ነፃ · መለያ አያስፈልግም · 15 ቋንቋዎች',
+    ht1:'ሕጋዊ ሰነዶች,', ht2:'በመጨረሻ በቀላል ቋንቋ።',
+    heroSub:'ማንኛውም ሕጋዊ ማስታወቂያ፣ ሊዝ፣ የፍርድ ቤት ጥሪ ወይም ውል ይጫኑ ወይም ይለጥፉ። ከጠቀሱ ሕጎች እና ዋና ቀኖች ጋር ፈጣን ማብራሪያ ያግኙ።',
+    heroCta:'አሁን ይሞክሩ ↓', howLabel:'እንዴት እንደሚሠራ', howTitle:'ለግልጽነት ሦስት ደረጃዎች',
+    howSub:'ሕጋዊ ዕውቀት አያስፈልግም። ምዝገባ አያስፈልግም። ነፃ ነው።',
+    step1Title:'ለጥፍ ወይም ጫን', step1Desc:'PDF ጫን ወይም የሕጋዊ ሰነዱን ጽሑፍ ለጥፍ።',
+    step2Title:'AI ሕጉን ያነባል', step2Desc:'AI ሁሉንም ተፈጻሚ ሕጎች፣ ቀዳሚ ፍርዶች እና የጊዜ ገደቦችን ይለያል።',
+    step3Title:'ግልጽ ማብራሪያ ያንብቡ', step3Desc:'በ15 ቋንቋዎች ሊረጋገጡ የሚችሉ ምንጮች ግልጽ ትንተና ያግኙ።',
+    appLabel:'እራስዎ ይሞክሩ', appTitle:'ሰነዱን ከዚህ በታች ለጥፍ',
+    tabPaste:'ጽሑፍ ለጥፍ', tabUpload:'PDF ጫን', sampleLabel:'ናሙና ጫን:',
+    personaQ:'ሕጋዊ ሰነዶችን ምን ያህል ያውቃሉ?',
+    noviceTitle:'አዲስ ነኝ', noviceDesc:'ሁሉንም ቀለል አድርጎ ያብራሩ',
+    interTitle:'መሠረቱን አውቃለሁ', interDesc:'ቀላል ቋንቋ፣ አንዳንድ ቃላት ደህናም ናቸው',
+    expertTitle:'በሕግ ዘርፍ እሠራለሁ', expertDesc:'ሙሉ ጥልቀት፣ ቴክኒካዊ ቋንቋ ተቀባይ',
+    outputLangLabel:'የውጤት ቋንቋ', analyzeBtn:'ሰነዱን ያብራሩ →',
+    tabBreakdown:'ቀላል ቋንቋ', tabLaws:'ሕጎች እና ደምቦች', tabCases:'ጉዳይ ሕግ',
+    tabGlossary:'ቃላት ዝርዝር', tabRights:'መብቶች እና እርዳታ',
+    btnNew:'← ሌላ ሰነድ ይተንትኑ', loadingMsg:'ሰነድዎን በማንበብ ላይ…',
+    loadingSub:'ሕጎችን፣ ጉዳዮችን እና የጊዜ ገደቦችን በመለየት ላይ',
+    placeholder:'የሕጋዊ ሰነዶን ጽሑፍ ከዚህ ለጥፍ…',
+  },
+};
+
+const UI_ELEMENTS = [
+  { id:'navBadge', key:'navBadge' },
+  { sel:'.hero-eyebrow', key:'heroBadge' },
+  { id:'ht1', key:'ht1' },
+  { id:'ht2', key:'ht2' },
+  { sel:'.hero > p', key:'heroSub' },
+  { sel:'.hero-cta', key:'heroCta' },
+  { sel:'.how .section-label', key:'howLabel' },
+  { sel:'.how .section-title', key:'howTitle' },
+  { sel:'.how .section-sub', key:'howSub' },
+  { sel:'.how-steps .how-step:nth-child(1) .step-title', key:'step1Title' },
+  { sel:'.how-steps .how-step:nth-child(1) .step-desc', key:'step1Desc' },
+  { sel:'.how-steps .how-step:nth-child(2) .step-title', key:'step2Title' },
+  { sel:'.how-steps .how-step:nth-child(2) .step-desc', key:'step2Desc' },
+  { sel:'.how-steps .how-step:nth-child(3) .step-title', key:'step3Title' },
+  { sel:'.how-steps .how-step:nth-child(3) .step-desc', key:'step3Desc' },
+  { sel:'#app .section-label', key:'appLabel' },
+  { sel:'#app .section-title', key:'appTitle' },
+  { id:'itab-paste', key:'tabPaste' },
+  { id:'itab-pdf', key:'tabUpload' },
+  { sel:'.sample-label', key:'sampleLabel' },
+  { sel:'.persona-question', key:'personaQ' },
+  { sel:'.persona-options .persona-btn:nth-child(1) .pb-title', key:'noviceTitle' },
+  { sel:'.persona-options .persona-btn:nth-child(1) .pb-desc', key:'noviceDesc' },
+  { sel:'.persona-options .persona-btn:nth-child(2) .pb-title', key:'interTitle' },
+  { sel:'.persona-options .persona-btn:nth-child(2) .pb-desc', key:'interDesc' },
+  { sel:'.persona-options .persona-btn:nth-child(3) .pb-title', key:'expertTitle' },
+  { sel:'.persona-options .persona-btn:nth-child(3) .pb-desc', key:'expertDesc' },
+  { sel:'.lang-label', key:'outputLangLabel' },
+  { id:'analyzeBtn', key:'analyzeBtn' },
+  { id:'ptab-breakdown', key:'tabBreakdown' },
+  { id:'ptab-laws', key:'tabLaws' },
+  { id:'ptab-cases', key:'tabCases' },
+  { id:'ptab-glossary', key:'tabGlossary' },
+  { id:'ptab-rights', key:'tabRights' },
+  { sel:'.btn-new', key:'btnNew' },
+  { id:'loadingMsg', key:'loadingMsg' },
+  { sel:'.loading-sub', key:'loadingSub' },
+];
+
+const LANG_LABELS = {
+  en:'EN', es:'ES', zh:'中文', 'zh-TW':'繁中', vi:'VI', tl:'TL',
+  ko:'KO', ar:'AR', hi:'HI', pt:'PT', ru:'RU', fr:'FR',
+  ht:'HT', pa:'PA', am:'AM',
+};
+
+let uiLang = 'en';
+
+function setUILang(code) {
+  uiLang = code;
+  const t = TRANSLATIONS[code] || TRANSLATIONS.en;
+  UI_ELEMENTS.forEach(({ id, sel, key }) => {
+    const el = id ? document.getElementById(id) : document.querySelector(sel);
+    if (el && t[key] !== undefined) el.textContent = t[key];
+  });
+  const ta = document.getElementById('docText');
+  if (ta && t.placeholder) ta.placeholder = t.placeholder;
+  document.documentElement.dir = code === 'ar' ? 'rtl' : 'ltr';
+  document.getElementById('uiLangLabel').textContent = LANG_LABELS[code] || code.toUpperCase();
+}
+
+function toggleUILang() {
+  document.getElementById('uiLangDropdown').classList.toggle('open');
+}
+
+function chooseUILang(code, btn) {
+  setUILang(code);
+  document.querySelectorAll('.ui-lang-opt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('uiLangDropdown').classList.remove('open');
+}
+
+document.addEventListener('click', e => {
+  const wrap = document.getElementById('uiLangWrap');
+  if (wrap && !wrap.contains(e.target)) {
+    document.getElementById('uiLangDropdown').classList.remove('open');
+  }
+});
 
 // ── Nav scroll effect ────────────────────────────────────────────────────────
 window.addEventListener('scroll', () => {
