@@ -94,23 +94,15 @@
 
     /* ── HERO ────────────────────────────────────────── */
     .hero {
-      background: linear-gradient(180deg, #121e30 0%, #0a1220 40%, #070c1a 100%);
+      background: linear-gradient(160deg, #0f1e38 0%, #080e1f 55%, #060b18 100%);
       min-height: 100vh; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       padding: 100px 24px 80px; text-align: center; position: relative; overflow: hidden;
     }
     .hero::before {
       content: ''; position: absolute; inset: 0;
-      background-image: radial-gradient(circle, rgba(255,255,255,.08) 1px, transparent 1px);
-      background-size: 28px 28px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+      background: radial-gradient(ellipse 70% 50% at 50% 40%, rgba(245,158,11,.08) 0%, transparent 70%);
       pointer-events: none;
-    }
-    .hero::after {
-      content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
-      width: 640px; height: 340px; pointer-events: none;
-      background: radial-gradient(ellipse, rgba(245,158,11,.11) 0%, transparent 65%);
     }
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 7px;
@@ -125,23 +117,7 @@
       letter-spacing: -1.5px;
       animation: fadeInUp .7s .1s ease both;
     }
-    .hero h1 #ht2 {
-      background: linear-gradient(90deg, #f59e0b 0%, #fcd34d 50%, #f59e0b 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    /* stats bar below hero */
-    .hero-stats {
-      display: flex; background: #060a14;
-      border-top: 1px solid rgba(255,255,255,.07);
-    }
-    .hero-stat {
-      flex: 1; text-align: center; padding: 22px 16px;
-      border-right: 1px solid rgba(255,255,255,.07);
-    }
-    .hero-stat:last-child { border-right: none; }
-    .hero-stat-n { font-size: 30px; font-weight: 900; color: #f59e0b; letter-spacing: -1px; }
-    .hero-stat-l { font-size: 12px; color: rgba(255,255,255,.32); font-weight: 500; margin-top: 3px; }
+    .hero h1 #ht2 { color: var(--amber); }
     .hero p {
       font-size: clamp(16px, 2vw, 19px); color: rgba(255,255,255,.65);
       max-width: 620px; margin: 0 auto 36px; line-height: 1.65;
@@ -825,13 +801,6 @@
   </div>
   <div class="hero-scroll">↓</div>
 </section>
-
-<!-- STATS BAR -->
-<div class="hero-stats">
-  <div class="hero-stat"><div class="hero-stat-n">15</div><div class="hero-stat-l">Languages supported</div></div>
-  <div class="hero-stat"><div class="hero-stat-n">0</div><div class="hero-stat-l">Data stored or logged</div></div>
-  <div class="hero-stat"><div class="hero-stat-n">∞</div><div class="hero-stat-l">Always free, no account</div></div>
-</div>
 
 <!-- HOW IT WORKS -->
 <section class="how">
