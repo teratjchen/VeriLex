@@ -57,6 +57,9 @@ PERSONA_INSTRUCTIONS = {
 # In-memory feedback store (persists until server restarts).
 feedback_db: list[dict] = []
 
+# In-memory usage log (persists until server restarts).
+usage_log: list[dict] = []
+
 
 class AnalyzeRequest(BaseModel):
     text: str
@@ -130,11 +133,41 @@ async def analyze(req: AnalyzeRequest):
         if start == -1 or end == 0:
             raise ValueError("No JSON found in response")
         result = json.loads(raw[start:end])
+        usage_log.append({
+            "timestamp": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
+            "date": datetime.datetime.utcnow().strftime("%Y-%m-%d"),
+            "language": req.language,
+            "persona": req.persona,
+            "location": req.user_location or "Unknown",
+            "doc_length": len(text),
+            "document_type": result.get("document_type", "unknown"),
+            "success": True,
+        })
         return JSONResponse(content=result)
 
     except (json.JSONDecodeError, ValueError) as e:
+        usage_log.append({
+            "timestamp": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
+            "date": datetime.datetime.utcnow().strftime("%Y-%m-%d"),
+            "language": req.language,
+            "persona": req.persona,
+            "location": req.user_location or "Unknown",
+            "doc_length": len(text),
+            "document_type": "parse_error",
+            "success": False,
+        })
         raise HTTPException(status_code=500, detail=f"Failed to parse response: {e}")
     except anthropic.APIError as e:
+        usage_log.append({
+            "timestamp": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
+            "date": datetime.datetime.utcnow().strftime("%Y-%m-%d"),
+            "language": req.language,
+            "persona": req.persona,
+            "location": req.user_location or "Unknown",
+            "doc_length": len(text),
+            "document_type": "api_error",
+            "success": False,
+        })
         raise HTTPException(status_code=502, detail=f"AI service error: {e}")
 
 
@@ -311,6 +344,59 @@ async def admin_view(key: str = ""):
         "other":      ("#f1f5f9", "#475569"),
     }
 
+    # ── Usage stats ──────────────────────────────────────────────────────────
+    today = datetime.datetime.utcnow().strftime("%Y-%m-%d")
+    week_ago = (datetime.datetime.utcnow() - datetime.timedelta(days=7)).strftime("%Y-%m-%d")
+
+    total_analyses   = len(usage_log)
+    today_analyses   = sum(1 for u in usage_log if u["date"] == today)
+    week_analyses    = sum(1 for u in usage_log if u["date"] >= week_ago)
+    successful       = sum(1 for u in usage_log if u["success"])
+    success_rate     = f"{100 * successful // total_analyses}%" if total_analyses else "—"
+
+    # Counts by field
+    def top_counts(field: str, n: int = 5) -> list[tuple[str, int]]:
+        from collections import Counter
+        return Counter(u[field] for u in usage_log).most_common(n)
+
+    lang_rows = "".join(
+        f"<tr><td>{html_lib.escape(k)}</td><td style='text-align:right;font-weight:600'>{v}</td></tr>"
+        for k, v in top_counts("language")
+    ) or "<tr><td colspan=2 style='color:#94a3b8'>No data</td></tr>"
+
+    persona_rows = "".join(
+        f"<tr><td>{html_lib.escape(k)}</td><td style='text-align:right;font-weight:600'>{v}</td></tr>"
+        for k, v in top_counts("persona")
+    ) or "<tr><td colspan=2 style='color:#94a3b8'>No data</td></tr>"
+
+    doctype_rows = "".join(
+        f"<tr><td>{html_lib.escape(k)}</td><td style='text-align:right;font-weight:600'>{v}</td></tr>"
+        for k, v in top_counts("document_type")
+    ) or "<tr><td colspan=2 style='color:#94a3b8'>No data</td></tr>"
+
+    location_rows = "".join(
+        f"<tr><td>{html_lib.escape(k)}</td><td style='text-align:right;font-weight:600'>{v}</td></tr>"
+        for k, v in top_counts("location")
+    ) or "<tr><td colspan=2 style='color:#94a3b8'>No data</td></tr>"
+
+    # Recent analyses (last 10)
+    recent_rows = ""
+    for u in reversed(usage_log[-10:]):
+        status_color = "#15803d" if u["success"] else "#b91c1c"
+        status_label = "✓" if u["success"] else "✗"
+        recent_rows += f"""
+        <tr>
+          <td style='color:#64748b;font-size:12px'>{u['timestamp']}</td>
+          <td>{html_lib.escape(u['document_type'])}</td>
+          <td>{html_lib.escape(u['language'])}</td>
+          <td>{html_lib.escape(u['persona'])}</td>
+          <td style='color:#64748b;font-size:12px'>{html_lib.escape(u['location'][:30])}</td>
+          <td style='text-align:center;color:{status_color};font-weight:700'>{status_label}</td>
+        </tr>"""
+    if not recent_rows:
+        recent_rows = "<tr><td colspan=6 style='color:#94a3b8;text-align:center;padding:20px'>No analyses yet.</td></tr>"
+
+    # ── Feedback rows ─────────────────────────────────────────────────────────
     rows = ""
     for item in reversed(feedback_db):
         bg, fg = CAT_COLORS.get(item["category"], CAT_COLORS["other"])
@@ -330,19 +416,74 @@ async def admin_view(key: str = ""):
         rows = "<p style='color:#94a3b8;text-align:center;padding:40px 0'>No feedback yet.</p>"
 
     page = f"""<!DOCTYPE html>
-<html><head><title>VeriLex — Feedback Admin</title>
+<html><head><title>VeriLex — Admin</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
   body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
        background:#f8f7f4;color:#1a1a2e;margin:0;padding:32px 16px}}
-  .wrap{{max-width:680px;margin:0 auto}}
+  .wrap{{max-width:760px;margin:0 auto}}
   h1{{font-size:22px;font-weight:800;margin-bottom:4px}}
+  h2{{font-size:16px;font-weight:700;margin:32px 0 12px;color:#334155}}
   .meta{{color:#64748b;font-size:14px;margin-bottom:28px}}
+  .cards{{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:8px}}
+  .card{{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:16px;text-align:center}}
+  .card .num{{font-size:28px;font-weight:800;color:#2563eb}}
+  .card .lbl{{font-size:12px;color:#64748b;margin-top:2px}}
+  table{{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;font-size:14px}}
+  th{{background:#f1f5f9;padding:8px 12px;text-align:left;font-size:12px;color:#64748b;font-weight:600}}
+  td{{padding:8px 12px;border-top:1px solid #f1f5f9}}
+  .grid2{{display:grid;grid-template-columns:1fr 1fr;gap:16px}}
+  @media(max-width:520px){{.grid2{{grid-template-columns:1fr}}}}
 </style>
 </head><body>
 <div class="wrap">
-  <h1>⚖️ VeriLex — Feedback</h1>
-  <p class="meta">{len(feedback_db)} submission(s) total &nbsp;·&nbsp; newest first</p>
+  <h1>⚖️ VeriLex — Admin</h1>
+  <p class="meta">Usage analytics &amp; feedback &nbsp;·&nbsp; data since last deploy</p>
+
+  <h2>📊 Usage Overview</h2>
+  <div class="cards">
+    <div class="card"><div class="num">{total_analyses}</div><div class="lbl">Total analyses</div></div>
+    <div class="card"><div class="num">{today_analyses}</div><div class="lbl">Today</div></div>
+    <div class="card"><div class="num">{week_analyses}</div><div class="lbl">Last 7 days</div></div>
+    <div class="card"><div class="num">{success_rate}</div><div class="lbl">Success rate</div></div>
+    <div class="card"><div class="num">{len(feedback_db)}</div><div class="lbl">Feedback items</div></div>
+  </div>
+
+  <h2>🕐 Recent Analyses</h2>
+  <table>
+    <tr><th>Time (UTC)</th><th>Doc type</th><th>Language</th><th>Persona</th><th>Location</th><th>✓</th></tr>
+    {recent_rows}
+  </table>
+
+  <h2>🔍 Breakdowns</h2>
+  <div class="grid2">
+    <div>
+      <table>
+        <tr><th colspan=2>Top Languages</th></tr>
+        {lang_rows}
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr><th colspan=2>Persona Level</th></tr>
+        {persona_rows}
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr><th colspan=2>Document Types</th></tr>
+        {doctype_rows}
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr><th colspan=2>Top Locations</th></tr>
+        {location_rows}
+      </table>
+    </div>
+  </div>
+
+  <h2>💬 Feedback</h2>
   {rows}
 </div>
 </body></html>"""
