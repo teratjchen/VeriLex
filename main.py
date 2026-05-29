@@ -77,6 +77,11 @@ async def root():
     return FileResponse("index.html")
 
 
+@app.get("/og-image.png")
+async def og_image():
+    return FileResponse("og-image.png", media_type="image/png")
+
+
 @app.post("/analyze")
 async def analyze(req: AnalyzeRequest):
     api_key = os.environ.get("ANTHROPIC_API_KEY")
