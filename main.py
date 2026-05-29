@@ -200,6 +200,72 @@ async def extract_pdf(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail=f"Failed to read PDF: {e}")
 
 
+@app.post("/extract-image")
+async def extract_image(file: UploadFile = File(...)):
+    """Use Claude Vision to read text from a JPEG/PNG photo of a legal document."""
+    fname = (file.filename or "").lower()
+    if not any(fname.endswith(ext) for ext in (".jpg", ".jpeg", ".png", ".webp")):
+        raise HTTPException(status_code=400, detail="File must be a JPEG or PNG image.")
+
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        raise HTTPException(
+            status_code=500,
+            detail="Server configuration error: ANTHROPIC_API_KEY is not set."
+        )
+
+    content = await file.read()
+    if len(content) > 20 * 1024 * 1024:  # 20 MB limit
+        raise HTTPException(status_code=400, detail="Image too large (max 20 MB).")
+
+    # Determine media type
+    if fname.endswith(".png"):
+        media_type = "image/png"
+    elif fname.endswith(".webp"):
+        media_type = "image/webp"
+    else:
+        media_type = "image/jpeg"
+
+    img_b64 = base64.standard_b64encode(content).decode()
+
+    vision_content = [
+        {
+            "type": "image",
+            "source": {"type": "base64", "media_type": media_type, "data": img_b64},
+        },
+        {
+            "type": "text",
+            "text": (
+                "This is a photo of a legal document. "
+                "Transcribe all visible text exactly as written, preserving the document's structure and layout. "
+                "Return only the transcribed text — no commentary, no explanation."
+            ),
+        },
+    ]
+
+    try:
+        client = anthropic.Anthropic(api_key=api_key)
+        response = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=4096,
+            messages=[{"role": "user", "content": vision_content}],
+        )
+        extracted = response.content[0].text.strip()
+        if not extracted:
+            raise HTTPException(
+                status_code=400,
+                detail="Could not read text from the image. Try a clearer photo with better lighting."
+            )
+        return {"text": extracted[:60_000], "method": "ocr"}
+
+    except HTTPException:
+        raise
+    except anthropic.APIError as e:
+        raise HTTPException(status_code=502, detail=f"AI service error: {e}")
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Failed to read image: {e}")
+
+
 @app.post("/feedback")
 async def submit_feedback(req: FeedbackRequest):
     if not req.message.strip():

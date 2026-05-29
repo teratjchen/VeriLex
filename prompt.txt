@@ -32,6 +32,9 @@ Respond with ONLY valid JSON — no prose, no markdown fences, nothing outside t
   "plain_summary": "2-3 sentence plain-language summary, reading level adjusted to user persona",
   "urgency": "low | medium | high | critical",
   "urgency_reason": "one sentence explaining the urgency level, in language matching user persona",
+  "action_steps": [
+    "For HIGH or CRITICAL urgency only: each string is one concrete, specific action the person should take right now, ordered by priority (most urgent first). Plain language — no legal advice phrasing (say 'you may want to' or 'consider'). Use an empty array [] for low or medium urgency."
+  ],
   "key_dates": [
     { "label": "deadline label", "date": "date from or calculated from the document", "significance": "what happens on this date if unaddressed" }
   ],

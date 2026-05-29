@@ -57,6 +57,13 @@
       padding: 3px 10px; font-weight: 500;
     }
     .nav-right { display: flex; align-items: center; gap: 10px; }
+    .nav-link {
+      color: rgba(255,255,255,.6); font-size: 13px; font-weight: 600;
+      text-decoration: none; padding: 4px 2px; transition: color .15s;
+      white-space: nowrap;
+    }
+    .nav-link:hover { color: #fff; }
+    @media (max-width: 520px) { .nav-link { display: none; } }
     .ui-lang-wrap { position: relative; }
     .ui-lang-btn {
       display: flex; align-items: center; gap: 5px;
@@ -525,6 +532,163 @@
       .input-footer { flex-direction: column; align-items: stretch; }
       select#langSelect { width: 100%; }
     }
+
+    /* ── TEXT SIZE TOGGLE ─────────────────────────────── */
+    .text-size-btn {
+      display: flex; align-items: center;
+      background: transparent; border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px; padding: 3px 11px; cursor: pointer;
+      color: rgba(255,255,255,.65); font-size: 12px; font-weight: 700;
+      transition: border-color .2s, color .2s; letter-spacing: .04em;
+    }
+    .text-size-btn:hover { border-color: rgba(255,255,255,.5); color: #fff; }
+    .text-size-btn.active { border-color: var(--amber); color: var(--amber); background: rgba(245,158,11,.12); }
+    /* Comprehensive large-text overrides — every px-sized element bumped ~2px */
+    body.large-text .hero-eyebrow   { font-size: 15px; }
+    body.large-text .hero p         { font-size: clamp(18px,2.2vw,21px); }
+    body.large-text .hero-cta       { font-size: 18px; }
+    body.large-text .doc-chip       { font-size: 15px; }
+    body.large-text .section-label  { font-size: 13px; }
+    body.large-text .section-title  { font-size: clamp(30px,4.2vw,42px); }
+    body.large-text .section-sub    { font-size: 19px; }
+    body.large-text .step-title     { font-size: 20px; }
+    body.large-text .step-desc      { font-size: 16px; }
+    body.large-text .faq-q          { font-size: 17px; }
+    body.large-text .faq-a          { font-size: 16px; }
+    body.large-text .input-card-top h2  { font-size: 24px; }
+    body.large-text .input-card-top p   { font-size: 16px; }
+    body.large-text .sample-label   { font-size: 14px; }
+    body.large-text .sample-btn     { font-size: 14px; }
+    body.large-text .input-tab      { font-size: 16px; }
+    body.large-text textarea#docText { font-size: 16px; }
+    body.large-text .dz-text        { font-size: 17px; }
+    body.large-text .dz-note        { font-size: 14px; }
+    body.large-text .privacy-notice { font-size: 14px; }
+    body.large-text .char-count     { font-size: 14px; }
+    body.large-text .persona-question { font-size: 15px; }
+    body.large-text .pb-title       { font-size: 15px; }
+    body.large-text .pb-desc        { font-size: 13px; }
+    body.large-text .lang-label     { font-size: 13px; }
+    body.large-text select#langSelect { font-size: 16px; }
+    body.large-text .btn-analyze    { font-size: 17px; }
+    body.large-text .loading-msg    { font-size: 18px; }
+    body.large-text .loading-sub    { font-size: 16px; }
+    body.large-text .badge          { font-size: 14px; }
+    body.large-text .urgency-bar    { font-size: 16px; }
+    body.large-text .plain-summary  { font-size: 18px; }
+    body.large-text .dates-title    { font-size: 14px; }
+    body.large-text .date-label     { font-size: 13px; }
+    body.large-text .date-val       { font-size: 20px; }
+    body.large-text .date-sig       { font-size: 14px; }
+    body.large-text .pill-tab       { font-size: 15px; }
+    body.large-text .acc-title      { font-size: 17px; }
+    body.large-text .original-quote { font-size: 15px; }
+    body.large-text .plain-explain  { font-size: 16px; }
+    body.large-text .term-chip      { font-size: 14px; }
+    body.large-text .law-citation   { font-size: 17px; }
+    body.large-text .law-title-sub  { font-size: 15px; }
+    body.large-text .btn-view-law   { font-size: 14px; }
+    body.large-text .law-what       { font-size: 16px; }
+    body.large-text .applies-here   { font-size: 15px; }
+    body.large-text .case-name      { font-size: 17px; }
+    body.large-text .case-meta      { font-size: 14px; }
+    body.large-text .case-holding   { font-size: 16px; }
+    body.large-text .why-matters    { font-size: 15px; }
+    body.large-text .gloss-term     { font-size: 17px; }
+    body.large-text .gloss-def      { font-size: 15px; }
+    body.large-text .rights-list li    { font-size: 16px; }
+    body.large-text .resource-name     { font-size: 16px; }
+    body.large-text .resource-services { font-size: 14px; }
+    body.large-text .resource-links a  { font-size: 14px; }
+    body.large-text .action-box-title  { font-size: 17px; }
+    body.large-text .action-steps-list li { font-size: 16px; }
+    body.large-text .btn-new        { font-size: 16px; }
+    body.large-text footer          { font-size: 15px; }
+    body.large-text .footer-logo span  { font-size: 20px; }
+
+    /* ── ACTION STEPS ─────────────────────────────────── */
+    .action-box {
+      border-radius: var(--r); padding: 22px 24px; margin-bottom: 16px;
+      animation: fadeInUp .4s ease both;
+    }
+    .action-box.critical { background: var(--crit-bg); border: 2px solid #fca5a5; }
+    .action-box.high     { background: var(--high-bg); border: 2px solid #fdba74; }
+    .action-box-title {
+      font-size: 15px; font-weight: 800; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .action-box.critical .action-box-title { color: var(--crit); }
+    .action-box.high     .action-box-title { color: var(--high); }
+    .action-steps-list { list-style: none; }
+    .action-steps-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 9px 0; font-size: 14px; line-height: 1.65; color: var(--text);
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    .action-steps-list li:last-child { border-bottom: none; }
+    .action-step-num {
+      flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+      color: #fff; font-size: 11px; font-weight: 800; margin-top: 2px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .action-box.critical .action-step-num { background: var(--crit); }
+    .action-box.high     .action-step-num { background: var(--high); }
+
+    /* ── RESULT ACTIONS (Print / Copy) ────────────────── */
+    .result-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+    .btn-result-action {
+      display: flex; align-items: center; gap: 6px;
+      border: 1.5px solid var(--border); background: var(--surface);
+      border-radius: 8px; padding: 7px 14px; font-size: 13px; font-weight: 600;
+      color: var(--ink-mid); cursor: pointer; transition: all .15s;
+    }
+    .btn-result-action:hover { border-color: var(--amber); color: var(--amber-dim); background: var(--amber-bg); }
+
+    /* ── PRIVACY NOTICE ───────────────────────────────── */
+    .privacy-notice {
+      font-size: 12px; color: var(--muted); margin-top: 10px;
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+    }
+
+    /* ── FAQ ──────────────────────────────────────────── */
+    .faq { padding: 72px 24px; background: var(--surface); }
+    .faq-list { max-width: 720px; margin: 0 auto; }
+    .faq-item {
+      border: 1px solid var(--border); border-radius: var(--r);
+      margin-bottom: 8px; background: var(--bg); overflow: hidden;
+    }
+    .faq-q {
+      width: 100%; text-align: left; padding: 18px 22px;
+      background: none; border: none; font-size: 15px; font-weight: 700;
+      color: var(--ink); cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      transition: background .15s;
+    }
+    .faq-q:hover { background: rgba(245,158,11,.05); }
+    .faq-chevron { color: var(--muted); font-size: 12px; flex-shrink: 0; transition: transform .2s; }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-a {
+      display: none; padding: 4px 22px 18px; font-size: 14px;
+      line-height: 1.75; color: var(--text); border-top: 1px solid var(--border);
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── PRINT ────────────────────────────────────────── */
+    @media print {
+      nav, .hero, .how, .faq, #feedback-section, footer,
+      .btn-new, .result-actions, .pill-tabs-wrap, .btn-analyze,
+      .input-card, .loading-card, .error-card, .hero-scroll { display: none !important; }
+      #app { padding: 0 !important; }
+      body { background: #fff; font-size: 12pt; color: #000; }
+      .results { display: block !important; }
+      .tab-panel { display: block !important; }
+      .acc-body { display: block !important; }
+      .content-card, .summary-card, .dates-wrap {
+        box-shadow: none !important; border: 1px solid #ccc !important;
+        page-break-inside: avoid; margin-bottom: 10px;
+      }
+      .action-box { border: 2px solid #999 !important; page-break-inside: avoid; }
+    }
   </style>
 </head>
 <body>
@@ -547,6 +711,17 @@
     <span class="logo-name">LawLight</span>
   </a>
   <div class="nav-right">
+    <a href="#about" class="nav-link" id="navAbout">About</a>
+    <a href="#faq" class="nav-link" id="navFaq">FAQ</a>
+    <button class="text-size-btn" onclick="toggleTextSize()" id="textSizeBtn" title="Toggle larger text">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="7" width="16" height="7" rx="1.5"/>
+        <line x1="5"  y1="7" x2="5"  y2="10.5"/>
+        <line x1="8"  y1="7" x2="8"  y2="9.5"/>
+        <line x1="11" y1="7" x2="11" y2="9.5"/>
+        <line x1="14" y1="7" x2="14" y2="10.5"/>
+      </svg>
+    </button>
     <div class="ui-lang-wrap" id="uiLangWrap">
       <button class="ui-lang-btn" onclick="toggleUILang()" title="Change website language">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
@@ -587,14 +762,14 @@
   <p>Upload or paste any legal notice, lease, court summons, or contract. Get an instant explanation with cited laws, case references, and deadlines highlighted.</p>
   <a href="#app" class="hero-cta">Try it now ↓</a>
   <div class="hero-chips">
-    <span class="doc-chip" onclick="loadSample('eviction')">⚠️ Eviction Notice</span>
-    <span class="doc-chip" onclick="loadSample('debt')">💳 Debt Collection Letter</span>
-    <span class="doc-chip">📋 Lease Agreement</span>
-    <span class="doc-chip">⚖️ Court Summons</span>
-    <span class="doc-chip">👔 Employment Contract</span>
-    <span class="doc-chip">🛂 Immigration Notice</span>
-    <span class="doc-chip">📬 IRS / Tax Letter</span>
-    <span class="doc-chip">🚗 Traffic Citation</span>
+    <span class="doc-chip" id="chip1" onclick="loadSample('eviction')">⚠️ Eviction Notice</span>
+    <span class="doc-chip" id="chip2" onclick="loadSample('debt')">💳 Debt Collection Letter</span>
+    <span class="doc-chip" id="chip3" onclick="loadSample('lease')">📋 Lease Agreement</span>
+    <span class="doc-chip" id="chip4" onclick="loadSample('summons')">⚖️ Court Summons</span>
+    <span class="doc-chip" id="chip5" onclick="loadSample('contract')">👔 Employment Contract</span>
+    <span class="doc-chip" id="chip6" onclick="loadSample('immigration')">🛂 Immigration Notice</span>
+    <span class="doc-chip" id="chip7" onclick="loadSample('irs')">📬 IRS / Tax Letter</span>
+    <span class="doc-chip" id="chip8" onclick="loadSample('traffic')">🚗 Traffic Citation</span>
   </div>
   <div class="hero-scroll">↓</div>
 </section>
@@ -628,6 +803,115 @@
   </div>
 </section>
 
+<!-- ABOUT -->
+<section id="about" style="background:var(--bg);padding:80px 24px">
+  <div style="max-width:820px;margin:0 auto">
+    <div class="section-header" style="text-align:left;margin-bottom:44px">
+      <div class="section-label" id="aboutLabel">About</div>
+      <h2 class="section-title" id="aboutTitle">Our purpose</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px;box-shadow:var(--shadow)">
+        <div style="font-size:32px;margin-bottom:12px">⚖️</div>
+        <h3 style="font-size:17px;font-weight:800;color:var(--ink);margin-bottom:10px">The Problem</h3>
+        <p style="font-size:14px;color:var(--text);line-height:1.75">Millions of people receive legal documents — eviction notices, court summonses, debt letters — and have no idea what they mean or what rights they have. Legal jargon is a barrier that shouldn't exist.</p>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px;box-shadow:var(--shadow)">
+        <div style="font-size:32px;margin-bottom:12px">💡</div>
+        <h3 style="font-size:17px;font-weight:800;color:var(--ink);margin-bottom:10px">Our Goal</h3>
+        <p style="font-size:14px;color:var(--text);line-height:1.75">LawLight explains what any legal document says — in plain language, with specific laws cited, deadlines flagged, and free legal aid listed. We never give legal advice, but we make sure you understand exactly what you're dealing with.</p>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px;box-shadow:var(--shadow)">
+        <div style="font-size:32px;margin-bottom:12px">🌍</div>
+        <h3 style="font-size:17px;font-weight:800;color:var(--ink);margin-bottom:10px">Who It's For</h3>
+        <p style="font-size:14px;color:var(--text);line-height:1.75">Anyone who receives a legal document and feels overwhelmed — students, renters, immigrants, workers. No legal background needed. Supports 15 languages. Always free. No account required.</p>
+      </div>
+
+      <div style="background:linear-gradient(135deg,var(--amber-bg),#fff);border:1px solid rgba(245,158,11,.3);border-radius:var(--r);padding:28px;box-shadow:var(--shadow)">
+        <div style="font-size:32px;margin-bottom:12px">🛡️</div>
+        <h3 style="font-size:17px;font-weight:800;color:var(--ink);margin-bottom:10px">Private by Design</h3>
+        <p style="font-size:14px;color:var(--text);line-height:1.75">Your documents are analyzed in real-time by Claude AI (Anthropic) and never stored, logged, or shared — not even temporarily. LawLight is free, requires no account, and collects no personal data.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq">
+  <div class="section-header">
+    <div class="section-label" id="faqLabel">FAQ</div>
+    <h2 class="section-title" id="faqTitle">Common questions</h2>
+    <p class="section-sub" id="faqSub">Everything you need to know before you start.</p>
+  </div>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span id="faq1q">Is this real legal advice?</span>
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a" id="faq1a">
+        No — LawLight provides <strong>legal information</strong>, not legal advice. There's an important difference: legal information explains what the law says in general; legal advice applies the law to your specific situation and requires a licensed attorney. LawLight helps you understand what a document means and what laws apply, but it does not tell you what to do. For advice specific to your case, please consult a licensed attorney. We include links to free legal aid organizations on every result.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span id="faq2q">Is my document kept private?</span>
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a" id="faq2a">
+        Your document is sent securely to Claude AI (by Anthropic) for analysis and is <strong>never stored on our servers</strong>. We do not log, save, or share the content of any document you upload or paste. The analysis result is displayed only in your browser and discarded when you leave the page. For highly sensitive documents (e.g., immigration papers), you may want to redact personal identifiers like full names and ID numbers before uploading.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span id="faq3q">What types of documents can I analyze?</span>
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a" id="faq3a">
+        LawLight works with almost any legal document: eviction notices, debt collection letters, lease agreements, court summonses, employment contracts, immigration notices (Notice to Appear, RFEs), IRS and tax letters, traffic citations, and more. You can paste text directly or upload a PDF. PDFs with selectable text are extracted instantly; scanned or handwritten PDFs are processed with AI vision (takes ~20 seconds). You can also upload a JPEG or PNG photo of a physical document.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span id="faq4q">Which languages are supported?</span>
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a" id="faq4a">
+        LawLight supports 15 languages for both the website interface and the AI analysis output: English, Spanish, Simplified Chinese, Traditional Chinese, Vietnamese, Tagalog, Korean, Arabic, Hindi, Portuguese, Russian, French, Haitian Creole, Punjabi, and Amharic. Select your preferred output language from the dropdown in the analysis form. You can also switch the entire website interface using the language button in the top navigation bar.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span id="faq5q">How accurate are the legal citations?</span>
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a" id="faq5a">
+        LawLight uses Claude AI by Anthropic, which is highly capable of identifying relevant statutes and citing them accurately. All statute citations include a direct link to the official text (e.g., leginfo.legislature.ca.gov for California law) so you can verify them yourself. For case law, we only include citations the AI is confident about — a missing citation is always better than a fabricated one. Laws change over time, so always verify current versions before relying on them.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span id="faq6q">I got an eviction / court notice — what should I do?</span>
+        <span class="faq-chevron">▼</span>
+      </button>
+      <div class="faq-a" id="faq6a">
+        First, paste or upload the document to LawLight to understand exactly what it says and what your rights are. Pay close attention to the <strong>Key Dates &amp; Deadlines</strong> section — missing a deadline can seriously harm your case. For high-urgency notices, LawLight will show a "What to do right now" action box. Then reach out to a legal aid organization immediately. In the Bay Area: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 and <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 offer free help.
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- APP -->
 <section id="app">
   <div class="app-inner">
@@ -647,9 +931,14 @@
 
       <div class="sample-bar">
         <span class="sample-label">Load a sample:</span>
-        <button class="sample-btn" onclick="loadSample('eviction')">⚠️ Eviction Notice</button>
-        <button class="sample-btn" onclick="loadSample('debt')">💳 Debt Letter</button>
-        <button class="sample-btn" onclick="loadSample('employment')">👔 Termination Letter</button>
+        <button id="sbtn1" class="sample-btn" onclick="loadSample('eviction')">⚠️ Eviction Notice</button>
+        <button id="sbtn2" class="sample-btn" onclick="loadSample('debt')">💳 Debt Letter</button>
+        <button id="sbtn3" class="sample-btn" onclick="loadSample('lease')">📋 Lease Agreement</button>
+        <button id="sbtn4" class="sample-btn" onclick="loadSample('summons')">⚖️ Court Summons</button>
+        <button id="sbtn5" class="sample-btn" onclick="loadSample('contract')">👔 Employment Contract</button>
+        <button id="sbtn6" class="sample-btn" onclick="loadSample('immigration')">🛂 Immigration Notice</button>
+        <button id="sbtn7" class="sample-btn" onclick="loadSample('irs')">📬 IRS Letter</button>
+        <button id="sbtn8" class="sample-btn" onclick="loadSample('traffic')">🚗 Traffic Citation</button>
       </div>
 
       <div class="persona-row">
@@ -682,10 +971,11 @@
              onclick="document.getElementById('pdfInput').click()"
              ondragover="onDragOver(event)" ondragleave="onDragLeave()" ondrop="onDrop(event)">
           <div class="dz-icon">📎</div>
-          <p class="dz-text"><strong>Click to upload</strong> or drag a PDF here</p>
-          <p class="dz-note">Works with typed/digital PDFs only. Scanned or handwritten documents cannot be read — take a photo and transcribe, or copy-paste the text instead.</p>
+          <p class="dz-text"><strong>Click to upload</strong> or drag and drop here</p>
+          <p class="dz-note">PDF, JPEG, or PNG · Typed, scanned, or handwritten documents all supported</p>
           <div class="pdf-status" id="pdfStatus"></div>
-          <input type="file" id="pdfInput" accept=".pdf" onchange="onPdfFile(this.files[0])">
+          <p class="privacy-notice">🔒 Your document is processed by Claude AI and never stored on our servers.</p>
+          <input type="file" id="pdfInput" accept=".pdf,.jpg,.jpeg,.png,.webp" onchange="onFileUpload(this.files[0])">
         </div>
       </div>
 
@@ -734,7 +1024,14 @@
     <!-- Results -->
     <div class="results" id="results">
 
+      <div class="result-actions">
+        <button class="btn-result-action" onclick="window.print()">🖨️ Print results</button>
+        <button class="btn-result-action" id="copySummaryBtn" onclick="copySummary()">📋 Copy summary</button>
+      </div>
+
       <div class="result-section" id="summarySection"></div>
+
+      <div class="result-section" id="actionSection" style="display:none"></div>
 
       <div class="result-section" id="datesSection" style="display:none">
         <div class="dates-wrap">
@@ -778,46 +1075,46 @@
 <!-- FEEDBACK -->
 <section id="feedback-section" style="background:#f8f7f4;padding:64px 24px">
   <div style="max-width:560px;margin:0 auto">
-    <div class="section-label" style="text-align:center">Feedback</div>
-    <h2 class="section-title" style="text-align:center;font-size:clamp(22px,3vw,30px);margin-bottom:8px">Have a question or suggestion?</h2>
-    <p style="text-align:center;color:var(--muted);margin-bottom:32px;font-size:15px">We read every message. Your feedback helps improve LawLight.</p>
+    <div class="section-label" id="fb-section-label" style="text-align:center">Feedback</div>
+    <h2 class="section-title" id="fb-title" style="text-align:center;font-size:clamp(22px,3vw,30px);margin-bottom:8px">Have a question or suggestion?</h2>
+    <p id="fb-sub" style="text-align:center;color:var(--muted);margin-bottom:32px;font-size:15px">We read every message. Your feedback helps improve LawLight.</p>
 
     <div style="background:#fff;border-radius:var(--r);padding:28px;box-shadow:var(--shadow)">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
         <div>
-          <label style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px">Your name (optional)</label>
+          <label id="fb-name-label" style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px">Your name (optional)</label>
           <input id="fb-name" type="text" placeholder="Anonymous"
             style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit"
             onfocus="this.style.borderColor='var(--amber)'" onblur="this.style.borderColor='var(--border)'">
         </div>
         <div>
-          <label style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px">Category</label>
+          <label id="fb-cat-label" style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px">Category</label>
           <select id="fb-category"
             style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;outline:none;background:#fff;font-family:inherit;cursor:pointer">
-            <option value="question">Question</option>
-            <option value="suggestion">Suggestion</option>
-            <option value="complaint">Complaint</option>
-            <option value="other">Other</option>
+            <option id="fb-opt-q" value="question">Question</option>
+            <option id="fb-opt-s" value="suggestion">Suggestion</option>
+            <option id="fb-opt-c" value="complaint">Complaint</option>
+            <option id="fb-opt-o" value="other">Other</option>
           </select>
         </div>
       </div>
 
       <div style="margin-bottom:14px">
-        <label style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px">Email (optional — if you'd like a reply)</label>
+        <label id="fb-email-label" style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px">Email (optional — if you'd like a reply)</label>
         <input id="fb-email" type="email" placeholder="your@email.com"
           style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;outline:none;transition:border-color .2s;font-family:inherit"
           onfocus="this.style.borderColor='var(--amber)'" onblur="this.style.borderColor='var(--border)'">
       </div>
 
       <div style="margin-bottom:18px">
-        <label style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px">Message</label>
+        <label id="fb-msg-label" style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px">Message</label>
         <textarea id="fb-message" rows="4" placeholder="Tell us what's on your mind…"
           style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;resize:vertical;outline:none;transition:border-color .2s;font-family:inherit"
           onfocus="this.style.borderColor='var(--amber)'" onblur="this.style.borderColor='var(--border)'"></textarea>
       </div>
 
       <div style="display:flex;align-items:center;gap:14px">
-        <button onclick="submitFeedback()"
+        <button id="fb-submit" onclick="submitFeedback()"
           style="background:var(--ink);color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s"
           onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
           Send Feedback
@@ -895,7 +1192,137 @@ This letter serves as formal notification that your employment with Horizon Tech
 You will receive your final paycheck, including all accrued and unused vacation pay (12 days / $1,840), no later than the next regular payday. You are bound by the Non-Disclosure Agreement signed on January 5, 2024 for a period of 2 years following separation. Your health insurance coverage will continue through May 31, 2026. COBRA continuation information will be mailed to your address on file within 14 days.
 
 By: Jennifer Park, VP Human Resources
-Horizon Tech Solutions, Inc.`
+Horizon Tech Solutions, Inc.`,
+
+  lease: `RESIDENTIAL LEASE AGREEMENT
+
+This Lease Agreement is entered into on June 1, 2026, between Oakland Residential Properties LLC ("Landlord") and [Tenant Name] ("Tenant").
+
+PREMISES: 1422 Broadway Ave, Apt 7, Oakland, CA 94612
+LEASE TERM: June 1, 2026 to May 31, 2027 (12 months)
+MONTHLY RENT: $2,150.00, due on the 1st of each month. A late fee of $75 will be assessed if rent is not received by the 5th.
+SECURITY DEPOSIT: $4,300.00 (two months' rent). To be returned within 21 days of vacating, less deductions for damage beyond normal wear and tear.
+
+UTILITIES: Tenant is responsible for electricity, gas, and internet. Landlord pays water and trash.
+NO-PET POLICY: No animals permitted without prior written consent.
+ENTRY: Landlord shall provide 24-hour written notice before entering, except in emergencies.
+TERMINATION: Tenant must provide 30 days written notice before vacating at lease end.
+SUBLETTING: Tenant may not sublet or assign this lease without Landlord's prior written consent.
+ALTERATIONS: No alterations, painting, or improvements without prior written consent.
+
+Landlord: Oakland Residential Properties LLC
+Contact: (510) 555-0304`,
+
+  summons: `SUMMONS — CIVIL CASE
+Case Number: RG-2026-109847
+Court: Alameda County Superior Court
+
+NOTICE TO DEFENDANT: [Your Name], 456 Shattuck Ave, Berkeley, CA 94704
+
+YOU ARE BEING SUED BY PLAINTIFF: Bayview Financial Services, Inc.
+
+You have 30 CALENDAR DAYS after this summons and legal papers are served on you to file a written response at this court and have a copy served on the plaintiff. A letter or phone call will not protect you; your written response must be in proper legal form if you want the court to hear your case.
+
+If you do not respond within 30 days, the court may decide against you without your being heard, and you could lose money, property, or other rights important to you.
+
+Date of service: May 28, 2026
+Response deadline: June 27, 2026
+Clerk of Court: Linda Torres
+Court Address: 1225 Fallon Street, Oakland, CA 94612
+(510) 891-6000
+
+You may wish to call an attorney right away. If you do not know an attorney, you may call an attorney referral service.`,
+
+  contract: `EMPLOYMENT AGREEMENT
+
+This Employment Agreement is entered into as of June 1, 2026, between Horizon Tech Solutions, Inc. ("Company") and Alex Rivera ("Employee").
+
+POSITION: Software Engineer, full-time, reporting to the VP of Engineering.
+START DATE: June 10, 2026
+COMPENSATION: $105,000 per year, paid bi-weekly. Eligible for annual performance review.
+BENEFITS: Health insurance (Company covers 80% of premium), dental, vision, 15 days PTO per year, 401(k) with 4% company match.
+
+AT-WILL EMPLOYMENT: Either party may terminate this agreement at any time, with or without cause, upon 2 weeks written notice. The Company may terminate immediately for cause.
+
+NON-COMPETE: For 12 months following separation, Employee shall not work for any direct competitor within Alameda County, California, without Company's prior written consent.
+
+NON-DISCLOSURE: Employee agrees not to disclose any Company trade secrets or confidential business information during or after employment, with no time limitation.
+
+INTELLECTUAL PROPERTY: All work product, inventions, and code created during employment — even on personal time if related to Company business — is the sole property of the Company.
+
+DISPUTE RESOLUTION: Any disputes arising from this agreement shall be resolved exclusively by binding arbitration under JAMS rules in Alameda County, California. Employee waives the right to a jury trial.
+
+Signed: Jennifer Park, VP Human Resources, Horizon Tech Solutions, Inc.
+Date: May 28, 2026`,
+
+  immigration: `DEPARTMENT OF HOMELAND SECURITY
+U.S. Immigration and Customs Enforcement
+
+NOTICE TO APPEAR (Pursuant to INA § 239(a))
+IN REMOVAL PROCEEDINGS UNDER SECTION 240 OF THE IMMIGRATION AND NATIONALITY ACT
+
+In the Matter of: [Respondent Name], A-Number: 123-456-789
+
+You are alleged to be subject to removal from the United States pursuant to:
+Section 212(a)(6)(A)(i) of the INA — Present in the United States without admission or parole.
+
+YOU ARE ORDERED to appear before an Immigration Judge at:
+United States Immigration Court
+1301 Clay Street, Suite 1400N, Oakland, CA 94612
+Date: July 15, 2026 at 9:00 AM
+
+Failure to appear at your hearing will result in a removal order being entered against you in your absence.
+
+You have the right to be represented by an attorney at no cost to the government. A list of free legal services providers is attached.
+
+You are required to provide a current address and notify the court of any change of address within 5 days of moving (Form EOIR-33).
+
+Issued by: Department of Homeland Security
+Date of Issue: May 28, 2026`,
+
+  irs: `DEPARTMENT OF THE TREASURY — INTERNAL REVENUE SERVICE
+
+Notice CP2000 | Tax Year: 2024
+Notice Date: May 15, 2026
+Proposed Amount Due: $1,240.00
+
+PROPOSED CHANGES TO YOUR 2024 FORM 1040
+
+We have information that doesn't match what you reported on your 2024 tax return. Income of $8,200 reported by a payer on Form 1099-NEC was not included on your return.
+
+WHAT YOU NEED TO DO — Respond by June 26, 2026:
+• If you AGREE: Sign and return the enclosed Response form with payment.
+• If you DISAGREE: Send us documentation (receipts, corrected 1099, etc.) showing why you believe your return was correct.
+• If you need more time: Call 1-800-829-1040 to request an extension before the deadline.
+
+IMPORTANT: If we do not hear from you by June 26, 2026, we will send a Statutory Notice of Deficiency. At that point you will have 90 days to petition the Tax Court.
+
+You have the right to appeal this proposed change to the IRS Appeals Office.
+For assistance: IRS.gov/cp2000 | 1-800-829-1040 (Mon–Fri, 7 AM–7 PM)`,
+
+  traffic: `CALIFORNIA NOTICE TO APPEAR — TRAFFIC VIOLATION
+Citation Number: CA-2026-5539821
+Date of Violation: May 22, 2026, 9:15 AM
+Location: Market St & 5th Ave, San Francisco, CA 94102
+
+VIOLATIONS CHARGED:
+1. Vehicle Code § 22350 — Unsafe Speed (Basic Speed Law)
+   Cited for 52 mph in a 35 mph zone.
+   Estimated total fine (with penalty assessments): $490
+
+2. Vehicle Code § 27315 — Seatbelt Violation (front passenger)
+   Estimated total fine (with penalty assessments): $162
+
+YOU MUST RESPOND BY June 22, 2026 by choosing one of:
+□ Pay the bail (fine) amount online at sfgov.org/courts — counts as a guilty plea
+□ Request a court date to contest the citation
+□ Request traffic school (if eligible — keeps points off your insurance record)
+
+Failure to respond by June 22, 2026 may result in a hold on your driver's license and additional $300 civil assessment fee.
+
+Citing Officer: M. Rodriguez, Badge #4421
+Court: San Francisco Superior Court — Traffic Division
+850 Bryant Street, San Francisco, CA 94103 | (415) 551-5800`
 };
 
 // ── State ────────────────────────────────────────────────────────────────────
@@ -932,6 +1359,33 @@ const TRANSLATIONS = {
     btnNew:'← Analyze Another Document', loadingMsg:'Reading your document…',
     loadingSub:'Identifying laws, cases, and deadlines',
     placeholder:'Paste the text of your legal document here…',
+    chip1:'⚠️ Eviction Notice', chip2:'💳 Debt Collection Letter', chip3:'📋 Lease Agreement',
+    chip4:'⚖️ Court Summons', chip5:'👔 Employment Contract', chip6:'🛂 Immigration Notice',
+    chip7:'📬 IRS / Tax Letter', chip8:'🚗 Traffic Citation',
+    sample1:'⚠️ Eviction Notice', sample2:'💳 Debt Letter', sample3:'📋 Lease Agreement',
+    sample4:'⚖️ Court Summons', sample5:'👔 Employment Contract', sample6:'🛂 Immigration Notice',
+    sample7:'📬 IRS Letter', sample8:'🚗 Traffic Citation',
+    navAbout:'About', navFaq:'FAQ', aboutLabel:'About', aboutTitle:'Our purpose',
+    fbLabel:'Feedback', fbTitle:'Have a question or suggestion?',
+    fbSub:'We read every message. Your feedback helps improve LawLight.',
+    fbNameLabel:'Your name (optional)', fbCatLabel:'Category',
+    fbEmailLabel:"Email (optional — if you'd like a reply)",
+    fbMsgLabel:'Message', fbSubmit:'Send Feedback',
+    fbOptQ:'Question', fbOptS:'Suggestion', fbOptC:'Complaint', fbOptO:'Other',
+    fbNamePh:'Anonymous', fbMsgPh:"Tell us what's on your mind…",
+    faqLabel:'FAQ', faqTitle:'Common questions', faqSub:'Everything you need to know before you start.',
+    faq1q:'Is this real legal advice?',
+    faq1a:'No — LawLight provides <strong>legal information</strong>, not legal advice. There\'s an important difference: legal information explains what the law says in general; legal advice applies the law to your specific situation and requires a licensed attorney. LawLight helps you understand what a document means and what laws apply, but it does not tell you what to do. For advice specific to your case, please consult a licensed attorney. We include links to free legal aid organizations on every result.',
+    faq2q:'Is my document kept private?',
+    faq2a:'Your document is sent securely to Claude AI (by Anthropic) for analysis and is <strong>never stored on our servers</strong>. We do not log, save, or share the content of any document you upload or paste. The analysis result is displayed only in your browser and discarded when you leave the page. For highly sensitive documents (e.g., immigration papers), you may want to redact personal identifiers like full names and ID numbers before uploading.',
+    faq3q:'What types of documents can I analyze?',
+    faq3a:'LawLight works with almost any legal document: eviction notices, debt collection letters, lease agreements, court summonses, employment contracts, immigration notices (Notice to Appear, RFEs), IRS and tax letters, traffic citations, and more. You can paste text directly or upload a PDF. PDFs with selectable text are extracted instantly; scanned or handwritten PDFs are processed with AI vision (takes ~20 seconds). You can also upload a JPEG or PNG photo of a physical document.',
+    faq4q:'Which languages are supported?',
+    faq4a:'LawLight supports 15 languages for both the website interface and the AI analysis output: English, Spanish, Simplified Chinese, Traditional Chinese, Vietnamese, Tagalog, Korean, Arabic, Hindi, Portuguese, Russian, French, Haitian Creole, Punjabi, and Amharic. Select your preferred output language from the dropdown in the analysis form. You can also switch the entire website interface using the language button in the top navigation bar.',
+    faq5q:'How accurate are the legal citations?',
+    faq5a:'LawLight uses Claude AI by Anthropic, which is highly capable of identifying relevant statutes and citing them accurately. All statute citations include a direct link to the official text (e.g., leginfo.legislature.ca.gov for California law) so you can verify them yourself. For case law, we only include citations the AI is confident about — a missing citation is always better than a fabricated one. Laws change over time, so always verify current versions before relying on them.',
+    faq6q:'I got an eviction / court notice — what should I do?',
+    faq6a:'First, paste or upload the document to LawLight to understand exactly what it says and what your rights are. Pay close attention to the <strong>Key Dates &amp; Deadlines</strong> section — missing a deadline can seriously harm your case. For high-urgency notices, LawLight will show a “What to do right now” action box. Then reach out to a legal aid organization immediately. In the Bay Area: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 and <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 offer free help.',
   },
   es: {
     navBadge:'Solo información legal', heroBadge:'✦ Gratis · Sin cuenta · 15 idiomas',
@@ -954,6 +1408,33 @@ const TRANSLATIONS = {
     btnNew:'← Analizar otro documento', loadingMsg:'Leyendo tu documento…',
     loadingSub:'Identificando leyes, casos y fechas límite',
     placeholder:'Pega el texto de tu documento legal aquí…',
+    chip1:'⚠️ Aviso de Desalojo', chip2:'💳 Carta de Cobro de Deuda', chip3:'📋 Contrato de Arrendamiento',
+    chip4:'⚖️ Citación Judicial', chip5:'👔 Contrato de Trabajo', chip6:'🛂 Aviso de Inmigración',
+    chip7:'📬 Carta del IRS / Impuestos', chip8:'🚗 Multa de Tráfico',
+    sample1:'⚠️ Aviso de Desalojo', sample2:'💳 Carta de Deuda', sample3:'📋 Contrato de Arrendamiento',
+    sample4:'⚖️ Citación Judicial', sample5:'👔 Contrato de Trabajo', sample6:'🛂 Aviso de Inmigración',
+    sample7:'📬 Carta del IRS', sample8:'🚗 Citación de Tráfico',
+    navAbout:'Acerca de', navFaq:'Preguntas', aboutLabel:'Acerca de', aboutTitle:'Nuestro propósito',
+    fbLabel:'Comentarios', fbTitle:'¿Tienes una pregunta o sugerencia?',
+    fbSub:'Leemos cada mensaje. Tu opinión ayuda a mejorar LawLight.',
+    fbNameLabel:'Tu nombre (opcional)', fbCatLabel:'Categoría',
+    fbEmailLabel:'Correo electrónico (opcional — si deseas respuesta)',
+    fbMsgLabel:'Mensaje', fbSubmit:'Enviar comentario',
+    fbOptQ:'Pregunta', fbOptS:'Sugerencia', fbOptC:'Queja', fbOptO:'Otro',
+    fbNamePh:'Anónimo', fbMsgPh:'Cuéntanos lo que piensas…',
+    faqLabel:'FAQ', faqTitle:'Preguntas frecuentes', faqSub:'Todo lo que necesitas saber antes de comenzar.',
+    faq1q:'¿Esto es asesoramiento legal real?',
+    faq1a:'No — LawLight proporciona <strong>información legal</strong>, no asesoramiento legal. Hay una diferencia importante: la información legal explica lo que dice la ley en general; el asesoramiento legal aplica la ley a su situación específica y requiere un abogado autorizado. LawLight le ayuda a entender qué significa un documento y qué leyes aplican, pero no le dice qué hacer. Para asesoramiento específico a su caso, consulte a un abogado autorizado. Incluimos enlaces a organizaciones de ayuda legal gratuita en cada resultado.',
+    faq2q:'¿Mi documento se mantiene privado?',
+    faq2a:'Su documento se envía de forma segura a Claude AI (de Anthropic) para su análisis y <strong>nunca se almacena en nuestros servidores</strong>. No registramos, guardamos ni compartimos el contenido de ningún documento que cargue o pegue. El resultado del análisis se muestra solo en su navegador y se descarta cuando abandona la página. Para documentos muy sensibles (por ejemplo, papeles de inmigración), es posible que desee eliminar identificadores personales como nombres completos y números de identificación antes de cargar.',
+    faq3q:'¿Qué tipos de documentos puedo analizar?',
+    faq3a:'LawLight funciona con casi cualquier documento legal: avisos de desalojo, cartas de cobro de deudas, contratos de arrendamiento, citaciones judiciales, contratos de trabajo, avisos de inmigración (Notice to Appear, RFEs), cartas del IRS e impuestos, citaciones de tráfico y más. Puede pegar texto directamente o cargar un PDF. Los PDFs con texto seleccionable se extraen instantáneamente; los PDFs escaneados o escritos a mano se procesan con visión de IA (~20 segundos). También puede cargar una foto JPEG o PNG de un documento físico.',
+    faq4q:'¿Qué idiomas son compatibles?',
+    faq4a:'LawLight admite 15 idiomas tanto para la interfaz del sitio web como para la salida del análisis de IA: inglés, español, chino simplificado, chino tradicional, vietnamita, tagalo, coreano, árabe, hindi, portugués, ruso, francés, criollo haitiano, punjabi y amhárico. Seleccione su idioma de salida preferido en el menú desplegable del formulario de análisis. También puede cambiar toda la interfaz del sitio web usando el botón de idioma en la barra de navegación superior.',
+    faq5q:'¿Qué tan precisas son las citas legales?',
+    faq5a:'LawLight utiliza Claude AI de Anthropic, que tiene una alta capacidad para identificar estatutos relevantes y citarlos con precisión. Todas las citas de estatutos incluyen un enlace directo al texto oficial (p. ej., leginfo.legislature.ca.gov para la ley de California) para que pueda verificarlos usted mismo. Para la jurisprudencia, solo incluimos citas de las que la IA está segura — una cita que falta siempre es mejor que una fabricada. Las leyes cambian con el tiempo, así que siempre verifique las versiones actuales antes de confiar en ellas.',
+    faq6q:'Recibí un aviso de desalojo / tribunal — ¿qué debo hacer?',
+    faq6a:'Primero, pegue o cargue el documento en LawLight para entender exactamente qué dice y cuáles son sus derechos. Preste mucha atención a la sección de <strong>Fechas Clave y Plazos</strong> — perder un plazo puede dañar seriamente su caso. Para avisos de alta urgencia, LawLight mostrará un cuadro de acción "Qué hacer ahora mismo". Luego comuníquese con una organización de ayuda legal de inmediato. En el Área de la Bahía: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 y <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ofrecen ayuda gratuita.',
   },
   zh: {
     navBadge:'仅供法律信息', heroBadge:'✦ 免费 · 无需账户 · 15种语言',
@@ -976,6 +1457,33 @@ const TRANSLATIONS = {
     btnNew:'← 分析另一份文件', loadingMsg:'正在阅读您的文件…',
     loadingSub:'识别法律、案例和截止日期',
     placeholder:'在此粘贴法律文件的文本…',
+    chip1:'⚠️ 驱逐通知', chip2:'💳 债务催收信', chip3:'📋 租赁协议',
+    chip4:'⚖️ 法院传票', chip5:'👔 劳动合同', chip6:'🛂 移民通知',
+    chip7:'📬 IRS / 税务信函', chip8:'🚗 交通罚单',
+    sample1:'⚠️ 驱逐通知', sample2:'💳 债务信', sample3:'📋 租赁协议',
+    sample4:'⚖️ 法院传票', sample5:'👔 劳动合同', sample6:'🛂 移民通知',
+    sample7:'📬 IRS 信函', sample8:'🚗 交通违章',
+    navAbout:'关于', navFaq:'常见问题', aboutLabel:'关于', aboutTitle:'我们的目标',
+    fbLabel:'反馈', fbTitle:'有问题或建议？',
+    fbSub:'我们阅读每一条留言。您的反馈有助于改进 LawLight。',
+    fbNameLabel:'您的姓名（可选）', fbCatLabel:'类别',
+    fbEmailLabel:'电子邮件（可选 — 如需回复）',
+    fbMsgLabel:'留言', fbSubmit:'发送反馈',
+    fbOptQ:'问题', fbOptS:'建议', fbOptC:'投诉', fbOptO:'其他',
+    fbNamePh:'匿名', fbMsgPh:'告诉我们您的想法…',
+    faqLabel:'常见问题', faqTitle:'常见问题解答', faqSub:'开始使用前您需要了解的一切。',
+    faq1q:'这是真正的法律建议吗？',
+    faq1a:'不 — LawLight 提供<strong>法律信息</strong>，而非法律建议。两者有重要区别：法律信息解释法律的一般规定；法律建议将法律应用于您的具体情况，需要持照律师。LawLight 帮助您理解文件含义和适用法律，但不告诉您该怎么做。如需针对您具体情况的建议，请咨询持照律师。每份分析结果都包含免费法律援助机构的链接。',
+    faq2q:'我的文件会保持私密吗？',
+    faq2a:'您的文件通过安全方式发送给 Claude AI（由 Anthropic 提供）进行分析，<strong>从不存储在我们的服务器上</strong>。我们不记录、保存或分享您上传或粘贴的任何文件内容。分析结果仅显示在您的浏览器中，当您离开页面时即被丢弃。对于高度敏感的文件（例如移民文件），您可能需要在上传前隐去全名和身份证号等个人信息。',
+    faq3q:'我可以分析哪些类型的文件？',
+    faq3a:'LawLight 几乎可以处理任何法律文件：驱逐通知、债务催收函、租赁协议、法院传票、劳动合同、移民通知（出庭通知、RFE）、IRS 及税务信函、交通违章通知等。您可以直接粘贴文本或上传 PDF。可选取文字的 PDF 可即时提取；扫描或手写的 PDF 通过 AI 视觉处理（约需 20 秒）。也可上传实体文件的 JPEG 或 PNG 照片。',
+    faq4q:'支持哪些语言？',
+    faq4a:'LawLight 在网站界面和 AI 分析输出方面均支持 15 种语言：英语、西班牙语、简体中文、繁体中文、越南语、他加禄语、韩语、阿拉伯语、印地语、葡萄牙语、俄语、法语、海地克里奥尔语、旁遮普语和阿姆哈拉语。在分析表单的下拉菜单中选择您偏好的输出语言，也可点击顶部导航栏的语言按钮切换整个网站界面。',
+    faq5q:'法律引用的准确性如何？',
+    faq5a:'LawLight 使用 Anthropic 的 Claude AI，能够高准确度地识别相关法规并进行引用。所有法规引用均包含指向官方文本的直接链接（例如加州法律为 leginfo.legislature.ca.gov），供您自行核实。对于判例法，我们仅收录 AI 有把握的引用——引用缺失永远优于引用错误。法律会随时间变化，请在依赖任何引用前确认当前有效版本。',
+    faq6q:'我收到了驱逐通知 / 法院通知 — 应该怎么办？',
+    faq6a:'首先，将文件粘贴或上传至 LawLight，了解其确切内容及您的权利。请密切关注<strong>关键日期和截止日期</strong>部分——错过截止日期可能严重损害您的权益。对于高紧急度通知，LawLight 将显示"立即采取行动"提示框。然后立即联系法律援助机构。在湾区：<a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">东湾社区法律中心</a> (510) 548-4040 和 <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">湾区法律援助</a> (415) 982-1300 提供免费帮助。',
   },
   'zh-TW': {
     navBadge:'僅供法律資訊', heroBadge:'✦ 免費 · 無需帳戶 · 15種語言',
@@ -998,6 +1506,33 @@ const TRANSLATIONS = {
     btnNew:'← 分析另一份文件', loadingMsg:'正在閱讀您的文件…',
     loadingSub:'識別法律、案例和截止日期',
     placeholder:'在此貼上法律文件的文本…',
+    chip1:'⚠️ 驅逐通知', chip2:'💳 催收債務信', chip3:'📋 租賃協議',
+    chip4:'⚖️ 法院傳票', chip5:'👔 勞動契約', chip6:'🛂 移民通知',
+    chip7:'📬 IRS / 稅務信函', chip8:'🚗 交通罰單',
+    sample1:'⚠️ 驅逐通知', sample2:'💳 催收信', sample3:'📋 租賃協議',
+    sample4:'⚖️ 法院傳票', sample5:'👔 勞動合約', sample6:'🛂 移民通知',
+    sample7:'📬 IRS 信函', sample8:'🚗 交通違規',
+    navAbout:'關於', navFaq:'常見問題', aboutLabel:'關於', aboutTitle:'我們的目標',
+    fbLabel:'回饋', fbTitle:'有問題或建議？',
+    fbSub:'我們閱讀每一條訊息。您的回饋有助於改進 LawLight。',
+    fbNameLabel:'您的姓名（選填）', fbCatLabel:'類別',
+    fbEmailLabel:'電子郵件（選填 — 如需回覆）',
+    fbMsgLabel:'訊息', fbSubmit:'發送回饋',
+    fbOptQ:'問題', fbOptS:'建議', fbOptC:'投訴', fbOptO:'其他',
+    fbNamePh:'匿名', fbMsgPh:'告訴我們您的想法…',
+    faqLabel:'常見問題', faqTitle:'常見問題解答', faqSub:'開始使用前您需要了解的一切。',
+    faq1q:'這是真正的法律建議嗎？',
+    faq1a:'不 — LawLight 提供<strong>法律資訊</strong>，而非法律建議。兩者有重要區別：法律資訊解釋法律的一般規定；法律建議將法律應用於您的具體情況，需要持照律師。LawLight 幫助您理解文件含義和適用法律，但不告訴您該怎麼做。如需針對您具體情況的建議，請諮詢持照律師。每份分析結果都包含免費法律援助機構的連結。',
+    faq2q:'我的文件會保持私密嗎？',
+    faq2a:'您的文件透過安全方式發送給 Claude AI（由 Anthropic 提供）進行分析，<strong>從不儲存在我們的伺服器上</strong>。我們不記錄、儲存或分享您上傳或貼上的任何文件內容。分析結果僅顯示在您的瀏覽器中，當您離開頁面時即被刪除。對於高度敏感的文件（例如移民文件），您可能需要在上傳前隱去全名和身份證號等個人資訊。',
+    faq3q:'我可以分析哪些類型的文件？',
+    faq3a:'LawLight 幾乎可以處理任何法律文件：驅逐通知、債務催收函、租賃協議、法院傳票、勞動合約、移民通知（出庭通知、RFE）、IRS 及稅務信函、交通違規通知等。您可以直接貼上文字或上傳 PDF。可選取文字的 PDF 可即時提取；掃描或手寫的 PDF 透過 AI 視覺處理（約需 20 秒）。也可上傳實體文件的 JPEG 或 PNG 照片。',
+    faq4q:'支援哪些語言？',
+    faq4a:'LawLight 在網站介面和 AI 分析輸出方面均支援 15 種語言：英語、西班牙語、簡體中文、繁體中文、越南語、他加祿語、韓語、阿拉伯語、印地語、葡萄牙語、俄語、法語、海地克里奧爾語、旁遮普語和阿姆哈拉語。在分析表單的下拉選單中選擇您偏好的輸出語言，也可點選頂部導覽列的語言按鈕切換整個網站介面。',
+    faq5q:'法律引用的準確性如何？',
+    faq5a:'LawLight 使用 Anthropic 的 Claude AI，能夠高準確度地識別相關法規並進行引用。所有法規引用均包含指向官方文字的直接連結（例如加州法律為 leginfo.legislature.ca.gov），供您自行核實。對於判例法，我們僅收錄 AI 有把握的引用——引用缺失永遠優於引用錯誤。法律會隨時間變化，請在依賴任何引用前確認當前有效版本。',
+    faq6q:'我收到了驅逐通知 / 法院通知 — 應該怎麼辦？',
+    faq6a:'首先，將文件貼上或上傳至 LawLight，了解其確切內容及您的權利。請密切關注<strong>關鍵日期和截止日期</strong>部分——錯過截止日期可能嚴重損害您的權益。對於高緊急度通知，LawLight 將顯示「立即採取行動」提示框。然後立即聯繫法律援助機構。在灣區：<a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">東灣社區法律中心</a> (510) 548-4040 和 <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">灣區法律援助</a> (415) 982-1300 提供免費幫助。',
   },
   vi: {
     navBadge:'Chỉ thông tin pháp lý', heroBadge:'✦ Miễn phí · Không cần tài khoản · 15 ngôn ngữ',
@@ -1020,6 +1555,33 @@ const TRANSLATIONS = {
     btnNew:'← Phân tích tài liệu khác', loadingMsg:'Đang đọc tài liệu của bạn…',
     loadingSub:'Xác định luật, vụ án và thời hạn',
     placeholder:'Dán văn bản tài liệu pháp lý của bạn vào đây…',
+    chip1:'⚠️ Thông báo Trục xuất', chip2:'💳 Thư Thu hồi Nợ', chip3:'📋 Hợp đồng Thuê nhà',
+    chip4:'⚖️ Trát đòi Hầu tòa', chip5:'👔 Hợp đồng Lao động', chip6:'🛂 Thông báo Nhập cư',
+    chip7:'📬 Thư IRS / Thuế', chip8:'🚗 Phiếu Phạt Giao thông',
+    sample1:'⚠️ Thông báo Trục xuất', sample2:'💳 Thư Thu nợ', sample3:'📋 Hợp đồng Thuê nhà',
+    sample4:'⚖️ Trát Hầu tòa', sample5:'👔 Hợp đồng Lao động', sample6:'🛂 Thông báo Nhập cư',
+    sample7:'📬 Thư IRS', sample8:'🚗 Giấy Phạt GT',
+    navAbout:'Giới thiệu', navFaq:'Câu hỏi', aboutLabel:'Giới thiệu', aboutTitle:'Mục đích của chúng tôi',
+    fbLabel:'Phản hồi', fbTitle:'Bạn có câu hỏi hoặc gợi ý?',
+    fbSub:'Chúng tôi đọc từng tin nhắn. Phản hồi của bạn giúp cải thiện LawLight.',
+    fbNameLabel:'Tên của bạn (tùy chọn)', fbCatLabel:'Danh mục',
+    fbEmailLabel:'Email (tùy chọn — nếu muốn nhận phản hồi)',
+    fbMsgLabel:'Tin nhắn', fbSubmit:'Gửi phản hồi',
+    fbOptQ:'Câu hỏi', fbOptS:'Góp ý', fbOptC:'Khiếu nại', fbOptO:'Khác',
+    fbNamePh:'Ẩn danh', fbMsgPh:'Cho chúng tôi biết suy nghĩ của bạn…',
+    faqLabel:'Câu hỏi', faqTitle:'Câu hỏi thường gặp', faqSub:'Mọi thứ bạn cần biết trước khi bắt đầu.',
+    faq1q:'Đây có phải là tư vấn pháp lý thực sự không?',
+    faq1a:'Không — LawLight cung cấp <strong>thông tin pháp lý</strong>, không phải tư vấn pháp lý. Có sự khác biệt quan trọng: thông tin pháp lý giải thích những gì luật nói một cách chung; tư vấn pháp lý áp dụng luật vào tình huống cụ thể của bạn và đòi hỏi luật sư có giấy phép. LawLight giúp bạn hiểu tài liệu có nghĩa gì và luật nào áp dụng, nhưng không nói cho bạn biết phải làm gì. Để được tư vấn cho trường hợp cụ thể, hãy tham khảo ý kiến luật sư có giấy phép. Chúng tôi bao gồm các liên kết đến các tổ chức trợ giúp pháp lý miễn phí trong mỗi kết quả.',
+    faq2q:'Tài liệu của tôi có được bảo mật không?',
+    faq2a:'Tài liệu của bạn được gửi an toàn đến Claude AI (của Anthropic) để phân tích và <strong>không bao giờ được lưu trữ trên máy chủ của chúng tôi</strong>. Chúng tôi không ghi lại, lưu hoặc chia sẻ nội dung của bất kỳ tài liệu nào bạn tải lên hoặc dán. Kết quả phân tích chỉ được hiển thị trong trình duyệt và bị xóa khi bạn rời khỏi trang. Đối với các tài liệu nhạy cảm cao (ví dụ: giấy tờ nhập cư), bạn nên xóa thông tin nhận dạng cá nhân trước khi tải lên.',
+    faq3q:'Tôi có thể phân tích những loại tài liệu nào?',
+    faq3a:'LawLight hoạt động với hầu hết mọi tài liệu pháp lý: thông báo đuổi nhà, thư đòi nợ, hợp đồng thuê nhà, trát hầu tòa, hợp đồng lao động, thông báo nhập cư (Notice to Appear, RFE), thư IRS và thuế, giấy phạt giao thông và nhiều hơn. Bạn có thể dán văn bản trực tiếp hoặc tải lên PDF. PDF có văn bản có thể chọn được trích xuất ngay lập tức; PDF được quét hoặc viết tay được xử lý bằng thị giác AI (~20 giây). Bạn cũng có thể tải lên ảnh JPEG hoặc PNG của tài liệu vật lý.',
+    faq4q:'Những ngôn ngữ nào được hỗ trợ?',
+    faq4a:'LawLight hỗ trợ 15 ngôn ngữ cho cả giao diện trang web và đầu ra phân tích AI: tiếng Anh, Tây Ban Nha, tiếng Trung giản thể, tiếng Trung phồn thể, tiếng Việt, tiếng Tagalog, tiếng Hàn, tiếng Ả Rập, tiếng Hindi, tiếng Bồ Đào Nha, tiếng Nga, tiếng Pháp, tiếng Creole Haiti, tiếng Punjab và tiếng Amharic. Chọn ngôn ngữ đầu ra ưa thích từ menu thả xuống trong biểu mẫu phân tích. Bạn cũng có thể chuyển đổi toàn bộ giao diện trang web bằng nút ngôn ngữ trong thanh điều hướng trên cùng.',
+    faq5q:'Các trích dẫn pháp lý chính xác đến mức nào?',
+    faq5a:'LawLight sử dụng Claude AI của Anthropic, có khả năng cao trong việc xác định các đạo luật liên quan và trích dẫn chúng chính xác. Tất cả các trích dẫn đạo luật đều bao gồm liên kết trực tiếp đến văn bản chính thức (ví dụ: leginfo.legislature.ca.gov cho luật California) để bạn có thể tự xác minh. Đối với luật án lệ, chúng tôi chỉ bao gồm các trích dẫn mà AI tự tin — một trích dẫn bị thiếu luôn tốt hơn một trích dẫn giả mạo. Luật thay đổi theo thời gian, vì vậy hãy luôn xác minh các phiên bản hiện tại trước khi dựa vào chúng.',
+    faq6q:'Tôi nhận được thông báo đuổi nhà / tòa án — tôi phải làm gì?',
+    faq6a:'Đầu tiên, dán hoặc tải tài liệu lên LawLight để hiểu chính xác nội dung và quyền của bạn. Chú ý kỹ đến phần <strong>Ngày Quan Trọng và Hạn Chót</strong> — bỏ lỡ hạn chót có thể gây hại nghiêm trọng cho trường hợp của bạn. Đối với thông báo khẩn cấp cao, LawLight sẽ hiển thị hộp hành động "Phải làm gì ngay bây giờ". Sau đó liên hệ ngay với tổ chức trợ giúp pháp lý. Ở Vùng Vịnh: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 và <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 cung cấp hỗ trợ miễn phí.',
   },
   tl: {
     navBadge:'Impormasyon sa Batas Lamang', heroBadge:'✦ Libre · Walang account · 15 wika',
@@ -1042,6 +1604,33 @@ const TRANSLATIONS = {
     btnNew:'← Suriin ang Isa Pang Dokumento', loadingMsg:'Binabasa ang iyong dokumento…',
     loadingSub:'Tinutukoy ang mga batas, kaso, at deadline',
     placeholder:'I-paste dito ang teksto ng iyong legal na dokumento…',
+    chip1:'⚠️ Abiso ng Pagpapaalis', chip2:'💳 Sulat ng Koleksyon ng Utang', chip3:'📋 Kasunduan sa Pag-upa',
+    chip4:'⚖️ Summons ng Korte', chip5:'👔 Kontrata sa Trabaho', chip6:'🛂 Abiso sa Imigrasyon',
+    chip7:'📬 Liham IRS / Buwis', chip8:'🚗 Multa sa Trapiko',
+    sample1:'⚠️ Abiso ng Pagpapaalis', sample2:'💳 Liham ng Utang', sample3:'📋 Kasunduan sa Pag-upa',
+    sample4:'⚖️ Summons ng Korte', sample5:'👔 Kontrata sa Trabaho', sample6:'🛂 Abiso sa Imigrasyon',
+    sample7:'📬 Liham IRS', sample8:'🚗 Multa sa Trapiko',
+    navAbout:'Tungkol sa', navFaq:'FAQ', aboutLabel:'Tungkol sa', aboutTitle:'Aming layunin',
+    fbLabel:'Feedback', fbTitle:'May tanong o mungkahi ka?',
+    fbSub:'Binabasa namin ang bawat mensahe. Ang iyong feedback ay tumutulong sa pagpapabuti ng LawLight.',
+    fbNameLabel:'Iyong pangalan (opsyonal)', fbCatLabel:'Kategorya',
+    fbEmailLabel:'Email (opsyonal — kung gusto mong makatanggap ng tugon)',
+    fbMsgLabel:'Mensahe', fbSubmit:'Ipadala ang Feedback',
+    fbOptQ:'Tanong', fbOptS:'Mungkahi', fbOptC:'Reklamo', fbOptO:'Iba pa',
+    fbNamePh:'Anonymous', fbMsgPh:'Sabihin sa amin ang iyong nasa isip…',
+    faqLabel:'FAQ', faqTitle:'Mga karaniwang tanong', faqSub:'Lahat ng kailangan mong malaman bago magsimula.',
+    faq1q:'Ito ba ay tunay na legal na payo?',
+    faq1a:'Hindi — Nagbibigay ang LawLight ng <strong>legal na impormasyon</strong>, hindi legal na payo. May mahalagang pagkakaiba: ang legal na impormasyon ay nagpapaliwanag ng sinasabi ng batas sa pangkalahatan; ang legal na payo ay inilalapat ang batas sa iyong partikular na sitwasyon at nangangailangan ng lisensyadong abogado. Tinutulungan ka ng LawLight na maunawaan ang ibig sabihin ng isang dokumento at kung anong mga batas ang naaangkop, ngunit hindi nito sinasabi sa iyo kung ano ang dapat gawin. Para sa payo na tukoy sa iyong kaso, kumonsulta sa lisensyadong abogado. Nagsasama kami ng mga link sa mga libreng organisasyon ng legal na tulong sa bawat resulta.',
+    faq2q:'Ang aking dokumento ba ay pinapanatiling pribado?',
+    faq2a:'Ang iyong dokumento ay ligtas na ipinapadala sa Claude AI (ng Anthropic) para sa pagsusuri at <strong>hindi kailanman naiimbak sa aming mga server</strong>. Hindi namin ini-log, nini-save, o ibinabahagi ang nilalaman ng anumang dokumentong ina-upload o ini-paste mo. Ang resulta ng pagsusuri ay ipinapakita lamang sa iyong browser at tinatanggal kapag umalis ka sa pahina. Para sa mga napaka-sensitibong dokumento (hal., mga papel sa imigrasyon), maaaring gusto mong tanggalin ang mga personal na identifier bago mag-upload.',
+    faq3q:'Anong uri ng mga dokumento ang maaari kong suriin?',
+    faq3a:'Gumagana ang LawLight sa halos anumang legal na dokumento: mga abiso ng pagpapaalis, mga sulat ng koleksyon ng utang, mga kasunduan sa pag-upa, mga summons ng korte, mga kontrata sa trabaho, mga abiso sa imigrasyon (Notice to Appear, mga RFE), mga liham ng IRS at buwis, mga multa sa trapiko, at iba pa. Maaari kang mag-paste ng teksto nang direkta o mag-upload ng PDF. Ang mga PDF na may mapipiling teksto ay agad na kinukuha; ang mga na-scan o sulat-kamay na PDF ay pinoproseso ng AI vision (~20 segundo). Maaari ka ring mag-upload ng JPEG o PNG na larawan ng isang pisikal na dokumento.',
+    faq4q:'Anong mga wika ang sinusuportahan?',
+    faq4a:'Sinusuportahan ng LawLight ang 15 wika para sa parehong interface ng website at output ng pagsusuri ng AI: Ingles, Espanyol, Simplified Chinese, Traditional Chinese, Vietnamese, Tagalog, Korean, Arabe, Hindi, Portuges, Ruso, Pranses, Haitian Creole, Punjabi, at Amharic. Piliin ang iyong gustong output na wika mula sa dropdown sa form ng pagsusuri. Maaari ka ring lumipat ng buong interface ng website gamit ang pindutan ng wika sa itaas na navigation bar.',
+    faq5q:'Gaano katumpak ang mga legal na sanggunian?',
+    faq5a:'Gumagamit ang LawLight ng Claude AI ng Anthropic, na may mataas na kakayahang tukuyin ang mga kaugnay na batas at banggitin ang mga ito nang tumpak. Lahat ng sanggunian sa batas ay may kasamang direktang link sa opisyal na teksto (hal., leginfo.legislature.ca.gov para sa batas ng California) para mapatunayan mo ang mga ito mismo. Para sa case law, isinama lamang namin ang mga sanggunian na tiwala ang AI — ang nawawalang sanggunian ay palaging mas mabuti kaysa sa gawa-gawa. Nagbabago ang mga batas sa paglipas ng panahon, kaya palaging i-verify ang mga kasalukuyang bersyon bago umasa sa mga ito.',
+    faq6q:'Nakatanggap ako ng abiso ng pagpapaalis / korte — ano ang dapat kong gawin?',
+    faq6a:'Una, i-paste o i-upload ang dokumento sa LawLight upang maunawaan nang eksakto ang sinasabi nito at ang iyong mga karapatan. Bigyang-pansin ang seksyon ng <strong>Mga Pangunahing Petsa at Deadline</strong> — ang pagkawala ng deadline ay maaaring seryosong makapinsala sa iyong kaso. Para sa mga abisong may mataas na pagkamadalian, ipapakita ng LawLight ang kahon ng aksyon na "Ano ang dapat gawin ngayon". Pagkatapos makipag-ugnayan kaagad sa isang organisasyon ng legal na tulong. Sa Bay Area: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 at <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ay nag-aalok ng libreng tulong.',
   },
   ko: {
     navBadge:'법적 정보만 제공', heroBadge:'✦ 무료 · 계정 불필요 · 15개 언어',
@@ -1064,6 +1653,33 @@ const TRANSLATIONS = {
     btnNew:'← 다른 문서 분석하기', loadingMsg:'문서를 읽는 중…',
     loadingSub:'법률, 사례 및 마감일 식별 중',
     placeholder:'법률 문서의 텍스트를 여기에 붙여넣으세요…',
+    chip1:'⚠️ 퇴거 통지서', chip2:'💳 채권 추심 서신', chip3:'📋 임대차 계약서',
+    chip4:'⚖️ 법원 소환장', chip5:'👔 고용 계약서', chip6:'🛂 이민 통지서',
+    chip7:'📬 IRS / 세금 서신', chip8:'🚗 교통 위반 딱지',
+    sample1:'⚠️ 퇴거 통지서', sample2:'💳 채권 서신', sample3:'📋 임대차 계약서',
+    sample4:'⚖️ 법원 소환장', sample5:'👔 고용 계약서', sample6:'🛂 이민 통지서',
+    sample7:'📬 IRS 서신', sample8:'🚗 교통 위반 딱지',
+    navAbout:'소개', navFaq:'자주 묻는 질문', aboutLabel:'소개', aboutTitle:'목적',
+    fbLabel:'의견', fbTitle:'질문이나 제안이 있으신가요?',
+    fbSub:'모든 메시지를 읽습니다. 여러분의 피드백은 LawLight 개선에 도움이 됩니다.',
+    fbNameLabel:'이름 (선택사항)', fbCatLabel:'카테고리',
+    fbEmailLabel:'이메일 (선택사항 — 답변을 원하시면)',
+    fbMsgLabel:'메시지', fbSubmit:'의견 보내기',
+    fbOptQ:'질문', fbOptS:'제안', fbOptC:'불만', fbOptO:'기타',
+    fbNamePh:'익명', fbMsgPh:'의견을 알려주세요…',
+    faqLabel:'자주 묻는 질문', faqTitle:'자주 묻는 질문', faqSub:'시작하기 전에 알아야 할 모든 것.',
+    faq1q:'이것이 실제 법률 조언인가요?',
+    faq1a:'아니요 — LawLight는 법률 조언이 아닌 <strong>법률 정보</strong>를 제공합니다. 중요한 차이가 있습니다: 법률 정보는 법률이 일반적으로 무엇을 말하는지 설명하고, 법률 조언은 법률을 귀하의 특정 상황에 적용하며 면허를 가진 변호사가 필요합니다. LawLight는 문서가 무엇을 의미하는지 이해하는 데 도움을 드리지만, 무엇을 해야 하는지는 알려드리지 않습니다. 귀하의 사례에 특정한 조언을 위해 면허를 가진 변호사와 상담하세요. 모든 결과에 무료 법률 지원 단체 링크를 포함합니다.',
+    faq2q:'제 문서는 비공개로 유지되나요?',
+    faq2a:'귀하의 문서는 분석을 위해 Claude AI(Anthropic 제공)에 안전하게 전송되며 <strong>우리 서버에 저장되지 않습니다</strong>. 업로드하거나 붙여넣은 문서의 내용을 기록, 저장 또는 공유하지 않습니다. 분석 결과는 귀하의 브라우저에만 표시되며 페이지를 떠나면 삭제됩니다. 매우 민감한 문서(예: 이민 서류)의 경우 업로드 전에 개인 식별 정보를 가리는 것이 좋습니다.',
+    faq3q:'어떤 유형의 문서를 분석할 수 있나요?',
+    faq3a:'LawLight는 거의 모든 법률 문서와 함께 작동합니다: 퇴거 통지, 채무 추심 서신, 임대 계약서, 법원 소환장, 고용 계약서, 이민 통지(출석 통지, RFE), IRS 및 세금 서신, 교통 위반 딱지 등. 텍스트를 직접 붙여넣거나 PDF를 업로드할 수 있습니다. 선택 가능한 텍스트가 있는 PDF는 즉시 추출됩니다; 스캔되거나 손으로 쓴 PDF는 AI 비전으로 처리됩니다(약 20초 소요). 실제 문서의 JPEG 또는 PNG 사진을 업로드할 수도 있습니다.',
+    faq4q:'어떤 언어가 지원되나요?',
+    faq4a:'LawLight는 웹사이트 인터페이스와 AI 분석 출력 모두에 15개 언어를 지원합니다: 영어, 스페인어, 중국어(간체), 중국어(번체), 베트남어, 타갈로그어, 한국어, 아랍어, 힌디어, 포르투갈어, 러시아어, 프랑스어, 아이티 크리올어, 펀자브어, 암하라어. 분석 양식의 드롭다운에서 원하는 출력 언어를 선택하세요. 상단 탐색 모음의 언어 버튼을 사용하여 전체 웹사이트 인터페이스를 전환할 수도 있습니다.',
+    faq5q:'법률 인용의 정확도는 어떻습니까?',
+    faq5a:'LawLight는 Anthropic의 Claude AI를 사용하며, 관련 법령을 식별하고 정확하게 인용하는 능력이 뛰어납니다. 모든 법령 인용은 공식 텍스트에 대한 직접 링크(예: 캘리포니아 법률의 경우 leginfo.legislature.ca.gov)를 포함하여 직접 확인할 수 있습니다. 판례법의 경우 AI가 확신하는 인용만 포함합니다 — 누락된 인용이 항상 조작된 인용보다 낫습니다. 법률은 시간이 지남에 따라 변경되므로 의존하기 전에 항상 현재 버전을 확인하세요.',
+    faq6q:'퇴거 / 법원 통지를 받았습니다 — 어떻게 해야 하나요?',
+    faq6a:'먼저 LawLight에 문서를 붙여넣거나 업로드하여 정확히 무엇을 말하는지, 귀하의 권리가 무엇인지 이해하세요. <strong>주요 날짜 및 기한</strong> 섹션에 주의를 기울이세요 — 기한을 놓치면 귀하의 사례에 심각한 해를 끼칠 수 있습니다. 긴급한 통지의 경우 LawLight에 "지금 해야 할 일" 행동 상자가 표시됩니다. 그런 다음 즉시 법률 지원 단체에 연락하세요. 베이 에어리어: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 및 <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300에서 무료 도움을 제공합니다.',
   },
   ar: {
     navBadge:'معلومات قانونية فقط', heroBadge:'✦ مجاني · بدون حساب · 15 لغة',
@@ -1086,6 +1702,33 @@ const TRANSLATIONS = {
     btnNew:'تحليل مستند آخر ←', loadingMsg:'جاري قراءة مستندك…',
     loadingSub:'تحديد القوانين والقضايا والمواعيد النهائية',
     placeholder:'الصق نص مستندك القانوني هنا…',
+    chip1:'⚠️ إشعار الإخلاء', chip2:'💳 رسالة تحصيل الديون', chip3:'📋 عقد الإيجار',
+    chip4:'⚖️ أمر استدعاء قضائي', chip5:'👔 عقد العمل', chip6:'🛂 إشعار الهجرة',
+    chip7:'📬 رسالة IRS / الضرائب', chip8:'🚗 مخالفة مرورية',
+    sample1:'⚠️ إشعار الإخلاء', sample2:'💳 رسالة الديون', sample3:'📋 عقد الإيجار',
+    sample4:'⚖️ أمر استدعاء', sample5:'👔 عقد العمل', sample6:'🛂 إشعار الهجرة',
+    sample7:'📬 رسالة IRS', sample8:'🚗 مخالفة مرورية',
+    navAbout:'حول', navFaq:'الأسئلة', aboutLabel:'حول', aboutTitle:'هدفنا',
+    fbLabel:'ملاحظات', fbTitle:'هل لديك سؤال أو اقتراح؟',
+    fbSub:'نقرأ كل رسالة. تساعد ملاحظاتك في تحسين LawLight.',
+    fbNameLabel:'اسمك (اختياري)', fbCatLabel:'الفئة',
+    fbEmailLabel:'البريد الإلكتروني (اختياري — إذا أردت ردًا)',
+    fbMsgLabel:'الرسالة', fbSubmit:'إرسال الملاحظات',
+    fbOptQ:'سؤال', fbOptS:'اقتراح', fbOptC:'شكوى', fbOptO:'أخرى',
+    fbNamePh:'مجهول', fbMsgPh:'أخبرنا بما يدور في ذهنك…',
+    faqLabel:'الأسئلة الشائعة', faqTitle:'الأسئلة الشائعة', faqSub:'كل ما تحتاج معرفته قبل البدء.',
+    faq1q:'هل هذه نصيحة قانونية حقيقية؟',
+    faq1a:'لا — يوفر LawLight <strong>معلومات قانونية</strong>، وليس نصائح قانونية. هناك فرق مهم: المعلومات القانونية تشرح ما يقوله القانون بشكل عام؛ النصيحة القانونية تطبّق القانون على وضعك المحدد وتتطلب محامياً مرخصاً. يساعدك LawLight على فهم معنى المستند وما هي القوانين المطبّقة، لكنه لا يخبرك بما يجب فعله. للحصول على نصيحة خاصة بحالتك، استشر محامياً مرخصاً. نضمّن روابط لمنظمات المساعدة القانونية المجانية في كل نتيجة.',
+    faq2q:'هل يُحفظ مستندي بشكل خاص؟',
+    faq2a:'يُرسَل مستندك بأمان إلى Claude AI (من Anthropic) للتحليل و<strong>لا يُخزَّن أبداً على خوادمنا</strong>. لا نسجّل أو نحفظ أو نشارك محتوى أي مستند تحمّله أو تلصقه. يُعرض نتيجة التحليل فقط في متصفحك ويُحذف عند مغادرة الصفحة. بالنسبة للمستندات شديدة الحساسية (مثل وثائق الهجرة)، قد ترغب في حذف المعرّفات الشخصية قبل الرفع.',
+    faq3q:'ما أنواع المستندات التي يمكنني تحليلها؟',
+    faq3a:'يعمل LawLight مع تقريباً أي مستند قانوني: إشعارات الإخلاء، رسائل تحصيل الديون، عقود الإيجار، أوامر المثول أمام المحكمة، عقود العمل، إشعارات الهجرة (Notice to Appear، RFEs)، رسائل IRS والضرائب، مخالفات المرور، وغير ذلك. يمكنك لصق النص مباشرةً أو رفع ملف PDF. يتم استخراج ملفات PDF ذات النصوص القابلة للتحديد فورياً؛ الملفات الممسوحة أو المكتوبة بخط اليد تُعالَج برؤية الذكاء الاصطناعي (~20 ثانية). يمكنك أيضاً رفع صورة JPEG أو PNG لمستند ورقي.',
+    faq4q:'ما اللغات المدعومة؟',
+    faq4a:'يدعم LawLight 15 لغة لواجهة الموقع وإخراج تحليل الذكاء الاصطناعي: الإنجليزية، الإسبانية، الصينية المبسّطة، الصينية التقليدية، الفيتنامية، التاغالوغية، الكورية، العربية، الهندية، البرتغالية، الروسية، الفرنسية، الكريولية الهايتية، البنجابية، والأمهرية. اختر لغة الإخراج المفضّلة من القائمة المنسدلة في نموذج التحليل. يمكنك أيضاً تبديل واجهة الموقع بالكامل باستخدام زر اللغة في شريط التنقل العلوي.',
+    faq5q:'ما مدى دقة الاستشهادات القانونية؟',
+    faq5a:'يستخدم LawLight Claude AI من Anthropic، الذي يتمتع بقدرة عالية على تحديد القوانين ذات الصلة والاستشهاد بها بدقة. تتضمن جميع استشهادات القوانين رابطاً مباشراً للنص الرسمي (مثلاً: leginfo.legislature.ca.gov لقانون كاليفورنيا) حتى تتمكن من التحقق منها. بالنسبة للسوابق القضائية، نضمّن فقط الاستشهادات التي يكون الذكاء الاصطناعي واثقاً منها — الاستشهاد الناقص دائماً أفضل من المزوّر. تتغير القوانين بمرور الوقت، لذا تحقق دائماً من الإصدارات الحالية.',
+    faq6q:'تلقيت إشعار إخلاء / محكمة — ماذا يجب أن أفعل؟',
+    faq6a:'أولاً، الصق أو ارفع المستند إلى LawLight لتفهم تماماً ما يقوله وما هي حقوقك. انتبه جيداً لقسم <strong>التواريخ والمواعيد النهائية الرئيسية</strong> — فإغفال موعد نهائي قد يضرّ بحالتك بشدة. بالنسبة للإشعارات عالية الإلحاح، سيعرض LawLight مربع إجراءات "ماذا تفعل الآن". ثم تواصل فوراً مع منظمة مساعدة قانونية. في منطقة البي أريا: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 و<a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 تقدمان مساعدة مجانية.',
   },
   hi: {
     navBadge:'केवल कानूनी जानकारी', heroBadge:'✦ मुफ़्त · कोई खाता नहीं · 15 भाषाएं',
@@ -1108,6 +1751,33 @@ const TRANSLATIONS = {
     btnNew:'← दूसरा दस्तावेज़ विश्लेषण करें', loadingMsg:'आपका दस्तावेज़ पढ़ा जा रहा है…',
     loadingSub:'कानून, मामले और डेडलाइन की पहचान हो रही है',
     placeholder:'यहाँ अपने कानूनी दस्तावेज़ का पाठ पेस्ट करें…',
+    chip1:'⚠️ बेदखली नोटिस', chip2:'💳 ऋण वसूली पत्र', chip3:'📋 किराया अनुबंध',
+    chip4:'⚖️ न्यायालय समन', chip5:'👔 रोजगार अनुबंध', chip6:'🛂 आव्रजन नोटिस',
+    chip7:'📬 IRS / कर पत्र', chip8:'🚗 ट्रैफ़िक उल्लंघन',
+    sample1:'⚠️ बेदखली नोटिस', sample2:'💳 ऋण पत्र', sample3:'📋 किराया अनुबंध',
+    sample4:'⚖️ कोर्ट समन', sample5:'👔 रोजगार अनुबंध', sample6:'🛂 आव्रजन नोटिस',
+    sample7:'📬 IRS पत्र', sample8:'🚗 ट्रैफ़िक उल्लंघन',
+    navAbout:'परिचय', navFaq:'सवाल', aboutLabel:'परिचय', aboutTitle:'हमारा लक्ष्य',
+    fbLabel:'प्रतिक्रिया', fbTitle:'कोई प्रश्न या सुझाव है?',
+    fbSub:'हम हर संदेश पढ़ते हैं। आपकी प्रतिक्रिया LawLight को बेहतर बनाने में मदद करती है।',
+    fbNameLabel:'आपका नाम (वैकल्पिक)', fbCatLabel:'श्रेणी',
+    fbEmailLabel:'ईमेल (वैकल्पिक — यदि उत्तर चाहते हैं)',
+    fbMsgLabel:'संदेश', fbSubmit:'प्रतिक्रिया भेजें',
+    fbOptQ:'प्रश्न', fbOptS:'सुझाव', fbOptC:'शिकायत', fbOptO:'अन्य',
+    fbNamePh:'अनाम', fbMsgPh:'हमें बताएं आपके मन में क्या है…',
+    faqLabel:'सामान्य प्रश्न', faqTitle:'सामान्य प्रश्न', faqSub:'शुरू करने से पहले आपको जो कुछ जानना चाहिए।',
+    faq1q:'क्या यह असली कानूनी सलाह है?',
+    faq1a:'नहीं — LawLight <strong>कानूनी जानकारी</strong> प्रदान करता है, न कि कानूनी सलाह। एक महत्वपूर्ण अंतर है: कानूनी जानकारी सामान्य रूप से बताती है कि कानून क्या कहता है; कानूनी सलाह आपकी विशिष्ट स्थिति में कानून लागू करती है और लाइसेंस प्राप्त वकील की आवश्यकता होती है। LawLight आपको दस्तावेज़ का अर्थ समझने में मदद करता है, लेकिन यह नहीं बताता कि क्या करना है। अपने मामले के लिए सलाह के लिए कृपया लाइसेंस प्राप्त वकील से परामर्श करें। हम हर परिणाम में मुफ्त कानूनी सहायता संगठनों के लिंक शामिल करते हैं।',
+    faq2q:'क्या मेरा दस्तावेज़ गोपनीय रहता है?',
+    faq2a:'आपका दस्तावेज़ विश्लेषण के लिए सुरक्षित रूप से Claude AI (Anthropic द्वारा) को भेजा जाता है और <strong>कभी हमारे सर्वर पर संग्रहीत नहीं किया जाता</strong>। हम आपके द्वारा अपलोड या पेस्ट किए गए किसी भी दस्तावेज़ की सामग्री को लॉग, सहेज या साझा नहीं करते हैं। विश्लेषण परिणाम केवल आपके ब्राउज़र में प्रदर्शित होता है। अत्यधिक संवेदनशील दस्तावेज़ों (जैसे, आव्रजन कागजात) के लिए, अपलोड करने से पहले व्यक्तिगत पहचानकर्ताओं को हटाना बेहतर हो सकता है।',
+    faq3q:'मैं किस प्रकार के दस्तावेज़ों का विश्लेषण कर सकता हूं?',
+    faq3a:'LawLight लगभग किसी भी कानूनी दस्तावेज़ के साथ काम करता है: बेदखली नोटिस, ऋण वसूली पत्र, लीज़ समझौते, कोर्ट समन, रोजगार अनुबंध, आव्रजन नोटिस (Notice to Appear, RFE), IRS और कर पत्र, ट्रैफ़िक उल्लंघन, और अधिक। आप पाठ सीधे पेस्ट कर सकते हैं या PDF अपलोड कर सकते हैं। चयन योग्य पाठ वाले PDF तुरंत निकाले जाते हैं; स्कैन या हस्तलिखित PDF को AI दृष्टि से संसाधित किया जाता है (~20 सेकंड)। आप भौतिक दस्तावेज़ की JPEG या PNG फ़ोटो भी अपलोड कर सकते हैं।',
+    faq4q:'कौन सी भाषाएं समर्थित हैं?',
+    faq4a:'LawLight वेबसाइट इंटरफेस और AI विश्लेषण आउटपुट दोनों के लिए 15 भाषाओं का समर्थन करता है: अंग्रेजी, स्पेनिश, सरलीकृत चीनी, पारंपरिक चीनी, वियतनामी, तागालोग, कोरियाई, अरबी, हिंदी, पुर्तगाली, रूसी, फ्रेंच, हाईटियन क्रियोल, पंजाबी, और अम्हारिक। विश्लेषण फ़ॉर्म में ड्रॉपडाउन से अपनी पसंदीदा भाषा चुनें। शीर्ष नेविगेशन बार में भाषा बटन से पूरे इंटरफेस को भी बदल सकते हैं।',
+    faq5q:'कानूनी उद्धरण कितने सटीक हैं?',
+    faq5a:'LawLight Anthropic के Claude AI का उपयोग करता है, जो प्रासंगिक क़ानूनों की पहचान और सटीक उद्धरण में अत्यधिक सक्षम है। सभी क़ानून उद्धरणों में आधिकारिक पाठ का सीधा लिंक शामिल है (उदाहरण के लिए, कैलिफ़ोर्निया कानून के लिए leginfo.legislature.ca.gov) ताकि आप उन्हें स्वयं सत्यापित कर सकें। केस लॉ के लिए, हम केवल वे उद्धरण शामिल करते हैं जिनके बारे में AI आश्वस्त है। कानून समय के साथ बदलते हैं, इसलिए भरोसा करने से पहले वर्तमान संस्करणों की जांच करें।',
+    faq6q:'मुझे बेदखली / कोर्ट का नोटिस मिला — मुझे क्या करना चाहिए?',
+    faq6a:'सबसे पहले, दस्तावेज़ को LawLight पर पेस्ट या अपलोड करें और जानें कि यह क्या कहता है और आपके अधिकार क्या हैं। <strong>मुख्य तारीखें और समय सीमाएं</strong> अनुभाग पर ध्यान दें — एक समय सीमा चूकना आपके मामले को गंभीर रूप से नुकसान पहुंचा सकता है। फिर तुरंत एक कानूनी सहायता संगठन से संपर्क करें। बे एरिया में: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 और <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 मुफ़्त सहायता प्रदान करते हैं।',
   },
   pt: {
     navBadge:'Apenas Informação Legal', heroBadge:'✦ Grátis · Sem conta · 15 idiomas',
@@ -1130,6 +1800,33 @@ const TRANSLATIONS = {
     btnNew:'← Analisar Outro Documento', loadingMsg:'Lendo seu documento…',
     loadingSub:'Identificando leis, casos e prazos',
     placeholder:'Cole o texto do seu documento legal aqui…',
+    chip1:'⚠️ Aviso de Despejo', chip2:'💳 Carta de Cobrança', chip3:'📋 Contrato de Arrendamento',
+    chip4:'⚖️ Intimação Judicial', chip5:'👔 Contrato de Trabalho', chip6:'🛂 Aviso de Imigração',
+    chip7:'📬 Carta IRS / Impostos', chip8:'🚗 Multa de Trânsito',
+    sample1:'⚠️ Aviso de Despejo', sample2:'💳 Carta de Dívida', sample3:'📋 Contrato de Arrendamento',
+    sample4:'⚖️ Intimação Judicial', sample5:'👔 Contrato de Trabalho', sample6:'🛂 Aviso de Imigração',
+    sample7:'📬 Carta do IRS', sample8:'🚗 Multa de Trânsito',
+    navAbout:'Sobre', navFaq:'Perguntas', aboutLabel:'Sobre', aboutTitle:'Nossa missão',
+    fbLabel:'Comentários', fbTitle:'Tem uma pergunta ou sugestão?',
+    fbSub:'Lemos cada mensagem. O seu feedback ajuda a melhorar o LawLight.',
+    fbNameLabel:'Seu nome (opcional)', fbCatLabel:'Categoria',
+    fbEmailLabel:'Email (opcional — se quiser uma resposta)',
+    fbMsgLabel:'Mensagem', fbSubmit:'Enviar feedback',
+    fbOptQ:'Pergunta', fbOptS:'Sugestão', fbOptC:'Reclamação', fbOptO:'Outro',
+    fbNamePh:'Anônimo', fbMsgPh:'Conte-nos o que está pensando…',
+    faqLabel:'Perguntas', faqTitle:'Perguntas frequentes', faqSub:'Tudo o que precisa de saber antes de começar.',
+    faq1q:'Isso é aconselhamento jurídico real?',
+    faq1a:'Não — o LawLight fornece <strong>informação jurídica</strong>, não aconselhamento jurídico. Há uma diferença importante: a informação jurídica explica o que a lei diz em geral; o aconselhamento jurídico aplica a lei à sua situação específica e requer um advogado licenciado. O LawLight ajuda-o a entender o que um documento significa e quais as leis que se aplicam, mas não lhe diz o que fazer. Para aconselhamento específico ao seu caso, consulte um advogado licenciado. Incluímos links para organizações de assistência jurídica gratuita em cada resultado.',
+    faq2q:'O meu documento é mantido em privado?',
+    faq2a:'O seu documento é enviado de forma segura ao Claude AI (da Anthropic) para análise e <strong>nunca é armazenado nos nossos servidores</strong>. Não registamos, guardamos nem partilhamos o conteúdo de qualquer documento que carregue ou cole. O resultado da análise é exibido apenas no seu navegador e descartado quando sai da página. Para documentos altamente sensíveis (por ex., papéis de imigração), pode querer redigir identificadores pessoais antes de carregar.',
+    faq3q:'Que tipos de documentos posso analisar?',
+    faq3a:'O LawLight funciona com quase qualquer documento jurídico: avisos de despejo, cartas de cobrança de dívidas, contratos de arrendamento, intimações judiciais, contratos de trabalho, avisos de imigração (Notice to Appear, RFEs), cartas do IRS e impostos, multas de trânsito e mais. Pode colar texto diretamente ou carregar um PDF. PDFs com texto selecionável são extraídos instantaneamente; PDFs digitalizados ou escritos à mão são processados com visão de IA (~20 segundos). Também pode carregar uma foto JPEG ou PNG de um documento físico.',
+    faq4q:'Quais idiomas são suportados?',
+    faq4a:'O LawLight suporta 15 idiomas tanto para a interface do website como para o output da análise de IA: inglês, espanhol, chinês simplificado, chinês tradicional, vietnamita, tagalo, coreano, árabe, hindi, português, russo, francês, crioulo haitiano, punjabi e amárico. Selecione o seu idioma de output preferido no menu suspenso no formulário de análise. Também pode mudar toda a interface do website usando o botão de idioma na barra de navegação superior.',
+    faq5q:'Qual a precisão das citações jurídicas?',
+    faq5a:'O LawLight usa o Claude AI da Anthropic, que é altamente capaz de identificar estatutos relevantes e citá-los com precisão. Todas as citações de estatutos incluem um link direto para o texto oficial (por ex., leginfo.legislature.ca.gov para a lei da Califórnia). Para jurisprudência, apenas incluímos citações das quais a IA tem confiança — uma citação em falta é sempre melhor do que uma fabricada. As leis mudam com o tempo, por isso verifique sempre as versões atuais.',
+    faq6q:'Recebi um aviso de despejo / tribunal — o que devo fazer?',
+    faq6a:'Primeiro, cole ou carregue o documento no LawLight para entender exatamente o que diz e quais são os seus direitos. Preste muita atenção à secção de <strong>Datas e Prazos Importantes</strong> — perder um prazo pode prejudicar seriamente o seu caso. Para avisos de alta urgência, o LawLight mostrará uma caixa de ação "O que fazer agora". Em seguida, contacte imediatamente uma organização de assistência jurídica. Na Área da Baía: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 e <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 oferecem ajuda gratuita.',
   },
   ru: {
     navBadge:'Только правовая информация', heroBadge:'✦ Бесплатно · Без аккаунта · 15 языков',
@@ -1152,6 +1849,33 @@ const TRANSLATIONS = {
     btnNew:'← Анализировать другой документ', loadingMsg:'Читаем ваш документ…',
     loadingSub:'Определяем законы, дела и сроки',
     placeholder:'Вставьте текст вашего юридического документа сюда…',
+    chip1:'⚠️ Уведомление о выселении', chip2:'💳 Письмо о взыскании долга', chip3:'📋 Договор аренды',
+    chip4:'⚖️ Судебная повестка', chip5:'👔 Трудовой договор', chip6:'🛂 Уведомление об иммиграции',
+    chip7:'📬 Письмо IRS / Налоговое', chip8:'🚗 Штраф за нарушение ПДД',
+    sample1:'⚠️ Уведомление о выселении', sample2:'💳 Долговое письмо', sample3:'📋 Договор аренды',
+    sample4:'⚖️ Судебная повестка', sample5:'👔 Трудовой договор', sample6:'🛂 Уведомление об иммиграции',
+    sample7:'📬 Письмо IRS', sample8:'🚗 Штраф за нарушение ПДД',
+    navAbout:'О нас', navFaq:'Вопросы', aboutLabel:'О нас', aboutTitle:'Наша цель',
+    fbLabel:'Отзывы', fbTitle:'Есть вопрос или предложение?',
+    fbSub:'Мы читаем каждое сообщение. Ваши отзывы помогают улучшать LawLight.',
+    fbNameLabel:'Ваше имя (необязательно)', fbCatLabel:'Категория',
+    fbEmailLabel:'Email (необязательно — если хотите ответ)',
+    fbMsgLabel:'Сообщение', fbSubmit:'Отправить отзыв',
+    fbOptQ:'Вопрос', fbOptS:'Предложение', fbOptC:'Жалоба', fbOptO:'Другое',
+    fbNamePh:'Аноним', fbMsgPh:'Расскажите нам, что у вас на уме…',
+    faqLabel:'Вопросы', faqTitle:'Часто задаваемые вопросы', faqSub:'Всё, что нужно знать перед началом работы.',
+    faq1q:'Это настоящая юридическая консультация?',
+    faq1a:'Нет — LawLight предоставляет <strong>правовую информацию</strong>, а не юридическую консультацию. Есть важное различие: правовая информация объясняет, что говорит закон в целом; юридическая консультация применяет закон к вашей конкретной ситуации и требует лицензированного адвоката. LawLight помогает понять, что означает документ и какие законы применяются, но не говорит вам, что делать. Для консультации по вашему делу обратитесь к лицензированному адвокату. В каждом результате мы включаем ссылки на организации бесплатной юридической помощи.',
+    faq2q:'Мой документ остаётся конфиденциальным?',
+    faq2a:'Ваш документ безопасно отправляется в Claude AI (от Anthropic) для анализа и <strong>никогда не хранится на наших серверах</strong>. Мы не записываем, не сохраняем и не передаём содержимое документов, которые вы загружаете или вставляете. Результат анализа отображается только в вашем браузере и удаляется, когда вы покидаете страницу. Для особо конфиденциальных документов рекомендуется замаскировать личные данные перед загрузкой.',
+    faq3q:'Какие типы документов я могу анализировать?',
+    faq3a:'LawLight работает почти с любыми юридическими документами: уведомлениями о выселении, письмами о взыскании долгов, договорами аренды, судебными повестками, трудовыми договорами, иммиграционными уведомлениями (Notice to Appear, RFE), письмами IRS и налоговыми уведомлениями, штрафами за нарушение ПДД и другими. Вы можете вставить текст напрямую или загрузить PDF. PDF с выделяемым текстом извлекаются мгновенно; отсканированные или рукописные PDF обрабатываются с помощью AI-зрения (~20 секунд). Также можно загрузить фото документа в формате JPEG или PNG.',
+    faq4q:'Какие языки поддерживаются?',
+    faq4a:'LawLight поддерживает 15 языков как для интерфейса сайта, так и для вывода AI-анализа: английский, испанский, упрощённый китайский, традиционный китайский, вьетнамский, тагальский, корейский, арабский, хинди, португальский, русский, французский, гаитянский креольский, панджаби и амхарский. Выберите предпочтительный язык вывода в выпадающем списке формы анализа. Переключить весь интерфейс сайта можно с помощью кнопки языка в верхней панели навигации.',
+    faq5q:'Насколько точны правовые ссылки?',
+    faq5a:'LawLight использует Claude AI от Anthropic, который отличается высокой способностью выявлять соответствующие законы и точно их цитировать. Все ссылки на законодательство включают прямую ссылку на официальный текст (например, leginfo.legislature.ca.gov для законов Калифорнии). Для прецедентного права мы включаем только те ссылки, в которых AI уверен — отсутствующая ссылка всегда лучше ложной. Законы меняются со временем, поэтому всегда проверяйте актуальные версии.',
+    faq6q:'Я получил уведомление о выселении / из суда — что делать?',
+    faq6a:'Сначала вставьте или загрузите документ в LawLight, чтобы точно понять, что в нём написано и каковы ваши права. Обратите особое внимание на раздел <strong>Ключевые даты и сроки</strong> — пропущенный срок может серьёзно навредить вашему делу. Для срочных уведомлений LawLight покажет блок действий "Что сделать прямо сейчас". Затем немедленно обратитесь в организацию юридической помощи. В Бэй-Эрии: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 и <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 предлагают бесплатную помощь.',
   },
   fr: {
     navBadge:'Informations juridiques uniquement', heroBadge:'✦ Gratuit · Sans compte · 15 langues',
@@ -1174,6 +1898,33 @@ const TRANSLATIONS = {
     btnNew:'← Analyser un autre document', loadingMsg:'Lecture de votre document…',
     loadingSub:'Identification des lois, cas et délais',
     placeholder:'Collez le texte de votre document juridique ici…',
+    chip1:"⚠️ Avis d'Expulsion", chip2:'💳 Lettre de Recouvrement', chip3:'📋 Contrat de Location',
+    chip4:'⚖️ Convocation Judiciaire', chip5:'👔 Contrat de Travail', chip6:"🛂 Avis d'Immigration",
+    chip7:'📬 Lettre IRS / Impôts', chip8:'🚗 Contravention Routière',
+    sample1:"⚠️ Avis d'Expulsion", sample2:'💳 Lettre de Créance', sample3:'📋 Contrat de Location',
+    sample4:'⚖️ Convocation', sample5:'👔 Contrat de Travail', sample6:"🛂 Avis d'Immigration",
+    sample7:'📬 Lettre IRS', sample8:'🚗 Contravention',
+    navAbout:'À propos', navFaq:'FAQ', aboutLabel:'À propos', aboutTitle:'Notre mission',
+    fbLabel:'Commentaires', fbTitle:'Vous avez une question ou une suggestion?',
+    fbSub:'Nous lisons chaque message. Vos commentaires aident à améliorer LawLight.',
+    fbNameLabel:'Votre nom (facultatif)', fbCatLabel:'Catégorie',
+    fbEmailLabel:'Email (facultatif — si vous souhaitez une réponse)',
+    fbMsgLabel:'Message', fbSubmit:'Envoyer le commentaire',
+    fbOptQ:'Question', fbOptS:'Suggestion', fbOptC:'Plainte', fbOptO:'Autre',
+    fbNamePh:'Anonyme', fbMsgPh:'Dites-nous ce que vous pensez…',
+    faqLabel:'FAQ', faqTitle:'Questions fréquentes', faqSub:'Tout ce que vous devez savoir avant de commencer.',
+    faq1q:"S'agit-il de vrais conseils juridiques?",
+    faq1a:"Non — LawLight fournit des <strong>informations juridiques</strong>, et non des conseils juridiques. Il y a une différence importante : les informations juridiques expliquent ce que dit la loi en général ; les conseils juridiques appliquent la loi à votre situation spécifique et nécessitent un avocat agréé. LawLight vous aide à comprendre ce que signifie un document et quelles lois s'appliquent, mais ne vous dit pas quoi faire. Pour des conseils propres à votre cas, veuillez consulter un avocat agréé. Nous incluons des liens vers des organisations d'aide juridique gratuite dans chaque résultat.",
+    faq2q:'Mon document reste-t-il privé?',
+    faq2a:"Votre document est envoyé de manière sécurisée à Claude AI (par Anthropic) pour analyse et n'est <strong>jamais stocké sur nos serveurs</strong>. Nous ne consignons, ne sauvegardons ni ne partageons le contenu des documents que vous téléchargez ou collez. Le résultat de l'analyse s'affiche uniquement dans votre navigateur et est supprimé lorsque vous quittez la page. Pour les documents très sensibles (ex. : documents d'immigration), vous pouvez supprimer les informations personnelles avant de télécharger.",
+    faq3q:'Quels types de documents puis-je analyser?',
+    faq3a:"LawLight fonctionne avec presque tout document juridique : avis d'expulsion, lettres de recouvrement de dettes, contrats de location, citations à comparaître, contrats de travail, avis d'immigration (Notice to Appear, RFE), lettres de l'IRS et fiscales, contraventions routières, et plus. Vous pouvez coller du texte directement ou télécharger un PDF. Les PDF avec du texte sélectionnable sont extraits instantanément ; les PDF scannés ou manuscrits sont traités par vision IA (~20 secondes). Vous pouvez également télécharger une photo JPEG ou PNG d'un document physique.",
+    faq4q:'Quelles langues sont prises en charge?',
+    faq4a:"LawLight prend en charge 15 langues pour l'interface du site et la sortie d'analyse IA : anglais, espagnol, chinois simplifié, chinois traditionnel, vietnamien, tagalog, coréen, arabe, hindi, portugais, russe, français, créole haïtien, pendjabi et amharique. Sélectionnez votre langue de sortie préférée dans la liste déroulante du formulaire d'analyse. Vous pouvez également changer toute l'interface du site avec le bouton de langue dans la barre de navigation supérieure.",
+    faq5q:'Quelle est la précision des citations juridiques?',
+    faq5a:'LawLight utilise Claude AI d\'Anthropic, très capable d\'identifier les statuts pertinents et de les citer avec précision. Toutes les citations de statuts incluent un lien direct vers le texte officiel (ex. : leginfo.legislature.ca.gov pour la loi californienne). Pour la jurisprudence, nous n\'incluons que les citations dont l\'IA est sûre — une citation manquante est toujours préférable à une citation fabriquée. Les lois évoluent dans le temps, vérifiez donc toujours les versions actuelles.',
+    faq6q:"J'ai reçu un avis d'expulsion / de tribunal — que dois-je faire?",
+    faq6a:"D'abord, collez ou téléchargez le document dans LawLight pour comprendre exactement ce qu'il dit et quels sont vos droits. Portez une attention particulière à la section <strong>Dates et délais clés</strong> — manquer une échéance peut gravement nuire à votre dossier. Pour les avis très urgents, LawLight affichera un encadré d'action \"Que faire maintenant\". Contactez ensuite immédiatement une organisation d'aide juridique. Dans la Bay Area : <a href=\"https://ebclc.org\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--sky)\">East Bay Community Law Center</a> (510) 548-4040 et <a href=\"https://baylegal.org\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--sky)\">Bay Area Legal Aid</a> (415) 982-1300 offrent une aide gratuite.",
   },
   ht: {
     navBadge:'Enfòmasyon Legal Sèlman', heroBadge:'✦ Gratis · San kont · 15 lang',
@@ -1196,6 +1947,33 @@ const TRANSLATIONS = {
     btnNew:'← Analize Yon Lòt Dokiman', loadingMsg:'Ap li dokiman ou…',
     loadingSub:'Idantifye lwa, ka ak dat limit',
     placeholder:'Kole tèks dokiman legal ou isit la…',
+    chip1:'⚠️ Avi Ekspilsyon', chip2:'💳 Lèt Rekouvman Dèt', chip3:'📋 Kontra Lwaye',
+    chip4:'⚖️ Konvokasyon Tribinal', chip5:'👔 Kontra Travay', chip6:'🛂 Avi Imigrasyon',
+    chip7:'📬 Lèt IRS / Taks', chip8:'🚗 Kontravansyon Trafik',
+    sample1:'⚠️ Avi Ekspilsyon', sample2:'💳 Lèt Dèt', sample3:'📋 Kontra Lwaye',
+    sample4:'⚖️ Konvokasyon Tribinal', sample5:'👔 Kontra Travay', sample6:'🛂 Avi Imigrasyon',
+    sample7:'📬 Lèt IRS', sample8:'🚗 Kontravansyon',
+    navAbout:'Konsènan', navFaq:'Kesyon', aboutLabel:'Konsènan', aboutTitle:'Objektif nou',
+    fbLabel:'Kòmantè', fbTitle:'Ou gen yon kesyon oswa sijesyon?',
+    fbSub:'Nou li chak mesaj. Kòmantè ou yo ede amelyore LawLight.',
+    fbNameLabel:'Non ou (opsyonèl)', fbCatLabel:'Kategori',
+    fbEmailLabel:'Imel (opsyonèl — si ou vle yon repons)',
+    fbMsgLabel:'Mesaj', fbSubmit:'Voye Kòmantè',
+    fbOptQ:'Kesyon', fbOptS:'Sijesyon', fbOptC:'Plent', fbOptO:'Lòt',
+    fbNamePh:'Anonim', fbMsgPh:'Di nou sa ou panse…',
+    faqLabel:'Kesyon', faqTitle:'Kesyon ki poze souvan', faqSub:'Tout sa ou bezwen konnen anvan ou kòmanse.',
+    faq1q:'Èske sa a se vre konsèy legal?',
+    faq1a:'Non — LawLight bay <strong>enfòmasyon legal</strong>, pa konsèy legal. Gen yon diferans enpòtan: enfòmasyon legal eksplike sa lalwa di an jeneral; konsèy legal aplike lalwa nan sitiyasyon espesifik ou epi li mande yon avoka lisansye. LawLight ede ou konprann sa yon dokiman vle di ak ki lwa yo aplike, men li pa di ou sa pou fè. Pou konsèy espesifik nan ka ou, tanpri konsilte yon avoka lisansye. Nou mete lyen pou òganizasyon èd legal gratis nan chak rezilta.',
+    faq2q:'Èske dokiman mwen rete prive?',
+    faq2a:'Dokiman ou voye an sekirite bay Claude AI (pa Anthropic) pou analiz epi li <strong>pa janm estoke sou sèvè nou yo</strong>. Nou pa anrejistre, sove, ni pataje kontni okenn dokiman ou telechaje oswa kole. Rezilta analiz la montre sèlman nan navigatè ou epi jete lè ou kite paj la. Pou dokiman ki trè sansib (pa ekzanp, papye imigrasyon), ou ka vle efase enfòmasyon pèsonèl anvan ou telechaje.',
+    faq3q:'Ki kalite dokiman mwen ka analize?',
+    faq3a:'LawLight travay ak prèske nenpòt dokiman legal: avi ekspilsyon, lèt rekouvman dèt, kontra lwaye, konvokasyon tribinal, kontra travay, avi imigrasyon (Notice to Appear, RFE), lèt IRS ak taks, kontravansyon trafik, ak plis. Ou ka kole tèks dirèkteman oswa telechaje yon PDF. PDF ak tèks ki ka chwazi yo ekstrè imedyatman; PDF eskane yo trete ak vizyon AI (~20 segond). Ou ka telechaje yon foto JPEG oswa PNG yon dokiman fizik tou.',
+    faq4q:'Ki lang yo sipòte?',
+    faq4a:'LawLight sipòte 15 lang pou tou de entèfas sitwèb la ak pwodiksyon analiz AI: anglè, panyòl, chinwa senplifye, chinwa tradisyonèl, vyetnamyen, tagalog, koreyen, arab, hindi, pòtigè, ris, fransè, kreyòl ayisyen, punjabi, ak amharik. Chwazi lang pwodiksyon prefere ou nan meni dewoutan nan fòm analiz la. Ou ka chanje tout entèfas sitwèb la tou lè w itilize bouton lang nan ba navigasyon anwo.',
+    faq5q:'Ki nivo presizyon sitasyon legal yo?',
+    faq5a:'LawLight itilize Claude AI pa Anthropic, ki gen kapasite pou idantifye estati enpòtan yo epi site yo avèk presizyon. Tout sitasyon estati yo gen yon lyen dirèk nan tèks ofisyèl la (pa ekzanp, leginfo.legislature.ca.gov pou lwa Californi). Pou lwa ka, nou sèlman mete sitasyon AI a gen konfyans yo — yon sitasyon ki manke toujou pi bon pase yon ki fabrike. Lwa yo chanje ak tan, kidonk toujou verifye vèsyon aktyèl yo.',
+    faq6q:'Mwen resevwa yon avi ekspilsyon / tribinal — kisa mwen dwe fè?',
+    faq6a:'Premye, kole oswa telechaje dokiman an nan LawLight pou konprann egzakteman sa li di ak ki dwa ou genyen. Fè atansyon pou seksyon <strong>Dat ak Delè Kle yo</strong> — rate yon delè ka domaje ka ou seryezman. Pou avi ki gen ijans segondè, LawLight pral montre yon bwat aksyon "Kisa pou fè kounye a". Epi kontakte yon òganizasyon èd legal imedyatman. Nan Bay Area: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 ak <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ofri èd gratis.',
   },
   pa: {
     navBadge:'ਕੇਵਲ ਕਾਨੂੰਨੀ ਜਾਣਕਾਰੀ', heroBadge:'✦ ਮੁਫ਼ਤ · ਕੋਈ ਖਾਤਾ ਨਹੀਂ · 15 ਭਾਸ਼ਾਵਾਂ',
@@ -1218,6 +1996,33 @@ const TRANSLATIONS = {
     btnNew:'← ਹੋਰ ਦਸਤਾਵੇਜ਼ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰੋ', loadingMsg:'ਤੁਹਾਡਾ ਦਸਤਾਵੇਜ਼ ਪੜ੍ਹਿਆ ਜਾ ਰਿਹਾ ਹੈ…',
     loadingSub:'ਕਾਨੂੰਨ, ਮਾਮਲੇ ਅਤੇ ਸਮਾਂ-ਸੀਮਾਵਾਂ ਦੀ ਪਛਾਣ ਹੋ ਰਹੀ ਹੈ',
     placeholder:'ਇੱਥੇ ਆਪਣੇ ਕਾਨੂੰਨੀ ਦਸਤਾਵੇਜ਼ ਦਾ ਪਾਠ ਪੇਸਟ ਕਰੋ…',
+    chip1:'⚠️ ਬੇਦਖਲੀ ਨੋਟਿਸ', chip2:'💳 ਕਰਜ਼ਾ ਵਸੂਲੀ ਪੱਤਰ', chip3:'📋 ਕਿਰਾਏ ਦਾ ਇਕਰਾਰਨਾਮਾ',
+    chip4:'⚖️ ਅਦਾਲਤੀ ਸੰਮਨ', chip5:'👔 ਰੁਜ਼ਗਾਰ ਇਕਰਾਰਨਾਮਾ', chip6:'🛂 ਇਮੀਗ੍ਰੇਸ਼ਨ ਨੋਟਿਸ',
+    chip7:'📬 IRS / ਟੈਕਸ ਪੱਤਰ', chip8:'🚗 ਟ੍ਰੈਫਿਕ ਜੁਰਮਾਨਾ',
+    sample1:'⚠️ ਬੇਦਖਲੀ ਨੋਟਿਸ', sample2:'💳 ਕਰਜ਼ਾ ਪੱਤਰ', sample3:'📋 ਕਿਰਾਏ ਦਾ ਇਕਰਾਰਨਾਮਾ',
+    sample4:'⚖️ ਅਦਾਲਤੀ ਸੰਮਨ', sample5:'👔 ਰੁਜ਼ਗਾਰ ਇਕਰਾਰਨਾਮਾ', sample6:'🛂 ਇਮੀਗ੍ਰੇਸ਼ਨ ਨੋਟਿਸ',
+    sample7:'📬 IRS ਪੱਤਰ', sample8:'🚗 ਟ੍ਰੈਫਿਕ ਜੁਰਮਾਨਾ',
+    navAbout:'ਬਾਰੇ', navFaq:'ਸਵਾਲ', aboutLabel:'ਬਾਰੇ', aboutTitle:'ਸਾਡਾ ਮਕਸਦ',
+    fbLabel:'ਪ੍ਰਤੀਕਿਰਿਆ', fbTitle:'ਕੋਈ ਸਵਾਲ ਜਾਂ ਸੁਝਾਅ ਹੈ?',
+    fbSub:'ਅਸੀਂ ਹਰ ਸੁਨੇਹਾ ਪੜ੍ਹਦੇ ਹਾਂ। ਤੁਹਾਡੀ ਪ੍ਰਤੀਕਿਰਿਆ LawLight ਨੂੰ ਬਿਹਤਰ ਬਣਾਉਂਦੀ ਹੈ।',
+    fbNameLabel:'ਤੁਹਾਡਾ ਨਾਮ (ਵਿਕਲਪਿਕ)', fbCatLabel:'ਸ਼੍ਰੇਣੀ',
+    fbEmailLabel:'ਈਮੇਲ (ਵਿਕਲਪਿਕ — ਜੇ ਜਵਾਬ ਚਾਹੁੰਦੇ ਹੋ)',
+    fbMsgLabel:'ਸੁਨੇਹਾ', fbSubmit:'ਪ੍ਰਤੀਕਿਰਿਆ ਭੇਜੋ',
+    fbOptQ:'ਸਵਾਲ', fbOptS:'ਸੁਝਾਅ', fbOptC:'ਸ਼ਿਕਾਇਤ', fbOptO:'ਹੋਰ',
+    fbNamePh:'ਅਣਜਾਣ', fbMsgPh:'ਸਾਨੂੰ ਦੱਸੋ ਕੀ ਸੋਚਦੇ ਹੋ…',
+    faqLabel:'ਸਵਾਲ', faqTitle:'ਆਮ ਸਵਾਲ', faqSub:'ਸ਼ੁਰੂ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਜੋ ਕੁਝ ਜਾਣਨਾ ਜ਼ਰੂਰੀ ਹੈ।',
+    faq1q:'ਕੀ ਇਹ ਅਸਲ ਕਾਨੂੰਨੀ ਸਲਾਹ ਹੈ?',
+    faq1a:'ਨਹੀਂ — LawLight <strong>ਕਾਨੂੰਨੀ ਜਾਣਕਾਰੀ</strong> ਪ੍ਰਦਾਨ ਕਰਦਾ ਹੈ, ਕਾਨੂੰਨੀ ਸਲਾਹ ਨਹੀਂ। ਇੱਕ ਮਹੱਤਵਪੂਰਨ ਅੰਤਰ ਹੈ: ਕਾਨੂੰਨੀ ਜਾਣਕਾਰੀ ਦੱਸਦੀ ਹੈ ਕਿ ਕਾਨੂੰਨ ਕੀ ਕਹਿੰਦਾ ਹੈ; ਕਾਨੂੰਨੀ ਸਲਾਹ ਤੁਹਾਡੀ ਖਾਸ ਸਥਿਤੀ \'ਤੇ ਕਾਨੂੰਨ ਲਾਗੂ ਕਰਦੀ ਹੈ ਅਤੇ ਲਾਇਸੰਸਸ਼ੁਦਾ ਵਕੀਲ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। LawLight ਤੁਹਾਨੂੰ ਸਮਝਣ ਵਿੱਚ ਮਦਦ ਕਰਦਾ ਹੈ, ਪਰ ਦੱਸਦਾ ਨਹੀਂ ਕਿ ਕੀ ਕਰਨਾ ਹੈ। ਆਪਣੇ ਮਾਮਲੇ ਲਈ ਲਾਇਸੰਸਸ਼ੁਦਾ ਵਕੀਲ ਨਾਲ ਸੰਪਰਕ ਕਰੋ। ਅਸੀਂ ਹਰ ਨਤੀਜੇ ਵਿੱਚ ਮੁਫ਼ਤ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਸੰਸਥਾਵਾਂ ਦੇ ਲਿੰਕ ਸ਼ਾਮਲ ਕਰਦੇ ਹਾਂ।',
+    faq2q:'ਕੀ ਮੇਰਾ ਦਸਤਾਵੇਜ਼ ਗੁਪਤ ਰਹਿੰਦਾ ਹੈ?',
+    faq2a:'ਤੁਹਾਡਾ ਦਸਤਾਵੇਜ਼ ਵਿਸ਼ਲੇਸ਼ਣ ਲਈ ਸੁਰੱਖਿਅਤ ਢੰਗ ਨਾਲ Claude AI (Anthropic ਦੁਆਰਾ) ਨੂੰ ਭੇਜਿਆ ਜਾਂਦਾ ਹੈ ਅਤੇ <strong>ਕਦੇ ਸਾਡੇ ਸਰਵਰਾਂ ਤੇ ਸਟੋਰ ਨਹੀਂ ਹੁੰਦਾ</strong>। ਅਸੀਂ ਤੁਹਾਡੇ ਕਿਸੇ ਵੀ ਦਸਤਾਵੇਜ਼ ਦੀ ਸਮੱਗਰੀ ਨੂੰ ਲੌਗ, ਸੇਵ ਜਾਂ ਸਾਂਝਾ ਨਹੀਂ ਕਰਦੇ। ਵਿਸ਼ਲੇਸ਼ਣ ਦਾ ਨਤੀਜਾ ਸਿਰਫ਼ ਤੁਹਾਡੇ ਬ੍ਰਾਊਜ਼ਰ ਵਿੱਚ ਦਿਖਾਇਆ ਜਾਂਦਾ ਹੈ। ਬਹੁਤ ਸੰਵੇਦਨਸ਼ੀਲ ਦਸਤਾਵੇਜ਼ਾਂ ਲਈ, ਅਪਲੋਡ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਨਿੱਜੀ ਜਾਣਕਾਰੀ ਛੁਪਾਉਣਾ ਬਿਹਤਰ ਹੈ।',
+    faq3q:'ਮੈਂ ਕਿਸ ਕਿਸਮ ਦੇ ਦਸਤਾਵੇਜ਼ਾਂ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰ ਸਕਦਾ ਹਾਂ?',
+    faq3a:'LawLight ਲਗਭਗ ਕਿਸੇ ਵੀ ਕਾਨੂੰਨੀ ਦਸਤਾਵੇਜ਼ ਨਾਲ ਕੰਮ ਕਰਦਾ ਹੈ: ਬੇਦਖਲੀ ਨੋਟਿਸ, ਕਰਜ਼ਾ ਵਸੂਲੀ ਪੱਤਰ, ਕਿਰਾਏ ਦੇ ਇਕਰਾਰਨਾਮੇ, ਅਦਾਲਤੀ ਸੰਮਨ, ਰੁਜ਼ਗਾਰ ਇਕਰਾਰਨਾਮੇ, ਇਮੀਗ੍ਰੇਸ਼ਨ ਨੋਟਿਸ, IRS ਅਤੇ ਟੈਕਸ ਪੱਤਰ, ਟ੍ਰੈਫਿਕ ਜੁਰਮਾਨੇ ਅਤੇ ਹੋਰ। ਤੁਸੀਂ ਟੈਕਸਟ ਸਿੱਧਾ ਪੇਸਟ ਕਰ ਸਕਦੇ ਹੋ ਜਾਂ PDF ਅਪਲੋਡ ਕਰ ਸਕਦੇ ਹੋ।',
+    faq4q:'ਕਿਹੜੀਆਂ ਭਾਸ਼ਾਵਾਂ ਸਮਰਥਿਤ ਹਨ?',
+    faq4a:'LawLight ਵੈੱਬਸਾਈਟ ਇੰਟਰਫੇਸ ਅਤੇ AI ਵਿਸ਼ਲੇਸ਼ਣ ਦੋਵਾਂ ਲਈ 15 ਭਾਸ਼ਾਵਾਂ ਦਾ ਸਮਰਥਨ ਕਰਦਾ ਹੈ: ਅੰਗਰੇਜ਼ੀ, ਸਪੇਨੀ, ਸਰਲੀਕ੍ਰਿਤ ਚੀਨੀ, ਰਵਾਇਤੀ ਚੀਨੀ, ਵਿਅਤਨਾਮੀ, ਤਾਗਾਲੋਗ, ਕੋਰੀਅਨ, ਅਰਬੀ, ਹਿੰਦੀ, ਪੁਰਤਗਾਲੀ, ਰੂਸੀ, ਫ੍ਰੈਂਚ, ਹੈਤੀਅਨ ਕ੍ਰੀਓਲ, ਪੰਜਾਬੀ ਅਤੇ ਅਮਹਾਰਿਕ। ਵਿਸ਼ਲੇਸ਼ਣ ਫਾਰਮ ਵਿੱਚ ਡ੍ਰੌਪਡਾਊਨ ਤੋਂ ਆਪਣੀ ਪਸੰਦੀਦਾ ਭਾਸ਼ਾ ਚੁਣੋ।',
+    faq5q:'ਕਾਨੂੰਨੀ ਹਵਾਲੇ ਕਿੰਨੇ ਸਹੀ ਹਨ?',
+    faq5a:'LawLight Anthropic ਦਾ Claude AI ਵਰਤਦਾ ਹੈ, ਜੋ ਸੰਬੰਧਿਤ ਕਾਨੂੰਨਾਂ ਦੀ ਸਹੀ ਢੰਗ ਨਾਲ ਪਛਾਣ ਕਰਨ ਅਤੇ ਹਵਾਲਾ ਦੇਣ ਵਿੱਚ ਬਹੁਤ ਸਮਰੱਥ ਹੈ। ਸਾਰੇ ਹਵਾਲਿਆਂ ਵਿੱਚ ਸਰਕਾਰੀ ਪਾਠ ਦਾ ਸਿੱਧਾ ਲਿੰਕ ਸ਼ਾਮਲ ਹੈ। ਕਾਨੂੰਨ ਸਮੇਂ ਦੇ ਨਾਲ ਬਦਲਦੇ ਹਨ, ਇਸਲਈ ਭਰੋਸਾ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਮੌਜੂਦਾ ਸੰਸਕਰਣਾਂ ਦੀ ਜਾਂਚ ਕਰੋ।',
+    faq6q:'ਮੈਨੂੰ ਬੇਦਖਲੀ / ਅਦਾਲਤ ਦਾ ਨੋਟਿਸ ਮਿਲਿਆ — ਕੀ ਕਰਾਂ?',
+    faq6a:'ਪਹਿਲਾਂ, ਦਸਤਾਵੇਜ਼ ਨੂੰ LawLight \'ਤੇ ਪੇਸਟ ਜਾਂ ਅਪਲੋਡ ਕਰੋ ਅਤੇ ਆਪਣੇ ਅਧਿਕਾਰ ਜਾਣੋ। <strong>ਮੁੱਖ ਤਾਰੀਖਾਂ ਅਤੇ ਸਮਾਂ-ਸੀਮਾਵਾਂ</strong> ਵੱਲ ਧਿਆਨ ਦਿਓ। ਫਿਰ ਤੁਰੰਤ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਸੰਸਥਾ ਨਾਲ ਸੰਪਰਕ ਕਰੋ। ਬੇ ਏਰੀਆ ਵਿੱਚ: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 ਅਤੇ <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ਮੁਫ਼ਤ ਮਦਦ ਦਿੰਦੇ ਹਨ।',
   },
   am: {
     navBadge:'ሕጋዊ መረጃ ብቻ', heroBadge:'✦ ነፃ · መለያ አያስፈልግም · 15 ቋንቋዎች',
@@ -1240,6 +2045,33 @@ const TRANSLATIONS = {
     btnNew:'← ሌላ ሰነድ ይተንትኑ', loadingMsg:'ሰነድዎን በማንበብ ላይ…',
     loadingSub:'ሕጎችን፣ ጉዳዮችን እና የጊዜ ገደቦችን በመለየት ላይ',
     placeholder:'የሕጋዊ ሰነዶን ጽሑፍ ከዚህ ለጥፍ…',
+    chip1:'⚠️ የማስወጣት ማስታወቂያ', chip2:'💳 የዕዳ ስብስብ ደብዳቤ', chip3:'📋 የቤት ኪራይ ስምምነት',
+    chip4:'⚖️ የፍርድ ቤት መጥሪያ', chip5:'👔 የቅጥር ውል', chip6:'🛂 የኢሚግሬሽን ማስታወቂያ',
+    chip7:'📬 IRS / የታክስ ደብዳቤ', chip8:'🚗 የትራፊክ መቀጮ',
+    sample1:'⚠️ የማስወጣት ማስታወቂያ', sample2:'💳 የዕዳ ደብዳቤ', sample3:'📋 የቤት ኪራይ ስምምነት',
+    sample4:'⚖️ የፍርድ ቤት መጥሪያ', sample5:'👔 የቅጥር ውል', sample6:'🛂 የኢሚግሬሽን ማስታወቂያ',
+    sample7:'📬 IRS ደብዳቤ', sample8:'🚗 የትራፊክ መቀጮ',
+    navAbout:'ስለ', navFaq:'ጥያቄዎች', aboutLabel:'ስለ', aboutTitle:'ዓላማችን',
+    fbLabel:'ግብረ መልስ', fbTitle:'ጥያቄ ወይም ሐሳብ አለዎት?',
+    fbSub:'እያንዳንዱ መልዕክት እናነባለን። ግብረ መልስዎ LawLight ን ለማሻሻል ይረዳል።',
+    fbNameLabel:'ስምዎ (አማራጭ)', fbCatLabel:'ምድብ',
+    fbEmailLabel:'ኢሜይል (አማራጭ — ምላሽ ከፈለጉ)',
+    fbMsgLabel:'መልዕክት', fbSubmit:'ግብረ መልስ ላክ',
+    fbOptQ:'ጥያቄ', fbOptS:'ሐሳብ', fbOptC:'ቅሬታ', fbOptO:'ሌላ',
+    fbNamePh:'ስም አልባ', fbMsgPh:'ምን እያሰቡ እንዳሉ ይንገሩን…',
+    faqLabel:'ጥያቄዎች', faqTitle:'ተደጋጋሚ ጥያቄዎች', faqSub:'ከመጀመርዎ በፊት ማወቅ ያለብዎት ሁሉ።',
+    faq1q:'ይህ እውነተኛ የሕግ ምክር ነው?',
+    faq1a:'አይደለም — LawLight <strong>ሕጋዊ መረጃ</strong> ያቀርባል፣ የሕግ ምክር አይደለም። ጠቃሚ ልዩነት አለ: ሕጋዊ መረጃ ሕጉ በአጠቃላይ ምን እንደሚናገር ያብራራል; የሕግ ምክር ሕጉን ለእርስዎ ልዩ ሁኔታ ይተገብራል እናም ፈቃድ ያለው ጠበቃ ያስፈልጋል። LawLight ሰነዱ ምን ማለት እንደሆነ ለመረዳት ያግዝዎታል፣ ነገር ግን ምን ማድረግ እንዳለብዎ አይነግርዎትም። ፈቃድ ያለው ጠበቃ ያማክሩ። እያንዳንዱ ውጤት ነፃ የሕግ እርዳታ ድርጅቶች ማስፈንጠሪያዎች ይዟል።',
+    faq2q:'ሰነዴ ሚስጥራዊ ሆኖ ይቆያል?',
+    faq2a:'ሰነዶ ለትንተና ወደ Claude AI (ከ Anthropic) ሚስጥራዊ በሆነ መንገድ ይላካል እና <strong>በሰርቨሮቻችን ላይ ፈጽሞ አይከማቹም</strong>። ስለሰቀሉት ወይም ስለለጠፉት ሰነድ ይዘት አንቆጥርም፣ አናስቀምጥም ወይም አናጋራም። የትንተና ውጤቱ በአሳሽዎ ብቻ ይታያል። ለሚስጥራዊ ሰነዶች ከመስቀልዎ በፊት ስምና ID ቁጥርን ማሸፈን ይሻላል።',
+    faq3q:'ምን አይነት ሰነዶች መተንተን እችላለሁ?',
+    faq3a:'LawLight ሁሉን ዓይነት ሕጋዊ ሰነዶች ያስተናግዳል: የማስወጣት ማስታወቂያዎች፣ የዕዳ ስብሰባ ደብዳቤዎች፣ የቤት ኪራይ ስምምነቶች፣ የፍርድ ቤት መጥሪያዎች፣ የቅጥር ውሎች፣ የኢሚግሬሽን ማስታወቂያዎች፣ IRS እና የግብር ደብዳቤዎች፣ የትራፊክ መቀጮዎች እና ሌሎችም። ጽሑፍ ቀጥታ መለጠፍ ወይም PDF መጫን ይችላሉ።',
+    faq4q:'የትኞቹ ቋንቋዎች ይደገፋሉ?',
+    faq4a:'LawLight ለድር ጣቢያ ይዘት እና AI ትንተና ውጤት 15 ቋንቋዎችን ይደግፋል: እንግሊዝኛ፣ ስፓኒሽ፣ ቀለሉ ቻይንኛ፣ ባህላዊ ቻይንኛ፣ ቪትናምኛ፣ ታጋሎግ፣ ኮሪያኛ፣ አረብኛ፣ ሂንዲ፣ ፖርቱጋልኛ፣ ሩሲያኛ፣ ፈረንሳይኛ፣ ሃይቲያን ክርዮሌ፣ ፑንጃቢ እና አምሃርኛ። ተመራጭ የውጤት ቋንቋዎን ከትንተና ፎርሙ ዝርዝር ይምረጡ።',
+    faq5q:'የሕጋዊ ጥቅሶች ትክክለኛነት ምን ያህል ነው?',
+    faq5a:'LawLight የ Anthropic Claude AI ይጠቀማል። ሁሉም ሕጋዊ ጥቅሶች ወደ ኦፊሴላዊ ጽሑፉ ቀጥተኛ ማስፈንጠሪያ ይዘዋል (ለምሳሌ leginfo.legislature.ca.gov ለካሊፎርኒያ ሕግ)። ሕጎች ከጊዜ ወደ ጊዜ ይለወጣሉ፣ ስለዚህ ሁሌ ወቅታዊ ስሪቶችን ያረጋግጡ።',
+    faq6q:'የማስወጣት / ፍርድ ቤት ማስታወቂያ ደረሰኝ — ምን ማድረግ አለብኝ?',
+    faq6a:'በመጀመሪያ ሰነዱን ወደ LawLight ለጥፉ ወይም ጫኑ ምን እንደሚናገር እና መብቶቹ ምን እንደሆኑ ለመረዳት። <strong>ቁልፍ ቀኖች እና ጊዜ ገደቦች</strong> ክፍል ላይ ትኩረት ይስጡ — ጊዜ ገደብ መዝለቅ ጉዳዮን ሊጎዳ ይችላል። ከዚያ ወዲያው የሕግ እርዳታ ድርጅት ያግኙ። ቤይ ኤሪያ: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 እና <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ነፃ እርዳታ ያቀርባሉ።',
   },
 };
 
@@ -1281,6 +2113,39 @@ const UI_ELEMENTS = [
   { sel:'.btn-new', key:'btnNew' },
   { id:'loadingMsg', key:'loadingMsg' },
   { sel:'.loading-sub', key:'loadingSub' },
+  { id:'chip1', key:'chip1' }, { id:'chip2', key:'chip2' },
+  { id:'chip3', key:'chip3' }, { id:'chip4', key:'chip4' },
+  { id:'chip5', key:'chip5' }, { id:'chip6', key:'chip6' },
+  { id:'chip7', key:'chip7' }, { id:'chip8', key:'chip8' },
+  { id:'sbtn1', key:'sample1' }, { id:'sbtn2', key:'sample2' },
+  { id:'sbtn3', key:'sample3' }, { id:'sbtn4', key:'sample4' },
+  { id:'sbtn5', key:'sample5' }, { id:'sbtn6', key:'sample6' },
+  { id:'sbtn7', key:'sample7' }, { id:'sbtn8', key:'sample8' },
+  { id:'navAbout', key:'navAbout' },
+  { id:'navFaq', key:'navFaq' },
+  { id:'aboutLabel', key:'aboutLabel' },
+  { id:'aboutTitle', key:'aboutTitle' },
+  { id:'fb-section-label', key:'fbLabel' },
+  { id:'fb-title', key:'fbTitle' },
+  { id:'fb-sub', key:'fbSub' },
+  { id:'fb-name-label', key:'fbNameLabel' },
+  { id:'fb-cat-label', key:'fbCatLabel' },
+  { id:'fb-email-label', key:'fbEmailLabel' },
+  { id:'fb-msg-label', key:'fbMsgLabel' },
+  { id:'fb-submit', key:'fbSubmit' },
+  { id:'fb-opt-q', key:'fbOptQ' },
+  { id:'fb-opt-s', key:'fbOptS' },
+  { id:'fb-opt-c', key:'fbOptC' },
+  { id:'fb-opt-o', key:'fbOptO' },
+  { id:'faqLabel', key:'faqLabel' },
+  { id:'faqTitle', key:'faqTitle' },
+  { id:'faqSub', key:'faqSub' },
+  { id:'faq1q', key:'faq1q' }, { id:'faq1a', key:'faq1a', html:true },
+  { id:'faq2q', key:'faq2q' }, { id:'faq2a', key:'faq2a', html:true },
+  { id:'faq3q', key:'faq3q' }, { id:'faq3a', key:'faq3a', html:true },
+  { id:'faq4q', key:'faq4q' }, { id:'faq4a', key:'faq4a', html:true },
+  { id:'faq5q', key:'faq5q' }, { id:'faq5a', key:'faq5a', html:true },
+  { id:'faq6q', key:'faq6q' }, { id:'faq6a', key:'faq6a', html:true },
 ];
 
 const LANG_LABELS = {
@@ -1294,12 +2159,19 @@ let uiLang = 'en';
 function setUILang(code) {
   uiLang = code;
   const t = TRANSLATIONS[code] || TRANSLATIONS.en;
-  UI_ELEMENTS.forEach(({ id, sel, key }) => {
+  UI_ELEMENTS.forEach(({ id, sel, key, html }) => {
     const el = id ? document.getElementById(id) : document.querySelector(sel);
-    if (el && t[key] !== undefined) el.textContent = t[key];
+    if (el && t[key] !== undefined) {
+      if (html) el.innerHTML = t[key];
+      else el.textContent = t[key];
+    }
   });
   const ta = document.getElementById('docText');
   if (ta && t.placeholder) ta.placeholder = t.placeholder;
+  const fbName = document.getElementById('fb-name');
+  if (fbName && t.fbNamePh) fbName.placeholder = t.fbNamePh;
+  const fbMsg = document.getElementById('fb-message');
+  if (fbMsg && t.fbMsgPh) fbMsg.placeholder = t.fbMsgPh;
   document.documentElement.dir = code === 'ar' ? 'rtl' : 'ltr';
   document.getElementById('uiLangLabel').textContent = LANG_LABELS[code] || code.toUpperCase();
 }
@@ -1360,38 +2232,44 @@ function loadSample(key) {
   document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ── PDF handling ───────────────────────────────────────────────────────────────
+// ── File handling (PDF + images) ───────────────────────────────────────────────
 function onDragOver(e) { e.preventDefault(); document.getElementById('dropzone').classList.add('dragover'); }
 function onDragLeave()  { document.getElementById('dropzone').classList.remove('dragover'); }
 function onDrop(e) {
   e.preventDefault();
   document.getElementById('dropzone').classList.remove('dragover');
   const f = e.dataTransfer.files[0];
-  if (f) onPdfFile(f);
+  if (f) onFileUpload(f);
 }
 
-async function onPdfFile(file) {
+async function onFileUpload(file) {
   if (!file) return;
   const st = document.getElementById('pdfStatus');
-  st.style.color = '#64748b'; st.textContent = '⏳ Reading document…';
+  const isImage = /\.(jpe?g|png|webp)$/i.test(file.name) || file.type.startsWith('image/');
+  const endpoint = isImage ? '/extract-image' : '/extract-pdf';
 
-  // After 4 s with no result, hint that AI OCR may be running
+  st.style.color = '#64748b';
+  st.textContent = isImage ? '⏳ Reading image with AI…' : '⏳ Reading document…';
+
+  // After 4 s with no result, show a patience hint
   const ocrHint = setTimeout(() => {
     if (st.textContent.includes('Reading')) {
-      st.textContent = '⏳ Scanning with AI — handwritten PDFs take ~20 s…';
+      st.textContent = '⏳ Scanning with AI — this can take ~20 s for complex documents…';
     }
   }, 4000);
 
   const fd = new FormData();
   fd.append('file', file);
   try {
-    const res = await fetch('/extract-pdf', { method: 'POST', body: fd });
+    const res = await fetch(endpoint, { method: 'POST', body: fd });
     clearTimeout(ocrHint);
     const data = await res.json();
     if (!res.ok) throw new Error(data.detail);
     pdfText = data.text;
     st.style.color = 'var(--low)';
-    if (data.method === 'ocr') {
+    if (isImage) {
+      st.textContent = `✓ Image read with AI — ready to analyze`;
+    } else if (data.method === 'ocr') {
       st.textContent = `✓ ${data.pages} page${data.pages !== 1 ? 's' : ''} scanned with AI ✦ review the text before analyzing`;
     } else {
       st.textContent = `✓ ${data.pages} page${data.pages !== 1 ? 's' : ''} extracted — ready to analyze`;
@@ -1460,6 +2338,7 @@ function setUI(state) {
 // ── Render ─────────────────────────────────────────────────────────────────────
 function render(d) {
   renderSummary(d);
+  renderActionSteps(d);
   renderDates(d.key_dates || []);
   renderBreakdown(d.sections || []);
   renderLaws(d.applicable_laws || []);
@@ -1467,6 +2346,26 @@ function render(d) {
   renderGlossary(d.glossary || []);
   renderRights(d.rights_under_law || [], d.local_resources || []);
   switchTab('breakdown', document.querySelector('.pill-tab'));
+}
+
+function renderActionSteps(d) {
+  const sec = document.getElementById('actionSection');
+  const u = (d.urgency || 'low').toLowerCase();
+  const steps = d.action_steps || [];
+  if (!['high','critical'].includes(u) || !steps.length) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  const icon = u === 'critical' ? '🚨' : '⚠️';
+  sec.innerHTML = `
+    <div class="action-box ${u}">
+      <div class="action-box-title">${icon} What to do right now</div>
+      <ul class="action-steps-list">
+        ${steps.map((s,i) => `
+          <li>
+            <span class="action-step-num">${i+1}</span>
+            <span>${esc(s)}</span>
+          </li>`).join('')}
+      </ul>
+    </div>`;
 }
 
 const URGENCY_ICON  = { low:'🟢', medium:'🟡', high:'🟠', critical:'🔴' };
@@ -1658,6 +2557,32 @@ function setUI(state) {
   document.getElementById('errorCard').style.display    = state === 'error'   ? 'block' : 'none';
   document.getElementById('results').style.display      = state === 'results' ? 'block' : 'none';
   document.getElementById('analyzeBtn').disabled        = state === 'loading';
+}
+
+// ── Text size toggle ───────────────────────────────────────────────────────────
+let largeText = false;
+function toggleTextSize() {
+  largeText = !largeText;
+  document.body.classList.toggle('large-text', largeText);
+  document.getElementById('textSizeBtn').classList.toggle('active', largeText);
+}
+
+// ── Copy summary ───────────────────────────────────────────────────────────────
+async function copySummary() {
+  const el = document.getElementById('summarySection');
+  if (!el) return;
+  const btn = document.getElementById('copySummaryBtn');
+  try {
+    await navigator.clipboard.writeText(el.innerText);
+    if (btn) { btn.textContent = '✓ Copied!'; setTimeout(() => btn.textContent = '📋 Copy summary', 2000); }
+  } catch {
+    alert('Copy not supported in this browser — please select the text and copy manually.');
+  }
+}
+
+// ── FAQ accordion ──────────────────────────────────────────────────────────────
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
