@@ -114,7 +114,7 @@ async def analyze(req: AnalyzeRequest):
     user_msg = (
         f"{persona_ctx}\n\n"
         f"{location_ctx}"
-        f"Respond entirely in {req.language}.\n\n"
+        f"The document below may be written in any language. Analyze it fully regardless of the document's language, then respond entirely in {req.language}.\n\n"
         f"DOCUMENT:\n{text}"
     )
 
@@ -185,7 +185,9 @@ async def extract_pdf(file: UploadFile = File(...)):
             num_pages = len(pdf.pages)
             pages = [page.extract_text() or "" for page in pdf.pages]
         text = "\n\n".join(pages).strip()
-        if text:
+        # Require a meaningful amount of text to trust the extraction.
+        # Low character counts suggest encoding failure (common with some RTL/CJK PDFs).
+        if text and len(text) > 30 * num_pages:
             return {"text": text[:60_000], "pages": num_pages, "method": "text"}
     except Exception:
         num_pages = 0
@@ -220,8 +222,10 @@ async def extract_pdf(file: UploadFile = File(...)):
         vision_content.append({
             "type": "text",
             "text": (
-                "This is a scanned or handwritten document. "
-                "Transcribe all visible text exactly as written, preserving the document's structure and layout. "
+                "This is a scanned or handwritten document. It may be in any language or script, "
+                "including Arabic, Chinese, Korean, Hindi, Russian, Hebrew, or other non-Latin scripts. "
+                "Transcribe all visible text exactly as it appears in its original language and script. "
+                "Do not translate. Preserve the document's structure and layout. "
                 "Return only the transcribed text — no commentary, no explanation."
             ),
         })
@@ -286,8 +290,10 @@ async def extract_image(file: UploadFile = File(...)):
         {
             "type": "text",
             "text": (
-                "This is a photo of a legal document. "
-                "Transcribe all visible text exactly as written, preserving the document's structure and layout. "
+                "This is a photo of a legal document. It may be in any language or script, "
+                "including Arabic, Chinese, Korean, Hindi, Russian, Hebrew, or other non-Latin scripts. "
+                "Transcribe all visible text exactly as it appears in its original language and script. "
+                "Do not translate. Preserve the document's structure and layout. "
                 "Return only the transcribed text — no commentary, no explanation."
             ),
         },

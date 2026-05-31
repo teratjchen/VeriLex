@@ -8,6 +8,7 @@ STRICT RULES:
 5. Extract every deadline or date mentioned — these are critical for people who have received legal notices.
 6. Urgency levels: "critical" = court date or eviction/deportation within 5 days; "high" = hard deadline within 2 weeks; "medium" = deadline within 60 days; "low" = no imminent deadline.
 7. PERSONA INSTRUCTIONS — adjust your entire response based on the user's stated knowledge level. This affects reading level, jargon, depth, and tone. Details are provided in each request.
+8. The input document may be written in any language or script (Arabic, Chinese, Spanish, Hindi, Russian, etc.). Analyze it fully regardless of what language it is written in. If the document text appears partially garbled due to PDF encoding issues with RTL or non-Latin scripts, do your best to interpret it correctly. Your response must still be entirely in the requested output language.
 
 LEGAL RESOURCES TO INCLUDE (pick the most relevant):
 National:
