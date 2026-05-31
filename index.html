@@ -1207,22 +1207,23 @@
       <div class="input-footer">
         <div class="lang-wrap">
           <div class="lang-label">Output language</div>
-          <select id="langSelect">
-            <option>English</option>
-            <option>Spanish</option>
-            <option>Simplified Chinese</option>
-            <option>Traditional Chinese</option>
-            <option>Vietnamese</option>
-            <option>Tagalog</option>
-            <option>Korean</option>
-            <option>Arabic</option>
-            <option>Hindi</option>
-            <option>Portuguese</option>
-            <option>Russian</option>
-            <option>French</option>
-            <option>Haitian Creole</option>
-            <option>Punjabi</option>
-            <option>Amharic</option>
+          <select id="langSelect" onchange="onOutputLangChange()">
+            <option value="Auto-detect">🌐 Auto-detect</option>
+            <option value="English">English</option>
+            <option value="Spanish">Español</option>
+            <option value="Simplified Chinese">中文 (简体)</option>
+            <option value="Traditional Chinese">中文 (繁體)</option>
+            <option value="Vietnamese">Tiếng Việt</option>
+            <option value="Tagalog">Tagalog</option>
+            <option value="Korean">한국어</option>
+            <option value="Arabic">العربية</option>
+            <option value="Hindi">हिन्दी</option>
+            <option value="Portuguese">Português</option>
+            <option value="Russian">Русский</option>
+            <option value="French">Français</option>
+            <option value="Haitian Creole">Kreyòl Ayisyen</option>
+            <option value="Punjabi">ਪੰਜਾਬੀ</option>
+            <option value="Amharic">አማርኛ</option>
           </select>
         </div>
         <button class="btn-analyze" id="analyzeBtn" onclick="analyze()">
@@ -2888,6 +2889,31 @@ const LANG_LABELS = {
 
 let uiLang = 'en';
 
+// Maps output-language dropdown values ↔ UI language codes
+const OUTPUT_TO_CODE = {
+  'English':'en','Spanish':'es','Simplified Chinese':'zh',
+  'Traditional Chinese':'zh-TW','Vietnamese':'vi','Tagalog':'tl',
+  'Korean':'ko','Arabic':'ar','Hindi':'hi','Portuguese':'pt',
+  'Russian':'ru','French':'fr','Haitian Creole':'ht',
+  'Punjabi':'pa','Amharic':'am',
+};
+const CODE_TO_OUTPUT = Object.fromEntries(
+  Object.entries(OUTPUT_TO_CODE).map(([k,v])=>[v,k])
+);
+
+// Called when output-language dropdown changes → sync UI language
+function onOutputLangChange() {
+  const val = document.getElementById('langSelect').value;
+  const code = OUTPUT_TO_CODE[val];
+  if (code) {
+    setUILang(code);
+    // Keep UI lang button in sync
+    document.querySelectorAll('.ui-lang-opt').forEach(b => {
+      b.classList.toggle('active', b.getAttribute('onclick') === `chooseUILang('${code}',this)`);
+    });
+  }
+}
+
 function setUILang(code) {
   uiLang = code;
   const t = TRANSLATIONS[code] || TRANSLATIONS.en;
@@ -2919,6 +2945,9 @@ function chooseUILang(code, btn) {
   document.querySelectorAll('.ui-lang-opt').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('uiLangDropdown').classList.remove('open');
+  // Sync output language dropdown
+  const outVal = CODE_TO_OUTPUT[code];
+  if (outVal) document.getElementById('langSelect').value = outVal;
 }
 
 document.addEventListener('click', e => {

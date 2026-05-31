@@ -139,10 +139,22 @@ async def analyze(req: AnalyzeRequest):
         if req.user_location else
         "USER LOCATION: Unknown. Include a mix of national resources and note that local resources may vary by state.\n\n"
     )
+    if req.language.lower() in ("auto-detect", "auto"):
+        lang_instruction = (
+            "Detect the language of the document text and respond entirely in that same language "
+            "throughout every field of your JSON response. If the document is in Spanish, respond in Spanish. "
+            "If it is in Chinese, respond in Chinese. Match the document's language exactly."
+        )
+    else:
+        lang_instruction = (
+            f"The document below may be written in any language. Analyze it fully regardless of the document's language, "
+            f"then respond entirely in {req.language}."
+        )
+
     user_msg = (
         f"{persona_ctx}\n\n"
         f"{location_ctx}"
-        f"The document below may be written in any language. Analyze it fully regardless of the document's language, then respond entirely in {req.language}.\n\n"
+        f"{lang_instruction}\n\n"
         f"DOCUMENT:\n{text}"
     )
 
@@ -233,10 +245,15 @@ async def followup(req: FollowUpRequest):
     client = anthropic.Anthropic(api_key=api_key)
 
     # Document + analysis as a cached first turn so repeated follow-ups are cheap
+    if req.language.lower() in ("auto-detect", "auto"):
+        lang_note = "Detect the language of the document and respond in that same language."
+    else:
+        lang_note = f"Respond entirely in {req.language}."
+
     doc_context = (
         f"DOCUMENT TEXT:\n{req.document_text}\n\n"
         f"PRIOR ANALYSIS:\n{json.dumps(req.prior_analysis, ensure_ascii=False, indent=2)}\n\n"
-        f"Respond entirely in {req.language}."
+        f"{lang_note}"
     )
 
     messages: list[dict] = [
