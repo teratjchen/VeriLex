@@ -362,6 +362,7 @@
     .light-bulb { font-size: 32px; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); animation: pulse 1.2s ease infinite; }
     .loading-msg { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
     .loading-sub { font-size: 14px; color: var(--muted); }
+    .loading-time-estimate { font-size: 12px; color: var(--muted); margin-top: 10px; opacity: 0.75; }
 
     /* ── ERROR ───────────────────────────────────────── */
     .error-card {
@@ -1191,6 +1192,7 @@
       </div>
       <div class="loading-msg" id="loadingMsg">Reading your document…</div>
       <div class="loading-sub">Identifying laws, cases, and deadlines</div>
+      <div class="loading-time-estimate" id="loadingTime"></div>
     </div>
 
     <!-- Error -->
@@ -1203,7 +1205,7 @@
     <div class="results" id="results">
 
       <div class="result-actions">
-        <button class="btn-result-action" onclick="window.print()">🖨️ Print results</button>
+        <button class="btn-result-action" id="btnPrint" onclick="window.print()">🖨️ Print results</button>
         <button class="btn-result-action" id="copySummaryBtn" onclick="copySummary()">📋 Copy summary</button>
       </div>
 
@@ -1213,7 +1215,7 @@
 
       <div class="result-section" id="datesSection" style="display:none">
         <div class="dates-wrap">
-          <div class="dates-title">Key Dates &amp; Deadlines</div>
+          <div class="dates-title" id="keyDatesTitle">Key Dates &amp; Deadlines</div>
           <div class="dates-grid" id="datesGrid"></div>
         </div>
       </div>
@@ -1622,6 +1624,16 @@ const TRANSLATIONS = {
     faq5a:'VeriLex uses Claude AI by Anthropic, which is highly capable of identifying relevant statutes and citing them accurately. All statute citations include a direct link to the official text (e.g., leginfo.legislature.ca.gov for California law) so you can verify them yourself. For case law, we only include citations the AI is confident about — a missing citation is always better than a fabricated one. Laws change over time, so always verify current versions before relying on them.',
     faq6q:'I got an eviction / court notice — what should I do?',
     faq6a:'First, paste or upload the document to VeriLex to understand exactly what it says and what your rights are. Pay close attention to the <strong>Key Dates &amp; Deadlines</strong> section — missing a deadline can seriously harm your case. For high-urgency notices, VeriLex will show a “What to do right now” action box. Then reach out to a legal aid organization immediately. In the Bay Area: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 and <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 offer free help.',
+    loadStep1:'Reading your document…', loadStep2:'Identifying applicable laws…', loadStep3:'Finding relevant court cases…', loadStep4:'Extracting key dates and deadlines…', loadStep5:'Composing plain-language explanations…',
+    loadTimeEst:'Usually takes 15–30 seconds', loadTimeStill:'Still working…',
+    urgencyLow:'Low Urgency', urgencyMed:'Medium Urgency', urgencyHigh:'High Urgency', urgencyCrit:'Critical — Act Immediately',
+    actionBoxTitle:'What to do right now',
+    emptyBreakdown:'No section breakdown available.', emptyLaws:'No statutes identified for this document.', emptyCases:'No case law identified for this document type.', emptyGlossary:'No glossary terms identified.', emptyRights:'No rights information or resources available.',
+    sectionPrefix:'Section', localResources:'Local & National Legal Resources',
+    viewLaw:'View Law ↗', searchCase:'Search ↗', websiteLink:'Website ↗',
+    defaultDocType:'Legal Document',
+    btnPrint:'🖨️ Print results', btnCopy:'📋 Copy summary', btnCopied:'✓ Copied!',
+    keyDates:'Key Dates & Deadlines',
   },
   es: {
     navBadge:'Solo información legal', heroBadge:'✦ Gratis · Sin cuenta · 15 idiomas',
@@ -1684,6 +1696,16 @@ const TRANSLATIONS = {
     faq5a:'VeriLex utiliza Claude AI de Anthropic, que tiene una alta capacidad para identificar estatutos relevantes y citarlos con precisión. Todas las citas de estatutos incluyen un enlace directo al texto oficial (p. ej., leginfo.legislature.ca.gov para la ley de California) para que pueda verificarlos usted mismo. Para la jurisprudencia, solo incluimos citas de las que la IA está segura — una cita que falta siempre es mejor que una fabricada. Las leyes cambian con el tiempo, así que siempre verifique las versiones actuales antes de confiar en ellas.',
     faq6q:'Recibí un aviso de desalojo / tribunal — ¿qué debo hacer?',
     faq6a:'Primero, pegue o cargue el documento en VeriLex para entender exactamente qué dice y cuáles son sus derechos. Preste mucha atención a la sección de <strong>Fechas Clave y Plazos</strong> — perder un plazo puede dañar seriamente su caso. Para avisos de alta urgencia, VeriLex mostrará un cuadro de acción "Qué hacer ahora mismo". Luego comuníquese con una organización de ayuda legal de inmediato. En el Área de la Bahía: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 y <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ofrecen ayuda gratuita.',
+    loadStep1:'Leyendo tu documento…', loadStep2:'Identificando leyes aplicables…', loadStep3:'Buscando casos judiciales relevantes…', loadStep4:'Extrayendo fechas y plazos clave…', loadStep5:'Redactando explicaciones en lenguaje claro…',
+    loadTimeEst:'Generalmente tarda 15–30 segundos', loadTimeStill:'Aún trabajando…',
+    urgencyLow:'Urgencia baja', urgencyMed:'Urgencia media', urgencyHigh:'Urgencia alta', urgencyCrit:'Crítico — Actúa de inmediato',
+    actionBoxTitle:'Qué hacer ahora mismo',
+    emptyBreakdown:'No hay desglose de secciones disponible.', emptyLaws:'No se identificaron leyes para este documento.', emptyCases:'No se identificó jurisprudencia para este tipo de documento.', emptyGlossary:'No se identificaron términos de glosario.', emptyRights:'No hay información de derechos o recursos disponible.',
+    sectionPrefix:'Sección', localResources:'Recursos legales locales y nacionales',
+    viewLaw:'Ver ley ↗', searchCase:'Buscar ↗', websiteLink:'Sitio web ↗',
+    defaultDocType:'Documento legal',
+    btnPrint:'🖨️ Imprimir resultados', btnCopy:'📋 Copiar resumen', btnCopied:'✓ ¡Copiado!',
+    keyDates:'Fechas y plazos clave',
   },
   zh: {
     navBadge:'仅供法律信息', heroBadge:'✦ 免费 · 无需账户 · 15种语言',
@@ -1746,6 +1768,16 @@ const TRANSLATIONS = {
     faq5a:'VeriLex 使用 Anthropic 的 Claude AI，能够高准确度地识别相关法规并进行引用。所有法规引用均包含指向官方文本的直接链接（例如加州法律为 leginfo.legislature.ca.gov），供您自行核实。对于判例法，我们仅收录 AI 有把握的引用——引用缺失永远优于引用错误。法律会随时间变化，请在依赖任何引用前确认当前有效版本。',
     faq6q:'我收到了驱逐通知 / 法院通知 — 应该怎么办？',
     faq6a:'首先，将文件粘贴或上传至 VeriLex，了解其确切内容及您的权利。请密切关注<strong>关键日期和截止日期</strong>部分——错过截止日期可能严重损害您的权益。对于高紧急度通知，VeriLex 将显示"立即采取行动"提示框。然后立即联系法律援助机构。在湾区：<a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">东湾社区法律中心</a> (510) 548-4040 和 <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">湾区法律援助</a> (415) 982-1300 提供免费帮助。',
+    loadStep1:'正在阅读您的文件…', loadStep2:'识别适用法律…', loadStep3:'查找相关法院案例…', loadStep4:'提取关键日期和截止日期…', loadStep5:'撰写通俗易懂的解释…',
+    loadTimeEst:'通常需要 15–30 秒', loadTimeStill:'仍在处理中…',
+    urgencyLow:'低紧迫性', urgencyMed:'中等紧迫性', urgencyHigh:'高紧迫性', urgencyCrit:'紧急 — 立即采取行动',
+    actionBoxTitle:'现在需要做什么',
+    emptyBreakdown:'无可用章节分析。', emptyLaws:'未识别到适用于本文件的法规。', emptyCases:'未识别到适用于本文件类型的判例法。', emptyGlossary:'未识别到术语表。', emptyRights:'无权利信息或资源可用。',
+    sectionPrefix:'第', localResources:'本地及全国法律资源',
+    viewLaw:'查看法律 ↗', searchCase:'搜索 ↗', websiteLink:'网站 ↗',
+    defaultDocType:'法律文件',
+    btnPrint:'🖨️ 打印结果', btnCopy:'📋 复制摘要', btnCopied:'✓ 已复制！',
+    keyDates:'关键日期和截止日期',
   },
   'zh-TW': {
     navBadge:'僅供法律資訊', heroBadge:'✦ 免費 · 無需帳戶 · 15種語言',
@@ -1808,6 +1840,16 @@ const TRANSLATIONS = {
     faq5a:'VeriLex 使用 Anthropic 的 Claude AI，能夠高準確度地識別相關法規並進行引用。所有法規引用均包含指向官方文字的直接連結（例如加州法律為 leginfo.legislature.ca.gov），供您自行核實。對於判例法，我們僅收錄 AI 有把握的引用——引用缺失永遠優於引用錯誤。法律會隨時間變化，請在依賴任何引用前確認當前有效版本。',
     faq6q:'我收到了驅逐通知 / 法院通知 — 應該怎麼辦？',
     faq6a:'首先，將文件貼上或上傳至 VeriLex，了解其確切內容及您的權利。請密切關注<strong>關鍵日期和截止日期</strong>部分——錯過截止日期可能嚴重損害您的權益。對於高緊急度通知，VeriLex 將顯示「立即採取行動」提示框。然後立即聯繫法律援助機構。在灣區：<a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">東灣社區法律中心</a> (510) 548-4040 和 <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">灣區法律援助</a> (415) 982-1300 提供免費幫助。',
+    loadStep1:'正在閱讀您的文件…', loadStep2:'識別適用法律…', loadStep3:'查找相關法院案例…', loadStep4:'提取關鍵日期和截止日期…', loadStep5:'撰寫通俗易懂的解釋…',
+    loadTimeEst:'通常需要 15–30 秒', loadTimeStill:'仍在處理中…',
+    urgencyLow:'低緊迫性', urgencyMed:'中等緊迫性', urgencyHigh:'高緊迫性', urgencyCrit:'緊急 — 立即採取行動',
+    actionBoxTitle:'現在需要做什麼',
+    emptyBreakdown:'無可用章節分析。', emptyLaws:'未識別到適用於本文件的法規。', emptyCases:'未識別到適用於本文件類型的判例法。', emptyGlossary:'未識別到術語表。', emptyRights:'無權利資訊或資源可用。',
+    sectionPrefix:'第', localResources:'本地及全國法律資源',
+    viewLaw:'查看法律 ↗', searchCase:'搜尋 ↗', websiteLink:'網站 ↗',
+    defaultDocType:'法律文件',
+    btnPrint:'🖨️ 列印結果', btnCopy:'📋 複製摘要', btnCopied:'✓ 已複製！',
+    keyDates:'關鍵日期和截止日期',
   },
   vi: {
     navBadge:'Chỉ thông tin pháp lý', heroBadge:'✦ Miễn phí · Không cần tài khoản · 15 ngôn ngữ',
@@ -1870,6 +1912,16 @@ const TRANSLATIONS = {
     faq5a:'VeriLex sử dụng Claude AI của Anthropic, có khả năng cao trong việc xác định các đạo luật liên quan và trích dẫn chúng chính xác. Tất cả các trích dẫn đạo luật đều bao gồm liên kết trực tiếp đến văn bản chính thức (ví dụ: leginfo.legislature.ca.gov cho luật California) để bạn có thể tự xác minh. Đối với luật án lệ, chúng tôi chỉ bao gồm các trích dẫn mà AI tự tin — một trích dẫn bị thiếu luôn tốt hơn một trích dẫn giả mạo. Luật thay đổi theo thời gian, vì vậy hãy luôn xác minh các phiên bản hiện tại trước khi dựa vào chúng.',
     faq6q:'Tôi nhận được thông báo đuổi nhà / tòa án — tôi phải làm gì?',
     faq6a:'Đầu tiên, dán hoặc tải tài liệu lên VeriLex để hiểu chính xác nội dung và quyền của bạn. Chú ý kỹ đến phần <strong>Ngày Quan Trọng và Hạn Chót</strong> — bỏ lỡ hạn chót có thể gây hại nghiêm trọng cho trường hợp của bạn. Đối với thông báo khẩn cấp cao, VeriLex sẽ hiển thị hộp hành động "Phải làm gì ngay bây giờ". Sau đó liên hệ ngay với tổ chức trợ giúp pháp lý. Ở Vùng Vịnh: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 và <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 cung cấp hỗ trợ miễn phí.',
+    loadStep1:'Đang đọc tài liệu của bạn…', loadStep2:'Xác định luật áp dụng…', loadStep3:'Tìm kiếm án lệ liên quan…', loadStep4:'Trích xuất ngày quan trọng và thời hạn…', loadStep5:'Soạn giải thích bằng ngôn ngữ đơn giản…',
+    loadTimeEst:'Thường mất 15–30 giây', loadTimeStill:'Vẫn đang xử lý…',
+    urgencyLow:'Mức độ khẩn cấp thấp', urgencyMed:'Mức độ khẩn cấp trung bình', urgencyHigh:'Mức độ khẩn cấp cao', urgencyCrit:'Khẩn cấp — Hành động ngay',
+    actionBoxTitle:'Cần làm gì ngay bây giờ',
+    emptyBreakdown:'Không có phân tích mục nào.', emptyLaws:'Không xác định được luật cho tài liệu này.', emptyCases:'Không xác định được án lệ cho loại tài liệu này.', emptyGlossary:'Không xác định được thuật ngữ nào.', emptyRights:'Không có thông tin quyền hoặc tài nguyên.',
+    sectionPrefix:'Mục', localResources:'Tài nguyên pháp lý địa phương & quốc gia',
+    viewLaw:'Xem luật ↗', searchCase:'Tìm kiếm ↗', websiteLink:'Trang web ↗',
+    defaultDocType:'Tài liệu pháp lý',
+    btnPrint:'🖨️ In kết quả', btnCopy:'📋 Sao chép tóm tắt', btnCopied:'✓ Đã sao chép!',
+    keyDates:'Ngày quan trọng & Thời hạn',
   },
   tl: {
     navBadge:'Impormasyon sa Batas Lamang', heroBadge:'✦ Libre · Walang account · 15 wika',
@@ -1932,6 +1984,16 @@ const TRANSLATIONS = {
     faq5a:'Gumagamit ang VeriLex ng Claude AI ng Anthropic, na may mataas na kakayahang tukuyin ang mga kaugnay na batas at banggitin ang mga ito nang tumpak. Lahat ng sanggunian sa batas ay may kasamang direktang link sa opisyal na teksto (hal., leginfo.legislature.ca.gov para sa batas ng California) para mapatunayan mo ang mga ito mismo. Para sa case law, isinama lamang namin ang mga sanggunian na tiwala ang AI — ang nawawalang sanggunian ay palaging mas mabuti kaysa sa gawa-gawa. Nagbabago ang mga batas sa paglipas ng panahon, kaya palaging i-verify ang mga kasalukuyang bersyon bago umasa sa mga ito.',
     faq6q:'Nakatanggap ako ng abiso ng pagpapaalis / korte — ano ang dapat kong gawin?',
     faq6a:'Una, i-paste o i-upload ang dokumento sa VeriLex upang maunawaan nang eksakto ang sinasabi nito at ang iyong mga karapatan. Bigyang-pansin ang seksyon ng <strong>Mga Pangunahing Petsa at Deadline</strong> — ang pagkawala ng deadline ay maaaring seryosong makapinsala sa iyong kaso. Para sa mga abisong may mataas na pagkamadalian, ipapakita ng VeriLex ang kahon ng aksyon na "Ano ang dapat gawin ngayon". Pagkatapos makipag-ugnayan kaagad sa isang organisasyon ng legal na tulong. Sa Bay Area: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 at <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ay nag-aalok ng libreng tulong.',
+    loadStep1:'Binabasa ang iyong dokumento…', loadStep2:'Tinutukoy ang naaangkop na mga batas…', loadStep3:'Naghahanap ng mga kaugnay na kaso…', loadStep4:'Kinukuha ang mga mahahalagang petsa at deadline…', loadStep5:'Gumagawa ng mga paliwanag sa simpleng wika…',
+    loadTimeEst:'Karaniwang tumatagal ng 15–30 segundo', loadTimeStill:'Nagtatrabaho pa…',
+    urgencyLow:'Mababang Urgensya', urgencyMed:'Katamtamang Urgensya', urgencyHigh:'Mataas na Urgensya', urgencyCrit:'Kritikal — Kumilos Agad',
+    actionBoxTitle:'Ano ang gagawin ngayon',
+    emptyBreakdown:'Walang available na breakdown ng seksyon.', emptyLaws:'Walang natukoy na batas para sa dokumentong ito.', emptyCases:'Walang natukoy na case law para sa ganitong uri ng dokumento.', emptyGlossary:'Walang natukoy na mga termino.', emptyRights:'Walang available na impormasyon sa karapatan o mapagkukunan.',
+    sectionPrefix:'Seksyon', localResources:'Lokal at Pambansang Legal na Mapagkukunan',
+    viewLaw:'Tingnan ang Batas ↗', searchCase:'Maghanap ↗', websiteLink:'Website ↗',
+    defaultDocType:'Legal na Dokumento',
+    btnPrint:'🖨️ I-print ang mga resulta', btnCopy:'📋 Kopyahin ang buod', btnCopied:'✓ Nakopya!',
+    keyDates:'Mga Pangunahing Petsa at Deadline',
   },
   ko: {
     navBadge:'법적 정보만 제공', heroBadge:'✦ 무료 · 계정 불필요 · 15개 언어',
@@ -1994,6 +2056,16 @@ const TRANSLATIONS = {
     faq5a:'VeriLex는 Anthropic의 Claude AI를 사용하며, 관련 법령을 식별하고 정확하게 인용하는 능력이 뛰어납니다. 모든 법령 인용은 공식 텍스트에 대한 직접 링크(예: 캘리포니아 법률의 경우 leginfo.legislature.ca.gov)를 포함하여 직접 확인할 수 있습니다. 판례법의 경우 AI가 확신하는 인용만 포함합니다 — 누락된 인용이 항상 조작된 인용보다 낫습니다. 법률은 시간이 지남에 따라 변경되므로 의존하기 전에 항상 현재 버전을 확인하세요.',
     faq6q:'퇴거 / 법원 통지를 받았습니다 — 어떻게 해야 하나요?',
     faq6a:'먼저 VeriLex에 문서를 붙여넣거나 업로드하여 정확히 무엇을 말하는지, 귀하의 권리가 무엇인지 이해하세요. <strong>주요 날짜 및 기한</strong> 섹션에 주의를 기울이세요 — 기한을 놓치면 귀하의 사례에 심각한 해를 끼칠 수 있습니다. 긴급한 통지의 경우 VeriLex에 "지금 해야 할 일" 행동 상자가 표시됩니다. 그런 다음 즉시 법률 지원 단체에 연락하세요. 베이 에어리어: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 및 <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300에서 무료 도움을 제공합니다.',
+    loadStep1:'문서를 읽는 중…', loadStep2:'적용 가능한 법률 식별 중…', loadStep3:'관련 판례 검색 중…', loadStep4:'주요 날짜 및 마감일 추출 중…', loadStep5:'쉬운 언어로 설명 작성 중…',
+    loadTimeEst:'보통 15–30초 소요', loadTimeStill:'아직 처리 중…',
+    urgencyLow:'낮은 긴급도', urgencyMed:'중간 긴급도', urgencyHigh:'높은 긴급도', urgencyCrit:'긴급 — 즉시 행동하세요',
+    actionBoxTitle:'지금 당장 해야 할 일',
+    emptyBreakdown:'섹션 분석 없음.', emptyLaws:'이 문서에 해당하는 법령이 없습니다.', emptyCases:'이 문서 유형에 해당하는 판례가 없습니다.', emptyGlossary:'용어 정의 없음.', emptyRights:'권리 정보 또는 자료 없음.',
+    sectionPrefix:'섹션', localResources:'지역 및 전국 법률 자료',
+    viewLaw:'법률 보기 ↗', searchCase:'검색 ↗', websiteLink:'웹사이트 ↗',
+    defaultDocType:'법률 문서',
+    btnPrint:'🖨️ 결과 인쇄', btnCopy:'📋 요약 복사', btnCopied:'✓ 복사됨!',
+    keyDates:'주요 날짜 및 마감일',
   },
   ar: {
     navBadge:'معلومات قانونية فقط', heroBadge:'✦ مجاني · بدون حساب · 15 لغة',
@@ -2056,6 +2128,16 @@ const TRANSLATIONS = {
     faq5a:'يستخدم VeriLex Claude AI من Anthropic، الذي يتمتع بقدرة عالية على تحديد القوانين ذات الصلة والاستشهاد بها بدقة. تتضمن جميع استشهادات القوانين رابطاً مباشراً للنص الرسمي (مثلاً: leginfo.legislature.ca.gov لقانون كاليفورنيا) حتى تتمكن من التحقق منها. بالنسبة للسوابق القضائية، نضمّن فقط الاستشهادات التي يكون الذكاء الاصطناعي واثقاً منها — الاستشهاد الناقص دائماً أفضل من المزوّر. تتغير القوانين بمرور الوقت، لذا تحقق دائماً من الإصدارات الحالية.',
     faq6q:'تلقيت إشعار إخلاء / محكمة — ماذا يجب أن أفعل؟',
     faq6a:'أولاً، الصق أو ارفع المستند إلى VeriLex لتفهم تماماً ما يقوله وما هي حقوقك. انتبه جيداً لقسم <strong>التواريخ والمواعيد النهائية الرئيسية</strong> — فإغفال موعد نهائي قد يضرّ بحالتك بشدة. بالنسبة للإشعارات عالية الإلحاح، سيعرض VeriLex مربع إجراءات "ماذا تفعل الآن". ثم تواصل فوراً مع منظمة مساعدة قانونية. في منطقة البي أريا: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 و<a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 تقدمان مساعدة مجانية.',
+    loadStep1:'جاري قراءة مستندك…', loadStep2:'تحديد القوانين المطبقة…', loadStep3:'البحث عن القضايا ذات الصلة…', loadStep4:'استخراج التواريخ والمواعيد النهائية الرئيسية…', loadStep5:'صياغة شروحات بلغة بسيطة…',
+    loadTimeEst:'عادةً يستغرق 15–30 ثانية', loadTimeStill:'لا يزال يعمل…',
+    urgencyLow:'أولوية منخفضة', urgencyMed:'أولوية متوسطة', urgencyHigh:'أولوية عالية', urgencyCrit:'حرج — تصرف فوراً',
+    actionBoxTitle:'ما يجب فعله الآن',
+    emptyBreakdown:'لا يوجد تحليل للأقسام.', emptyLaws:'لم يتم تحديد أي قوانين لهذا المستند.', emptyCases:'لم يتم تحديد أي قانون للقضايا لهذا النوع.', emptyGlossary:'لم يتم تحديد أي مصطلحات.', emptyRights:'لا تتوفر معلومات حقوق أو موارد.',
+    sectionPrefix:'قسم', localResources:'الموارد القانونية المحلية والوطنية',
+    viewLaw:'عرض القانون ↗', searchCase:'بحث ↗', websiteLink:'الموقع ↗',
+    defaultDocType:'وثيقة قانونية',
+    btnPrint:'🖨️ طباعة النتائج', btnCopy:'📋 نسخ الملخص', btnCopied:'✓ تم النسخ!',
+    keyDates:'التواريخ والمواعيد النهائية الرئيسية',
   },
   hi: {
     navBadge:'केवल कानूनी जानकारी', heroBadge:'✦ मुफ़्त · कोई खाता नहीं · 15 भाषाएं',
@@ -2118,6 +2200,16 @@ const TRANSLATIONS = {
     faq5a:'VeriLex Anthropic के Claude AI का उपयोग करता है, जो प्रासंगिक क़ानूनों की पहचान और सटीक उद्धरण में अत्यधिक सक्षम है। सभी क़ानून उद्धरणों में आधिकारिक पाठ का सीधा लिंक शामिल है (उदाहरण के लिए, कैलिफ़ोर्निया कानून के लिए leginfo.legislature.ca.gov) ताकि आप उन्हें स्वयं सत्यापित कर सकें। केस लॉ के लिए, हम केवल वे उद्धरण शामिल करते हैं जिनके बारे में AI आश्वस्त है। कानून समय के साथ बदलते हैं, इसलिए भरोसा करने से पहले वर्तमान संस्करणों की जांच करें।',
     faq6q:'मुझे बेदखली / कोर्ट का नोटिस मिला — मुझे क्या करना चाहिए?',
     faq6a:'सबसे पहले, दस्तावेज़ को VeriLex पर पेस्ट या अपलोड करें और जानें कि यह क्या कहता है और आपके अधिकार क्या हैं। <strong>मुख्य तारीखें और समय सीमाएं</strong> अनुभाग पर ध्यान दें — एक समय सीमा चूकना आपके मामले को गंभीर रूप से नुकसान पहुंचा सकता है। फिर तुरंत एक कानूनी सहायता संगठन से संपर्क करें। बे एरिया में: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 और <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 मुफ़्त सहायता प्रदान करते हैं।',
+    loadStep1:'आपका दस्तावेज़ पढ़ा जा रहा है…', loadStep2:'लागू कानूनों की पहचान हो रही है…', loadStep3:'प्रासंगिक अदालती मामले खोजे जा रहे हैं…', loadStep4:'मुख्य तिथियाँ और समय-सीमाएँ निकाली जा रही हैं…', loadStep5:'सरल भाषा में स्पष्टीकरण तैयार हो रहे हैं…',
+    loadTimeEst:'आमतौर पर 15–30 सेकंड लगते हैं', loadTimeStill:'अभी भी काम चल रहा है…',
+    urgencyLow:'कम जरूरी', urgencyMed:'मध्यम जरूरी', urgencyHigh:'अधिक जरूरी', urgencyCrit:'अत्यंत जरूरी — अभी कार्रवाई करें',
+    actionBoxTitle:'अभी क्या करें',
+    emptyBreakdown:'कोई अनुभाग विश्लेषण उपलब्ध नहीं।', emptyLaws:'इस दस्तावेज़ के लिए कोई कानून नहीं मिला।', emptyCases:'इस प्रकार के दस्तावेज़ के लिए कोई केस लॉ नहीं मिला।', emptyGlossary:'कोई शब्दावली नहीं मिली।', emptyRights:'कोई अधिकार जानकारी या संसाधन उपलब्ध नहीं।',
+    sectionPrefix:'अनुभाग', localResources:'स्थानीय और राष्ट्रीय कानूनी संसाधन',
+    viewLaw:'कानून देखें ↗', searchCase:'खोजें ↗', websiteLink:'वेबसाइट ↗',
+    defaultDocType:'कानूनी दस्तावेज़',
+    btnPrint:'🖨️ परिणाम प्रिंट करें', btnCopy:'📋 सारांश कॉपी करें', btnCopied:'✓ कॉपी हो गया!',
+    keyDates:'मुख्य तिथियाँ और समय-सीमाएँ',
   },
   pt: {
     navBadge:'Apenas Informação Legal', heroBadge:'✦ Grátis · Sem conta · 15 idiomas',
@@ -2180,6 +2272,16 @@ const TRANSLATIONS = {
     faq5a:'O VeriLex usa o Claude AI da Anthropic, que é altamente capaz de identificar estatutos relevantes e citá-los com precisão. Todas as citações de estatutos incluem um link direto para o texto oficial (por ex., leginfo.legislature.ca.gov para a lei da Califórnia). Para jurisprudência, apenas incluímos citações das quais a IA tem confiança — uma citação em falta é sempre melhor do que uma fabricada. As leis mudam com o tempo, por isso verifique sempre as versões atuais.',
     faq6q:'Recebi um aviso de despejo / tribunal — o que devo fazer?',
     faq6a:'Primeiro, cole ou carregue o documento no VeriLex para entender exatamente o que diz e quais são os seus direitos. Preste muita atenção à secção de <strong>Datas e Prazos Importantes</strong> — perder um prazo pode prejudicar seriamente o seu caso. Para avisos de alta urgência, o VeriLex mostrará uma caixa de ação "O que fazer agora". Em seguida, contacte imediatamente uma organização de assistência jurídica. Na Área da Baía: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 e <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 oferecem ajuda gratuita.',
+    loadStep1:'Lendo seu documento…', loadStep2:'Identificando leis aplicáveis…', loadStep3:'Buscando casos judiciais relevantes…', loadStep4:'Extraindo datas e prazos importantes…', loadStep5:'Redigindo explicações em linguagem simples…',
+    loadTimeEst:'Geralmente leva 15–30 segundos', loadTimeStill:'Ainda processando…',
+    urgencyLow:'Urgência baixa', urgencyMed:'Urgência média', urgencyHigh:'Urgência alta', urgencyCrit:'Crítico — Aja imediatamente',
+    actionBoxTitle:'O que fazer agora',
+    emptyBreakdown:'Nenhuma análise de seção disponível.', emptyLaws:'Nenhum estatuto identificado para este documento.', emptyCases:'Nenhuma jurisprudência identificada para este tipo de documento.', emptyGlossary:'Nenhum termo do glossário identificado.', emptyRights:'Nenhuma informação de direitos ou recursos disponível.',
+    sectionPrefix:'Seção', localResources:'Recursos Jurídicos Locais e Nacionais',
+    viewLaw:'Ver lei ↗', searchCase:'Pesquisar ↗', websiteLink:'Site ↗',
+    defaultDocType:'Documento legal',
+    btnPrint:'🖨️ Imprimir resultados', btnCopy:'📋 Copiar resumo', btnCopied:'✓ Copiado!',
+    keyDates:'Datas e Prazos Importantes',
   },
   ru: {
     navBadge:'Только правовая информация', heroBadge:'✦ Бесплатно · Без аккаунта · 15 языков',
@@ -2242,6 +2344,16 @@ const TRANSLATIONS = {
     faq5a:'VeriLex использует Claude AI от Anthropic, который отличается высокой способностью выявлять соответствующие законы и точно их цитировать. Все ссылки на законодательство включают прямую ссылку на официальный текст (например, leginfo.legislature.ca.gov для законов Калифорнии). Для прецедентного права мы включаем только те ссылки, в которых AI уверен — отсутствующая ссылка всегда лучше ложной. Законы меняются со временем, поэтому всегда проверяйте актуальные версии.',
     faq6q:'Я получил уведомление о выселении / из суда — что делать?',
     faq6a:'Сначала вставьте или загрузите документ в VeriLex, чтобы точно понять, что в нём написано и каковы ваши права. Обратите особое внимание на раздел <strong>Ключевые даты и сроки</strong> — пропущенный срок может серьёзно навредить вашему делу. Для срочных уведомлений VeriLex покажет блок действий "Что сделать прямо сейчас". Затем немедленно обратитесь в организацию юридической помощи. В Бэй-Эрии: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 и <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 предлагают бесплатную помощь.',
+    loadStep1:'Читаем ваш документ…', loadStep2:'Определяем применимые законы…', loadStep3:'Ищем соответствующие судебные дела…', loadStep4:'Извлекаем ключевые даты и сроки…', loadStep5:'Составляем объяснения на понятном языке…',
+    loadTimeEst:'Обычно занимает 15–30 секунд', loadTimeStill:'Всё ещё обрабатывается…',
+    urgencyLow:'Низкая срочность', urgencyMed:'Средняя срочность', urgencyHigh:'Высокая срочность', urgencyCrit:'Критично — Действуйте немедленно',
+    actionBoxTitle:'Что делать прямо сейчас',
+    emptyBreakdown:'Нет доступного разбора разделов.', emptyLaws:'Законодательство для этого документа не определено.', emptyCases:'Прецеденты для этого типа документа не определены.', emptyGlossary:'Термины глоссария не определены.', emptyRights:'Нет информации о правах или ресурсах.',
+    sectionPrefix:'Раздел', localResources:'Местные и национальные правовые ресурсы',
+    viewLaw:'Смотреть закон ↗', searchCase:'Поиск ↗', websiteLink:'Сайт ↗',
+    defaultDocType:'Юридический документ',
+    btnPrint:'🖨️ Печать результатов', btnCopy:'📋 Копировать резюме', btnCopied:'✓ Скопировано!',
+    keyDates:'Ключевые даты и сроки',
   },
   fr: {
     navBadge:'Informations juridiques uniquement', heroBadge:'✦ Gratuit · Sans compte · 15 langues',
@@ -2304,6 +2416,16 @@ const TRANSLATIONS = {
     faq5a:'VeriLex utilise Claude AI d\'Anthropic, très capable d\'identifier les statuts pertinents et de les citer avec précision. Toutes les citations de statuts incluent un lien direct vers le texte officiel (ex. : leginfo.legislature.ca.gov pour la loi californienne). Pour la jurisprudence, nous n\'incluons que les citations dont l\'IA est sûre — une citation manquante est toujours préférable à une citation fabriquée. Les lois évoluent dans le temps, vérifiez donc toujours les versions actuelles.',
     faq6q:"J'ai reçu un avis d'expulsion / de tribunal — que dois-je faire?",
     faq6a:"D'abord, collez ou téléchargez le document dans VeriLex pour comprendre exactement ce qu'il dit et quels sont vos droits. Portez une attention particulière à la section <strong>Dates et délais clés</strong> — manquer une échéance peut gravement nuire à votre dossier. Pour les avis très urgents, VeriLex affichera un encadré d'action \"Que faire maintenant\". Contactez ensuite immédiatement une organisation d'aide juridique. Dans la Bay Area : <a href=\"https://ebclc.org\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--sky)\">East Bay Community Law Center</a> (510) 548-4040 et <a href=\"https://baylegal.org\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--sky)\">Bay Area Legal Aid</a> (415) 982-1300 offrent une aide gratuite.",
+    loadStep1:'Lecture de votre document…', loadStep2:'Identification des lois applicables…', loadStep3:'Recherche de jurisprudence pertinente…', loadStep4:'Extraction des dates et délais clés…', loadStep5:"Rédaction d'explications en langage clair…",
+    loadTimeEst:'Prend généralement 15–30 secondes', loadTimeStill:'Toujours en cours…',
+    urgencyLow:'Urgence faible', urgencyMed:'Urgence moyenne', urgencyHigh:'Urgence élevée', urgencyCrit:'Critique — Agissez immédiatement',
+    actionBoxTitle:'Que faire maintenant',
+    emptyBreakdown:'Aucune analyse de section disponible.', emptyLaws:'Aucune loi identifiée pour ce document.', emptyCases:'Aucune jurisprudence identifiée pour ce type de document.', emptyGlossary:'Aucun terme de glossaire identifié.', emptyRights:'Aucune information sur les droits ou ressources disponible.',
+    sectionPrefix:'Section', localResources:'Ressources juridiques locales et nationales',
+    viewLaw:'Voir la loi ↗', searchCase:'Rechercher ↗', websiteLink:'Site web ↗',
+    defaultDocType:'Document juridique',
+    btnPrint:'🖨️ Imprimer les résultats', btnCopy:'📋 Copier le résumé', btnCopied:'✓ Copié !',
+    keyDates:'Dates et délais clés',
   },
   ht: {
     navBadge:'Enfòmasyon Legal Sèlman', heroBadge:'✦ Gratis · San kont · 15 lang',
@@ -2366,6 +2488,16 @@ const TRANSLATIONS = {
     faq5a:'VeriLex itilize Claude AI pa Anthropic, ki gen kapasite pou idantifye estati enpòtan yo epi site yo avèk presizyon. Tout sitasyon estati yo gen yon lyen dirèk nan tèks ofisyèl la (pa ekzanp, leginfo.legislature.ca.gov pou lwa Californi). Pou lwa ka, nou sèlman mete sitasyon AI a gen konfyans yo — yon sitasyon ki manke toujou pi bon pase yon ki fabrike. Lwa yo chanje ak tan, kidonk toujou verifye vèsyon aktyèl yo.',
     faq6q:'Mwen resevwa yon avi ekspilsyon / tribinal — kisa mwen dwe fè?',
     faq6a:'Premye, kole oswa telechaje dokiman an nan VeriLex pou konprann egzakteman sa li di ak ki dwa ou genyen. Fè atansyon pou seksyon <strong>Dat ak Delè Kle yo</strong> — rate yon delè ka domaje ka ou seryezman. Pou avi ki gen ijans segondè, VeriLex pral montre yon bwat aksyon "Kisa pou fè kounye a". Epi kontakte yon òganizasyon èd legal imedyatman. Nan Bay Area: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 ak <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ofri èd gratis.',
+    loadStep1:'Ap li dokiman ou…', loadStep2:'Ap idantifye lwa ki aplike…', loadStep3:'Ap chèche ka legal ki enpòtan…', loadStep4:'Ap ekstrè dat ak dat limit kle…', loadStep5:'Ap konpoze eksplikasyon an lang senp…',
+    loadTimeEst:'Pran anviwon 15–30 segonn', loadTimeStill:'Toujou ap travay…',
+    urgencyLow:'Ijans ba', urgencyMed:'Ijans mwayen', urgencyHigh:'Ijans wo', urgencyCrit:'Kritik — Aji kounye a',
+    actionBoxTitle:'Kisa pou fè kounye a',
+    emptyBreakdown:'Pa gen analiz seksyon disponib.', emptyLaws:'Pa gen lwa idantifye pou dokiman sa a.', emptyCases:'Pa gen ka legal idantifye pou tip dokiman sa a.', emptyGlossary:'Pa gen tèm glosè idantifye.', emptyRights:'Pa gen enfòmasyon sou dwa oswa resous disponib.',
+    sectionPrefix:'Seksyon', localResources:'Resous Legal Lokal ak Nasyonal',
+    viewLaw:'Wè lwa ↗', searchCase:'Chèche ↗', websiteLink:'Sit wèb ↗',
+    defaultDocType:'Dokiman Legal',
+    btnPrint:'🖨️ Enprime rezilta', btnCopy:'📋 Kopye rezime', btnCopied:'✓ Kopye!',
+    keyDates:'Dat ak Dat Limit Kle',
   },
   pa: {
     navBadge:'ਕੇਵਲ ਕਾਨੂੰਨੀ ਜਾਣਕਾਰੀ', heroBadge:'✦ ਮੁਫ਼ਤ · ਕੋਈ ਖਾਤਾ ਨਹੀਂ · 15 ਭਾਸ਼ਾਵਾਂ',
@@ -2428,6 +2560,16 @@ const TRANSLATIONS = {
     faq5a:'VeriLex Anthropic ਦਾ Claude AI ਵਰਤਦਾ ਹੈ, ਜੋ ਸੰਬੰਧਿਤ ਕਾਨੂੰਨਾਂ ਦੀ ਸਹੀ ਢੰਗ ਨਾਲ ਪਛਾਣ ਕਰਨ ਅਤੇ ਹਵਾਲਾ ਦੇਣ ਵਿੱਚ ਬਹੁਤ ਸਮਰੱਥ ਹੈ। ਸਾਰੇ ਹਵਾਲਿਆਂ ਵਿੱਚ ਸਰਕਾਰੀ ਪਾਠ ਦਾ ਸਿੱਧਾ ਲਿੰਕ ਸ਼ਾਮਲ ਹੈ। ਕਾਨੂੰਨ ਸਮੇਂ ਦੇ ਨਾਲ ਬਦਲਦੇ ਹਨ, ਇਸਲਈ ਭਰੋਸਾ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਮੌਜੂਦਾ ਸੰਸਕਰਣਾਂ ਦੀ ਜਾਂਚ ਕਰੋ।',
     faq6q:'ਮੈਨੂੰ ਬੇਦਖਲੀ / ਅਦਾਲਤ ਦਾ ਨੋਟਿਸ ਮਿਲਿਆ — ਕੀ ਕਰਾਂ?',
     faq6a:'ਪਹਿਲਾਂ, ਦਸਤਾਵੇਜ਼ ਨੂੰ VeriLex \'ਤੇ ਪੇਸਟ ਜਾਂ ਅਪਲੋਡ ਕਰੋ ਅਤੇ ਆਪਣੇ ਅਧਿਕਾਰ ਜਾਣੋ। <strong>ਮੁੱਖ ਤਾਰੀਖਾਂ ਅਤੇ ਸਮਾਂ-ਸੀਮਾਵਾਂ</strong> ਵੱਲ ਧਿਆਨ ਦਿਓ। ਫਿਰ ਤੁਰੰਤ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਸੰਸਥਾ ਨਾਲ ਸੰਪਰਕ ਕਰੋ। ਬੇ ਏਰੀਆ ਵਿੱਚ: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 ਅਤੇ <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ਮੁਫ਼ਤ ਮਦਦ ਦਿੰਦੇ ਹਨ।',
+    loadStep1:'ਤੁਹਾਡਾ ਦਸਤਾਵੇਜ਼ ਪੜ੍ਹਿਆ ਜਾ ਰਿਹਾ ਹੈ…', loadStep2:'ਲਾਗੂ ਕਾਨੂੰਨਾਂ ਦੀ ਪਛਾਣ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ…', loadStep3:'ਸੰਬੰਧਿਤ ਅਦਾਲਤੀ ਕੇਸ ਲੱਭੇ ਜਾ ਰਹੇ ਹਨ…', loadStep4:'ਮੁੱਖ ਤਾਰੀਖਾਂ ਅਤੇ ਸਮਾਂ-ਸੀਮਾਵਾਂ ਕੱਢੀਆਂ ਜਾ ਰਹੀਆਂ ਹਨ…', loadStep5:'ਸਰਲ ਭਾਸ਼ਾ ਵਿੱਚ ਵਿਆਖਿਆਵਾਂ ਤਿਆਰ ਕੀਤੀਆਂ ਜਾ ਰਹੀਆਂ ਹਨ…',
+    loadTimeEst:'ਆਮਤੌਰ ਤੇ 15–30 ਸਕਿੰਟ ਲੱਗਦੇ ਹਨ', loadTimeStill:'ਅਜੇ ਵੀ ਕੰਮ ਚੱਲ ਰਿਹਾ ਹੈ…',
+    urgencyLow:'ਘੱਟ ਜ਼ਰੂਰੀ', urgencyMed:'ਮੱਧਮ ਜ਼ਰੂਰੀ', urgencyHigh:'ਵੱਧ ਜ਼ਰੂਰੀ', urgencyCrit:'ਬਹੁਤ ਜ਼ਰੂਰੀ — ਹੁਣੇ ਕਾਰਵਾਈ ਕਰੋ',
+    actionBoxTitle:'ਹੁਣੇ ਕੀ ਕਰਨਾ ਹੈ',
+    emptyBreakdown:'ਕੋਈ ਅਨੁਭਾਗ ਵਿਸ਼ਲੇਸ਼ਣ ਉਪਲਬਧ ਨਹੀਂ।', emptyLaws:'ਇਸ ਦਸਤਾਵੇਜ਼ ਲਈ ਕੋਈ ਕਾਨੂੰਨ ਨਹੀਂ ਮਿਲਿਆ।', emptyCases:'ਇਸ ਕਿਸਮ ਲਈ ਕੋਈ ਕੇਸ ਕਾਨੂੰਨ ਨਹੀਂ ਮਿਲਿਆ।', emptyGlossary:'ਕੋਈ ਸ਼ਬਦਾਵਲੀ ਨਹੀਂ ਮਿਲੀ।', emptyRights:'ਕੋਈ ਅਧਿਕਾਰ ਜਾਣਕਾਰੀ ਜਾਂ ਸਰੋਤ ਉਪਲਬਧ ਨਹੀਂ।',
+    sectionPrefix:'ਅਨੁਭਾਗ', localResources:'ਸਥਾਨਕ ਅਤੇ ਰਾਸ਼ਟਰੀ ਕਾਨੂੰਨੀ ਸਰੋਤ',
+    viewLaw:'ਕਾਨੂੰਨ ਦੇਖੋ ↗', searchCase:'ਖੋਜੋ ↗', websiteLink:'ਵੈੱਬਸਾਈਟ ↗',
+    defaultDocType:'ਕਾਨੂੰਨੀ ਦਸਤਾਵੇਜ਼',
+    btnPrint:'🖨️ ਨਤੀਜੇ ਛਾਪੋ', btnCopy:'📋 ਸਾਰ ਕਾਪੀ ਕਰੋ', btnCopied:'✓ ਕਾਪੀ ਹੋ ਗਿਆ!',
+    keyDates:'ਮੁੱਖ ਤਾਰੀਖਾਂ ਅਤੇ ਸਮਾਂ-ਸੀਮਾਵਾਂ',
   },
   am: {
     navBadge:'ሕጋዊ መረጃ ብቻ', heroBadge:'✦ ነፃ · መለያ አያስፈልግም · 15 ቋንቋዎች',
@@ -2490,6 +2632,16 @@ const TRANSLATIONS = {
     faq5a:'VeriLex የ Anthropic Claude AI ይጠቀማል። ሁሉም ሕጋዊ ጥቅሶች ወደ ኦፊሴላዊ ጽሑፉ ቀጥተኛ ማስፈንጠሪያ ይዘዋል (ለምሳሌ leginfo.legislature.ca.gov ለካሊፎርኒያ ሕግ)። ሕጎች ከጊዜ ወደ ጊዜ ይለወጣሉ፣ ስለዚህ ሁሌ ወቅታዊ ስሪቶችን ያረጋግጡ።',
     faq6q:'የማስወጣት / ፍርድ ቤት ማስታወቂያ ደረሰኝ — ምን ማድረግ አለብኝ?',
     faq6a:'በመጀመሪያ ሰነዱን ወደ VeriLex ለጥፉ ወይም ጫኑ ምን እንደሚናገር እና መብቶቹ ምን እንደሆኑ ለመረዳት። <strong>ቁልፍ ቀኖች እና ጊዜ ገደቦች</strong> ክፍል ላይ ትኩረት ይስጡ — ጊዜ ገደብ መዝለቅ ጉዳዮን ሊጎዳ ይችላል። ከዚያ ወዲያው የሕግ እርዳታ ድርጅት ያግኙ። ቤይ ኤሪያ: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 እና <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ነፃ እርዳታ ያቀርባሉ።',
+    loadStep1:'ሰነድዎን እያነበብን ነው…', loadStep2:'ተፈፃሚ ሕጎችን እንለያለን…', loadStep3:'ተዛማጅ ፍርድ ቤት ጉዳዮችን እንፈልጋለን…', loadStep4:'ዋና ቀናቶች እና የመጨረሻ ቀናቶች እናወጣለን…', loadStep5:'በቀላል ቋንቋ ማብራሪያ እናዘጋጃለን…',
+    loadTimeEst:'አብዛኛውን ጊዜ 15–30 ሰከንድ ይወስዳል', loadTimeStill:'አሁንም እየሰራ ነው…',
+    urgencyLow:'ዝቅተኛ አስቸኳይነት', urgencyMed:'መካከለኛ አስቸኳይነት', urgencyHigh:'ከፍተኛ አስቸኳይነት', urgencyCrit:'አሳሳቢ — አሁኑኑ ይስሩ',
+    actionBoxTitle:'አሁን ምን ማድረግ እንዳለበት',
+    emptyBreakdown:'ምንም የክፍል ትንታኔ የለም።', emptyLaws:'ለዚህ ሰነድ ምንም ሕግ አልተገኘም።', emptyCases:'ለዚህ ሰነድ አይነት ምንም ጉዳይ ሕግ አልተገኘም።', emptyGlossary:'ምንም ቃላት አልተገኙም።', emptyRights:'ምንም የሕግ መብቶች ወይም ሀብቶች አልተገኙም።',
+    sectionPrefix:'ክፍል', localResources:'የአካባቢ እና ብሔራዊ የሕግ ሀብቶች',
+    viewLaw:'ሕግ ይመልከቱ ↗', searchCase:'ፈልጉ ↗', websiteLink:'ድረ-ገጽ ↗',
+    defaultDocType:'የሕግ ሰነድ',
+    btnPrint:'🖨️ ውጤቶችን ያትሙ', btnCopy:'📋 ማጠቃለያ ቅዳ', btnCopied:'✓ ተቀድቷል!',
+    keyDates:'ዋና ቀናቶች እና የመጨረሻ ቀናቶች',
   },
 };
 
@@ -2549,6 +2701,9 @@ const UI_ELEMENTS = [
   { sel:'.btn-new', key:'btnNew' },
   { id:'loadingMsg', key:'loadingMsg' },
   { sel:'.loading-sub', key:'loadingSub' },
+  { id:'btnPrint', key:'btnPrint' },
+  { id:'copySummaryBtn', key:'btnCopy' },
+  { id:'keyDatesTitle', key:'keyDates' },
   { id:'chip1', key:'chip1' }, { id:'chip2', key:'chip2' },
   { id:'chip3', key:'chip3' }, { id:'chip4', key:'chip4' },
   { id:'chip5', key:'chip5' }, { id:'chip6', key:'chip6' },
@@ -2744,14 +2899,12 @@ async function onFileUpload(file) {
 }
 
 // ── Analysis ───────────────────────────────────────────────────────────────────
-const loadSteps = [
-  'Reading your document…',
-  'Identifying applicable laws…',
-  'Finding relevant court cases…',
-  'Extracting key dates and deadlines…',
-  'Composing plain-language explanations…',
-];
+function getLoadSteps() {
+  const t = T();
+  return [t.loadStep1, t.loadStep2, t.loadStep3, t.loadStep4, t.loadStep5];
+}
 let loadInterval;
+let timerInterval;
 
 async function analyze() {
   const text = inputMode === 'paste'
@@ -2767,12 +2920,20 @@ async function analyze() {
 
   const lang = document.getElementById('langSelect').value;
   setUI('loading');
+  const steps = getLoadSteps();
   let i = 0;
-  document.getElementById('loadingMsg').textContent = loadSteps[0];
+  document.getElementById('loadingMsg').textContent = steps[0];
   loadInterval = setInterval(() => {
-    i = (i + 1) % loadSteps.length;
-    document.getElementById('loadingMsg').textContent = loadSteps[i];
+    i = (i + 1) % steps.length;
+    document.getElementById('loadingMsg').textContent = steps[i];
   }, 2000);
+  let elapsed = 0;
+  const timeEl = document.getElementById('loadingTime');
+  timeEl.textContent = T().loadTimeEst;
+  timerInterval = setInterval(() => {
+    elapsed++;
+    timeEl.textContent = elapsed < 15 ? T().loadTimeEst : `${T().loadTimeStill} (${elapsed}s)`;
+  }, 1000);
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 120_000); // 2-min hard timeout
@@ -2788,12 +2949,16 @@ async function analyze() {
     const data = await res.json();
     if (!res.ok) throw new Error(data.detail || 'Analysis failed');
     clearInterval(loadInterval);
+    clearInterval(timerInterval);
+    timeEl.textContent = '';
     render(data);
     setUI('results');
     document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (e) {
     clearTimeout(timeoutId);
     clearInterval(loadInterval);
+    clearInterval(timerInterval);
+    timeEl.textContent = '';
     const msg = e.name === 'AbortError'
       ? 'Request timed out — the document may be too complex. Try a shorter section.'
       : e.message;
@@ -2810,6 +2975,8 @@ function setUI(state) {
 }
 
 // ── Render ─────────────────────────────────────────────────────────────────────
+function T() { return TRANSLATIONS[uiLang] || TRANSLATIONS.en; }
+
 function render(d) {
   renderSummary(d);
   renderActionSteps(d);
@@ -2831,7 +2998,7 @@ function renderActionSteps(d) {
   const icon = u === 'critical' ? '🚨' : '⚠️';
   sec.innerHTML = `
     <div class="action-box ${u}">
-      <div class="action-box-title">${icon} What to do right now</div>
+      <div class="action-box-title">${icon} ${T().actionBoxTitle}</div>
       <ul class="action-steps-list">
         ${steps.map((s,i) => `
           <li>
@@ -2843,7 +3010,7 @@ function renderActionSteps(d) {
 }
 
 const URGENCY_ICON  = { low:'🟢', medium:'🟡', high:'🟠', critical:'🔴' };
-const URGENCY_LABEL = { low:'Low Urgency', medium:'Medium Urgency', high:'High Urgency', critical:'Critical — Act Immediately' };
+function urgLabel(u) { const t = T(); return ({low:t.urgencyLow,medium:t.urgencyMed,high:t.urgencyHigh,critical:t.urgencyCrit})[u] || u; }
 const PERSONA_LABEL = { novice:'🌱 Simplified', intermediate:'📚 Standard', expert:'⚖️ Technical' };
 
 function renderSummary(d) {
@@ -2851,8 +3018,8 @@ function renderSummary(d) {
   document.getElementById('summarySection').innerHTML = `
     <div class="summary-card">
       <div class="doc-meta">
-        <span class="badge badge-type">${esc(d.document_type || 'Legal Document')}</span>
-        <span class="badge badge-${u}">${URGENCY_ICON[u] || '⚪'} ${URGENCY_LABEL[u] || u}</span>
+        <span class="badge badge-type">${esc(d.document_type || T().defaultDocType)}</span>
+        <span class="badge badge-${u}">${URGENCY_ICON[u] || '⚪'} ${urgLabel(u)}</span>
         <span class="badge" style="background:rgba(0,0,0,.05);color:var(--muted)">${PERSONA_LABEL[persona] || ''}</span>
       </div>
       <div class="urgency-bar ${u}">
@@ -2877,11 +3044,11 @@ function renderDates(dates) {
 
 function renderBreakdown(sections) {
   document.getElementById('cnt-breakdown').textContent = sections.length;
-  if (!sections.length) { document.getElementById('tab-breakdown').innerHTML = emptyState('No section breakdown available.'); return; }
+  if (!sections.length) { document.getElementById('tab-breakdown').innerHTML = emptyState(T().emptyBreakdown); return; }
   document.getElementById('tab-breakdown').innerHTML = sections.map((s, i) => `
     <div class="content-card acc-item" id="acc-${i}" style="padding:0">
       <div class="acc-head" onclick="toggleAcc(${i})">
-        <span class="acc-title">${esc(s.heading || 'Section ' + (i+1))}</span>
+        <span class="acc-title">${esc(s.heading || T().sectionPrefix + ' ' + (i+1))}</span>
         <span class="acc-chevron">▼</span>
       </div>
       <div class="acc-body">
@@ -2899,7 +3066,7 @@ function toggleAcc(i) {
 
 function renderLaws(laws) {
   document.getElementById('cnt-laws').textContent = laws.length;
-  if (!laws.length) { document.getElementById('tab-laws').innerHTML = emptyState('No statutes identified for this document.'); return; }
+  if (!laws.length) { document.getElementById('tab-laws').innerHTML = emptyState(T().emptyLaws); return; }
   document.getElementById('tab-laws').innerHTML = laws.map(l => `
     <div class="content-card">
       <div class="law-head">
@@ -2907,7 +3074,7 @@ function renderLaws(laws) {
           <div class="law-citation">${esc(l.citation)}</div>
           <div class="law-title-sub">${esc(l.title)}</div>
         </div>
-        ${l.url ? `<a class="btn-view-law" href="${escA(l.url)}" target="_blank" rel="noopener">View Law ↗</a>` : ''}
+        ${l.url ? `<a class="btn-view-law" href="${escA(l.url)}" target="_blank" rel="noopener">${T().viewLaw}</a>` : ''}
       </div>
       <div class="law-what">${esc(l.what_it_says)}</div>
       ${l.relevance ? `<div class="applies-here">${esc(l.relevance)}</div>` : ''}
@@ -2916,7 +3083,7 @@ function renderLaws(laws) {
 
 function renderCases(cases) {
   document.getElementById('cnt-cases').textContent = cases.length;
-  if (!cases.length) { document.getElementById('tab-cases').innerHTML = emptyState('No case law identified for this document type.'); return; }
+  if (!cases.length) { document.getElementById('tab-cases').innerHTML = emptyState(T().emptyCases); return; }
   document.getElementById('tab-cases').innerHTML = cases.map(c => {
     const q = encodeURIComponent(`${c.case_name || ''} ${c.citation || ''}`);
     return `<div class="content-card">
@@ -2925,7 +3092,7 @@ function renderCases(cases) {
           <div class="case-name">${esc(c.case_name)}</div>
           <div class="case-meta">${[c.citation,c.court,c.year].filter(Boolean).map(esc).join(' · ')}</div>
         </div>
-        <a class="btn-search-case" href="https://scholar.google.com/scholar?q=${q}" target="_blank" rel="noopener">Search ↗</a>
+        <a class="btn-search-case" href="https://scholar.google.com/scholar?q=${q}" target="_blank" rel="noopener">${T().searchCase}</a>
       </div>
       <div class="case-holding">${esc(c.holding)}</div>
       ${c.relevance ? `<div class="why-matters">${esc(c.relevance)}</div>` : ''}
@@ -2935,7 +3102,7 @@ function renderCases(cases) {
 
 function renderGlossary(terms) {
   document.getElementById('cnt-glossary').textContent = terms.length;
-  if (!terms.length) { document.getElementById('tab-glossary').innerHTML = emptyState('No glossary terms identified.'); return; }
+  if (!terms.length) { document.getElementById('tab-glossary').innerHTML = emptyState(T().emptyGlossary); return; }
   const sorted = [...terms].sort((a,b) => (a.term||'').localeCompare(b.term||''));
   document.getElementById('tab-glossary').innerHTML = `
     <div class="glossary-grid">
@@ -2951,19 +3118,19 @@ function renderRights(rights, resources) {
   let html = '';
   if (rights.length) html += `<ul class="rights-list">${rights.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>`;
   if (resources.length) html += `
-    <div class="dates-title" style="margin-top:28px;margin-bottom:10px">Local &amp; National Legal Resources</div>
+    <div class="dates-title" style="margin-top:28px;margin-bottom:10px">${esc(T().localResources)}</div>
     <div class="resource-grid">
       ${resources.map(r=>`
         <div class="resource-card">
           <div class="resource-name">${esc(r.name)}</div>
           <div class="resource-services">${esc(r.services)}</div>
           <div class="resource-links">
-            ${r.url ? `<a href="https://${r.url.replace(/^https?:\/\//,'')}" target="_blank" rel="noopener">Website ↗</a>` : ''}
+            ${r.url ? `<a href="https://${r.url.replace(/^https?:\/\//,'')}" target="_blank" rel="noopener">${T().websiteLink}</a>` : ''}
             ${r.phone ? `<a href="tel:${r.phone.replace(/[^\d+]/g,'')}">${esc(r.phone)}</a>` : ''}
           </div>
         </div>`).join('')}
     </div>`;
-  if (!html) html = emptyState('No rights information or resources available.');
+  if (!html) html = emptyState(T().emptyRights);
   document.getElementById('tab-rights').innerHTML = html;
 }
 
@@ -3048,7 +3215,7 @@ async function copySummary() {
   const btn = document.getElementById('copySummaryBtn');
   try {
     await navigator.clipboard.writeText(el.innerText);
-    if (btn) { btn.textContent = '✓ Copied!'; setTimeout(() => btn.textContent = '📋 Copy summary', 2000); }
+    if (btn) { btn.textContent = T().btnCopied; setTimeout(() => btn.textContent = T().btnCopy, 2000); }
   } catch {
     alert('Copy not supported in this browser — please select the text and copy manually.');
   }
