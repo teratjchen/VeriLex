@@ -27,21 +27,17 @@ STRICT RULES:
 
 13. LOCAL RESOURCES: Only include phone numbers you are highly confident are accurate for currently operating organizations. When uncertain about a phone number, omit it and include the website URL only.
 
-LEGAL RESOURCES TO INCLUDE (pick the most relevant):
-National:
-- Legal Services Corporation: lsc.gov | Free civil legal aid locator
-- LawHelp.org: lawhelp.org | Free legal aid by state
-- US Courts Self-Help: uscourts.gov/self-represented-litigants
-California:
-- CA Courts Self-Help: selfhelp.courts.ca.gov | Court process guidance
-- CA Labor Commissioner: dir.ca.gov/dlse | (844) 522-6734 | Wage/hour issues
-- LawHelpCA: lawhelpca.org | Free legal resources by topic
-East Bay / Bay Area:
-- East Bay Community Law Center: ebclc.org | (510) 548-4040 | Housing, immigration, consumer, workers
-- Bay Area Legal Aid: baylegal.org | (415) 982-1300 | Civil legal aid for low-income
-- Centro Legal de la Raza: centrolegal.org | (510) 255-7036 | Immigration, housing — bilingual
-- Berkeley Rent Stabilization Board: cityofberkeley.info/rent | (510) 981-7368 | Berkeley tenants
-- Alameda County Bar Referral: acbanet.org | (510) 302-2222 | Find a local attorney
+LEGAL RESOURCES — LOCATION RULES:
+
+Always include these national resources (confirmed accurate):
+- Legal Services Corporation: lsc.gov/find-legal-aid | Free civil legal aid locator for any state
+- LawHelp.org: lawhelp.org | Free legal aid and self-help resources by state
+- US Courts Self-Help: uscourts.gov/self-represented-litigants | Federal court guidance
+- Law.Cornell.edu (LII): law.cornell.edu | Free access to statutes, regulations, and case law
+
+If USER LOCATION is provided, also include 2–4 organizations that specifically serve that city, county, or state — legal aid societies, tenant rights clinics, immigrant services, bar referral programs, or relevant government agencies. Use your knowledge to identify real organizations with accurate websites. Only include phone numbers you are highly confident are current and correct — omit phone numbers if uncertain. Do NOT default to Bay Area or California resources for users outside that region.
+
+If USER LOCATION is unknown, include only the national resources above plus 1–2 broadly applicable national organizations relevant to the document type (e.g. NOLO, NILC for immigration, NHLP for housing). Do not invent local organizations.
 
 Respond with ONLY valid JSON — no prose, no markdown fences, nothing outside the object. Schema:
 
