@@ -1230,7 +1230,7 @@
       <div class="input-body">
         <div id="pastePanel">
           <textarea id="docText" placeholder="Paste the text of your legal document here…" oninput="onTextInput()"></textarea>
-          <div class="char-count" id="charCount">0 characters</div>
+          <div class="char-count" id="charCount">0</div>
         </div>
         <div class="dropzone" id="dropzone"
              onclick="document.getElementById('fileInput').click()"
@@ -1239,8 +1239,8 @@
           <p id="pdfDzText" class="dz-text"><strong>Click to upload</strong> or drag and drop here</p>
           <p id="pdfDzNote" class="dz-note">PDF · JPEG · PNG — Text PDFs extract instantly · Scanned files use AI vision (~45s)</p>
           <div class="pdf-status" id="pdfStatus"></div>
-          <p class="privacy-notice">🔒 Your file is processed by Claude AI and never stored on our servers.</p>
-          <input type="file" id="fileInput" accept=".pdf,.jpg,.jpeg,.png,.webp" onchange="onFileUpload(this.files[0])">
+          <p class="privacy-notice" id="uploadPrivacyNote">🔒 Your file is processed by Claude AI and never stored on our servers.</p>
+          <input type="file" id="fileInput" accept=".pdf,.jpg,.jpeg,.png,.webp" onchange="onFileUpload(this.files[0])" style="display:none">
         </div>
 
         <!-- Camera and Google Drive alternatives -->
@@ -1760,6 +1760,8 @@ const TRANSLATIONS = {
     faq6a:'First, paste or upload the document to VeriLex to understand exactly what it says and what your rights are. Pay close attention to the <strong>Key Dates &amp; Deadlines</strong> section — missing a deadline can seriously harm your case. For high-urgency notices, VeriLex will show a “What to do right now” action box. Then reach out to a legal aid organization immediately. In the Bay Area: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 and <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 offer free help.',
     loadStep1:'Reading your document…', loadStep2:'Identifying applicable laws…', loadStep3:'Finding relevant court cases…', loadStep4:'Extracting key dates and deadlines…', loadStep5:'Composing plain-language explanations…',
     loadTimeEst:'Usually takes 30–60 seconds', loadTimeStill:'Still working…',
+    uploadPrivacyNote:'🔒 Your file is processed by Claude AI and never stored on our servers.',
+    charCountSuffix:' characters',
     urgencyLow:'Low Urgency', urgencyMed:'Medium Urgency', urgencyHigh:'High Urgency', urgencyCrit:'Critical — Act Immediately',
     actionBoxTitle:'What to do right now',
     emptyBreakdown:'No section breakdown available.', emptyLaws:'No statutes identified for this document.', emptyCases:'No case law identified for this document type.', emptyGlossary:'No glossary terms identified.', emptyRights:'No rights information or resources available.',
@@ -1838,6 +1840,8 @@ const TRANSLATIONS = {
     faq6a:'Primero, pegue o cargue el documento en VeriLex para entender exactamente qué dice y cuáles son sus derechos. Preste mucha atención a la sección de <strong>Fechas Clave y Plazos</strong> — perder un plazo puede dañar seriamente su caso. Para avisos de alta urgencia, VeriLex mostrará un cuadro de acción "Qué hacer ahora mismo". Luego comuníquese con una organización de ayuda legal de inmediato. En el Área de la Bahía: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 y <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ofrecen ayuda gratuita.',
     loadStep1:'Leyendo tu documento…', loadStep2:'Identificando leyes aplicables…', loadStep3:'Buscando casos judiciales relevantes…', loadStep4:'Extrayendo fechas y plazos clave…', loadStep5:'Redactando explicaciones en lenguaje claro…',
     loadTimeEst:'Generalmente tarda 30–60 segundos', loadTimeStill:'Aún trabajando…',
+    uploadPrivacyNote:'🔒 Tu archivo es procesado por Claude AI y nunca se almacena en nuestros servidores.',
+    charCountSuffix:' caracteres',
     urgencyLow:'Urgencia baja', urgencyMed:'Urgencia media', urgencyHigh:'Urgencia alta', urgencyCrit:'Crítico — Actúa de inmediato',
     actionBoxTitle:'Qué hacer ahora mismo',
     emptyBreakdown:'No hay desglose de secciones disponible.', emptyLaws:'No se identificaron leyes para este documento.', emptyCases:'No se identificó jurisprudencia para este tipo de documento.', emptyGlossary:'No se identificaron términos de glosario.', emptyRights:'No hay información de derechos o recursos disponible.',
@@ -1916,6 +1920,8 @@ const TRANSLATIONS = {
     faq6a:'首先，将文件粘贴或上传至 VeriLex，了解其确切内容及您的权利。请密切关注<strong>关键日期和截止日期</strong>部分——错过截止日期可能严重损害您的权益。对于高紧急度通知，VeriLex 将显示"立即采取行动"提示框。然后立即联系法律援助机构。在湾区：<a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">东湾社区法律中心</a> (510) 548-4040 和 <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">湾区法律援助</a> (415) 982-1300 提供免费帮助。',
     loadStep1:'正在阅读您的文件…', loadStep2:'识别适用法律…', loadStep3:'查找相关法院案例…', loadStep4:'提取关键日期和截止日期…', loadStep5:'撰写通俗易懂的解释…',
     loadTimeEst:'通常需要 30–60 秒', loadTimeStill:'仍在处理中…',
+    uploadPrivacyNote:'🔒 您的文件由 Claude AI 处理，从不存储在我们的服务器上。',
+    charCountSuffix:' 个字符',
     urgencyLow:'低紧迫性', urgencyMed:'中等紧迫性', urgencyHigh:'高紧迫性', urgencyCrit:'紧急 — 立即采取行动',
     actionBoxTitle:'现在需要做什么',
     emptyBreakdown:'无可用章节分析。', emptyLaws:'未识别到适用于本文件的法规。', emptyCases:'未识别到适用于本文件类型的判例法。', emptyGlossary:'未识别到术语表。', emptyRights:'无权利信息或资源可用。',
@@ -1994,6 +2000,8 @@ const TRANSLATIONS = {
     faq6a:'首先，將文件貼上或上傳至 VeriLex，了解其確切內容及您的權利。請密切關注<strong>關鍵日期和截止日期</strong>部分——錯過截止日期可能嚴重損害您的權益。對於高緊急度通知，VeriLex 將顯示「立即採取行動」提示框。然後立即聯繫法律援助機構。在灣區：<a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">東灣社區法律中心</a> (510) 548-4040 和 <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">灣區法律援助</a> (415) 982-1300 提供免費幫助。',
     loadStep1:'正在閱讀您的文件…', loadStep2:'識別適用法律…', loadStep3:'查找相關法院案例…', loadStep4:'提取關鍵日期和截止日期…', loadStep5:'撰寫通俗易懂的解釋…',
     loadTimeEst:'通常需要 30–60 秒', loadTimeStill:'仍在處理中…',
+    uploadPrivacyNote:'🔒 您的檔案由 Claude AI 處理，從不儲存於我們的伺服器。',
+    charCountSuffix:' 個字元',
     urgencyLow:'低緊迫性', urgencyMed:'中等緊迫性', urgencyHigh:'高緊迫性', urgencyCrit:'緊急 — 立即採取行動',
     actionBoxTitle:'現在需要做什麼',
     emptyBreakdown:'無可用章節分析。', emptyLaws:'未識別到適用於本文件的法規。', emptyCases:'未識別到適用於本文件類型的判例法。', emptyGlossary:'未識別到術語表。', emptyRights:'無權利資訊或資源可用。',
@@ -2072,6 +2080,8 @@ const TRANSLATIONS = {
     faq6a:'Đầu tiên, dán hoặc tải tài liệu lên VeriLex để hiểu chính xác nội dung và quyền của bạn. Chú ý kỹ đến phần <strong>Ngày Quan Trọng và Hạn Chót</strong> — bỏ lỡ hạn chót có thể gây hại nghiêm trọng cho trường hợp của bạn. Đối với thông báo khẩn cấp cao, VeriLex sẽ hiển thị hộp hành động "Phải làm gì ngay bây giờ". Sau đó liên hệ ngay với tổ chức trợ giúp pháp lý. Ở Vùng Vịnh: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 và <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 cung cấp hỗ trợ miễn phí.',
     loadStep1:'Đang đọc tài liệu của bạn…', loadStep2:'Xác định luật áp dụng…', loadStep3:'Tìm kiếm án lệ liên quan…', loadStep4:'Trích xuất ngày quan trọng và thời hạn…', loadStep5:'Soạn giải thích bằng ngôn ngữ đơn giản…',
     loadTimeEst:'Thường mất 30–60 giây', loadTimeStill:'Vẫn đang xử lý…',
+    uploadPrivacyNote:'🔒 Tệp của bạn được xử lý bởi Claude AI và không bao giờ được lưu trữ trên máy chủ của chúng tôi.',
+    charCountSuffix:' ký tự',
     urgencyLow:'Mức độ khẩn cấp thấp', urgencyMed:'Mức độ khẩn cấp trung bình', urgencyHigh:'Mức độ khẩn cấp cao', urgencyCrit:'Khẩn cấp — Hành động ngay',
     actionBoxTitle:'Cần làm gì ngay bây giờ',
     emptyBreakdown:'Không có phân tích mục nào.', emptyLaws:'Không xác định được luật cho tài liệu này.', emptyCases:'Không xác định được án lệ cho loại tài liệu này.', emptyGlossary:'Không xác định được thuật ngữ nào.', emptyRights:'Không có thông tin quyền hoặc tài nguyên.',
@@ -2150,6 +2160,8 @@ const TRANSLATIONS = {
     faq6a:'Una, i-paste o i-upload ang dokumento sa VeriLex upang maunawaan nang eksakto ang sinasabi nito at ang iyong mga karapatan. Bigyang-pansin ang seksyon ng <strong>Mga Pangunahing Petsa at Deadline</strong> — ang pagkawala ng deadline ay maaaring seryosong makapinsala sa iyong kaso. Para sa mga abisong may mataas na pagkamadalian, ipapakita ng VeriLex ang kahon ng aksyon na "Ano ang dapat gawin ngayon". Pagkatapos makipag-ugnayan kaagad sa isang organisasyon ng legal na tulong. Sa Bay Area: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 at <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ay nag-aalok ng libreng tulong.',
     loadStep1:'Binabasa ang iyong dokumento…', loadStep2:'Tinutukoy ang naaangkop na mga batas…', loadStep3:'Naghahanap ng mga kaugnay na kaso…', loadStep4:'Kinukuha ang mga mahahalagang petsa at deadline…', loadStep5:'Gumagawa ng mga paliwanag sa simpleng wika…',
     loadTimeEst:'Karaniwang tumatagal ng 30–60 segundo', loadTimeStill:'Nagtatrabaho pa…',
+    uploadPrivacyNote:'🔒 Ang iyong file ay pinoproseso ng Claude AI at hindi kailanman naiimbak sa aming mga server.',
+    charCountSuffix:' mga karakter',
     urgencyLow:'Mababang Urgensya', urgencyMed:'Katamtamang Urgensya', urgencyHigh:'Mataas na Urgensya', urgencyCrit:'Kritikal — Kumilos Agad',
     actionBoxTitle:'Ano ang gagawin ngayon',
     emptyBreakdown:'Walang available na breakdown ng seksyon.', emptyLaws:'Walang natukoy na batas para sa dokumentong ito.', emptyCases:'Walang natukoy na case law para sa ganitong uri ng dokumento.', emptyGlossary:'Walang natukoy na mga termino.', emptyRights:'Walang available na impormasyon sa karapatan o mapagkukunan.',
@@ -2228,6 +2240,8 @@ const TRANSLATIONS = {
     faq6a:'먼저 VeriLex에 문서를 붙여넣거나 업로드하여 정확히 무엇을 말하는지, 귀하의 권리가 무엇인지 이해하세요. <strong>주요 날짜 및 기한</strong> 섹션에 주의를 기울이세요 — 기한을 놓치면 귀하의 사례에 심각한 해를 끼칠 수 있습니다. 긴급한 통지의 경우 VeriLex에 "지금 해야 할 일" 행동 상자가 표시됩니다. 그런 다음 즉시 법률 지원 단체에 연락하세요. 베이 에어리어: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 및 <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300에서 무료 도움을 제공합니다.',
     loadStep1:'문서를 읽는 중…', loadStep2:'적용 가능한 법률 식별 중…', loadStep3:'관련 판례 검색 중…', loadStep4:'주요 날짜 및 마감일 추출 중…', loadStep5:'쉬운 언어로 설명 작성 중…',
     loadTimeEst:'보통 30–60초 소요', loadTimeStill:'아직 처리 중…',
+    uploadPrivacyNote:'🔒 귀하의 파일은 Claude AI로 처리되며 서버에 저장되지 않습니다.',
+    charCountSuffix:' 자',
     urgencyLow:'낮은 긴급도', urgencyMed:'중간 긴급도', urgencyHigh:'높은 긴급도', urgencyCrit:'긴급 — 즉시 행동하세요',
     actionBoxTitle:'지금 당장 해야 할 일',
     emptyBreakdown:'섹션 분석 없음.', emptyLaws:'이 문서에 해당하는 법령이 없습니다.', emptyCases:'이 문서 유형에 해당하는 판례가 없습니다.', emptyGlossary:'용어 정의 없음.', emptyRights:'권리 정보 또는 자료 없음.',
@@ -2306,6 +2320,8 @@ const TRANSLATIONS = {
     faq6a:'أولاً، الصق أو ارفع المستند إلى VeriLex لتفهم تماماً ما يقوله وما هي حقوقك. انتبه جيداً لقسم <strong>التواريخ والمواعيد النهائية الرئيسية</strong> — فإغفال موعد نهائي قد يضرّ بحالتك بشدة. بالنسبة للإشعارات عالية الإلحاح، سيعرض VeriLex مربع إجراءات "ماذا تفعل الآن". ثم تواصل فوراً مع منظمة مساعدة قانونية. في منطقة البي أريا: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 و<a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 تقدمان مساعدة مجانية.',
     loadStep1:'جاري قراءة مستندك…', loadStep2:'تحديد القوانين المطبقة…', loadStep3:'البحث عن القضايا ذات الصلة…', loadStep4:'استخراج التواريخ والمواعيد النهائية الرئيسية…', loadStep5:'صياغة شروحات بلغة بسيطة…',
     loadTimeEst:'عادةً يستغرق 30–60 ثانية', loadTimeStill:'لا يزال يعمل…',
+    uploadPrivacyNote:'🔒 ملفك تتم معالجته بواسطة Claude AI ولا يُخزَّن أبدًا على خوادمنا.',
+    charCountSuffix:' حرف',
     urgencyLow:'أولوية منخفضة', urgencyMed:'أولوية متوسطة', urgencyHigh:'أولوية عالية', urgencyCrit:'حرج — تصرف فوراً',
     actionBoxTitle:'ما يجب فعله الآن',
     emptyBreakdown:'لا يوجد تحليل للأقسام.', emptyLaws:'لم يتم تحديد أي قوانين لهذا المستند.', emptyCases:'لم يتم تحديد أي قانون للقضايا لهذا النوع.', emptyGlossary:'لم يتم تحديد أي مصطلحات.', emptyRights:'لا تتوفر معلومات حقوق أو موارد.',
@@ -2384,6 +2400,8 @@ const TRANSLATIONS = {
     faq6a:'सबसे पहले, दस्तावेज़ को VeriLex पर पेस्ट या अपलोड करें और जानें कि यह क्या कहता है और आपके अधिकार क्या हैं। <strong>मुख्य तारीखें और समय सीमाएं</strong> अनुभाग पर ध्यान दें — एक समय सीमा चूकना आपके मामले को गंभीर रूप से नुकसान पहुंचा सकता है। फिर तुरंत एक कानूनी सहायता संगठन से संपर्क करें। बे एरिया में: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 और <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 मुफ़्त सहायता प्रदान करते हैं।',
     loadStep1:'आपका दस्तावेज़ पढ़ा जा रहा है…', loadStep2:'लागू कानूनों की पहचान हो रही है…', loadStep3:'प्रासंगिक अदालती मामले खोजे जा रहे हैं…', loadStep4:'मुख्य तिथियाँ और समय-सीमाएँ निकाली जा रही हैं…', loadStep5:'सरल भाषा में स्पष्टीकरण तैयार हो रहे हैं…',
     loadTimeEst:'आमतौर पर 30–60 सेकंड लगते हैं', loadTimeStill:'अभी भी काम चल रहा है…',
+    uploadPrivacyNote:'🔒 आपकी फ़ाइल Claude AI द्वारा प्रोसेस की जाती है और हमारे सर्वर पर कभी संग्रहीत नहीं होती।',
+    charCountSuffix:' अक्षर',
     urgencyLow:'कम जरूरी', urgencyMed:'मध्यम जरूरी', urgencyHigh:'अधिक जरूरी', urgencyCrit:'अत्यंत जरूरी — अभी कार्रवाई करें',
     actionBoxTitle:'अभी क्या करें',
     emptyBreakdown:'कोई अनुभाग विश्लेषण उपलब्ध नहीं।', emptyLaws:'इस दस्तावेज़ के लिए कोई कानून नहीं मिला।', emptyCases:'इस प्रकार के दस्तावेज़ के लिए कोई केस लॉ नहीं मिला।', emptyGlossary:'कोई शब्दावली नहीं मिली।', emptyRights:'कोई अधिकार जानकारी या संसाधन उपलब्ध नहीं।',
@@ -2462,6 +2480,8 @@ const TRANSLATIONS = {
     faq6a:'Primeiro, cole ou carregue o documento no VeriLex para entender exatamente o que diz e quais são os seus direitos. Preste muita atenção à secção de <strong>Datas e Prazos Importantes</strong> — perder um prazo pode prejudicar seriamente o seu caso. Para avisos de alta urgência, o VeriLex mostrará uma caixa de ação "O que fazer agora". Em seguida, contacte imediatamente uma organização de assistência jurídica. Na Área da Baía: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 e <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 oferecem ajuda gratuita.',
     loadStep1:'Lendo seu documento…', loadStep2:'Identificando leis aplicáveis…', loadStep3:'Buscando casos judiciais relevantes…', loadStep4:'Extraindo datas e prazos importantes…', loadStep5:'Redigindo explicações em linguagem simples…',
     loadTimeEst:'Geralmente leva 30–60 segundos', loadTimeStill:'Ainda processando…',
+    uploadPrivacyNote:'🔒 O seu ficheiro é processado pelo Claude AI e nunca é armazenado nos nossos servidores.',
+    charCountSuffix:' caracteres',
     urgencyLow:'Urgência baixa', urgencyMed:'Urgência média', urgencyHigh:'Urgência alta', urgencyCrit:'Crítico — Aja imediatamente',
     actionBoxTitle:'O que fazer agora',
     emptyBreakdown:'Nenhuma análise de seção disponível.', emptyLaws:'Nenhum estatuto identificado para este documento.', emptyCases:'Nenhuma jurisprudência identificada para este tipo de documento.', emptyGlossary:'Nenhum termo do glossário identificado.', emptyRights:'Nenhuma informação de direitos ou recursos disponível.',
@@ -2540,6 +2560,8 @@ const TRANSLATIONS = {
     faq6a:'Сначала вставьте или загрузите документ в VeriLex, чтобы точно понять, что в нём написано и каковы ваши права. Обратите особое внимание на раздел <strong>Ключевые даты и сроки</strong> — пропущенный срок может серьёзно навредить вашему делу. Для срочных уведомлений VeriLex покажет блок действий "Что сделать прямо сейчас". Затем немедленно обратитесь в организацию юридической помощи. В Бэй-Эрии: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 и <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 предлагают бесплатную помощь.',
     loadStep1:'Читаем ваш документ…', loadStep2:'Определяем применимые законы…', loadStep3:'Ищем соответствующие судебные дела…', loadStep4:'Извлекаем ключевые даты и сроки…', loadStep5:'Составляем объяснения на понятном языке…',
     loadTimeEst:'Обычно занимает 30–60 секунд', loadTimeStill:'Всё ещё обрабатывается…',
+    uploadPrivacyNote:'🔒 Ваш файл обрабатывается Claude AI и никогда не хранится на наших серверах.',
+    charCountSuffix:' символов',
     urgencyLow:'Низкая срочность', urgencyMed:'Средняя срочность', urgencyHigh:'Высокая срочность', urgencyCrit:'Критично — Действуйте немедленно',
     actionBoxTitle:'Что делать прямо сейчас',
     emptyBreakdown:'Нет доступного разбора разделов.', emptyLaws:'Законодательство для этого документа не определено.', emptyCases:'Прецеденты для этого типа документа не определены.', emptyGlossary:'Термины глоссария не определены.', emptyRights:'Нет информации о правах или ресурсах.',
@@ -2618,6 +2640,8 @@ const TRANSLATIONS = {
     faq6a:"D'abord, collez ou téléchargez le document dans VeriLex pour comprendre exactement ce qu'il dit et quels sont vos droits. Portez une attention particulière à la section <strong>Dates et délais clés</strong> — manquer une échéance peut gravement nuire à votre dossier. Pour les avis très urgents, VeriLex affichera un encadré d'action \"Que faire maintenant\". Contactez ensuite immédiatement une organisation d'aide juridique. Dans la Bay Area : <a href=\"https://ebclc.org\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--sky)\">East Bay Community Law Center</a> (510) 548-4040 et <a href=\"https://baylegal.org\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--sky)\">Bay Area Legal Aid</a> (415) 982-1300 offrent une aide gratuite.",
     loadStep1:'Lecture de votre document…', loadStep2:'Identification des lois applicables…', loadStep3:'Recherche de jurisprudence pertinente…', loadStep4:'Extraction des dates et délais clés…', loadStep5:"Rédaction d'explications en langage clair…",
     loadTimeEst:'Prend généralement 30–60 secondes', loadTimeStill:'Toujours en cours…',
+    uploadPrivacyNote:'🔒 Votre fichier est traité par Claude AI et n\'est jamais stocké sur nos serveurs.',
+    charCountSuffix:' caractères',
     urgencyLow:'Urgence faible', urgencyMed:'Urgence moyenne', urgencyHigh:'Urgence élevée', urgencyCrit:'Critique — Agissez immédiatement',
     actionBoxTitle:'Que faire maintenant',
     emptyBreakdown:'Aucune analyse de section disponible.', emptyLaws:'Aucune loi identifiée pour ce document.', emptyCases:'Aucune jurisprudence identifiée pour ce type de document.', emptyGlossary:'Aucun terme de glossaire identifié.', emptyRights:'Aucune information sur les droits ou ressources disponible.',
@@ -2696,6 +2720,8 @@ const TRANSLATIONS = {
     faq6a:'Premye, kole oswa telechaje dokiman an nan VeriLex pou konprann egzakteman sa li di ak ki dwa ou genyen. Fè atansyon pou seksyon <strong>Dat ak Delè Kle yo</strong> — rate yon delè ka domaje ka ou seryezman. Pou avi ki gen ijans segondè, VeriLex pral montre yon bwat aksyon "Kisa pou fè kounye a". Epi kontakte yon òganizasyon èd legal imedyatman. Nan Bay Area: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 ak <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ofri èd gratis.',
     loadStep1:'Ap li dokiman ou…', loadStep2:'Ap idantifye lwa ki aplike…', loadStep3:'Ap chèche ka legal ki enpòtan…', loadStep4:'Ap ekstrè dat ak dat limit kle…', loadStep5:'Ap konpoze eksplikasyon an lang senp…',
     loadTimeEst:'Pran anviwon 30–60 segonn', loadTimeStill:'Toujou ap travay…',
+    uploadPrivacyNote:'🔒 Fichye ou a trete pa Claude AI epi li pa janm stoke sou sèvè nou yo.',
+    charCountSuffix:' karaktè',
     urgencyLow:'Ijans ba', urgencyMed:'Ijans mwayen', urgencyHigh:'Ijans wo', urgencyCrit:'Kritik — Aji kounye a',
     actionBoxTitle:'Kisa pou fè kounye a',
     emptyBreakdown:'Pa gen analiz seksyon disponib.', emptyLaws:'Pa gen lwa idantifye pou dokiman sa a.', emptyCases:'Pa gen ka legal idantifye pou tip dokiman sa a.', emptyGlossary:'Pa gen tèm glosè idantifye.', emptyRights:'Pa gen enfòmasyon sou dwa oswa resous disponib.',
@@ -2774,6 +2800,8 @@ const TRANSLATIONS = {
     faq6a:'ਪਹਿਲਾਂ, ਦਸਤਾਵੇਜ਼ ਨੂੰ VeriLex \'ਤੇ ਪੇਸਟ ਜਾਂ ਅਪਲੋਡ ਕਰੋ ਅਤੇ ਆਪਣੇ ਅਧਿਕਾਰ ਜਾਣੋ। <strong>ਮੁੱਖ ਤਾਰੀਖਾਂ ਅਤੇ ਸਮਾਂ-ਸੀਮਾਵਾਂ</strong> ਵੱਲ ਧਿਆਨ ਦਿਓ। ਫਿਰ ਤੁਰੰਤ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਸੰਸਥਾ ਨਾਲ ਸੰਪਰਕ ਕਰੋ। ਬੇ ਏਰੀਆ ਵਿੱਚ: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 ਅਤੇ <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ਮੁਫ਼ਤ ਮਦਦ ਦਿੰਦੇ ਹਨ।',
     loadStep1:'ਤੁਹਾਡਾ ਦਸਤਾਵੇਜ਼ ਪੜ੍ਹਿਆ ਜਾ ਰਿਹਾ ਹੈ…', loadStep2:'ਲਾਗੂ ਕਾਨੂੰਨਾਂ ਦੀ ਪਛਾਣ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ…', loadStep3:'ਸੰਬੰਧਿਤ ਅਦਾਲਤੀ ਕੇਸ ਲੱਭੇ ਜਾ ਰਹੇ ਹਨ…', loadStep4:'ਮੁੱਖ ਤਾਰੀਖਾਂ ਅਤੇ ਸਮਾਂ-ਸੀਮਾਵਾਂ ਕੱਢੀਆਂ ਜਾ ਰਹੀਆਂ ਹਨ…', loadStep5:'ਸਰਲ ਭਾਸ਼ਾ ਵਿੱਚ ਵਿਆਖਿਆਵਾਂ ਤਿਆਰ ਕੀਤੀਆਂ ਜਾ ਰਹੀਆਂ ਹਨ…',
     loadTimeEst:'ਆਮਤੌਰ ਤੇ 30–60 ਸਕਿੰਟ ਲੱਗਦੇ ਹਨ', loadTimeStill:'ਅਜੇ ਵੀ ਕੰਮ ਚੱਲ ਰਿਹਾ ਹੈ…',
+    uploadPrivacyNote:'🔒 ਤੁਹਾਡੀ ਫਾਈਲ Claude AI ਦੁਆਰਾ ਪ੍ਰੋਸੈਸ ਕੀਤੀ ਜਾਂਦੀ ਹੈ ਅਤੇ ਕਦੇ ਵੀ ਸਾਡੇ ਸਰਵਰਾਂ ਤੇ ਸਟੋਰ ਨਹੀਂ ਹੁੰਦੀ।',
+    charCountSuffix:' ਅੱਖਰ',
     urgencyLow:'ਘੱਟ ਜ਼ਰੂਰੀ', urgencyMed:'ਮੱਧਮ ਜ਼ਰੂਰੀ', urgencyHigh:'ਵੱਧ ਜ਼ਰੂਰੀ', urgencyCrit:'ਬਹੁਤ ਜ਼ਰੂਰੀ — ਹੁਣੇ ਕਾਰਵਾਈ ਕਰੋ',
     actionBoxTitle:'ਹੁਣੇ ਕੀ ਕਰਨਾ ਹੈ',
     emptyBreakdown:'ਕੋਈ ਅਨੁਭਾਗ ਵਿਸ਼ਲੇਸ਼ਣ ਉਪਲਬਧ ਨਹੀਂ।', emptyLaws:'ਇਸ ਦਸਤਾਵੇਜ਼ ਲਈ ਕੋਈ ਕਾਨੂੰਨ ਨਹੀਂ ਮਿਲਿਆ।', emptyCases:'ਇਸ ਕਿਸਮ ਲਈ ਕੋਈ ਕੇਸ ਕਾਨੂੰਨ ਨਹੀਂ ਮਿਲਿਆ।', emptyGlossary:'ਕੋਈ ਸ਼ਬਦਾਵਲੀ ਨਹੀਂ ਮਿਲੀ।', emptyRights:'ਕੋਈ ਅਧਿਕਾਰ ਜਾਣਕਾਰੀ ਜਾਂ ਸਰੋਤ ਉਪਲਬਧ ਨਹੀਂ।',
@@ -2852,6 +2880,8 @@ const TRANSLATIONS = {
     faq6a:'በመጀመሪያ ሰነዱን ወደ VeriLex ለጥፉ ወይም ጫኑ ምን እንደሚናገር እና መብቶቹ ምን እንደሆኑ ለመረዳት። <strong>ቁልፍ ቀኖች እና ጊዜ ገደቦች</strong> ክፍል ላይ ትኩረት ይስጡ — ጊዜ ገደብ መዝለቅ ጉዳዮን ሊጎዳ ይችላል። ከዚያ ወዲያው የሕግ እርዳታ ድርጅት ያግኙ። ቤይ ኤሪያ: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 እና <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 ነፃ እርዳታ ያቀርባሉ።',
     loadStep1:'ሰነድዎን እያነበብን ነው…', loadStep2:'ተፈፃሚ ሕጎችን እንለያለን…', loadStep3:'ተዛማጅ ፍርድ ቤት ጉዳዮችን እንፈልጋለን…', loadStep4:'ዋና ቀናቶች እና የመጨረሻ ቀናቶች እናወጣለን…', loadStep5:'በቀላል ቋንቋ ማብራሪያ እናዘጋጃለን…',
     loadTimeEst:'አብዛኛውን ጊዜ 30–60 ሰከንድ ይወስዳል', loadTimeStill:'አሁንም እየሰራ ነው…',
+    uploadPrivacyNote:'🔒 ፋይልዎ በ Claude AI ይሠራል እና በሰርቨሮቻችን ላይ ፈጽሞ አይቀመጥም።',
+    charCountSuffix:' ቁምፊዎች',
     urgencyLow:'ዝቅተኛ አስቸኳይነት', urgencyMed:'መካከለኛ አስቸኳይነት', urgencyHigh:'ከፍተኛ አስቸኳይነት', urgencyCrit:'አሳሳቢ — አሁኑኑ ይስሩ',
     actionBoxTitle:'አሁን ምን ማድረግ እንዳለበት',
     emptyBreakdown:'ምንም የክፍል ትንታኔ የለም።', emptyLaws:'ለዚህ ሰነድ ምንም ሕግ አልተገኘም።', emptyCases:'ለዚህ ሰነድ አይነት ምንም ጉዳይ ሕግ አልተገኘም።', emptyGlossary:'ምንም ቃላት አልተገኙም።', emptyRights:'ምንም የሕግ መብቶች ወይም ሀብቶች አልተገኙም።',
@@ -2892,6 +2922,7 @@ const UI_ELEMENTS = [
   { id:'locBtn', key:'locBtn' },
   { id:'pdfDzText', key:'pdfDzText', html:true },
   { id:'pdfDzNote', key:'pdfDzNote' },
+  { id:'uploadPrivacyNote', key:'uploadPrivacyNote' },
   { id:'cameraBtnLabel', key:'cameraBtn' },
   { id:'driveBtnLabel',  key:'driveBtn'  },
   { id:'cameraTitle',    key:'cameraTitle' },
@@ -3066,7 +3097,7 @@ function switchInput(mode, btn) {
 
 function onTextInput() {
   const n = document.getElementById('docText').value.length;
-  document.getElementById('charCount').textContent = n.toLocaleString() + ' characters';
+  document.getElementById('charCount').textContent = n.toLocaleString() + (T().charCountSuffix || ' characters');
 }
 
 // ── Sample loader ─────────────────────────────────────────────────────────────
@@ -3608,7 +3639,7 @@ async function submitFeedback() {
 function resetAll() {
   setUI('none');
   document.getElementById('docText').value = '';
-  document.getElementById('charCount').textContent = '0 characters';
+  document.getElementById('charCount').textContent = '0' + (T().charCountSuffix || ' characters');
   pdfText = '';
   document.getElementById('pdfStatus').textContent = '';
   lastDocText = '';
