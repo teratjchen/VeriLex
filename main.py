@@ -113,6 +113,15 @@ async def og_image():
     return FileResponse("og-image.png", media_type="image/png")
 
 
+@app.get("/config")
+async def get_config():
+    """Returns public client-side config (never secrets like the Anthropic key)."""
+    return JSONResponse({
+        "google_client_id": os.environ.get("GOOGLE_CLIENT_ID", ""),
+        "google_api_key":   os.environ.get("GOOGLE_API_KEY", ""),
+    })
+
+
 @app.post("/analyze")
 async def analyze(req: AnalyzeRequest):
     api_key = os.environ.get("ANTHROPIC_API_KEY")
@@ -321,16 +330,22 @@ async def extract_pdf(file: UploadFile = File(...)):
         num_pages = len(pdf_doc)
 
         # Convert pages to images (cap at 10 pages to keep costs reasonable)
+        # JPEG at 1.5× zoom keeps text sharp while being ~75% smaller than 2× PNG,
+        # which dramatically reduces API payload size and processing time.
         vision_content = []
         for i, page in enumerate(pdf_doc):
             if i >= 10:
                 break
-            mat = fitz.Matrix(2.0, 2.0)  # 2× zoom for better handwriting recognition
+            mat = fitz.Matrix(1.5, 1.5)
             pix = page.get_pixmap(matrix=mat)
-            img_b64 = base64.standard_b64encode(pix.tobytes("png")).decode()
+            jpeg_bytes = pix.tobytes("jpg", jpg_quality=85)
+            # If a page is still very large (e.g. high-DPI scan), compress further
+            if len(jpeg_bytes) > 1_500_000:
+                jpeg_bytes = pix.tobytes("jpg", jpg_quality=65)
+            img_b64 = base64.standard_b64encode(jpeg_bytes).decode()
             vision_content.append({
                 "type": "image",
-                "source": {"type": "base64", "media_type": "image/png", "data": img_b64},
+                "source": {"type": "base64", "media_type": "image/jpeg", "data": img_b64},
             })
 
         vision_content.append({

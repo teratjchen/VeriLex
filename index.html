@@ -807,6 +807,58 @@
       .law-item, .case-item { page-break-inside: avoid; }
     }
 
+    /* ── UPLOAD ACTIONS (camera / drive) ────────────── */
+    .upload-actions {
+      display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;
+    }
+    .upload-action-btn {
+      flex: 1; min-width: 130px; padding: 10px 14px;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      background: var(--surface); color: var(--ink-mid);
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: border-color .15s, color .15s;
+    }
+    .upload-action-btn:hover { border-color: var(--sky); color: var(--sky); }
+
+    /* ── CAMERA MODAL ────────────────────────────────── */
+    .camera-modal {
+      position: fixed; inset: 0; background: rgba(0,0,0,.75);
+      z-index: 9000; display: flex; align-items: center; justify-content: center;
+      padding: 16px;
+    }
+    .camera-inner {
+      background: #fff; border-radius: 16px; overflow: hidden;
+      width: 100%; max-width: 560px; box-shadow: 0 24px 64px rgba(0,0,0,.4);
+    }
+    .camera-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 20px; border-bottom: 1px solid #e2e8f0;
+      font-weight: 700; font-size: 15px;
+    }
+    .camera-close {
+      background: none; border: none; font-size: 20px;
+      cursor: pointer; color: #64748b; line-height: 1;
+    }
+    #cameraVideo {
+      width: 100%; display: block; background: #0f172a;
+      max-height: 360px; object-fit: cover;
+    }
+    .camera-footer {
+      padding: 16px 20px; display: flex; gap: 10px; justify-content: flex-end;
+      border-top: 1px solid #e2e8f0;
+    }
+    .camera-capture-btn {
+      padding: 10px 24px; background: var(--sky); color: #fff;
+      border: none; border-radius: 8px; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: opacity .15s;
+    }
+    .camera-capture-btn:hover { opacity: .85; }
+    .camera-cancel-btn {
+      padding: 10px 18px; background: #f1f5f9; color: #475569;
+      border: none; border-radius: 8px; font-size: 14px; cursor: pointer;
+    }
+
     /* ── FOLLOW-UP CHAT ──────────────────────────────── */
     .chat-section {
       background: var(--surface); border: 1px solid var(--border);
@@ -1130,9 +1182,8 @@
     <div class="input-card">
       <div class="input-card-top">
         <div class="input-tabs">
-          <button id="itab-paste" class="input-tab active" onclick="switchInput('paste',this)">Paste Text</button>
-          <button id="itab-pdf" class="input-tab" onclick="switchInput('pdf',this)">Upload PDF</button>
-          <button id="itab-photo" class="input-tab" onclick="switchInput('photo',this)">Upload Photo</button>
+          <button id="itab-paste"   class="input-tab active" onclick="switchInput('paste',this)">Paste Text</button>
+          <button id="itab-upload" class="input-tab"        onclick="switchInput('upload',this)">Upload File</button>
         </div>
       </div>
 
@@ -1182,25 +1233,24 @@
           <div class="char-count" id="charCount">0 characters</div>
         </div>
         <div class="dropzone" id="dropzone"
-             onclick="document.getElementById('pdfInput').click()"
+             onclick="document.getElementById('fileInput').click()"
              ondragover="onDragOver(event)" ondragleave="onDragLeave()" ondrop="onDrop(event)">
           <div class="dz-icon">📎</div>
           <p id="pdfDzText" class="dz-text"><strong>Click to upload</strong> or drag and drop here</p>
-          <p id="pdfDzNote" class="dz-note">PDF only · Text-based PDFs extract instantly · Scanned PDFs use AI vision (~20s)</p>
+          <p id="pdfDzNote" class="dz-note">PDF · JPEG · PNG — Text PDFs extract instantly · Scanned files use AI vision (~20s)</p>
           <div class="pdf-status" id="pdfStatus"></div>
-          <p class="privacy-notice">🔒 Your document is processed by Claude AI and never stored on our servers.</p>
-          <input type="file" id="pdfInput" accept=".pdf" onchange="onFileUpload(this.files[0])">
+          <p class="privacy-notice">🔒 Your file is processed by Claude AI and never stored on our servers.</p>
+          <input type="file" id="fileInput" accept=".pdf,.jpg,.jpeg,.png,.webp" onchange="onFileUpload(this.files[0])">
         </div>
 
-        <div class="dropzone" id="photoDropzone"
-             onclick="document.getElementById('photoInput').click()"
-             ondragover="onDragOver(event)" ondragleave="onDragLeave()" ondrop="onPhotoDrop(event)">
-          <div class="dz-icon">📷</div>
-          <p id="photoDzText" class="dz-text"><strong>Click to upload a photo</strong> or drag and drop here</p>
-          <p id="photoDzNote" class="dz-note">JPEG or PNG · Works with handwritten documents, physical mail, printed forms</p>
-          <div class="pdf-status" id="photoStatus"></div>
-          <p class="privacy-notice">🔒 Your photo is processed by Claude AI vision and never stored on our servers.</p>
-          <input type="file" id="photoInput" accept=".jpg,.jpeg,.png,.webp" onchange="onPhotoUpload(this.files[0])">
+        <!-- Camera and Google Drive alternatives -->
+        <div class="upload-actions" id="uploadActions" style="display:none">
+          <button class="upload-action-btn" id="cameraBtn" onclick="openCamera()">
+            📷 <span id="cameraBtnLabel">Use Camera</span>
+          </button>
+          <button class="upload-action-btn" id="driveBtn" onclick="openGoogleDrive()">
+            📂 <span id="driveBtnLabel">Google Drive</span>
+          </button>
         </div>
       </div>
 
@@ -1400,6 +1450,22 @@
   </div>
 </footer>
 
+<!-- Camera modal -->
+<div id="cameraModal" class="camera-modal" style="display:none" onclick="if(event.target===this)closeCamera()">
+  <div class="camera-inner">
+    <div class="camera-header">
+      <span>📷 <span id="cameraTitle">Point camera at your document</span></span>
+      <button class="camera-close" onclick="closeCamera()">✕</button>
+    </div>
+    <video id="cameraVideo" autoplay playsinline muted></video>
+    <canvas id="cameraCanvas" style="display:none"></canvas>
+    <div class="camera-footer">
+      <button class="camera-cancel-btn" onclick="closeCamera()" id="cameraCancelBtn">Cancel</button>
+      <button class="camera-capture-btn" onclick="capturePhoto()" id="cameraCaptureBtn">📸 Take Photo</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ── Sample documents ─────────────────────────────────────────────────────────
 const SAMPLES = {
@@ -1583,6 +1649,10 @@ let lastDocText = '';
 let lastAnalysis = null;
 let chatHistory = [];
 
+// Public config (Google Drive credentials etc.) fetched from server on load
+window.VERILEX_CONFIG = {};
+fetch('/config').then(r => r.json()).then(d => { window.VERILEX_CONFIG = d; }).catch(() => {});
+
 async function requestLocation() {
   const btn = document.getElementById('locBtn');
   const label = document.getElementById('locLabel');
@@ -1636,10 +1706,11 @@ const TRANSLATIONS = {
     step2Title:'AI reads the law', step2Desc:'Our AI identifies every applicable statute, case law precedent, and deadline.',
     step3Title:'Read plain English', step3Desc:'Get a clear breakdown with sources you can verify — in any of 15 languages.',
     appLabel:'Try it yourself', appTitle:'Paste your document below',
-    tabPaste:'Paste Text', tabUpload:'Upload PDF', tabPhoto:'Upload Photo',
+    tabPaste:'Paste Text', tabUpload:'Upload File', tabPhoto:'Upload Photo',
+    cameraBtn:'Use Camera', driveBtn:'Google Drive', cameraTitle:'Point camera at your document',
     locLabel:'Share your location for local legal aid resources', locBtn:'Allow Location',
     pdfDzText:'<strong>Click to upload</strong> or drag and drop here',
-    pdfDzNote:'PDF only · Text-based PDFs extract instantly · Scanned PDFs use AI vision (~20s)',
+    pdfDzNote:'PDF · JPEG · PNG — Text PDFs extract instantly · Scanned files use AI vision (~20s)',
     photoDzText:'<strong>Click to upload a photo</strong> or drag and drop here',
     photoDzNote:'JPEG or PNG · Works with handwritten documents, physical mail, printed forms',
     aboutNameLabel:'The Name',
@@ -1713,10 +1784,11 @@ const TRANSLATIONS = {
     step2Title:'La IA lee la ley', step2Desc:'Nuestra IA identifica cada ley aplicable, precedente legal y fecha límite.',
     step3Title:'Lee en lenguaje claro', step3Desc:'Obtén un desglose claro con fuentes verificables en 15 idiomas.',
     appLabel:'Pruébalo tú mismo', appTitle:'Pega tu documento aquí',
-    tabPaste:'Pegar texto', tabUpload:'Subir PDF', tabPhoto:'Subir foto',
+    tabPaste:'Pegar texto', tabUpload:'Subir archivo', tabPhoto:'Subir foto',
+    cameraBtn:'Usar cámara', driveBtn:'Google Drive', cameraTitle:'Apunte la cámara al documento',
     locLabel:'Comparte tu ubicación para recursos legales locales', locBtn:'Permitir ubicación',
     pdfDzText:'<strong>Haz clic para subir</strong> o arrastra y suelta aquí',
-    pdfDzNote:'Solo PDF · Los PDF de texto se extraen al instante · Los PDF escaneados usan visión IA (~20s)',
+    pdfDzNote:'PDF · JPEG · PNG — Texto al instante · Archivos escaneados usan visión IA (~20s)',
     photoDzText:'<strong>Haz clic para subir una foto</strong> o arrastra y suelta aquí',
     photoDzNote:'JPEG o PNG · Funciona con documentos escritos a mano, correo físico, formularios impresos',
     aboutNameLabel:'El Nombre',
@@ -1790,10 +1862,11 @@ const TRANSLATIONS = {
     step2Title:'AI解读法律', step2Desc:'我们的AI识别每一条适用法规、判例法先例和截止日期。',
     step3Title:'读懂清晰解释', step3Desc:'获得带有可验证来源的清晰分析，支持15种语言。',
     appLabel:'亲自试试', appTitle:'在下方粘贴您的文件',
-    tabPaste:'粘贴文本', tabUpload:'上传PDF', tabPhoto:'上传照片',
+    tabPaste:'粘贴文本', tabUpload:'上传文件', tabPhoto:'上传照片',
+    cameraBtn:'使用相机', driveBtn:'Google Drive', cameraTitle:'将相机对准文件',
     locLabel:'分享您的位置以获取本地法律援助资源', locBtn:'允许定位',
     pdfDzText:'<strong>点击上传</strong>或拖放到这里',
-    pdfDzNote:'仅支持PDF · 文字PDF即时提取 · 扫描PDF使用AI视觉（约20秒）',
+    pdfDzNote:'PDF · JPEG · PNG — 文字PDF即时提取 · 扫描文件使用AI视觉（约20秒）',
     photoDzText:'<strong>点击上传照片</strong>或拖放到这里',
     photoDzNote:'JPEG或PNG · 支持手写文件、实体信件、印刷表格',
     aboutNameLabel:'名称由来',
@@ -1867,10 +1940,11 @@ const TRANSLATIONS = {
     step2Title:'AI解讀法律', step2Desc:'我們的AI識別每一條適用法規、判例法先例和截止日期。',
     step3Title:'閱讀清晰說明', step3Desc:'獲得帶有可驗證來源的清晰分析，支援15種語言。',
     appLabel:'親自試試', appTitle:'在下方貼上您的文件',
-    tabPaste:'貼上文字', tabUpload:'上傳PDF', tabPhoto:'上傳照片',
+    tabPaste:'貼上文字', tabUpload:'上傳文件', tabPhoto:'上傳照片',
+    cameraBtn:'使用相機', driveBtn:'Google Drive', cameraTitle:'將相機對準文件',
     locLabel:'分享您的位置以獲取本地法律援助資源', locBtn:'允許定位',
     pdfDzText:'<strong>點擊上傳</strong>或拖放到這裡',
-    pdfDzNote:'僅支援PDF · 文字PDF即時提取 · 掃描PDF使用AI視覺（約20秒）',
+    pdfDzNote:'PDF · JPEG · PNG — 文字PDF即時提取 · 掃描文件使用AI視覺（約20秒）',
     photoDzText:'<strong>點擊上傳照片</strong>或拖放到這裡',
     photoDzNote:'JPEG或PNG · 支援手寫文件、實體信件、印刷表格',
     aboutNameLabel:'名稱由來',
@@ -1944,10 +2018,11 @@ const TRANSLATIONS = {
     step2Title:'AI đọc luật', step2Desc:'AI của chúng tôi xác định mọi luật, tiền lệ án lệ và thời hạn áp dụng.',
     step3Title:'Đọc giải thích rõ ràng', step3Desc:'Nhận phân tích rõ ràng với nguồn có thể xác minh, bằng 15 ngôn ngữ.',
     appLabel:'Thử tự làm', appTitle:'Dán tài liệu của bạn bên dưới',
-    tabPaste:'Dán văn bản', tabUpload:'Tải lên PDF', tabPhoto:'Tải ảnh lên',
+    tabPaste:'Dán văn bản', tabUpload:'Tải tệp lên', tabPhoto:'Tải ảnh lên',
+    cameraBtn:'Dùng Camera', driveBtn:'Google Drive', cameraTitle:'Hướng camera vào tài liệu',
     locLabel:'Chia sẻ vị trí để nhận tài nguyên hỗ trợ pháp lý địa phương', locBtn:'Cho phép vị trí',
     pdfDzText:'<strong>Nhấp để tải lên</strong> hoặc kéo thả vào đây',
-    pdfDzNote:'Chỉ PDF · PDF văn bản trích xuất ngay · PDF quét dùng AI thị giác (~20 giây)',
+    pdfDzNote:'PDF · JPEG · PNG — PDF văn bản trích xuất ngay · Tệp quét dùng AI (~20 giây)',
     photoDzText:'<strong>Nhấp để tải ảnh lên</strong> hoặc kéo thả vào đây',
     photoDzNote:'JPEG hoặc PNG · Hỗ trợ tài liệu viết tay, thư vật lý, biểu mẫu in',
     aboutNameLabel:'Tên gọi',
@@ -2021,10 +2096,11 @@ const TRANSLATIONS = {
     step2Title:'Binabasa ng AI ang batas', step2Desc:'Tinutukoy ng aming AI ang bawat naaangkop na batas, case law precedent, at deadline.',
     step3Title:'Basahin ang malinaw na paliwanag', step3Desc:'Makakuha ng malinaw na breakdown na may mga mapagkakatiwalaang pinagkukunan sa 15 wika.',
     appLabel:'Subukan mo mismo', appTitle:'I-paste ang iyong dokumento sa ibaba',
-    tabPaste:'I-paste ang Teksto', tabUpload:'Mag-upload ng PDF', tabPhoto:'Mag-upload ng Larawan',
+    tabPaste:'I-paste ang Teksto', tabUpload:'Mag-upload ng File', tabPhoto:'Mag-upload ng Larawan',
+    cameraBtn:'Gumamit ng Camera', driveBtn:'Google Drive', cameraTitle:'Itutok ang camera sa dokumento',
     locLabel:'Ibahagi ang iyong lokasyon para sa lokal na tulong sa batas', locBtn:'Payagan ang Lokasyon',
     pdfDzText:'<strong>Mag-click upang mag-upload</strong> o i-drag at i-drop dito',
-    pdfDzNote:'PDF lamang · Ang mga PDF na may teksto ay agad na nakuha · Ang mga na-scan na PDF ay gumagamit ng AI vision (~20s)',
+    pdfDzNote:'PDF · JPEG · PNG — Agad na nakuha ang teksto · Mga na-scan na file ay gumagamit ng AI vision (~20s)',
     photoDzText:'<strong>Mag-click upang mag-upload ng larawan</strong> o i-drag at i-drop dito',
     photoDzNote:'JPEG o PNG · Gumagana sa mga sulat-kamay na dokumento, pisikal na sulat, mga nakalimbag na form',
     aboutNameLabel:'Ang Pangalan',
@@ -2098,10 +2174,11 @@ const TRANSLATIONS = {
     step2Title:'AI가 법률을 읽습니다', step2Desc:'우리 AI는 적용 가능한 모든 법령, 판례법 선례 및 마감일을 식별합니다.',
     step3Title:'쉽게 설명된 결과 읽기', step3Desc:'15개 언어로 검증 가능한 출처와 함께 명확한 분석을 받으세요.',
     appLabel:'직접 사용해보기', appTitle:'아래에 문서를 붙여넣으세요',
-    tabPaste:'텍스트 붙여넣기', tabUpload:'PDF 업로드', tabPhoto:'사진 업로드',
+    tabPaste:'텍스트 붙여넣기', tabUpload:'파일 업로드', tabPhoto:'사진 업로드',
+    cameraBtn:'카메라 사용', driveBtn:'Google Drive', cameraTitle:'카메라를 문서에 향하세요',
     locLabel:'지역 법률 지원 리소스를 위해 위치를 공유하세요', locBtn:'위치 허용',
     pdfDzText:'<strong>클릭하여 업로드</strong>하거나 여기에 드래그 앤 드롭하세요',
-    pdfDzNote:'PDF만 가능 · 텍스트 PDF는 즉시 추출 · 스캔 PDF는 AI 비전 사용 (~20초)',
+    pdfDzNote:'PDF · JPEG · PNG — 텍스트 PDF 즉시 추출 · 스캔 파일은 AI 비전 사용 (~20초)',
     photoDzText:'<strong>클릭하여 사진 업로드</strong>하거나 여기에 드래그 앤 드롭하세요',
     photoDzNote:'JPEG 또는 PNG · 손으로 쓴 문서, 우편물, 인쇄된 양식 지원',
     aboutNameLabel:'이름의 의미',
@@ -2175,10 +2252,11 @@ const TRANSLATIONS = {
     step2Title:'الذكاء الاصطناعي يقرأ القانون', step2Desc:'يحدد ذكاؤنا الاصطناعي كل قانون معمول به وسابقة قانونية وموعد نهائي.',
     step3Title:'اقرأ التفسير بلغة واضحة', step3Desc:'احصل على تحليل واضح مع مصادر قابلة للتحقق بـ 15 لغة.',
     appLabel:'جربه بنفسك', appTitle:'الصق مستندك أدناه',
-    tabPaste:'لصق النص', tabUpload:'رفع PDF', tabPhoto:'تحميل صورة',
+    tabPaste:'لصق النص', tabUpload:'رفع ملف', tabPhoto:'تحميل صورة',
+    cameraBtn:'استخدام الكاميرا', driveBtn:'Google Drive', cameraTitle:'وجّه الكاميرا نحو المستند',
     locLabel:'شارك موقعك للحصول على موارد المساعدة القانونية المحلية', locBtn:'السماح بالموقع',
     pdfDzText:'<strong>انقر للتحميل</strong> أو اسحب وأفلت هنا',
-    pdfDzNote:'PDF فقط · ملفات PDF النصية تُستخرج فوراً · ملفات PDF الممسوحة تستخدم رؤية AI (~20ثانية)',
+    pdfDzNote:'PDF · JPEG · PNG — النصية فورية · الممسوحة تستخدم رؤية الذكاء الاصطناعي (~20 ث)',
     photoDzText:'<strong>انقر لتحميل صورة</strong> أو اسحب وأفلت هنا',
     photoDzNote:'JPEG أو PNG · يعمل مع الوثائق المكتوبة بخط اليد والبريد الورقي والنماذج المطبوعة',
     aboutNameLabel:'اسم التطبيق',
@@ -2252,10 +2330,11 @@ const TRANSLATIONS = {
     step2Title:'AI कानून पढ़ता है', step2Desc:'हमारा AI हर लागू क़ानून, केस लॉ मिसाल और डेडलाइन की पहचान करता है।',
     step3Title:'सरल स्पष्टीकरण पढ़ें', step3Desc:'15 भाषाओं में सत्यापन योग्य स्रोतों के साथ स्पष्ट विश्लेषण पाएं।',
     appLabel:'खुद आज़माएं', appTitle:'नीचे अपना दस्तावेज़ पेस्ट करें',
-    tabPaste:'पाठ पेस्ट करें', tabUpload:'PDF अपलोड करें', tabPhoto:'फ़ोटो अपलोड करें',
+    tabPaste:'पाठ पेस्ट करें', tabUpload:'फ़ाइल अपलोड करें', tabPhoto:'फ़ोटो अपलोड करें',
+    cameraBtn:'कैमरा उपयोग करें', driveBtn:'Google Drive', cameraTitle:'कैमरे को दस्तावेज़ पर लक्षित करें',
     locLabel:'स्थानीय कानूनी सहायता संसाधनों के लिए अपना स्थान साझा करें', locBtn:'स्थान की अनुमति दें',
     pdfDzText:'<strong>अपलोड करने के लिए क्लिक करें</strong> या यहाँ खींचें और छोड़ें',
-    pdfDzNote:'केवल PDF · टेक्स्ट PDF तुरंत निकाला जाता है · स्कैन PDF AI विजन का उपयोग करता है (~20 सेकंड)',
+    pdfDzNote:'PDF · JPEG · PNG — टेक्स्ट तुरंत · स्कैन फ़ाइलें AI विज़न (~20 सेकंड)',
     photoDzText:'<strong>फ़ोटो अपलोड करने के लिए क्लिक करें</strong> या यहाँ खींचें और छोड़ें',
     photoDzNote:'JPEG या PNG · हस्तलिखित दस्तावेज़, भौतिक मेल, मुद्रित फ़ॉर्म के साथ काम करता है',
     aboutNameLabel:'नाम का अर्थ',
@@ -2329,10 +2408,11 @@ const TRANSLATIONS = {
     step2Title:'A IA lê a lei', step2Desc:'A nossa IA identifica cada lei aplicável, precedente de jurisprudência e prazo.',
     step3Title:'Leia a explicação clara', step3Desc:'Obtenha uma análise clara com fontes verificáveis em 15 idiomas.',
     appLabel:'Experimente você mesmo', appTitle:'Cole seu documento abaixo',
-    tabPaste:'Colar Texto', tabUpload:'Carregar PDF', tabPhoto:'Enviar Foto',
+    tabPaste:'Colar Texto', tabUpload:'Enviar arquivo', tabPhoto:'Enviar Foto',
+    cameraBtn:'Usar Câmera', driveBtn:'Google Drive', cameraTitle:'Aponte a câmera para o documento',
     locLabel:'Compartilhe sua localização para recursos de assistência jurídica local', locBtn:'Permitir Localização',
     pdfDzText:'<strong>Clique para enviar</strong> ou arraste e solte aqui',
-    pdfDzNote:'Apenas PDF · PDFs com texto são extraídos instantaneamente · PDFs digitalizados usam visão IA (~20s)',
+    pdfDzNote:'PDF · JPEG · PNG — Texto instantâneo · Digitalizados usam visão IA (~20s)',
     photoDzText:'<strong>Clique para enviar uma foto</strong> ou arraste e solte aqui',
     photoDzNote:'JPEG ou PNG · Funciona com documentos manuscritos, correspondência física, formulários impressos',
     aboutNameLabel:'O Nome',
@@ -2406,10 +2486,11 @@ const TRANSLATIONS = {
     step2Title:'ИИ читает закон', step2Desc:'Наш ИИ выявляет каждый применимый закон, прецедент и срок.',
     step3Title:'Читайте понятное объяснение', step3Desc:'Получите чёткий анализ с проверяемыми источниками на 15 языках.',
     appLabel:'Попробуйте сами', appTitle:'Вставьте документ ниже',
-    tabPaste:'Вставить текст', tabUpload:'Загрузить PDF', tabPhoto:'Загрузить фото',
+    tabPaste:'Вставить текст', tabUpload:'Загрузить файл', tabPhoto:'Загрузить фото',
+    cameraBtn:'Использовать камеру', driveBtn:'Google Drive', cameraTitle:'Наведите камеру на документ',
     locLabel:'Поделитесь местоположением для местных ресурсов правовой помощи', locBtn:'Разрешить',
     pdfDzText:'<strong>Нажмите для загрузки</strong> или перетащите сюда',
-    pdfDzNote:'Только PDF · Текстовые PDF извлекаются мгновенно · Сканированные PDF используют ИИ-зрение (~20 сек)',
+    pdfDzNote:'PDF · JPEG · PNG — Текстовые мгновенно · Сканированные используют ИИ-зрение (~20 с)',
     photoDzText:'<strong>Нажмите для загрузки фото</strong> или перетащите сюда',
     photoDzNote:'JPEG или PNG · Работает с рукописными документами, физической почтой, печатными формами',
     aboutNameLabel:'Название',
@@ -2483,10 +2564,11 @@ const TRANSLATIONS = {
     step2Title:"L'IA lit la loi", step2Desc:'Notre IA identifie chaque loi applicable, précédent jurisprudentiel et délai.',
     step3Title:"Lire l'explication claire", step3Desc:'Obtenez une analyse claire avec des sources vérifiables en 15 langues.',
     appLabel:'Essayez vous-même', appTitle:'Collez votre document ci-dessous',
-    tabPaste:'Coller le texte', tabUpload:'Télécharger PDF', tabPhoto:'Télécharger une photo',
+    tabPaste:'Coller le texte', tabUpload:'Télécharger un fichier', tabPhoto:'Télécharger une photo',
+    cameraBtn:'Utiliser la caméra', driveBtn:'Google Drive', cameraTitle:'Pointez la caméra vers le document',
     locLabel:'Partagez votre position pour des ressources d\'aide juridique locales', locBtn:'Autoriser',
     pdfDzText:'<strong>Cliquez pour télécharger</strong> ou faites glisser-déposer ici',
-    pdfDzNote:'PDF uniquement · Les PDF textuels sont extraits instantanément · Les PDF scannés utilisent la vision IA (~20s)',
+    pdfDzNote:'PDF · JPEG · PNG — Texte instantané · Numérisés utilisent la vision IA (~20s)',
     photoDzText:'<strong>Cliquez pour télécharger une photo</strong> ou faites glisser-déposer ici',
     photoDzNote:'JPEG ou PNG · Fonctionne avec des documents manuscrits, du courrier physique, des formulaires imprimés',
     aboutNameLabel:'Le Nom',
@@ -2560,10 +2642,11 @@ const TRANSLATIONS = {
     step2Title:'AI li lalwa', step2Desc:'AI nou idantifye chak lwa ki aplikab, presidan ka, ak dat limit.',
     step3Title:'Li eksplikasyon ki klè', step3Desc:'Jwenn analiz ki klè ak sous verifiyab nan 15 lang.',
     appLabel:'Eseye ou menm', appTitle:'Kole dokiman ou anba a',
-    tabPaste:'Kole Tèks', tabUpload:'Telechaje PDF', tabPhoto:'Telechaje Foto',
+    tabPaste:'Kole Tèks', tabUpload:'Telechaje Fichye', tabPhoto:'Telechaje Foto',
+    cameraBtn:'Itilize Kamera', driveBtn:'Google Drive', cameraTitle:'Dirije kamera sou dokiman an',
     locLabel:'Pataje kote ou ye a pou resous èd legal lokal', locBtn:'Pèmèt Kote',
     pdfDzText:'<strong>Klike pou telechaje</strong> oswa glise epi lage isit',
-    pdfDzNote:'PDF sèlman · PDF tèks ekstrè imedyatman · PDF eskane itilize vizyon AI (~20s)',
+    pdfDzNote:'PDF · JPEG · PNG — Tèks imedya · Eskane itilize vizyon AI (~20s)',
     photoDzText:'<strong>Klike pou telechaje yon foto</strong> oswa glise epi lage isit',
     photoDzNote:'JPEG oswa PNG · Travay ak dokiman alamen, lapòs fizik, fòm enprime',
     aboutNameLabel:'Non an',
@@ -2637,10 +2720,11 @@ const TRANSLATIONS = {
     step2Title:'AI ਕਾਨੂੰਨ ਪੜ੍ਹਦਾ ਹੈ', step2Desc:'ਸਾਡਾ AI ਹਰ ਲਾਗੂ ਕਾਨੂੰਨ ਅਤੇ ਸਮਾਂ-ਸੀਮਾ ਦੀ ਪਛਾਣ ਕਰਦਾ ਹੈ।',
     step3Title:'ਸਪੱਸ਼ਟ ਵਿਆਖਿਆ ਪੜ੍ਹੋ', step3Desc:'15 ਭਾਸ਼ਾਵਾਂ ਵਿੱਚ ਤਸਦੀਕਯੋਗ ਸਰੋਤਾਂ ਨਾਲ ਸਪੱਸ਼ਟ ਵਿਸ਼ਲੇਸ਼ਣ ਪ੍ਰਾਪਤ ਕਰੋ।',
     appLabel:'ਆਪ ਅਜ਼ਮਾਓ', appTitle:'ਹੇਠਾਂ ਆਪਣਾ ਦਸਤਾਵੇਜ਼ ਪੇਸਟ ਕਰੋ',
-    tabPaste:'ਪਾਠ ਪੇਸਟ ਕਰੋ', tabUpload:'PDF ਅਪਲੋਡ ਕਰੋ', tabPhoto:'ਫੋਟੋ ਅਪਲੋਡ ਕਰੋ',
+    tabPaste:'ਪਾਠ ਪੇਸਟ ਕਰੋ', tabUpload:'ਫਾਈਲ ਅੱਪਲੋਡ ਕਰੋ', tabPhoto:'ਫੋਟੋ ਅਪਲੋਡ ਕਰੋ',
+    cameraBtn:'ਕੈਮਰਾ ਵਰਤੋ', driveBtn:'Google Drive', cameraTitle:'ਕੈਮਰੇ ਨੂੰ ਦਸਤਾਵੇਜ਼ ਵੱਲ ਕਰੋ',
     locLabel:'ਸਥਾਨਕ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਸਰੋਤਾਂ ਲਈ ਆਪਣੀ ਸਥਿਤੀ ਸਾਂਝੀ ਕਰੋ', locBtn:'ਸਥਿਤੀ ਦੀ ਆਗਿਆ ਦਿਓ',
     pdfDzText:'<strong>ਅਪਲੋਡ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ</strong> ਜਾਂ ਇੱਥੇ ਖਿੱਚੋ ਅਤੇ ਛੱਡੋ',
-    pdfDzNote:'ਸਿਰਫ਼ PDF · ਟੈਕਸਟ PDF ਤੁਰੰਤ ਕੱਢੇ ਜਾਂਦੇ ਹਨ · ਸਕੈਨ PDF AI ਵਿਜ਼ਨ ਵਰਤਦੇ ਹਨ (~20 ਸਕਿੰਟ)',
+    pdfDzNote:'PDF · JPEG · PNG — ਟੈਕਸਟ ਤੁਰੰਤ · ਸਕੈਨ ਫਾਈਲਾਂ AI ਵਿਜ਼ਨ (~20 ਸਕਿੰਟ)',
     photoDzText:'<strong>ਫੋਟੋ ਅਪਲੋਡ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ</strong> ਜਾਂ ਇੱਥੇ ਖਿੱਚੋ ਅਤੇ ਛੱਡੋ',
     photoDzNote:'JPEG ਜਾਂ PNG · ਹੱਥ ਲਿਖੇ ਦਸਤਾਵੇਜ਼, ਭੌਤਿਕ ਡਾਕ, ਛਾਪੇ ਗਏ ਫਾਰਮਾਂ ਨਾਲ ਕੰਮ ਕਰਦਾ ਹੈ',
     aboutNameLabel:'ਨਾਮ ਦਾ ਅਰਥ',
@@ -2714,10 +2798,11 @@ const TRANSLATIONS = {
     step2Title:'AI ሕጉን ያነባል', step2Desc:'AI ሁሉንም ተፈጻሚ ሕጎች፣ ቀዳሚ ፍርዶች እና የጊዜ ገደቦችን ይለያል።',
     step3Title:'ግልጽ ማብራሪያ ያንብቡ', step3Desc:'በ15 ቋንቋዎች ሊረጋገጡ የሚችሉ ምንጮች ግልጽ ትንተና ያግኙ።',
     appLabel:'እራስዎ ይሞክሩ', appTitle:'ሰነዱን ከዚህ በታች ለጥፍ',
-    tabPaste:'ጽሑፍ ለጥፍ', tabUpload:'PDF ጫን', tabPhoto:'ፎቶ ስቀል',
+    tabPaste:'ጽሑፍ ለጥፍ', tabUpload:'ፋይል ጫን', tabPhoto:'ፎቶ ስቀል',
+    cameraBtn:'ካሜራ ተጠቀም', driveBtn:'Google Drive', cameraTitle:'ካሜራዎን ወደ ሰነዱ አዙሩ',
     locLabel:'የአካባቢ ህጋዊ እርዳታ ሀብቶችን ለማግኘት ቦታዎን ያጋሩ', locBtn:'ቦታ ፍቀድ',
     pdfDzText:'<strong>ለስቀሉ ጠቅ ያድርጉ</strong> ወይም እዚህ ጎትተው ያቆዩ',
-    pdfDzNote:'ፒዲኤፍ ብቻ · የጽሑፍ ፒዲኤፍዎች ወዲያውኑ ይወጣሉ · የተቃኙ ፒዲኤፍዎች AI ዕይታ ይጠቀማሉ (~20 ሰ)',
+    pdfDzNote:'PDF · JPEG · PNG — ጽሑፍ ወዲያው · የተቃኙ AI ዕይታ ይጠቀማሉ (~20 ሰ)',
     photoDzText:'<strong>ፎቶ ለስቀሉ ጠቅ ያድርጉ</strong> ወይም እዚህ ጎትተው ያቆዩ',
     photoDzNote:'JPEG ወይም PNG · ከእጅ የተፃፉ ሰነዶች፣ አካላዊ ደብዳቤ፣ የታተሙ ቅጾች ይሰራል',
     aboutNameLabel:'ስሙ',
@@ -2801,15 +2886,15 @@ const UI_ELEMENTS = [
   { sel:'.how-steps .how-step:nth-child(3) .step-desc', key:'step3Desc' },
   { sel:'#app .section-label', key:'appLabel' },
   { sel:'#app .section-title', key:'appTitle' },
-  { id:'itab-paste', key:'tabPaste' },
-  { id:'itab-pdf', key:'tabUpload' },
-  { id:'itab-photo', key:'tabPhoto' },
+  { id:'itab-paste',  key:'tabPaste'  },
+  { id:'itab-upload', key:'tabUpload' },
   { id:'locLabel', key:'locLabel' },
   { id:'locBtn', key:'locBtn' },
   { id:'pdfDzText', key:'pdfDzText', html:true },
   { id:'pdfDzNote', key:'pdfDzNote' },
-  { id:'photoDzText', key:'photoDzText', html:true },
-  { id:'photoDzNote', key:'photoDzNote' },
+  { id:'cameraBtnLabel', key:'cameraBtn' },
+  { id:'driveBtnLabel',  key:'driveBtn'  },
+  { id:'cameraTitle',    key:'cameraTitle' },
   { id:'aboutNameLabel', key:'aboutNameLabel' },
   { id:'aboutNameTitle', key:'aboutNameTitle', html:true },
   { id:'aboutNameDesc', key:'aboutNameDesc' },
@@ -2972,10 +3057,11 @@ document.querySelectorAll('.how-step').forEach(el => observer.observe(el));
 function switchInput(mode, btn) {
   inputMode = mode;
   document.querySelectorAll('.input-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('pastePanel').style.display        = mode === 'paste' ? 'block' : 'none';
-  document.getElementById('dropzone').classList.toggle('visible',      mode === 'pdf');
-  document.getElementById('photoDropzone').classList.toggle('visible', mode === 'photo');
+  if (btn) btn.classList.add('active');
+  const isUpload = mode === 'upload';
+  document.getElementById('pastePanel').style.display = mode === 'paste' ? 'block' : 'none';
+  document.getElementById('dropzone').classList.toggle('visible', isUpload);
+  document.getElementById('uploadActions').style.display = isUpload ? 'flex' : 'none';
 }
 
 function onTextInput() {
@@ -3005,27 +3091,131 @@ function onDrop(e) {
   const f = e.dataTransfer.files[0];
   if (f) onFileUpload(f);
 }
-function onPhotoDrop(e) {
-  e.preventDefault();
-  document.getElementById('photoDropzone').classList.remove('dragover');
-  const f = e.dataTransfer.files[0];
-  if (f) onPhotoUpload(f);
-}
-async function onPhotoUpload(file) {
-  if (!file) return;
-  const st = document.getElementById('photoStatus');
-  st.style.color = '#64748b';
-  st.textContent = '⏳ Reading photo with AI vision…';
-  const fd = new FormData();
-  fd.append('file', file);
+
+// ── Camera ──────────────────────────────────────────────────────────────────────
+let cameraStream = null;
+
+async function openCamera() {
+  const modal = document.getElementById('cameraModal');
+  const video = document.getElementById('cameraVideo');
   try {
-    const res = await fetch('/extract-image', { method: 'POST', body: fd });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.detail);
-    pdfText = data.text;
-    inputMode = 'photo';
-    st.style.color = 'var(--low)';
-    st.textContent = '✓ Photo read — review the text below and click Analyze';
+    cameraStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 } }
+    });
+    video.srcObject = cameraStream;
+    modal.style.display = 'flex';
+  } catch {
+    // getUserMedia unavailable (no camera, no HTTPS, or denied) — fall back to file picker
+    const inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = 'image/*';
+    inp.capture = 'environment';
+    inp.onchange = () => { if (inp.files[0]) onFileUpload(inp.files[0]); };
+    inp.click();
+  }
+}
+
+function closeCamera() {
+  if (cameraStream) { cameraStream.getTracks().forEach(t => t.stop()); cameraStream = null; }
+  document.getElementById('cameraModal').style.display = 'none';
+  document.getElementById('cameraVideo').srcObject = null;
+}
+
+function capturePhoto() {
+  const video  = document.getElementById('cameraVideo');
+  const canvas = document.getElementById('cameraCanvas');
+  canvas.width  = video.videoWidth;
+  canvas.height = video.videoHeight;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(video, 0, 0);
+
+  // Basic brightness check — reject nearly-black captures (lens covered, dark room)
+  const sample = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  let brightness = 0;
+  for (let i = 0; i < sample.length; i += 40) brightness += sample[i] + sample[i+1] + sample[i+2];
+  brightness /= (sample.length / 40) * 3;
+  if (brightness < 15) {
+    document.getElementById('pdfStatus').textContent = '✗ Image too dark — make sure the document is well-lit';
+    document.getElementById('pdfStatus').style.color = 'var(--crit)';
+    closeCamera();
+    return;
+  }
+
+  closeCamera();
+  canvas.toBlob(blob => {
+    const file = new File([blob], 'camera-capture.jpg', { type: 'image/jpeg' });
+    inputMode = 'upload';
+    onFileUpload(file);
+  }, 'image/jpeg', 0.92);
+}
+
+// ── Google Drive ────────────────────────────────────────────────────────────────
+let driveAccessToken = null;
+
+async function openGoogleDrive() {
+  if (!window.VERILEX_CONFIG?.google_client_id) {
+    alert('Google Drive integration is not yet configured on this server.\n\nTo enable it, add GOOGLE_CLIENT_ID and GOOGLE_API_KEY to the Railway environment variables.');
+    return;
+  }
+  // Load Google Identity Services if not already loaded
+  if (!window.google?.accounts) {
+    await new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://accounts.google.com/gsi/client';
+      s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+  // Load Google API (picker) if not already loaded
+  if (!window.gapi) {
+    await new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://apis.google.com/js/api.js';
+      s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+  await new Promise(res => gapi.load('picker', res));
+
+  // Request OAuth token
+  const tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: window.VERILEX_CONFIG.google_client_id,
+    scope: 'https://www.googleapis.com/auth/drive.readonly',
+    callback: (resp) => {
+      if (resp.error) return;
+      driveAccessToken = resp.access_token;
+      showDrivePicker();
+    }
+  });
+  tokenClient.requestAccessToken({ prompt: '' });
+}
+
+function showDrivePicker() {
+  const view = new google.picker.View(google.picker.ViewId.DOCS);
+  view.setMimeTypes('application/pdf,image/jpeg,image/png,image/webp');
+  new google.picker.PickerBuilder()
+    .addView(view)
+    .setOAuthToken(driveAccessToken)
+    .setDeveloperKey(window.VERILEX_CONFIG.google_api_key)
+    .setCallback(drivePickerCallback)
+    .build()
+    .setVisible(true);
+}
+
+async function drivePickerCallback(data) {
+  if (data.action !== google.picker.Action.PICKED) return;
+  const picked = data.docs[0];
+  const st = document.getElementById('pdfStatus');
+  st.style.color = '#64748b';
+  st.textContent = `⏳ Downloading "${picked.name}" from Drive…`;
+  try {
+    const url = `https://www.googleapis.com/drive/v3/files/${picked.id}?alt=media`;
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${driveAccessToken}` } });
+    if (!res.ok) throw new Error('Could not download file from Drive.');
+    const blob = await res.blob();
+    const file = new File([blob], picked.name, { type: picked.mimeType });
+    inputMode = 'upload';
+    onFileUpload(file);
   } catch (e) {
     st.style.color = 'var(--crit)';
     st.textContent = '✗ ' + e.message;
@@ -3425,6 +3615,7 @@ function resetAll() {
   lastAnalysis = null;
   chatHistory = [];
   document.getElementById('chatMessages').innerHTML = '';
+  if (cameraStream) closeCamera();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function setUI(state) {
