@@ -58,7 +58,7 @@ def _extract_json(raw: str) -> dict:
     """
     Robustly extract and parse a JSON object from a Claude response string.
     Handles cases where non-ASCII characters (Chinese full-width quotes, etc.)
-    appear inside string values and cause json.loads to fail.
+    or unescaped ASCII double-quotes inside string values cause json.loads to fail.
     """
     start = raw.find("{")
     end = raw.rfind("}") + 1
@@ -85,12 +85,24 @@ def _extract_json(raw: str) -> dict:
         .replace('“', '\\"').replace('”', '\\"')  # "..." → escaped quotes
         .replace('‘', "\\'").replace('’', "\\'")  # '...' → escaped quotes
         .replace('「', '').replace('」', '')        # 「」 → removed
-        .replace('\x00', '')                              # null bytes
+        .replace('\x00', '')                               # null bytes
     )
     try:
         return json.loads(cleaned, strict=False)
-    except json.JSONDecodeError as e:
-        raise ValueError(f"Expecting ',' delimiter: {e}") from e
+    except json.JSONDecodeError:
+        pass
+
+    # Fourth attempt: use json-repair to fix unescaped quotes and other common
+    # issues that arise when Claude generates Chinese or other non-Latin output.
+    try:
+        from json_repair import repair_json
+        repaired = repair_json(candidate, return_objects=True)
+        if isinstance(repaired, dict) and repaired:
+            return repaired
+    except Exception:
+        pass
+
+    raise ValueError("Could not parse JSON from model response after all repair attempts")
 
 
 def _ocr_quality_ok(text: str) -> bool:
