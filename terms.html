@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service — VeriLex</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #0f172a; --ink-mid: #1e293b;
+      --amber: #2563eb; --amber-dim: #1d4ed8; --amber-bg: #eff6ff;
+      --bg: #f8f7f4; --surface: #ffffff; --border: #e5e1d8;
+      --text: #1a1a2e; --muted: #64748b; --r: 12px;
+      --shadow: 0 2px 12px rgba(0,0,0,.07);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    .topbar {
+      background: #060f1e; padding: 0 32px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, #2563eb 0%, #0891b2 100%);
+      display: flex; align-items: center; justify-content: center; font-size: 16px;
+    }
+    .logo-name { font-size: 19px; font-weight: 800; color: #fff; letter-spacing: -.3px; }
+    .back-link {
+      font-size: 13px; font-weight: 600; color: rgba(255,255,255,.55);
+      text-decoration: none; transition: color .15s;
+    }
+    .back-link:hover { color: #fff; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: linear-gradient(160deg, #0a1628 0%, #060f1e 100%);
+      padding: 56px 24px 48px; text-align: center;
+    }
+    .page-header .label {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .12em; color: #67e8f9;
+      margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-size: clamp(28px, 4vw, 40px); font-weight: 900;
+      color: #fff; letter-spacing: -.5px; margin-bottom: 10px;
+    }
+    .page-header p {
+      font-size: 15px; color: rgba(255,255,255,.5); max-width: 480px; margin: 0 auto;
+    }
+
+    /* ── PROSE ── */
+    .prose-wrap {
+      max-width: 740px; margin: 0 auto; padding: 56px 24px 96px;
+    }
+    .prose-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--r); box-shadow: var(--shadow);
+      padding: 40px 44px;
+    }
+    @media (max-width: 600px) { .prose-card { padding: 28px 20px; } }
+
+    .prose-card h2 {
+      font-size: 18px; font-weight: 800; color: var(--ink);
+      margin: 36px 0 10px; padding-top: 36px;
+      border-top: 1px solid var(--border);
+    }
+    .prose-card h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .prose-card h3 {
+      font-size: 15px; font-weight: 700; color: var(--ink-mid);
+      margin: 22px 0 6px;
+    }
+    .prose-card p { font-size: 15px; color: var(--text); line-height: 1.75; margin-bottom: 14px; }
+    .prose-card p:last-child { margin-bottom: 0; }
+    .prose-card ul {
+      margin: 8px 0 14px 20px; font-size: 15px; color: var(--text); line-height: 1.75;
+    }
+    .prose-card ul li { margin-bottom: 4px; }
+    .prose-card a { color: var(--amber); text-decoration: none; }
+    .prose-card a:hover { text-decoration: underline; }
+    .prose-card strong { font-weight: 700; color: var(--ink); }
+
+    .notice-box {
+      background: #eff6ff; border: 1px solid rgba(37,99,235,.25);
+      border-radius: 8px; padding: 16px 18px; margin: 20px 0;
+      font-size: 14px; color: #1e40af; line-height: 1.65;
+    }
+    .notice-box strong { color: #1e3a8a; }
+
+    .warn-box {
+      background: #fef2f2; border: 1px solid rgba(220,38,38,.2);
+      border-radius: 8px; padding: 16px 18px; margin: 20px 0;
+      font-size: 14px; color: #991b1b; line-height: 1.65;
+    }
+    .warn-box strong { color: #7f1d1d; }
+
+    .updated {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 28px; padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060f1e; padding: 32px 24px; text-align: center;
+      font-size: 13px; color: rgba(255,255,255,.4);
+    }
+    footer a { color: rgba(255,255,255,.5); text-decoration: none; margin: 0 8px; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="nav-logo">
+    <div class="logo-icon">⚖️</div>
+    <span class="logo-name">VeriLex</span>
+  </a>
+  <a href="/" class="back-link">← Back to VeriLex</a>
+</div>
+
+<div class="page-header">
+  <div class="label">Legal</div>
+  <h1>Terms of Service</h1>
+  <p>What VeriLex is, what it isn't, and what you agree to when you use it.</p>
+</div>
+
+<div class="prose-wrap">
+  <div class="prose-card">
+    <p class="updated">Last updated: June 2, 2026</p>
+
+    <div class="warn-box">
+      <strong>Important:</strong> VeriLex provides legal <em>information</em> — not legal <em>advice</em>. Using VeriLex does not create an attorney-client relationship. Always consult a licensed attorney for advice about your specific situation.
+    </div>
+
+    <!-- 1 -->
+    <h2>1. Acceptance of Terms</h2>
+    <p>By accessing or using VeriLex at verilex.org, you agree to these Terms of Service. If you do not agree, please do not use the service. These terms may be updated from time to time; continued use after changes are posted constitutes acceptance.</p>
+
+    <!-- 2 -->
+    <h2>2. Legal Information, Not Legal Advice</h2>
+    <p><strong>VeriLex provides legal information — not legal advice.</strong> These are meaningfully different:</p>
+    <ul>
+      <li><strong>Legal information</strong> explains what a law or legal document generally says. VeriLex does this.</li>
+      <li><strong>Legal advice</strong> applies the law to your specific facts and circumstances, assesses your options, and recommends a course of action. Only a licensed attorney can do this.</li>
+    </ul>
+    <p>VeriLex is designed to help you understand what a document says and what laws may be relevant — not to tell you what to do. Nothing in any VeriLex analysis constitutes legal advice, and nothing should be relied upon as a substitute for consultation with a licensed attorney.</p>
+    <p>For advice specific to your situation, consult a licensed attorney. Free legal aid is available in most states — visit <a href="https://lsc.gov/find-legal-aid" target="_blank" rel="noopener">lsc.gov/find-legal-aid</a> or <a href="https://lawhelp.org" target="_blank" rel="noopener">lawhelp.org</a>.</p>
+
+    <!-- 3 -->
+    <h2>3. No Attorney-Client Relationship</h2>
+    <p>Use of VeriLex does not create an attorney-client relationship between you and VeriLex, its operator (Tera Chen), or any other person or entity. No communication through VeriLex is privileged. VeriLex is not a law firm and is not authorized to practice law.</p>
+
+    <!-- 4 -->
+    <h2>4. AI Accuracy — Verify Before Acting</h2>
+    <p>VeriLex uses AI technology (Claude, by Anthropic) to analyze documents. AI can and does make mistakes. Specifically, you should be aware that:</p>
+    <ul>
+      <li>Statute citations may be inaccurate, incomplete, or out of date</li>
+      <li>Case law citations may contain errors, misattributions, or may not exist</li>
+      <li>Legal summaries may miss important nuance or jurisdiction-specific rules</li>
+      <li>Analysis may not account for recent changes in the law</li>
+      <li>Important facts specific to your situation may affect the analysis in ways the AI cannot know</li>
+    </ul>
+    <div class="notice-box">
+      <strong>Always verify statute citations</strong> against official sources before relying on them — for example, <a href="https://leginfo.legislature.ca.gov" target="_blank" rel="noopener">leginfo.legislature.ca.gov</a> for California law or <a href="https://law.cornell.edu" target="_blank" rel="noopener">law.cornell.edu</a> for federal law. Laws change, and citations that were correct at the time of training may have since been amended.
+    </div>
+
+    <!-- 5 -->
+    <h2>5. No Warranty</h2>
+    <p>VeriLex is provided <strong>"as is"</strong> and <strong>"as available,"</strong> without any warranty of any kind, express or implied. To the fullest extent permitted by law, VeriLex and its operator make no representations or warranties regarding:</p>
+    <ul>
+      <li>The accuracy, completeness, or reliability of any analysis or citation</li>
+      <li>The fitness of the service for any particular purpose</li>
+      <li>The continued availability or uninterrupted operation of the service</li>
+    </ul>
+
+    <!-- 6 -->
+    <h2>6. Limitation of Liability</h2>
+    <p>To the maximum extent permitted by applicable law, Tera Chen and VeriLex shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising from:</p>
+    <ul>
+      <li>Your use of or reliance on any VeriLex analysis or legal citation</li>
+      <li>Any inaccuracy in AI-generated content</li>
+      <li>Any interruption, suspension, or termination of the service</li>
+    </ul>
+    <p>This limitation applies regardless of the theory of liability (contract, tort, negligence, or otherwise) and even if VeriLex has been advised of the possibility of such damages. Your sole remedy for dissatisfaction with the service is to stop using it.</p>
+
+    <!-- 7 -->
+    <h2>7. Acceptable Use</h2>
+    <p>You agree not to use VeriLex to:</p>
+    <ul>
+      <li>Violate any applicable law or regulation</li>
+      <li>Submit documents or text containing fabricated information with the intent to generate misleading legal analysis</li>
+      <li>Attempt to access, probe, or test the security of the service without authorization</li>
+      <li>Scrape, crawl, or make automated requests that place unreasonable load on the service</li>
+      <li>Attempt to circumvent rate limits, usage restrictions, or security features</li>
+    </ul>
+
+    <!-- 8 -->
+    <h2>8. No Endorsement</h2>
+    <p>VeriLex has not been reviewed, certified, or endorsed by any bar association, state law licensing authority, legal aid organization, or regulatory body unless explicitly stated in writing. References to organizations (e.g., EBCLC, ILRC, Pro Bono Net) are provided as resources and do not imply any affiliation or endorsement by those organizations.</p>
+
+    <!-- 9 -->
+    <h2>9. Service Availability</h2>
+    <p>VeriLex is a free service operated by an individual. We make no guarantees of continuous availability, uptime, or data retention. The service may be modified, suspended, or discontinued at any time without prior notice. VeriLex is not a substitute for emergency legal help — if you have an urgent legal matter, contact a licensed attorney or legal aid organization immediately.</p>
+
+    <!-- 10 -->
+    <h2>10. Third-Party Links and Resources</h2>
+    <p>VeriLex may link to third-party websites and legal resources. These links are provided for convenience only. VeriLex has no control over and assumes no responsibility for the content, accuracy, or availability of third-party sites.</p>
+
+    <!-- 11 -->
+    <h2>11. Governing Law</h2>
+    <p>These Terms of Service are governed by the laws of the State of California, United States, without regard to conflict of law principles. Any disputes arising under these terms shall be subject to the exclusive jurisdiction of the courts located in Alameda County, California.</p>
+
+    <!-- 12 -->
+    <h2>12. Contact</h2>
+    <p>Questions about these terms: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:10px">
+    <a href="/">Home</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Service</a>
+    <a href="mailto:terachen@berkeley.edu">Contact</a>
+  </div>
+  <div>© 2026 Tera Chen · VeriLex · Legal information only, not legal advice.</div>
+</footer>
+
+</body>
+</html>

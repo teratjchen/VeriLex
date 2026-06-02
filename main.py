@@ -164,6 +164,16 @@ async def og_image():
     return FileResponse("og-image.png", media_type="image/png")
 
 
+@app.get("/privacy")
+async def privacy():
+    return FileResponse("privacy.html")
+
+
+@app.get("/terms")
+async def terms():
+    return FileResponse("terms.html")
+
+
 @app.get("/config")
 async def get_config():
     """Returns public client-side config (never secrets like the Anthropic key)."""

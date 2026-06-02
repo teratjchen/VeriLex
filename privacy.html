@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — VeriLex</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #0f172a; --ink-mid: #1e293b;
+      --amber: #2563eb; --amber-dim: #1d4ed8; --amber-bg: #eff6ff;
+      --bg: #f8f7f4; --surface: #ffffff; --border: #e5e1d8;
+      --text: #1a1a2e; --muted: #64748b; --r: 12px;
+      --shadow: 0 2px 12px rgba(0,0,0,.07);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    .topbar {
+      background: #060f1e; padding: 0 32px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, #2563eb 0%, #0891b2 100%);
+      display: flex; align-items: center; justify-content: center; font-size: 16px;
+    }
+    .logo-name { font-size: 19px; font-weight: 800; color: #fff; letter-spacing: -.3px; }
+    .back-link {
+      font-size: 13px; font-weight: 600; color: rgba(255,255,255,.55);
+      text-decoration: none; transition: color .15s;
+    }
+    .back-link:hover { color: #fff; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: linear-gradient(160deg, #0a1628 0%, #060f1e 100%);
+      padding: 56px 24px 48px; text-align: center;
+    }
+    .page-header .label {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .12em; color: #67e8f9;
+      margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-size: clamp(28px, 4vw, 40px); font-weight: 900;
+      color: #fff; letter-spacing: -.5px; margin-bottom: 10px;
+    }
+    .page-header p {
+      font-size: 15px; color: rgba(255,255,255,.5); max-width: 480px; margin: 0 auto;
+    }
+
+    /* ── PROSE ── */
+    .prose-wrap {
+      max-width: 740px; margin: 0 auto; padding: 56px 24px 96px;
+    }
+    .prose-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--r); box-shadow: var(--shadow);
+      padding: 40px 44px;
+    }
+    @media (max-width: 600px) { .prose-card { padding: 28px 20px; } }
+
+    .prose-card h2 {
+      font-size: 18px; font-weight: 800; color: var(--ink);
+      margin: 36px 0 10px; padding-top: 36px;
+      border-top: 1px solid var(--border);
+    }
+    .prose-card h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .prose-card h3 {
+      font-size: 15px; font-weight: 700; color: var(--ink-mid);
+      margin: 22px 0 6px;
+    }
+    .prose-card p { font-size: 15px; color: var(--text); line-height: 1.75; margin-bottom: 14px; }
+    .prose-card p:last-child { margin-bottom: 0; }
+    .prose-card ul {
+      margin: 8px 0 14px 20px; font-size: 15px; color: var(--text); line-height: 1.75;
+    }
+    .prose-card ul li { margin-bottom: 4px; }
+    .prose-card a { color: var(--amber); text-decoration: none; }
+    .prose-card a:hover { text-decoration: underline; }
+    .prose-card strong { font-weight: 700; color: var(--ink); }
+
+    .notice-box {
+      background: #eff6ff; border: 1px solid rgba(37,99,235,.25);
+      border-radius: 8px; padding: 16px 18px; margin: 20px 0;
+      font-size: 14px; color: #1e40af; line-height: 1.65;
+    }
+    .notice-box strong { color: #1e3a8a; }
+
+    .updated {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 28px; padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060f1e; padding: 32px 24px; text-align: center;
+      font-size: 13px; color: rgba(255,255,255,.4);
+    }
+    footer a { color: rgba(255,255,255,.5); text-decoration: none; margin: 0 8px; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="nav-logo">
+    <div class="logo-icon">⚖️</div>
+    <span class="logo-name">VeriLex</span>
+  </a>
+  <a href="/" class="back-link">← Back to VeriLex</a>
+</div>
+
+<div class="page-header">
+  <div class="label">Legal</div>
+  <h1>Privacy Policy</h1>
+  <p>How VeriLex handles your data — and how it doesn't.</p>
+</div>
+
+<div class="prose-wrap">
+  <div class="prose-card">
+    <p class="updated">Last updated: June 2, 2026</p>
+
+    <div class="notice-box">
+      <strong>Short version:</strong> VeriLex does not store your documents, does not require an account, and does not track you. Your document text is sent to Anthropic's Claude API for analysis and is not retained anywhere on VeriLex's servers.
+    </div>
+
+    <!-- 1 -->
+    <h2>1. Who Operates VeriLex</h2>
+    <p>VeriLex (verilex.org) is a free legal document accessibility tool built and maintained by <strong>Tera Chen</strong>, a Legal Studies student at the University of California, Berkeley. VeriLex is not a law firm, legal services company, or registered legal entity.</p>
+    <p>Contact: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>
+
+    <!-- 2 -->
+    <h2>2. Information VeriLex Collects</h2>
+
+    <h3>Document content you submit</h3>
+    <p>Text you paste or files you upload are transmitted securely (HTTPS) to Anthropic's Claude API for analysis. <strong>VeriLex never stores, logs, or retains document content on its own servers.</strong> The analysis result is displayed in your browser and discarded when you close or navigate away from the page.</p>
+
+    <h3>Anonymous usage analytics</h3>
+    <p>VeriLex logs a small set of anonymized metadata for each analysis to monitor service health and improve the tool. Each log entry contains:</p>
+    <ul>
+      <li>Timestamp (date and UTC time)</li>
+      <li>Language selected</li>
+      <li>Knowledge level selected (beginner / intermediate / expert)</li>
+      <li>Approximate document length (character count only)</li>
+      <li>Document type identified by the AI (e.g., "Lease Agreement")</li>
+      <li>Whether the request succeeded or failed</li>
+      <li>Location, if you chose to share it (e.g., "Oakland, California")</li>
+    </ul>
+    <p>This log contains <strong>no document content, no IP addresses, no names, and no personal identifiers.</strong> It is held in server memory and is cleared automatically each time the server restarts (which happens with every new deployment).</p>
+
+    <h3>Feedback you submit</h3>
+    <p>If you submit feedback through the feedback form, the message, category, and any name or email address you optionally provide are stored in server memory. This data is also cleared on server restart. We do not share it with any third party.</p>
+
+    <h3>Cookies and tracking</h3>
+    <p>VeriLex uses <strong>no cookies, no tracking pixels, no analytics scripts</strong>, and no third-party tracking technology of any kind. Your preferred interface language is saved in your browser's <code>localStorage</code> — this data never leaves your device.</p>
+
+    <!-- 3 -->
+    <h2>3. Third-Party Data Processors</h2>
+
+    <h3>Anthropic (Claude AI)</h3>
+    <p>Your document text is processed by Anthropic's Claude API. Anthropic is a US-based AI safety company. Per <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic's privacy policy</a> and their API usage terms, <strong>Anthropic does not use API inputs to train their AI models by default.</strong> For Anthropic's full data practices, see <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">anthropic.com/legal/privacy</a>.</p>
+
+    <h3>Railway (Server Hosting)</h3>
+    <p>VeriLex is hosted on <a href="https://railway.app" target="_blank" rel="noopener">Railway</a>, a cloud infrastructure provider. Servers are located in the United States. For Railway's privacy practices, see <a href="https://railway.app/legal/privacy" target="_blank" rel="noopener">railway.app/legal/privacy</a>.</p>
+
+    <!-- 4 -->
+    <h2>4. Sensitive Documents</h2>
+    <p>VeriLex is designed to help users understand documents that may be sensitive — including immigration notices, eviction filings, and financial correspondence. If your document contains highly sensitive personal information (Social Security numbers, immigration case numbers, full legal names combined with dates of birth), we recommend <strong>redacting that identifying information before uploading</strong>. The legal substance of the document is usually analyzable without it.</p>
+    <p>While VeriLex does not store documents, any transmission to an external AI service carries inherent risk. Use your judgment about what you share.</p>
+
+    <!-- 5 -->
+    <h2>5. Data Retention Summary</h2>
+    <ul>
+      <li><strong>Document content:</strong> Never stored. Processed in real time and discarded.</li>
+      <li><strong>Usage analytics log:</strong> In memory only. Cleared on each server restart.</li>
+      <li><strong>Feedback submissions:</strong> In memory only. Cleared on each server restart.</li>
+      <li><strong>Interface language preference:</strong> Stored in your browser's localStorage. Never sent to the server.</li>
+    </ul>
+
+    <!-- 6 -->
+    <h2>6. Children's Privacy</h2>
+    <p>VeriLex is not directed at children under 13 and does not knowingly collect information from children under 13. If you believe a child under 13 has submitted information, please contact us at <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a>.</p>
+
+    <!-- 7 -->
+    <h2>7. Changes to This Policy</h2>
+    <p>This policy may be updated over time. The "Last updated" date at the top reflects when it was last revised. Continued use of VeriLex after changes are posted constitutes acceptance of the updated policy.</p>
+
+    <!-- 8 -->
+    <h2>8. Contact</h2>
+    <p>For privacy questions, concerns, or requests: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:10px">
+    <a href="/">Home</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Service</a>
+    <a href="mailto:terachen@berkeley.edu">Contact</a>
+  </div>
+  <div>© 2026 Tera Chen · VeriLex · Legal information only, not legal advice.</div>
+</footer>
+
+</body>
+</html>

@@ -1091,10 +1091,31 @@
       <div style="background:linear-gradient(135deg,var(--amber-bg),#fff);border:1px solid rgba(59,130,246,.3);border-radius:var(--r);padding:28px;box-shadow:var(--shadow)">
         <div style="font-size:32px;margin-bottom:12px">🔒</div>
         <h3 id="aboutCard4H" style="font-size:17px;font-weight:800;color:var(--ink);margin-bottom:10px">Private by Design</h3>
-        <p id="aboutCard4P" style="font-size:14px;color:var(--text);line-height:1.75">Your documents are analyzed in real-time by Claude AI (Anthropic) and never stored, logged, or shared — not even temporarily. VeriLex is free, requires no account, and collects no personal data.</p>
+        <p id="aboutCard4P" style="font-size:14px;color:var(--text);line-height:1.75">Documents are sent to Anthropic's Claude API for analysis and are never stored on VeriLex's servers. Anthropic does not use API data for model training. No account is required, no cookies are set, and no personal data is collected. <a href="/privacy" style="color:var(--amber)">Privacy Policy →</a></p>
       </div>
 
     </div>
+
+    <!-- Founder transparency -->
+    <div style="margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px 32px;box-shadow:var(--shadow);display:flex;gap:20px;align-items:flex-start">
+      <div style="flex-shrink:0;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#0891b2);display:flex;align-items:center;justify-content:center;font-size:20px">👩‍💻</div>
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);margin-bottom:5px">Built by</div>
+        <h3 style="font-size:16px;font-weight:800;color:var(--ink);margin-bottom:8px">Tera Chen — Legal Studies, UC Berkeley</h3>
+        <p style="font-size:14px;color:var(--text);line-height:1.75;margin-bottom:10px">VeriLex is a solo project. I built it after working as a Risk Management intern at Kirkland &amp; Ellis LLP — processing over 1,000 legal records and seeing firsthand how opaque legal language creates real barriers for ordinary people. I'm a student, not an attorney, and I built this to give everyone the starting point they deserve.</p>
+        <p style="font-size:13px;color:var(--muted)">
+          Questions or feedback:
+          <a href="mailto:terachen@berkeley.edu" style="color:var(--amber);font-weight:600">terachen@berkeley.edu</a>
+          &nbsp;·&nbsp;
+          <a href="https://linkedin.com/in/terachen" target="_blank" rel="noopener" style="color:var(--amber);font-weight:600">LinkedIn</a>
+          &nbsp;·&nbsp;
+          <a href="/privacy" style="color:var(--muted)">Privacy Policy</a>
+          &nbsp;·&nbsp;
+          <a href="/terms" style="color:var(--muted)">Terms of Service</a>
+        </p>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1123,7 +1144,7 @@
         <span class="faq-chevron">▼</span>
       </button>
       <div class="faq-a" id="faq2a">
-        Your document is sent securely to Claude AI (by Anthropic) for analysis and is <strong>never stored on our servers</strong>. We do not log, save, or share the content of any document you upload or paste. The analysis result is displayed only in your browser and discarded when you leave the page. For highly sensitive documents (e.g., immigration papers), you may want to redact personal identifiers like full names and ID numbers before uploading.
+        Your document is sent securely (HTTPS) to Anthropic's Claude API for analysis and is <strong>never stored on VeriLex's servers</strong>. We do not log, save, or share document content. The analysis is displayed only in your browser and discarded when you leave the page. Per <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener" style="color:var(--sky)">Anthropic's API usage policy</a>, they do not use API inputs to train their models. For highly sensitive documents (e.g., immigration papers), you may want to redact personal identifiers before uploading. <a href="/privacy" style="color:var(--sky)">Read our full Privacy Policy.</a>
       </div>
     </div>
 
@@ -1153,7 +1174,7 @@
         <span class="faq-chevron">▼</span>
       </button>
       <div class="faq-a" id="faq5a">
-        VeriLex uses Claude AI by Anthropic, which is highly capable of identifying relevant statutes and citing them accurately. All statute citations include a direct link to the official text (e.g., leginfo.legislature.ca.gov for California law) so you can verify them yourself. For case law, we only include citations the AI is confident about — a missing citation is always better than a fabricated one. Laws change over time, so always verify current versions before relying on them.
+        VeriLex uses Claude AI (Anthropic) to identify relevant statutes and generate explanations. All statute citations include a direct link to the official source so you can verify them independently — use those links before acting on any citation. For case law, the AI only includes references it is highly confident about and may return none at all; an empty list is always safer than a fabricated citation. <strong>AI models can make mistakes.</strong> Laws also change over time. Treat every citation as a starting point for your own verification, not a final answer. For decisions that matter, consult a licensed attorney.
       </div>
     </div>
 
@@ -1448,6 +1469,12 @@
     <a href="https://www.uscourts.gov/self-represented-litigants" target="_blank" rel="noopener">US Courts Self-Help</a>
     <a href="https://www.law.cornell.edu" target="_blank" rel="noopener">Cornell Legal Info</a>
   </div>
+  <div class="footer-links" style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08)">
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/terms">Terms of Service</a>
+    <a href="mailto:terachen@berkeley.edu">Contact</a>
+  </div>
+  <p style="margin-top:16px;font-size:11px;color:rgba(255,255,255,.25)">© 2026 Tera Chen &nbsp;·&nbsp; VeriLex is a free, independent project — not affiliated with any law firm or legal services organization.</p>
 </footer>
 
 <!-- Camera modal -->
@@ -1719,7 +1746,7 @@ const TRANSLATIONS = {
     aboutCard1H:'The Problem', aboutCard1P:'Millions of people receive legal documents — eviction notices, court summonses, debt letters — and have no idea what they mean or what rights they have. Legal jargon is a barrier that shouldn\'t exist.',
     aboutCard2H:'Our Goal', aboutCard2P:'VeriLex explains what any legal document says — in plain language, with specific laws cited, deadlines flagged, and free legal aid listed. We never give legal advice, but we make sure you understand exactly what you\'re dealing with.',
     aboutCard3H:'Who It\'s For', aboutCard3P:'Anyone who receives a legal document and feels overwhelmed — students, renters, immigrants, workers. No legal background needed. Supports 15 languages. Always free. No account required.',
-    aboutCard4H:'Private by Design', aboutCard4P:'Your documents are analyzed in real-time by Claude AI (Anthropic) and never stored, logged, or shared — not even temporarily. VeriLex is free, requires no account, and collects no personal data.',
+    aboutCard4H:'Private by Design', aboutCard4P:'Documents are sent to Anthropic\'s Claude API for analysis and are never stored on VeriLex\'s servers. Anthropic does not use API data for model training. No account is required, no cookies are set, and no personal data is collected. <a href="/privacy" style="color:var(--amber)">Privacy Policy →</a>',
     sampleLabel:'Load a sample:',
     personaQ:'How familiar are you with legal documents?',
     noviceTitle:'New to this', noviceDesc:'Explain everything simply, no jargon',
@@ -1749,13 +1776,13 @@ const TRANSLATIONS = {
     faq1q:'Is this real legal advice?',
     faq1a:'No — VeriLex provides <strong>legal information</strong>, not legal advice. There\'s an important difference: legal information explains what the law says in general; legal advice applies the law to your specific situation and requires a licensed attorney. VeriLex helps you understand what a document means and what laws apply, but it does not tell you what to do. For advice specific to your case, please consult a licensed attorney. We include links to free legal aid organizations on every result.',
     faq2q:'Is my document kept private?',
-    faq2a:'Your document is sent securely to Claude AI (by Anthropic) for analysis and is <strong>never stored on our servers</strong>. We do not log, save, or share the content of any document you upload or paste. The analysis result is displayed only in your browser and discarded when you leave the page. For highly sensitive documents (e.g., immigration papers), you may want to redact personal identifiers like full names and ID numbers before uploading.',
+    faq2a:'Your document is sent securely (HTTPS) to Anthropic\'s Claude API for analysis and is <strong>never stored on VeriLex\'s servers</strong>. We do not log, save, or share document content. The analysis is displayed only in your browser and discarded when you leave the page. Per <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener" style="color:var(--sky)">Anthropic\'s API usage policy</a>, they do not use API inputs to train their models. For highly sensitive documents (e.g., immigration papers), you may want to redact personal identifiers before uploading. <a href="/privacy" style="color:var(--sky)">Read our full Privacy Policy.</a>',
     faq3q:'What types of documents can I analyze?',
     faq3a:'VeriLex works with almost any legal document: eviction notices, debt collection letters, lease agreements, court summonses, employment contracts, immigration notices (Notice to Appear, RFEs), IRS and tax letters, traffic citations, and more. You can paste text directly or upload a PDF. PDFs with selectable text are extracted instantly; scanned or handwritten PDFs are processed with AI vision (can take up to 60 seconds). You can also upload a JPEG or PNG photo of a physical document.',
     faq4q:'Which languages are supported?',
     faq4a:'VeriLex supports 15 languages for both the website interface and the AI analysis output: English, Spanish, Simplified Chinese, Traditional Chinese, Vietnamese, Tagalog, Korean, Arabic, Hindi, Portuguese, Russian, French, Haitian Creole, Punjabi, and Amharic. Select your preferred output language from the dropdown in the analysis form. You can also switch the entire website interface using the language button in the top navigation bar.',
     faq5q:'How accurate are the legal citations?',
-    faq5a:'VeriLex uses Claude AI by Anthropic, which is highly capable of identifying relevant statutes and citing them accurately. All statute citations include a direct link to the official text (e.g., leginfo.legislature.ca.gov for California law) so you can verify them yourself. For case law, we only include citations the AI is confident about — a missing citation is always better than a fabricated one. Laws change over time, so always verify current versions before relying on them.',
+    faq5a:'VeriLex uses Claude AI (Anthropic) to identify relevant statutes and generate explanations. All statute citations include a direct link to the official source so you can verify them independently — use those links before acting on any citation. For case law, the AI only includes references it is highly confident about and may return none at all; an empty list is always safer than a fabricated citation. <strong>AI models can make mistakes.</strong> Laws also change over time. Treat every citation as a starting point for your own verification, not a final answer. For decisions that matter, consult a licensed attorney.',
     faq6q:'I got an eviction / court notice — what should I do?',
     faq6a:'First, paste or upload the document to VeriLex to understand exactly what it says and what your rights are. Pay close attention to the <strong>Key Dates &amp; Deadlines</strong> section — missing a deadline can seriously harm your case. For high-urgency notices, VeriLex will show a “What to do right now” action box. Then reach out to a legal aid organization immediately. In the Bay Area: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 and <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 offer free help.',
     loadStep1:'Reading your document…', loadStep2:'Identifying applicable laws…', loadStep3:'Finding relevant court cases…', loadStep4:'Extracting key dates and deadlines…', loadStep5:'Composing plain-language explanations…',
