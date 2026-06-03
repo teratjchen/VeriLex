@@ -185,6 +185,14 @@
         <button class="lang-opt" data-lang="pt" onclick="setLang('pt')">Português</button>
         <button class="lang-opt" data-lang="fr" onclick="setLang('fr')">Français</button>
         <button class="lang-opt" data-lang="tl" onclick="setLang('tl')">Filipino</button>
+        <button class="lang-opt" data-lang="zh-TW" onclick="setLang('zh-TW')">中文（繁體）</button>
+        <button class="lang-opt" data-lang="vi" onclick="setLang('vi')">Tiếng Việt</button>
+        <button class="lang-opt" data-lang="ar" onclick="setLang('ar')">العربية</button>
+        <button class="lang-opt" data-lang="hi" onclick="setLang('hi')">हिंदी</button>
+        <button class="lang-opt" data-lang="ru" onclick="setLang('ru')">Русский</button>
+        <button class="lang-opt" data-lang="ht" onclick="setLang('ht')">Kreyòl</button>
+        <button class="lang-opt" data-lang="pa" onclick="setLang('pa')">ਪੰਜਾਬੀ</button>
+        <button class="lang-opt" data-lang="am" onclick="setLang('am')">አማርኛ</button>
       </div>
     </div>
     <a href="/" id="backLink" class="back-link">← Back to VeriLex</a>
@@ -275,7 +283,7 @@
 </footer>
 
 <script>
-const LANG_NAMES = { en:'EN', es:'ES', zh:'中文', ko:'한국어', pt:'PT', fr:'FR', tl:'TL' };
+const LANG_NAMES = { en:'EN', es:'ES', zh:'中文', ko:'한국어', pt:'PT', fr:'FR', tl:'TL', 'zh-TW':'繁中', vi:'VI', ar:'عر', hi:'हिं', ru:'RU', ht:'HT', pa:'PA', am:'አማ' };
 
 const TRANSLATIONS = {
 
@@ -732,6 +740,428 @@ const TRANSLATIONS = {
 <h2>12. Makipag-ugnayan</h2>
 <p>Mga tanong tungkol sa mga tuntuning ito: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
     ftCopy: '© 2026 Tera Chen · VeriLex · Impormasyon lamang tungkol sa batas, hindi legal na payo.'
+  },
+
+  'zh-TW': {
+    back: '← 返回 VeriLex',
+    pageTitle: '服務條款',
+    pageSubtitle: 'VeriLex 是什麼、不是什麼，以及您使用時所同意的內容。',
+    prose: `<p class="updated">最後更新：2026年6月2日</p>
+<div class="warn-box"><strong>重要提示：</strong>VeriLex 提供法律<em>資訊</em>，而非法律<em>建議</em>。使用 VeriLex 不會建立律師-委託人關係。如需針對您具體情況的建議，請務必諮詢持牌律師。</div>
+<h2>1. 接受條款</h2>
+<p>存取或使用 verilex.org 上的 VeriLex，即表示您同意本服務條款。如不同意，請勿使用本服務。本條款可能會不時更新；在更改發佈後繼續使用即視為接受。</p>
+<h2>2. 法律資訊，而非法律建議</h2>
+<p><strong>VeriLex 提供法律資訊，而非法律建議。</strong>兩者存在實質性區別：</p>
+<ul>
+  <li><strong>法律資訊：</strong>說明某項法律或法律文件通常規定的內容。這是 VeriLex 所做的事情。</li>
+  <li><strong>法律建議：</strong>將法律適用於您的具體事實和情況，評估您的選擇，並推薦行動方案。只有持牌律師才能提供法律建議。</li>
+</ul>
+<p>VeriLex 旨在幫助您理解文件內容及可能適用的法律，而非告訴您應該做什麼。VeriLex 的任何分析均不構成法律建議。</p>
+<p>如需針對您具體情況的建議，請諮詢持牌律師。大多數州均提供免費法律援助——請訪問 <a href="https://lsc.gov/find-legal-aid" target="_blank" rel="noopener">lsc.gov/find-legal-aid</a> 或 <a href="https://lawhelp.org" target="_blank" rel="noopener">lawhelp.org</a>。</p>
+<h2>3. 不構成律師-委託人關係</h2>
+<p>使用 VeriLex 不會在您與 VeriLex、其運營者（Tera Chen）或任何其他個人或實體之間建立律師-委託人關係。通過 VeriLex 進行的任何通信均不受特權保護。VeriLex 不是律師事務所，也無權從事法律實務。</p>
+<h2>4. AI 準確性——採取行動前請核實</h2>
+<p>VeriLex 使用 AI 技術（Anthropic 的 Claude）分析文件。AI 可能會犯錯。具體而言，您應了解：</p>
+<ul>
+  <li>法規引用可能不準確、不完整或已過時</li>
+  <li>判例法引用可能存在錯誤或根本不存在</li>
+  <li>法律摘要可能遺漏重要細節或特定司法管轄區的規定</li>
+  <li>分析可能未考慮法律的近期變化</li>
+  <li>您情況特有的重要事實可能以 AI 無法預知的方式影響分析結果</li>
+</ul>
+<div class="notice-box"><strong>在依賴任何法規引用之前，請務必通過官方來源進行核實</strong>——例如，加利福尼亞州法律請參閱 <a href="https://leginfo.legislature.ca.gov" target="_blank" rel="noopener">leginfo.legislature.ca.gov</a>，聯邦法律請參閱 <a href="https://law.cornell.edu" target="_blank" rel="noopener">law.cornell.edu</a>。</div>
+<h2>5. 無擔保聲明</h2>
+<p>VeriLex 以<strong>「現狀」</strong>和<strong>「可用時」</strong>的形式提供，不提供任何明示或暗示的擔保，包括：</p>
+<ul>
+  <li>任何分析或引用的準確性、完整性或可靠性</li>
+  <li>服務對任何特定目的的適用性</li>
+  <li>服務的持續可用性或不間斷運行</li>
+</ul>
+<h2>6. 責任限制</h2>
+<p>在適用法律允許的最大範圍內，Tera Chen 和 VeriLex 對因以下原因造成的任何損害不承擔責任：</p>
+<ul>
+  <li>您使用或依賴 VeriLex 的任何分析或法律引用</li>
+  <li>AI 生成內容中的任何不準確之處</li>
+  <li>服務的任何中斷、暫停或終止</li>
+</ul>
+<p>您對服務不滿意的唯一救濟措施是停止使用本服務。</p>
+<h2>7. 可接受的使用</h2>
+<p>您同意不使用 VeriLex 從事以下活動：</p>
+<ul>
+  <li>違反任何適用法律或法規</li>
+  <li>提交包含捏造資訊的文件，意圖生成誤導性法律分析</li>
+  <li>未經授權嘗試訪問或測試服務的安全性</li>
+  <li>進行網路爬取或對服務造成不合理負擔的自動化請求</li>
+  <li>嘗試繞過速率限制或安全功能</li>
+</ul>
+<h2>8. 無背書聲明</h2>
+<p>除非有明確書面說明，VeriLex 未經任何律師協會、州法律許可機構、法律援助組織或監管機構的審查、認證或背書。</p>
+<h2>9. 服務可用性</h2>
+<p>VeriLex 是由個人運營的免費服務。我們不保證持續可用性或數據保留。服務可能隨時被修改、暫停或停止，恕不另行通知。</p>
+<h2>10. 第三方連結和資源</h2>
+<p>VeriLex 可能連結到第三方網站。這些連結僅供參考，VeriLex 不承擔任何責任。</p>
+<h2>11. 適用法律</h2>
+<p>本服務條款受美國加利福尼亞州法律管轄。因本條款產生的任何爭議均受加利福尼亞州阿拉米達縣法院的專屬管轄。</p>
+<h2>12. 聯絡我們</h2>
+<p>有關本條款的問題：<a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · 僅供法律資訊參考，不構成法律建議。'
+  },
+
+  vi: {
+    back: '← Quay lại VeriLex',
+    pageTitle: 'Điều Khoản Dịch Vụ',
+    pageSubtitle: 'VeriLex là gì, không phải là gì, và bạn đồng ý điều gì khi sử dụng.',
+    prose: `<p class="updated">Cập nhật lần cuối: ngày 2 tháng 6 năm 2026</p>
+<div class="warn-box"><strong>Quan trọng:</strong> VeriLex cung cấp <em>thông tin</em> pháp lý — không phải <em>tư vấn</em> pháp lý. Sử dụng VeriLex không tạo ra mối quan hệ luật sư-thân chủ. Luôn tham khảo ý kiến luật sư có giấy phép cho lời khuyên về tình huống cụ thể của bạn.</div>
+<h2>1. Chấp nhận Điều khoản</h2>
+<p>Bằng cách truy cập hoặc sử dụng VeriLex tại verilex.org, bạn đồng ý với các Điều khoản Dịch vụ này. Các điều khoản này có thể được cập nhật theo thời gian; việc tiếp tục sử dụng sau khi đăng các thay đổi là chấp nhận.</p>
+<h2>2. Thông tin Pháp lý, Không phải Tư vấn Pháp lý</h2>
+<p><strong>VeriLex cung cấp thông tin pháp lý — không phải tư vấn pháp lý.</strong> Hai khái niệm này khác nhau đáng kể:</p>
+<ul>
+  <li><strong>Thông tin pháp lý</strong> giải thích những gì một luật hoặc tài liệu pháp lý nói chung quy định. VeriLex làm điều này.</li>
+  <li><strong>Tư vấn pháp lý</strong> áp dụng luật vào các sự thật và hoàn cảnh cụ thể của bạn. Chỉ luật sư có giấy phép mới có thể làm điều này.</li>
+</ul>
+<p>Để được tư vấn cụ thể, hãy tham khảo luật sư có giấy phép. Hỗ trợ pháp lý miễn phí có sẵn ở hầu hết các bang — truy cập <a href="https://lsc.gov/find-legal-aid" target="_blank" rel="noopener">lsc.gov/find-legal-aid</a> hoặc <a href="https://lawhelp.org" target="_blank" rel="noopener">lawhelp.org</a>.</p>
+<h2>3. Không có Quan hệ Luật sư-Thân chủ</h2>
+<p>Sử dụng VeriLex không tạo ra mối quan hệ luật sư-thân chủ. VeriLex không phải là văn phòng luật và không được phép hành nghề luật.</p>
+<h2>4. Độ Chính xác của AI — Kiểm tra Trước khi Hành động</h2>
+<p>VeriLex sử dụng công nghệ AI (Claude của Anthropic) để phân tích tài liệu. AI có thể mắc lỗi. Cụ thể:</p>
+<ul>
+  <li>Các trích dẫn luật có thể không chính xác hoặc lỗi thời</li>
+  <li>Các trích dẫn án lệ có thể chứa lỗi hoặc không tồn tại</li>
+  <li>Tóm tắt pháp lý có thể bỏ sót các sắc thái hoặc quy tắc theo thẩm quyền</li>
+  <li>Phân tích có thể không phản ánh các thay đổi pháp luật gần đây</li>
+</ul>
+<div class="notice-box"><strong>Luôn xác minh các trích dẫn luật</strong> từ các nguồn chính thức trước khi dựa vào chúng — ví dụ: <a href="https://leginfo.legislature.ca.gov" target="_blank" rel="noopener">leginfo.legislature.ca.gov</a> cho luật California hoặc <a href="https://law.cornell.edu" target="_blank" rel="noopener">law.cornell.edu</a> cho luật liên bang.</div>
+<h2>5. Không Bảo đảm</h2>
+<p>VeriLex được cung cấp <strong>"nguyên trạng"</strong> và <strong>"theo khả năng cung cấp,"</strong> không có bất kỳ bảo đảm nào về độ chính xác, tính phù hợp hoặc tính khả dụng liên tục.</p>
+<h2>6. Giới hạn Trách nhiệm</h2>
+<p>Tera Chen và VeriLex sẽ không chịu trách nhiệm về bất kỳ thiệt hại nào phát sinh từ việc sử dụng hoặc dựa vào các phân tích, tính không chính xác của AI, hoặc sự gián đoạn dịch vụ. Biện pháp khắc phục duy nhất khi không hài lòng là ngừng sử dụng dịch vụ.</p>
+<h2>7. Sử dụng Được chấp nhận</h2>
+<p>Bạn đồng ý không sử dụng VeriLex để:</p>
+<ul>
+  <li>Vi phạm bất kỳ luật hoặc quy định nào</li>
+  <li>Gửi thông tin bịa đặt nhằm tạo phân tích pháp lý gây hiểu lầm</li>
+  <li>Cố gắng truy cập hoặc kiểm tra bảo mật của dịch vụ trái phép</li>
+  <li>Thực hiện các yêu cầu tự động gây tải không hợp lý cho dịch vụ</li>
+</ul>
+<h2>8. Không Chứng thực</h2>
+<p>VeriLex chưa được bất kỳ hiệp hội luật sư, tổ chức trợ giúp pháp lý hoặc cơ quan quản lý nào xem xét hoặc chứng thực trừ khi được nêu rõ bằng văn bản.</p>
+<h2>9. Tính Khả dụng của Dịch vụ</h2>
+<p>VeriLex là dịch vụ miễn phí do cá nhân vận hành. Chúng tôi không đảm bảo tính khả dụng liên tục. Dịch vụ có thể được sửa đổi hoặc ngừng bất cứ lúc nào.</p>
+<h2>10. Liên kết Bên thứ ba</h2>
+<p>Các liên kết đến trang web bên thứ ba chỉ được cung cấp để thuận tiện. VeriLex không chịu trách nhiệm về nội dung của chúng.</p>
+<h2>11. Luật Điều chỉnh</h2>
+<p>Các Điều khoản này chịu sự điều chỉnh của luật Bang California, Hoa Kỳ. Tranh chấp sẽ thuộc thẩm quyền xét xử của các tòa án tại Quận Alameda, California.</p>
+<h2>12. Liên hệ</h2>
+<p>Câu hỏi về các điều khoản này: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · Chỉ cung cấp thông tin pháp lý, không phải tư vấn pháp lý.'
+  },
+
+  ar: {
+    back: '← العودة إلى VeriLex',
+    pageTitle: 'شروط الخدمة',
+    pageSubtitle: 'ما هو VeriLex، وما ليس عليه، وما توافق عليه عند استخدامه.',
+    prose: `<p class="updated">آخر تحديث: 2 يونيو 2026</p>
+<div class="warn-box"><strong>هام:</strong> تُقدّم VeriLex <em>معلومات</em> قانونية — لا <em>استشارات</em> قانونية. لا يُنشئ استخدام VeriLex علاقة محامٍ-موكّل. استشر دائمًا محاميًا مرخّصًا للحصول على مشورة بشأن وضعك المحدد.</div>
+<h2>1. قبول الشروط</h2>
+<p>بالوصول إلى VeriLex على verilex.org أو استخدامه، فإنك توافق على هذه الشروط. قد تُحدَّث الشروط من وقت لآخر؛ يُعدّ الاستمرار في الاستخدام بعد نشر التغييرات قبولًا لها.</p>
+<h2>2. معلومات قانونية، لا استشارة قانونية</h2>
+<p><strong>تُقدّم VeriLex معلومات قانونية — لا استشارات قانونية.</strong> ثمة فرق جوهري بينهما:</p>
+<ul>
+  <li><strong>المعلومات القانونية:</strong> تشرح ما تنصّ عليه قانون أو وثيقة قانونية عمومًا. هذا ما تفعله VeriLex.</li>
+  <li><strong>الاستشارة القانونية:</strong> تُطبّق القانون على وقائعك وظروفك المحددة. لا يستطيع تقديمها إلا محامٍ مرخّص.</li>
+</ul>
+<p>للحصول على مشورة تخصّ وضعك، استشر محاميًا مرخّصًا. تتوفر المساعدة القانونية المجانية في معظم الولايات — زر <a href="https://lsc.gov/find-legal-aid" target="_blank" rel="noopener">lsc.gov/find-legal-aid</a> أو <a href="https://lawhelp.org" target="_blank" rel="noopener">lawhelp.org</a>.</p>
+<h2>3. لا علاقة محامٍ-موكّل</h2>
+<p>لا يُنشئ استخدام VeriLex علاقة محامٍ-موكّل. VeriLex ليست مكتب محاماة وليست مرخّصة لممارسة مهنة المحاماة.</p>
+<h2>4. دقة الذكاء الاصطناعي — تحقّق قبل التصرف</h2>
+<p>تستخدم VeriLex تقنية الذكاء الاصطناعي (Claude من Anthropic) لتحليل المستندات. قد يُخطئ الذكاء الاصطناعي. تحديدًا:</p>
+<ul>
+  <li>قد تكون استشهادات القوانين غير دقيقة أو قديمة</li>
+  <li>قد تحتوي استشهادات الأحكام القضائية على أخطاء أو قد لا تكون موجودة</li>
+  <li>قد تُغفل الملخصات القانونية فروقًا دقيقة أو قواعد خاصة بالولاية القضائية</li>
+  <li>قد لا يأخذ التحليل في الاعتبار التعديلات التشريعية الأخيرة</li>
+</ul>
+<div class="notice-box"><strong>تحقّق دائمًا من استشهادات القوانين</strong> عبر المصادر الرسمية قبل الاعتماد عليها — مثل <a href="https://leginfo.legislature.ca.gov" target="_blank" rel="noopener">leginfo.legislature.ca.gov</a> لقانون كاليفورنيا أو <a href="https://law.cornell.edu" target="_blank" rel="noopener">law.cornell.edu</a> للقانون الفيدرالي.</div>
+<h2>5. إخلاء المسؤولية عن الضمانات</h2>
+<p>تُقدَّم VeriLex <strong>"كما هي"</strong> و<strong>"حسب التوفر"</strong> دون أي ضمانات صريحة أو ضمنية تتعلق بالدقة أو الملاءمة أو استمرارية التوفر.</p>
+<h2>6. تحديد المسؤولية</h2>
+<p>لن تكون Tera Chen أو VeriLex مسؤولتان عن أي أضرار تنجم عن استخدام التحليلات أو الاستشهادات أو عدم دقة محتوى الذكاء الاصطناعي أو انقطاع الخدمة. وسيلتك الوحيدة في حالة عدم الرضا هي التوقف عن استخدام الخدمة.</p>
+<h2>7. الاستخدام المقبول</h2>
+<p>تتعهد بعدم استخدام VeriLex من أجل:</p>
+<ul>
+  <li>انتهاك أي قانون أو لائحة سارية</li>
+  <li>إرسال معلومات ملفقة بقصد توليد تحليل قانوني مضلل</li>
+  <li>محاولة الوصول إلى أمن الخدمة أو اختباره دون إذن</li>
+  <li>إجراء طلبات آلية تُشكّل عبئًا غير معقول على الخدمة</li>
+</ul>
+<h2>8. عدم التأييد</h2>
+<p>لم تُراجع VeriLex أو تعتمدها أو تؤيدها أي نقابة محامين أو هيئة ترخيص قانوني أو منظمة مساعدة قانونية أو جهة تنظيمية، ما لم يُصرَّح بذلك كتابيًا.</p>
+<h2>9. توفر الخدمة</h2>
+<p>VeriLex خدمة مجانية يديرها فرد. لا نضمن الاستمرارية ولا الاحتفاظ بالبيانات. قد تُعدَّل الخدمة أو تُوقَف في أي وقت دون إشعار مسبق.</p>
+<h2>10. روابط الجهات الخارجية</h2>
+<p>الروابط المقدَّمة لمواقع الجهات الخارجية هي لأغراض المساعدة فحسب. لا تتحمل VeriLex أي مسؤولية عن محتوى تلك المواقع.</p>
+<h2>11. القانون الحاكم</h2>
+<p>تخضع هذه الشروط لقوانين ولاية كاليفورنيا، الولايات المتحدة الأمريكية. تخضع أي نزاعات لاختصاص محاكم مقاطعة ألاميدا، كاليفورنيا.</p>
+<h2>12. التواصل</h2>
+<p>للاستفسار عن هذه الشروط: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · معلومات قانونية فقط، وليس استشارة قانونية.'
+  },
+
+  hi: {
+    back: '← VeriLex पर वापस जाएं',
+    pageTitle: 'सेवा की शर्तें',
+    pageSubtitle: 'VeriLex क्या है, क्या नहीं है, और इसके उपयोग पर आप किससे सहमत हैं।',
+    prose: `<p class="updated">अंतिम अपडेट: 2 जून 2026</p>
+<div class="warn-box"><strong>महत्वपूर्ण:</strong> VeriLex कानूनी <em>जानकारी</em> प्रदान करता है — कानूनी <em>सलाह</em> नहीं। VeriLex का उपयोग वकील-मुवक्किल संबंध नहीं बनाता। अपनी विशिष्ट स्थिति के बारे में सलाह के लिए हमेशा लाइसेंस प्राप्त वकील से परामर्श करें।</div>
+<h2>1. शर्तों की स्वीकृति</h2>
+<p>verilex.org पर VeriLex तक पहुँचने या उसका उपयोग करके, आप इन सेवा की शर्तों से सहमत होते हैं। परिवर्तन पोस्ट होने के बाद उपयोग जारी रखना स्वीकृति का गठन करता है।</p>
+<h2>2. कानूनी जानकारी, कानूनी सलाह नहीं</h2>
+<p><strong>VeriLex कानूनी जानकारी प्रदान करता है — कानूनी सलाह नहीं।</strong> दोनों में महत्वपूर्ण अंतर है:</p>
+<ul>
+  <li><strong>कानूनी जानकारी</strong> बताती है कि कोई कानून या कानूनी दस्तावेज़ सामान्यतः क्या कहता है। यही VeriLex करता है।</li>
+  <li><strong>कानूनी सलाह</strong> आपके विशिष्ट तथ्यों और परिस्थितियों पर कानून लागू करती है। केवल लाइसेंस प्राप्त वकील ही यह कर सकता है।</li>
+</ul>
+<p>अपनी स्थिति के लिए सलाह के लिए, लाइसेंस प्राप्त वकील से परामर्श करें। मुफ्त कानूनी सहायता <a href="https://lsc.gov/find-legal-aid" target="_blank" rel="noopener">lsc.gov/find-legal-aid</a> या <a href="https://lawhelp.org" target="_blank" rel="noopener">lawhelp.org</a> पर उपलब्ध है।</p>
+<h2>3. वकील-मुवक्किल संबंध नहीं</h2>
+<p>VeriLex का उपयोग आपके और VeriLex, इसके संचालक (Tera Chen), या किसी अन्य व्यक्ति के बीच वकील-मुवक्किल संबंध नहीं बनाता। VeriLex कोई कानूनी फर्म नहीं है।</p>
+<h2>4. AI सटीकता — कार्य करने से पहले सत्यापित करें</h2>
+<p>VeriLex दस्तावेज़ों का विश्लेषण करने के लिए AI तकनीक (Anthropic का Claude) का उपयोग करता है। AI गलतियाँ कर सकता है। विशेष रूप से:</p>
+<ul>
+  <li>क़ानून उद्धरण अशुद्ध, अधूरे या पुराने हो सकते हैं</li>
+  <li>केस लॉ उद्धरण में त्रुटियाँ हो सकती हैं या वे मौजूद नहीं हो सकते</li>
+  <li>कानूनी सारांश महत्वपूर्ण बारीकियों को छोड़ सकते हैं</li>
+  <li>विश्लेषण कानून में हालिया परिवर्तनों को ध्यान में नहीं ले सकता</li>
+</ul>
+<div class="notice-box"><strong>किसी भी क़ानून उद्धरण पर भरोसा करने से पहले हमेशा आधिकारिक स्रोतों से सत्यापित करें</strong> — जैसे कैलिफ़ोर्निया कानून के लिए <a href="https://leginfo.legislature.ca.gov" target="_blank" rel="noopener">leginfo.legislature.ca.gov</a> या संघीय कानून के लिए <a href="https://law.cornell.edu" target="_blank" rel="noopener">law.cornell.edu</a>।</div>
+<h2>5. कोई वारंटी नहीं</h2>
+<p>VeriLex किसी भी प्रकार की वारंटी के बिना <strong>"जैसा है"</strong> और <strong>"उपलब्धतानुसार"</strong> प्रदान किया जाता है, जिसमें सटीकता, उपयुक्तता या निरंतर उपलब्धता शामिल है।</p>
+<h2>6. दायित्व की सीमा</h2>
+<p>Tera Chen और VeriLex किसी भी विश्लेषण या AI सामग्री की अशुद्धता या सेवा में व्यवधान से उत्पन्न किसी भी नुकसान के लिए उत्तरदायी नहीं होंगे। सेवा से असंतोष का एकमात्र उपाय इसका उपयोग बंद करना है।</p>
+<h2>7. स्वीकार्य उपयोग</h2>
+<p>आप सहमत हैं कि VeriLex का उपयोग इन कार्यों के लिए नहीं करेंगे:</p>
+<ul>
+  <li>किसी भी लागू कानून या विनियम का उल्लंघन</li>
+  <li>भ्रामक कानूनी विश्लेषण उत्पन्न करने के इरादे से गढ़ी हुई जानकारी सबमिट करना</li>
+  <li>बिना अनुमति के सेवा की सुरक्षा का परीक्षण करना</li>
+  <li>सेवा पर अनुचित भार डालने वाले स्वचालित अनुरोध</li>
+</ul>
+<h2>8. कोई समर्थन नहीं</h2>
+<p>जब तक लिखित रूप से स्पष्ट न हो, VeriLex को किसी बार एसोसिएशन या कानूनी सहायता संगठन द्वारा समीक्षा या प्रमाणित नहीं किया गया है।</p>
+<h2>9. सेवा उपलब्धता</h2>
+<p>VeriLex एक व्यक्ति द्वारा संचालित मुफ्त सेवा है। हम निरंतर उपलब्धता की गारंटी नहीं देते। सेवा बिना नोटिस के संशोधित या बंद हो सकती है।</p>
+<h2>10. तृतीय-पक्ष लिंक</h2>
+<p>तृतीय-पक्ष वेबसाइटों के लिंक केवल सुविधा के लिए प्रदान किए जाते हैं। VeriLex उनकी सामग्री के लिए कोई जिम्मेदारी नहीं लेता।</p>
+<h2>11. शासी कानून</h2>
+<p>ये शर्तें कैलिफ़ोर्निया राज्य, अमेरिका के कानूनों द्वारा शासित हैं। विवाद अलामेडा काउंटी, कैलिफ़ोर्निया की अदालतों के विशेष अधिकार क्षेत्र के अधीन होंगे।</p>
+<h2>12. संपर्क</h2>
+<p>इन शर्तों के बारे में प्रश्न: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · केवल कानूनी जानकारी, कानूनी सलाह नहीं।'
+  },
+
+  ru: {
+    back: '← Вернуться в VeriLex',
+    pageTitle: 'Условия использования',
+    pageSubtitle: 'Что такое VeriLex, чем не является и с чем вы соглашаетесь, используя его.',
+    prose: `<p class="updated">Последнее обновление: 2 июня 2026 г.</p>
+<div class="warn-box"><strong>Важно:</strong> VeriLex предоставляет юридическую <em>информацию</em> — не юридические <em>консультации</em>. Использование VeriLex не создаёт отношений адвокат-клиент. Для получения рекомендаций по вашей конкретной ситуации всегда обращайтесь к лицензированному адвокату.</div>
+<h2>1. Принятие условий</h2>
+<p>Получая доступ к VeriLex на verilex.org или используя его, вы принимаете настоящие Условия использования. Продолжение использования после публикации изменений означает их принятие.</p>
+<h2>2. Юридическая информация, не консультация</h2>
+<p><strong>VeriLex предоставляет юридическую информацию — не консультации.</strong> Это принципиально разные понятия:</p>
+<ul>
+  <li><strong>Юридическая информация</strong> объясняет, что в общем говорит закон или юридический документ. Именно это делает VeriLex.</li>
+  <li><strong>Юридическая консультация</strong> применяет закон к вашим конкретным обстоятельствам. Это может делать только лицензированный адвокат.</li>
+</ul>
+<p>Для получения консультации по вашей ситуации обратитесь к лицензированному адвокату. Бесплатная юридическая помощь доступна в большинстве штатов — посетите <a href="https://lsc.gov/find-legal-aid" target="_blank" rel="noopener">lsc.gov/find-legal-aid</a> или <a href="https://lawhelp.org" target="_blank" rel="noopener">lawhelp.org</a>.</p>
+<h2>3. Отсутствие отношений адвокат-клиент</h2>
+<p>Использование VeriLex не создаёт отношений адвокат-клиент. VeriLex не является юридической фирмой и не уполномочена заниматься юридической практикой.</p>
+<h2>4. Точность ИИ — проверяйте перед действиями</h2>
+<p>VeriLex использует технологию ИИ (Claude от Anthropic) для анализа документов. ИИ может ошибаться. В частности:</p>
+<ul>
+  <li>Ссылки на законодательные акты могут быть неточными или устаревшими</li>
+  <li>Ссылки на судебную практику могут содержать ошибки или вовсе не существовать</li>
+  <li>Юридические резюме могут упускать важные нюансы или нормы конкретной юрисдикции</li>
+  <li>Анализ может не учитывать недавние изменения в законодательстве</li>
+</ul>
+<div class="notice-box"><strong>Всегда проверяйте ссылки на законодательные акты</strong> по официальным источникам — например, <a href="https://leginfo.legislature.ca.gov" target="_blank" rel="noopener">leginfo.legislature.ca.gov</a> для законодательства Калифорнии или <a href="https://law.cornell.edu" target="_blank" rel="noopener">law.cornell.edu</a> для федерального права.</div>
+<h2>5. Отказ от гарантий</h2>
+<p>VeriLex предоставляется <strong>«как есть»</strong> и <strong>«по мере доступности»</strong> без каких-либо гарантий точности, пригодности или непрерывной доступности.</p>
+<h2>6. Ограничение ответственности</h2>
+<p>Tera Chen и VeriLex не несут ответственности за убытки, возникшие в результате использования анализов, неточностей в контенте ИИ или перебоев в работе сервиса. Единственным средством защиты при неудовлетворённости является прекращение использования.</p>
+<h2>7. Допустимое использование</h2>
+<p>Вы соглашаетесь не использовать VeriLex для:</p>
+<ul>
+  <li>Нарушения применимых законов или нормативных актов</li>
+  <li>Отправки сфабрикованной информации с целью получения вводящего в заблуждение анализа</li>
+  <li>Попыток получить несанкционированный доступ к системе безопасности сервиса</li>
+  <li>Автоматизированных запросов, создающих чрезмерную нагрузку на сервис</li>
+</ul>
+<h2>8. Отсутствие одобрения</h2>
+<p>VeriLex не проверялся, не сертифицировался и не одобрялся какой-либо коллегией адвокатов или организацией юридической помощи, если иное не указано в письменном виде.</p>
+<h2>9. Доступность сервиса</h2>
+<p>VeriLex — бесплатный сервис, управляемый частным лицом. Мы не гарантируем непрерывной доступности. Сервис может быть изменён или прекращён в любое время без предупреждения.</p>
+<h2>10. Ссылки третьих сторон</h2>
+<p>Ссылки на сторонние ресурсы предоставлены исключительно для удобства. VeriLex не несёт ответственности за их содержимое.</p>
+<h2>11. Применимое право</h2>
+<p>Настоящие Условия регулируются законодательством штата Калифорния, США. Споры подлежат рассмотрению в судах округа Аламеда, Калифорния.</p>
+<h2>12. Контакты</h2>
+<p>Вопросы по настоящим Условиям: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · Только правовая информация, не юридическая консультация.'
+  },
+
+  ht: {
+    back: '← Retounen nan VeriLex',
+    pageTitle: 'Kondisyon Sèvis',
+    pageSubtitle: 'Sa VeriLex ye, sa li pa ye, ak sa ou dakò ak li lè ou itilize l.',
+    prose: `<p class="updated">Dènye mizajou: 2 jen 2026</p>
+<div class="warn-box"><strong>Mahalaga:</strong> VeriLex bay <em>enfòmasyon</em> legal — pa <em>konsèy</em> legal. Itilize VeriLex pa kreye yon relasyon avoka-kliyan. Toujou konsòlte yon avoka ki gen lisans pou konsèy sou sitiyasyon espesifik ou.</div>
+<h2>1. Akseptasyon Kondisyon yo</h2>
+<p>Lè ou aksede oswa itilize VeriLex sou verilex.org, ou dakò ak Kondisyon Sèvis sa yo. Kondisyon yo ka mete ajou peryodikman; kontinye itilize apre chanjman yo poste konstitye akseptasyon.</p>
+<h2>2. Enfòmasyon Legal, Pa Konsèy Legal</h2>
+<p><strong>VeriLex bay enfòmasyon legal — pa konsèy legal.</strong> Diferans sa a enpòtan:</p>
+<ul>
+  <li><strong>Enfòmasyon legal</strong> eksplike sa yon lwa oswa dokiman legal di an jeneral. Sa a se sa VeriLex fè.</li>
+  <li><strong>Konsèy legal</strong> aplike lwa a nan sitiyasyon espesifik ou. Sèlman yon avoka ki gen lisans ka fè sa.</li>
+</ul>
+<p>Pou konsèy espesifik nan sitiyasyon ou, konsòlte yon avoka ki gen lisans. Èd legal gratis disponib nan pifò eta — vizite <a href="https://lsc.gov/find-legal-aid" target="_blank" rel="noopener">lsc.gov/find-legal-aid</a> oswa <a href="https://lawhelp.org" target="_blank" rel="noopener">lawhelp.org</a>.</p>
+<h2>3. Pa Gen Relasyon Avoka-Kliyan</h2>
+<p>Itilize VeriLex pa kreye yon relasyon avoka-kliyan. VeriLex se pa yon kabinè avoka epi li pa otorize pou pratike lwa.</p>
+<h2>4. Egzaktitid AI — Verifye Anvan ou Aji</h2>
+<p>VeriLex itilize teknoloji AI (Claude, pa Anthropic) pou analize dokiman. AI ka fè erè. Espesyalman:</p>
+<ul>
+  <li>Sitasyon lwa ka pa egzak, enkonplè, oswa demode</li>
+  <li>Sitasyon jirispridans ka gen erè oswa ka pa egziste</li>
+  <li>Rezime legal ka rate detay enpòtan oswa règ espesifik jiridiksyon</li>
+  <li>Analiz la ka pa pran chanjman resan nan lwa a kont</li>
+</ul>
+<div class="notice-box"><strong>Toujou verifye sitasyon lwa yo</strong> kont sous ofisyèl anvan ou fè konfyans yo — pa egzanp, <a href="https://leginfo.legislature.ca.gov" target="_blank" rel="noopener">leginfo.legislature.ca.gov</a> pou lwa Kalifòni oswa <a href="https://law.cornell.edu" target="_blank" rel="noopener">law.cornell.edu</a> pou lwa federal.</div>
+<h2>5. Pa Gen Garanti</h2>
+<p>VeriLex bay <strong>"kòm li ye"</strong> ak <strong>"selon disponibilite,"</strong> san okenn garanti sou egzaktitid, aptitid, oswa disponibilite kontinyèl.</p>
+<h2>6. Limitasyon Responsablite</h2>
+<p>Tera Chen ak VeriLex p ap responsab pou okenn domaj ki soti nan itilizasyon analiz yo, move egzaktitid kontni AI, oswa entèripsyon sèvis. Sèl remèd ou si ou pa satisfè se sispann itilize sèvis la.</p>
+<h2>7. Itilizasyon Akseptab</h2>
+<p>Ou dakò pou pa itilize VeriLex pou:</p>
+<ul>
+  <li>Vyole nenpòt lwa oswa règleman ki aplikab</li>
+  <li>Soumèt enfòmasyon fòje pou kreye analiz legal tronpè</li>
+  <li>Eseye aksede sekirite sèvis la san otorizasyon</li>
+  <li>Fè demann otomatize ki mete chaj dezonèt sou sèvis la</li>
+</ul>
+<h2>8. Pa Gen Endòsman</h2>
+<p>VeriLex pa te revize, sètifye, oswa andòse pa okenn asosyasyon avoka oswa òganizasyon èd legal, sòf si endike klèman alekri.</p>
+<h2>9. Disponibilite Sèvis</h2>
+<p>VeriLex se yon sèvis gratis yon moun ap jere. Nou pa garanti disponibilite kontinyèl. Sèvis la ka chanje oswa sispann nenpòt ki lè san avètisman.</p>
+<h2>10. Lyen Twazyèm Pati</h2>
+<p>Lyen bay sit twazyèm pati yo bay pou fasilite sèlman. VeriLex pa responsab pou kontni yo.</p>
+<h2>11. Lwa ki Gouvène</h2>
+<p>Kondisyon sa yo gouvène pa lwa Eta Kalifòni, Etazini. Nenpòt dispute soumèt nan jiridiksyon eksklizif tribinal ki nan Konte Alameda, Kalifòni.</p>
+<h2>12. Kontakte</h2>
+<p>Kesyon sou kondisyon sa yo: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · Enfòmasyon legal sèlman, pa konsèy legal.'
+  },
+
+  pa: {
+    back: '← VeriLex \'ਤੇ ਵਾਪਸ ਜਾਓ',
+    pageTitle: 'ਸੇਵਾ ਦੀਆਂ ਸ਼ਰਤਾਂ',
+    pageSubtitle: 'VeriLex ਕੀ ਹੈ, ਕੀ ਨਹੀਂ ਹੈ, ਅਤੇ ਇਸਦੀ ਵਰਤੋਂ ਕਰਨ ਸਮੇਂ ਤੁਸੀਂ ਕਿਸ ਨਾਲ ਸਹਿਮਤ ਹੋ।',
+    prose: `<p class="updated">ਆਖਰੀ ਅੱਪਡੇਟ: 2 ਜੂਨ 2026</p>
+<div class="warn-box"><strong>ਮਹੱਤਵਪੂਰਨ:</strong> VeriLex ਕਾਨੂੰਨੀ <em>ਜਾਣਕਾਰੀ</em> ਪ੍ਰਦਾਨ ਕਰਦਾ ਹੈ — ਕਾਨੂੰਨੀ <em>ਸਲਾਹ</em> ਨਹੀਂ। VeriLex ਦੀ ਵਰਤੋਂ ਵਕੀਲ-ਮੁਵੱਕਿਲ ਸੰਬੰਧ ਨਹੀਂ ਬਣਾਉਂਦੀ। ਆਪਣੀ ਖਾਸ ਸਥਿਤੀ ਬਾਰੇ ਸਲਾਹ ਲਈ ਹਮੇਸ਼ਾ ਲਾਇਸੰਸਸ਼ੁਦਾ ਵਕੀਲ ਨਾਲ ਸਲਾਹ ਕਰੋ।</div>
+<h2>1. ਸ਼ਰਤਾਂ ਦੀ ਸਵੀਕ੍ਰਿਤੀ</h2>
+<p>verilex.org 'ਤੇ VeriLex ਤੱਕ ਪਹੁੰਚ ਕੇ ਜਾਂ ਇਸਦੀ ਵਰਤੋਂ ਕਰਕੇ, ਤੁਸੀਂ ਇਨ੍ਹਾਂ ਸੇਵਾ ਦੀਆਂ ਸ਼ਰਤਾਂ ਨਾਲ ਸਹਿਮਤ ਹੋ। ਬਦਲਾਅ ਤੋਂ ਬਾਅਦ ਵਰਤੋਂ ਜਾਰੀ ਰੱਖਣਾ ਸਵੀਕ੍ਰਿਤੀ ਹੈ।</p>
+<h2>2. ਕਾਨੂੰਨੀ ਜਾਣਕਾਰੀ, ਕਾਨੂੰਨੀ ਸਲਾਹ ਨਹੀਂ</h2>
+<p><strong>VeriLex ਕਾਨੂੰਨੀ ਜਾਣਕਾਰੀ ਪ੍ਰਦਾਨ ਕਰਦਾ ਹੈ — ਕਾਨੂੰਨੀ ਸਲਾਹ ਨਹੀਂ।</strong> ਦੋਵਾਂ ਵਿੱਚ ਮਹੱਤਵਪੂਰਨ ਅੰਤਰ ਹੈ:</p>
+<ul>
+  <li><strong>ਕਾਨੂੰਨੀ ਜਾਣਕਾਰੀ</strong> ਦੱਸਦੀ ਹੈ ਕਿ ਕੋਈ ਕਾਨੂੰਨ ਜਾਂ ਕਾਨੂੰਨੀ ਦਸਤਾਵੇਜ਼ ਆਮ ਤੌਰ 'ਤੇ ਕੀ ਕਹਿੰਦਾ ਹੈ। ਇਹੀ VeriLex ਕਰਦਾ ਹੈ।</li>
+  <li><strong>ਕਾਨੂੰਨੀ ਸਲਾਹ</strong> ਤੁਹਾਡੇ ਖਾਸ ਹਾਲਾਤਾਂ 'ਤੇ ਕਾਨੂੰਨ ਲਾਗੂ ਕਰਦੀ ਹੈ। ਸਿਰਫ਼ ਲਾਇਸੰਸਸ਼ੁਦਾ ਵਕੀਲ ਹੀ ਇਹ ਕਰ ਸਕਦਾ ਹੈ।</li>
+</ul>
+<p>ਖਾਸ ਸਲਾਹ ਲਈ ਲਾਇਸੰਸਸ਼ੁਦਾ ਵਕੀਲ ਨਾਲ ਸਲਾਹ ਕਰੋ। ਮੁਫ਼ਤ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ <a href="https://lsc.gov/find-legal-aid" target="_blank" rel="noopener">lsc.gov/find-legal-aid</a> ਜਾਂ <a href="https://lawhelp.org" target="_blank" rel="noopener">lawhelp.org</a> 'ਤੇ ਉਪਲਬਧ ਹੈ।</p>
+<h2>3. ਕੋਈ ਵਕੀਲ-ਮੁਵੱਕਿਲ ਸੰਬੰਧ ਨਹੀਂ</h2>
+<p>VeriLex ਦੀ ਵਰਤੋਂ ਵਕੀਲ-ਮੁਵੱਕਿਲ ਸੰਬੰਧ ਨਹੀਂ ਬਣਾਉਂਦੀ। VeriLex ਕੋਈ ਕਾਨੂੰਨੀ ਫਰਮ ਨਹੀਂ ਹੈ।</p>
+<h2>4. AI ਸ਼ੁੱਧਤਾ — ਕੰਮ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਪੁਸ਼ਟੀ ਕਰੋ</h2>
+<p>VeriLex ਦਸਤਾਵੇਜ਼ਾਂ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰਨ ਲਈ AI ਤਕਨੀਕ (Anthropic ਦਾ Claude) ਦੀ ਵਰਤੋਂ ਕਰਦਾ ਹੈ। AI ਗਲਤੀਆਂ ਕਰ ਸਕਦਾ ਹੈ। ਖਾਸ ਤੌਰ 'ਤੇ:</p>
+<ul>
+  <li>ਕਾਨੂੰਨ ਦੇ ਹਵਾਲੇ ਗਲਤ, ਅਧੂਰੇ, ਜਾਂ ਪੁਰਾਣੇ ਹੋ ਸਕਦੇ ਹਨ</li>
+  <li>ਕੇਸ ਲਾਅ ਦੇ ਹਵਾਲਿਆਂ ਵਿੱਚ ਗਲਤੀਆਂ ਹੋ ਸਕਦੀਆਂ ਹਨ</li>
+  <li>ਕਾਨੂੰਨੀ ਸੰਖੇਪ ਮਹੱਤਵਪੂਰਨ ਵੇਰਵੇ ਛੱਡ ਸਕਦੇ ਹਨ</li>
+  <li>ਵਿਸ਼ਲੇਸ਼ਣ ਕਾਨੂੰਨ ਵਿੱਚ ਤਾਜ਼ਾ ਬਦਲਾਅ ਨਹੀਂ ਦਰਸਾ ਸਕਦਾ</li>
+</ul>
+<div class="notice-box"><strong>ਭਰੋਸਾ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਹਮੇਸ਼ਾ ਅਧਿਕਾਰਤ ਸਰੋਤਾਂ ਤੋਂ ਕਾਨੂੰਨ ਦੇ ਹਵਾਲਿਆਂ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ</strong> — ਉਦਾਹਰਨ ਵਜੋਂ, ਕੈਲੀਫੋਰਨੀਆ ਕਾਨੂੰਨ ਲਈ <a href="https://leginfo.legislature.ca.gov" target="_blank" rel="noopener">leginfo.legislature.ca.gov</a> ਜਾਂ ਸੰਘੀ ਕਾਨੂੰਨ ਲਈ <a href="https://law.cornell.edu" target="_blank" rel="noopener">law.cornell.edu</a>।</div>
+<h2>5. ਕੋਈ ਵਾਰੰਟੀ ਨਹੀਂ</h2>
+<p>VeriLex ਸ਼ੁੱਧਤਾ, ਅਨੁਕੂਲਤਾ, ਜਾਂ ਨਿਰੰਤਰ ਉਪਲਬਧਤਾ ਦੀ ਕਿਸੇ ਵੀ ਵਾਰੰਟੀ ਤੋਂ ਬਿਨਾਂ <strong>"ਜਿਵੇਂ ਹੈ"</strong> ਪ੍ਰਦਾਨ ਕੀਤਾ ਜਾਂਦਾ ਹੈ।</p>
+<h2>6. ਦੇਣਦਾਰੀ ਦੀ ਸੀਮਾ</h2>
+<p>Tera Chen ਅਤੇ VeriLex ਵਿਸ਼ਲੇਸ਼ਣ ਦੀ ਵਰਤੋਂ, AI ਸਮੱਗਰੀ ਦੀ ਗਲਤੀ, ਜਾਂ ਸੇਵਾ ਵਿੱਚ ਰੁਕਾਵਟ ਤੋਂ ਹੋਣ ਵਾਲੇ ਕਿਸੇ ਵੀ ਨੁਕਸਾਨ ਲਈ ਜ਼ਿੰਮੇਵਾਰ ਨਹੀਂ ਹੋਣਗੇ।</p>
+<h2>7. ਸਵੀਕਾਰਯੋਗ ਵਰਤੋਂ</h2>
+<p>ਤੁਸੀਂ ਸਹਿਮਤ ਹੋ ਕਿ VeriLex ਦੀ ਵਰਤੋਂ ਇਨ੍ਹਾਂ ਕੰਮਾਂ ਲਈ ਨਹੀਂ ਕਰੋਗੇ:</p>
+<ul>
+  <li>ਕਿਸੇ ਵੀ ਲਾਗੂ ਕਾਨੂੰਨ ਦੀ ਉਲੰਘਣਾ</li>
+  <li>ਭੁਲੇਖੇ ਵਾਲੇ ਵਿਸ਼ਲੇਸ਼ਣ ਲਈ ਮਨਘੜਤ ਜਾਣਕਾਰੀ ਸਬਮਿਟ ਕਰਨਾ</li>
+  <li>ਬਿਨਾਂ ਇਜਾਜ਼ਤ ਸੇਵਾ ਦੀ ਸੁਰੱਖਿਆ ਦੀ ਜਾਂਚ</li>
+  <li>ਸੇਵਾ 'ਤੇ ਬੇਲੋੜਾ ਭਾਰ ਪਾਉਣ ਵਾਲੀਆਂ ਆਟੋਮੈਟਿਕ ਬੇਨਤੀਆਂ</li>
+</ul>
+<h2>8. ਕੋਈ ਸਮਰਥਨ ਨਹੀਂ</h2>
+<p>ਜਦੋਂ ਤੱਕ ਲਿਖਤੀ ਰੂਪ ਵਿੱਚ ਸਪੱਸ਼ਟ ਨਾ ਹੋਵੇ, VeriLex ਨੂੰ ਕਿਸੇ ਬਾਰ ਐਸੋਸੀਏਸ਼ਨ ਜਾਂ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਸੰਸਥਾ ਦੁਆਰਾ ਸਮੀਖਿਆ ਜਾਂ ਪ੍ਰਮਾਣਿਤ ਨਹੀਂ ਕੀਤਾ ਗਿਆ ਹੈ।</p>
+<h2>9. ਸੇਵਾ ਦੀ ਉਪਲਬਧਤਾ</h2>
+<p>VeriLex ਇੱਕ ਵਿਅਕਤੀ ਦੁਆਰਾ ਚਲਾਈ ਜਾਣ ਵਾਲੀ ਮੁਫ਼ਤ ਸੇਵਾ ਹੈ। ਅਸੀਂ ਨਿਰੰਤਰ ਉਪਲਬਧਤਾ ਦੀ ਗਾਰੰਟੀ ਨਹੀਂ ਦਿੰਦੇ। ਸੇਵਾ ਕਿਸੇ ਵੀ ਸਮੇਂ ਬਦਲੀ ਜਾਂ ਬੰਦ ਕੀਤੀ ਜਾ ਸਕਦੀ ਹੈ।</p>
+<h2>10. ਤੀਜੀ-ਧਿਰ ਲਿੰਕ</h2>
+<p>ਤੀਜੀ-ਧਿਰ ਵੈੱਬਸਾਈਟਾਂ ਦੇ ਲਿੰਕ ਸਿਰਫ਼ ਸੁਵਿਧਾ ਲਈ ਦਿੱਤੇ ਗਏ ਹਨ। VeriLex ਉਨ੍ਹਾਂ ਦੀ ਸਮੱਗਰੀ ਲਈ ਕੋਈ ਜ਼ਿੰਮੇਵਾਰੀ ਨਹੀਂ ਲੈਂਦਾ।</p>
+<h2>11. ਸ਼ਾਸਕੀ ਕਾਨੂੰਨ</h2>
+<p>ਇਹ ਸ਼ਰਤਾਂ ਕੈਲੀਫੋਰਨੀਆ ਰਾਜ, ਅਮਰੀਕਾ ਦੇ ਕਾਨੂੰਨਾਂ ਦੁਆਰਾ ਸ਼ਾਸਿਤ ਹਨ। ਵਿਵਾਦ ਅਲਾਮੇਡਾ ਕਾਊਂਟੀ, ਕੈਲੀਫੋਰਨੀਆ ਦੀਆਂ ਅਦਾਲਤਾਂ ਦੇ ਵਿਸ਼ੇਸ਼ ਅਧਿਕਾਰ ਖੇਤਰ ਦੇ ਅਧੀਨ ਹੋਣਗੇ।</p>
+<h2>12. ਸੰਪਰਕ</h2>
+<p>ਇਨ੍ਹਾਂ ਸ਼ਰਤਾਂ ਬਾਰੇ ਸਵਾਲ: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · ਸਿਰਫ਼ ਕਾਨੂੰਨੀ ਜਾਣਕਾਰੀ, ਕਾਨੂੰਨੀ ਸਲਾਹ ਨਹੀਂ।'
+  },
+
+  am: {
+    back: '← ወደ VeriLex ተመለስ',
+    pageTitle: 'የአገልግሎት ውሎች',
+    pageSubtitle: 'VeriLex ምን እንደሆነ፣ ምን እንዳልሆነ፣ እና ሲጠቀሙ ምን ላይ እንደሚስማሙ።',
+    prose: `<p class="updated">የመጨረሻ ማዘመኛ: ሰኔ 2, 2026</p>
+<div class="warn-box"><strong>አስፈላጊ:</strong> VeriLex ሕጋዊ <em>መረጃ</em> ያቀርባል — ሕጋዊ <em>ምክር</em> አይደለም። VeriLex መጠቀም የጠበቃ-ደንበኛ ግንኙነት አይፈጥርም። ለእርስዎ ሁኔታ ምክር ለማግኘት ሁሌም ፈቃድ ያለው ጠበቃ ያማክሩ።</div>
+<h2>1. ውሎቹን መቀበል</h2>
+<p>verilex.org ላይ VeriLex ን ሲደርሱ ወይም ሲጠቀሙ፣ ለዚህ የአገልግሎት ውሎች ይስማማሉ። ለውጦቹ ከተለቀቁ በኋላ መጠቀሙ ቀጥሎ ተቀባይነት ነው።</p>
+<h2>2. ሕጋዊ መረጃ — ሕጋዊ ምክር አይደለም</h2>
+<p><strong>VeriLex ሕጋዊ መረጃ ያቀርባል — ሕጋዊ ምክር አይደለም።</strong> ሁለቱ ትርጉም ያለው ልዩነት አላቸው:</p>
+<ul>
+  <li><strong>ሕጋዊ መረጃ</strong> ሕግ ወይም ሕጋዊ ሰነድ በአጠቃላይ ምን እንደሚል ያብራራል። VeriLex ይህን ያደርጋል።</li>
+  <li><strong>ሕጋዊ ምክር</strong> ሕጉን ለእርስዎ ሁኔታ ይሠራዋል። ፈቃድ ያለው ጠበቃ ብቻ ይህን ሊያደርግ ይችላል።</li>
+</ul>
+<p>ለእርስዎ ሁኔታ ምክር ለማግኘት ፈቃድ ያለው ጠበቃ ያማክሩ። ነፃ ሕጋዊ ድጋፍ <a href="https://lsc.gov/find-legal-aid" target="_blank" rel="noopener">lsc.gov/find-legal-aid</a> ወይም <a href="https://lawhelp.org" target="_blank" rel="noopener">lawhelp.org</a> ላይ ይገኛል።</p>
+<h2>3. ምንም የጠበቃ-ደንበኛ ግንኙነት የለም</h2>
+<p>VeriLex መጠቀም የጠበቃ-ደንበኛ ግንኙነት አይፈጥርም። VeriLex የሕግ ድርጅት አይደለም እና ሕጋዊ ሥራ ለመሥራት ፍቃድ የለውም።</p>
+<h2>4. AI ትክክለኛነት — ከማድረግ በፊት ያረጋግጡ</h2>
+<p>VeriLex ሰነዶችን ለመተንተን AI ቴክኖሎጂ (Anthropic Claude) ይጠቀማል። AI ስህተቶችን ሊሠራ ይችላል። በተለይ:</p>
+<ul>
+  <li>የሕግ ጥቅሶች ትክክለኛ ያልሆኑ ወይም ጊዜ ያለፈባቸው ሊሆኑ ይችላሉ</li>
+  <li>የፍርድ ቤት ውሳኔ ጥቅሶች ስህተቶች ሊኖሩባቸው ወይም ላይኖሩ ይችላሉ</li>
+  <li>ሕጋዊ ማጠቃለያዎች አስፈላጊ ዝርዝሮችን ሊያመልጧቸው ይችላሉ</li>
+  <li>ትንታኔው የቅርብ ጊዜ የሕግ ለውጦችን ላይጨምር ይችላል</li>
+</ul>
+<div class="notice-box"><strong>ሁሌም ከመታመን በፊት የሕግ ጥቅሶችን ከይፋዊ ምንጮች ያረጋግጡ</strong> — ለምሳሌ <a href="https://leginfo.legislature.ca.gov" target="_blank" rel="noopener">leginfo.legislature.ca.gov</a> ለካሊፎርኒያ ሕግ ወይም <a href="https://law.cornell.edu" target="_blank" rel="noopener">law.cornell.edu</a> ለፌዴራል ሕግ።</div>
+<h2>5. ምንም ዋስትና የለም</h2>
+<p>VeriLex ምንም ዓይነት ዋስትና ሳይኖር <strong>"እንዳለ"</strong> እና <strong>"ሲኖር"</strong> ይቀርባል — ስለ ትክክለኛነት፣ አስፈላጊነት ወይም ቀጣይ ተደራሽነት ምንም ዋስትና የለም።</p>
+<h2>6. የኃላፊነት ገደብ</h2>
+<p>Tera Chen እና VeriLex ከትንታኔ አጠቃቀም፣ ከ AI ይዘት ስህተቶች ወይም ከአገልግሎት ማቋረጥ ላይ ለሚነሱ ጉዳቶች ኃላፊ አይሆኑም። ካልረኩ ብቸኛ መፍትሄዎ አገልግሎቱን ማቆም ነው።</p>
+<h2>7. ተቀባይነት ያለው አጠቃቀም</h2>
+<p>VeriLex ን ለሚከተሉት ዓላማዎች ላለመጠቀም ይስማማሉ:</p>
+<ul>
+  <li>ማናቸውም ሕጎችን ወይም ደንቦችን መጣስ</li>
+  <li>አሳሳቢ ትንታኔ ለማምጣት የሀሰት መረጃ ማስገባት</li>
+  <li>ያለፍቃድ አገልግሎቱን ደህንነት ለመፈተን መሞከር</li>
+  <li>አገልግሎቱ ላይ ተገቢ ያልሆነ ጫና የሚፈጥሩ አውቶማቲክ ጥያቄዎች</li>
+</ul>
+<h2>8. ምንም ማጽደቅ የለም</h2>
+<p>ያለ ሕጋዊ ፍቃድ ካልሆነ በቀር፣ VeriLex በምንም ሕግ ማኅበር ወይም ሕጋዊ ድጋፍ ድርጅት ተገምግሞ ወይም ጸድቆ አያውቅም።</p>
+<h2>9. የአገልግሎት ተደራሽነት</h2>
+<p>VeriLex በአንድ ሰው የሚተዳደር ነፃ አገልግሎት ነው። ቀጣይ ተደራሽነትን አናረጋግጥም። አገልግሎቱ ያለ ቅድሚያ ማስታወቂያ ሊቀየር ወይም ሊቆም ይችላል።</p>
+<h2>10. የሦስተኛ ወገን አገናኞች</h2>
+<p>ለሦስተኛ ወገን ድረ-ገጾች አገናኞች ለምቾት ብቻ ናቸው። VeriLex ለይዘታቸው ኃላፊነት አይወስድም።</p>
+<h2>11. ተፈጻሚ ሕግ</h2>
+<p>እነዚህ ውሎች የካሊፎርኒያ ግዛት፣ አሜሪካ ሕጎች ያስተዳድሯቸዋል። ማናቸውም ክርክሮች በካሊፎርኒያ አላሜዳ ካውንቲ ፍርድ ቤቶች ስልጣን ሥር ይሆናሉ።</p>
+<h2>12. አግኙን</h2>
+<p>ስለ እነዚህ ውሎች ጥያቄዎች: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · የህግ መረጃ ብቻ፣ የህግ ምክር አይደለም።'
   }
 
 };
@@ -744,7 +1174,7 @@ function setLang(code) {
   document.getElementById('proseCard').innerHTML = t.prose;
   document.getElementById('ftCopy').innerHTML = t.ftCopy;
   document.documentElement.lang = code;
-  document.documentElement.dir = 'ltr';
+  document.documentElement.dir = code === 'ar' ? 'rtl' : 'ltr';
   localStorage.setItem('verilex_lang', code);
   document.querySelectorAll('.lang-opt').forEach(function(b) {
     b.classList.toggle('active', b.dataset.lang === code);
