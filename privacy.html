@@ -41,6 +41,31 @@
     }
     .back-link:hover { color: #fff; }
 
+    /* ── LANGUAGE SWITCHER ── */
+    .lang-wrap { position: relative; }
+    .lang-btn {
+      display: flex; align-items: center; gap: 5px;
+      background: transparent; border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px; padding: 3px 10px; cursor: pointer;
+      color: rgba(255,255,255,.65); font-size: 12px; font-weight: 500;
+      transition: border-color .2s, color .2s;
+    }
+    .lang-btn:hover { border-color: rgba(255,255,255,.5); color: #fff; }
+    .lang-menu {
+      display: none; position: absolute; top: calc(100% + 8px); right: 0;
+      background: #1e293b; border: 1px solid rgba(255,255,255,.12);
+      border-radius: 10px; overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,.35); min-width: 160px; z-index: 200;
+    }
+    .lang-menu.open { display: block; }
+    .lang-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 14px; background: none; border: none; cursor: pointer;
+      color: rgba(255,255,255,.75); font-size: 13px; transition: background .15s;
+    }
+    .lang-opt:hover { background: rgba(255,255,255,.07); color: #fff; }
+    .lang-opt.active { color: #2563eb; }
+
     /* ── PAGE HEADER ── */
     .page-header {
       background: linear-gradient(160deg, #0a1628 0%, #060f1e 100%);
@@ -116,37 +141,64 @@
 
 <div class="topbar">
   <a href="/" class="nav-logo">
-    <div class="logo-icon">⚖️</div>
+    <div class="logo-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="#0a0e1a" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="7.2" y1="18.8" x2="12.8" y2="18.8" stroke-width="1.7"/>
+        <line x1="8.5" y1="17.4" x2="11.5" y2="17.4" stroke-width="1.3"/>
+        <line x1="10" y1="4.6" x2="10" y2="17.4" stroke-width="1.25"/>
+        <line x1="8.8" y1="16.3" x2="11.2" y2="16.3" stroke-width="1.5"/>
+        <path d="M10 1.2 C11.1 2.1 11.3 3.3 10.6 3.9 Q10 4.5 9.4 3.9 C8.7 3.3 8.9 2.1 10 1.2 Z" fill="#0a0e1a" stroke="none"/>
+        <path d="M10 4.4 C8.2 4.5 6 5.3 4.2 7.2" stroke-width="1.25"/>
+        <path d="M10 4.4 C11.8 4.5 14 5.3 15.8 7.2" stroke-width="1.25"/>
+        <circle cx="4.2" cy="7.2" r="0.6" stroke-width="1.1"/>
+        <circle cx="15.8" cy="7.2" r="0.6" stroke-width="1.1"/>
+        <line x1="4.2" y1="7.8" x2="2" y2="12.5" stroke-width="1.15"/>
+        <line x1="4.2" y1="7.8" x2="6.4" y2="12.5" stroke-width="1.15"/>
+        <line x1="2" y1="12.5" x2="6.4" y2="12.5" stroke-width="1.3"/>
+        <path d="M2 12.5 Q4.2 14.3 6.4 12.5" stroke-width="1.3"/>
+        <line x1="15.8" y1="7.8" x2="13.6" y2="12.5" stroke-width="1.15"/>
+        <line x1="15.8" y1="7.8" x2="18" y2="12.5" stroke-width="1.15"/>
+        <line x1="13.6" y1="12.5" x2="18" y2="12.5" stroke-width="1.3"/>
+        <path d="M13.6 12.5 Q15.8 14.3 18 12.5" stroke-width="1.3"/>
+      </svg>
+    </div>
     <span class="logo-name">VeriLex</span>
   </a>
-  <a href="/" class="back-link">← Back to VeriLex</a>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="lang-wrap">
+      <button class="lang-btn" onclick="toggleLang()" aria-label="Select language">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span id="langLabel">EN</span>
+      </button>
+      <div class="lang-menu" id="langMenu">
+        <button class="lang-opt" data-lang="en" onclick="setLang('en')">English</button>
+        <button class="lang-opt" data-lang="es" onclick="setLang('es')">Español</button>
+        <button class="lang-opt" data-lang="zh" onclick="setLang('zh')">中文（简体）</button>
+        <button class="lang-opt" data-lang="ko" onclick="setLang('ko')">한국어</button>
+      </div>
+    </div>
+    <a href="/" id="backLink" class="back-link">← Back to VeriLex</a>
+  </div>
 </div>
 
 <div class="page-header">
   <div class="label">Legal</div>
-  <h1>Privacy Policy</h1>
-  <p>How VeriLex handles your data — and how it doesn't.</p>
+  <h1 id="pageTitle">Privacy Policy</h1>
+  <p id="pageSubtitle">How VeriLex handles your data — and how it doesn't.</p>
 </div>
 
 <div class="prose-wrap">
-  <div class="prose-card">
+  <div class="prose-card" id="proseCard">
     <p class="updated">Last updated: June 2, 2026</p>
-
     <div class="notice-box">
       <strong>Short version:</strong> VeriLex does not store your documents, does not require an account, and does not track you. Your document text is sent to Anthropic's Claude API for analysis and is not retained anywhere on VeriLex's servers.
     </div>
-
-    <!-- 1 -->
     <h2>1. Who Operates VeriLex</h2>
     <p>VeriLex (verilex.org) is a free legal document accessibility tool built and maintained by <strong>Tera Chen</strong>, a Legal Studies student at the University of California, Berkeley. VeriLex is not a law firm, legal services company, or registered legal entity.</p>
     <p>Contact: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>
-
-    <!-- 2 -->
     <h2>2. Information VeriLex Collects</h2>
-
     <h3>Document content you submit</h3>
     <p>Text you paste or files you upload are transmitted securely (HTTPS) to Anthropic's Claude API for analysis. <strong>VeriLex never stores, logs, or retains document content on its own servers.</strong> The analysis result is displayed in your browser and discarded when you close or navigate away from the page.</p>
-
     <h3>Anonymous usage analytics</h3>
     <p>VeriLex logs a small set of anonymized metadata for each analysis to monitor service health and improve the tool. Each log entry contains:</p>
     <ul>
@@ -159,28 +211,18 @@
       <li>Location, if you chose to share it (e.g., "Oakland, California")</li>
     </ul>
     <p>This log contains <strong>no document content, no IP addresses, no names, and no personal identifiers.</strong> It is held in server memory and is cleared automatically each time the server restarts (which happens with every new deployment).</p>
-
     <h3>Feedback you submit</h3>
     <p>If you submit feedback through the feedback form, the message, category, and any name or email address you optionally provide are stored in server memory. This data is also cleared on server restart. We do not share it with any third party.</p>
-
     <h3>Cookies and tracking</h3>
     <p>VeriLex uses <strong>no cookies, no tracking pixels, no analytics scripts</strong>, and no third-party tracking technology of any kind. Your preferred interface language is saved in your browser's <code>localStorage</code> — this data never leaves your device.</p>
-
-    <!-- 3 -->
     <h2>3. Third-Party Data Processors</h2>
-
     <h3>Anthropic (Claude AI)</h3>
     <p>Your document text is processed by Anthropic's Claude API. Anthropic is a US-based AI safety company. Per <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic's privacy policy</a> and their API usage terms, <strong>Anthropic does not use API inputs to train their AI models by default.</strong> For Anthropic's full data practices, see <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">anthropic.com/legal/privacy</a>.</p>
-
     <h3>Railway (Server Hosting)</h3>
     <p>VeriLex is hosted on <a href="https://railway.app" target="_blank" rel="noopener">Railway</a>, a cloud infrastructure provider. Servers are located in the United States. For Railway's privacy practices, see <a href="https://railway.app/legal/privacy" target="_blank" rel="noopener">railway.app/legal/privacy</a>.</p>
-
-    <!-- 4 -->
     <h2>4. Sensitive Documents</h2>
     <p>VeriLex is designed to help users understand documents that may be sensitive — including immigration notices, eviction filings, and financial correspondence. If your document contains highly sensitive personal information (Social Security numbers, immigration case numbers, full legal names combined with dates of birth), we recommend <strong>redacting that identifying information before uploading</strong>. The legal substance of the document is usually analyzable without it.</p>
     <p>While VeriLex does not store documents, any transmission to an external AI service carries inherent risk. Use your judgment about what you share.</p>
-
-    <!-- 5 -->
     <h2>5. Data Retention Summary</h2>
     <ul>
       <li><strong>Document content:</strong> Never stored. Processed in real time and discarded.</li>
@@ -188,16 +230,10 @@
       <li><strong>Feedback submissions:</strong> In memory only. Cleared on each server restart.</li>
       <li><strong>Interface language preference:</strong> Stored in your browser's localStorage. Never sent to the server.</li>
     </ul>
-
-    <!-- 6 -->
     <h2>6. Children's Privacy</h2>
     <p>VeriLex is not directed at children under 13 and does not knowingly collect information from children under 13. If you believe a child under 13 has submitted information, please contact us at <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a>.</p>
-
-    <!-- 7 -->
     <h2>7. Changes to This Policy</h2>
     <p>This policy may be updated over time. The "Last updated" date at the top reflects when it was last revised. Continued use of VeriLex after changes are posted constitutes acceptance of the updated policy.</p>
-
-    <!-- 8 -->
     <h2>8. Contact</h2>
     <p>For privacy questions, concerns, or requests: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>
   </div>
@@ -208,10 +244,255 @@
     <a href="/">Home</a>
     <a href="/privacy">Privacy Policy</a>
     <a href="/terms">Terms of Service</a>
-    <a href="mailto:terachen@berkeley.edu">Contact</a>
+    <a href="/#feedback-section">Contact</a>
   </div>
-  <div>© 2026 Tera Chen · VeriLex · Legal information only, not legal advice.</div>
+  <div id="ftCopy">© 2026 Tera Chen · VeriLex · Legal information only, not legal advice.</div>
 </footer>
 
+<script>
+const LANG_NAMES = { en:'EN', es:'ES', zh:'中文', ko:'한국어' };
+
+const TRANSLATIONS = {
+
+  en: {
+    back: '← Back to VeriLex',
+    pageTitle: 'Privacy Policy',
+    pageSubtitle: 'How VeriLex handles your data — and how it doesn’t.',
+    prose: `<p class="updated">Last updated: June 2, 2026</p>
+<div class="notice-box"><strong>Short version:</strong> VeriLex does not store your documents, does not require an account, and does not track you. Your document text is sent to Anthropic’s Claude API for analysis and is not retained anywhere on VeriLex’s servers.</div>
+<h2>1. Who Operates VeriLex</h2>
+<p>VeriLex (verilex.org) is a free legal document accessibility tool built and maintained by <strong>Tera Chen</strong>, a Legal Studies student at the University of California, Berkeley. VeriLex is not a law firm, legal services company, or registered legal entity.</p>
+<p>Contact: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>
+<h2>2. Information VeriLex Collects</h2>
+<h3>Document content you submit</h3>
+<p>Text you paste or files you upload are transmitted securely (HTTPS) to Anthropic’s Claude API for analysis. <strong>VeriLex never stores, logs, or retains document content on its own servers.</strong> The analysis result is displayed in your browser and discarded when you close or navigate away from the page.</p>
+<h3>Anonymous usage analytics</h3>
+<p>VeriLex logs a small set of anonymized metadata for each analysis to monitor service health and improve the tool. Each log entry contains:</p>
+<ul>
+  <li>Timestamp (date and UTC time)</li>
+  <li>Language selected</li>
+  <li>Knowledge level selected (beginner / intermediate / expert)</li>
+  <li>Approximate document length (character count only)</li>
+  <li>Document type identified by the AI (e.g., “Lease Agreement”)</li>
+  <li>Whether the request succeeded or failed</li>
+  <li>Location, if you chose to share it (e.g., “Oakland, California”)</li>
+</ul>
+<p>This log contains <strong>no document content, no IP addresses, no names, and no personal identifiers.</strong> It is held in server memory and is cleared automatically each time the server restarts (which happens with every new deployment).</p>
+<h3>Feedback you submit</h3>
+<p>If you submit feedback through the feedback form, the message, category, and any name or email address you optionally provide are stored in server memory. This data is also cleared on server restart. We do not share it with any third party.</p>
+<h3>Cookies and tracking</h3>
+<p>VeriLex uses <strong>no cookies, no tracking pixels, no analytics scripts</strong>, and no third-party tracking technology of any kind. Your preferred interface language is saved in your browser’s <code>localStorage</code> — this data never leaves your device.</p>
+<h2>3. Third-Party Data Processors</h2>
+<h3>Anthropic (Claude AI)</h3>
+<p>Your document text is processed by Anthropic’s Claude API. Anthropic is a US-based AI safety company. Per <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic’s privacy policy</a> and their API usage terms, <strong>Anthropic does not use API inputs to train their AI models by default.</strong> For Anthropic’s full data practices, see <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">anthropic.com/legal/privacy</a>.</p>
+<h3>Railway (Server Hosting)</h3>
+<p>VeriLex is hosted on <a href="https://railway.app" target="_blank" rel="noopener">Railway</a>, a cloud infrastructure provider. Servers are located in the United States. For Railway’s privacy practices, see <a href="https://railway.app/legal/privacy" target="_blank" rel="noopener">railway.app/legal/privacy</a>.</p>
+<h2>4. Sensitive Documents</h2>
+<p>VeriLex is designed to help users understand documents that may be sensitive — including immigration notices, eviction filings, and financial correspondence. If your document contains highly sensitive personal information (Social Security numbers, immigration case numbers, full legal names combined with dates of birth), we recommend <strong>redacting that identifying information before uploading</strong>. The legal substance of the document is usually analyzable without it.</p>
+<p>While VeriLex does not store documents, any transmission to an external AI service carries inherent risk. Use your judgment about what you share.</p>
+<h2>5. Data Retention Summary</h2>
+<ul>
+  <li><strong>Document content:</strong> Never stored. Processed in real time and discarded.</li>
+  <li><strong>Usage analytics log:</strong> In memory only. Cleared on each server restart.</li>
+  <li><strong>Feedback submissions:</strong> In memory only. Cleared on each server restart.</li>
+  <li><strong>Interface language preference:</strong> Stored in your browser’s localStorage. Never sent to the server.</li>
+</ul>
+<h2>6. Children’s Privacy</h2>
+<p>VeriLex is not directed at children under 13 and does not knowingly collect information from children under 13. If you believe a child under 13 has submitted information, please contact us at <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a>.</p>
+<h2>7. Changes to This Policy</h2>
+<p>This policy may be updated over time. The “Last updated” date at the top reflects when it was last revised. Continued use of VeriLex after changes are posted constitutes acceptance of the updated policy.</p>
+<h2>8. Contact</h2>
+<p>For privacy questions, concerns, or requests: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · Legal information only, not legal advice.'
+  },
+
+  es: {
+    back: '← Volver a VeriLex',
+    pageTitle: 'Política de Privacidad',
+    pageSubtitle: 'Cómo VeriLex maneja sus datos — y cómo no.',
+    prose: `<p class="updated">Última actualización: 2 de junio de 2026</p>
+<div class="notice-box"><strong>Versión corta:</strong> VeriLex no almacena sus documentos, no requiere una cuenta y no lo rastrea. El texto de su documento se envía a la API Claude de Anthropic para su análisis y no se retiene en ningún servidor de VeriLex.</div>
+<h2>1. Quién opera VeriLex</h2>
+<p>VeriLex (verilex.org) es una herramienta gratuita de accesibilidad a documentos legales, desarrollada y mantenida por <strong>Tera Chen</strong>, estudiante de Estudios Legales en la Universidad de California, Berkeley. VeriLex no es un bufete de abogados, empresa de servicios jurídicos ni entidad legal registrada.</p>
+<p>Contacto: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>
+<h2>2. Información que recopila VeriLex</h2>
+<h3>Contenido del documento que usted envía</h3>
+<p>El texto que pegue o los archivos que cargue se transmiten de forma segura (HTTPS) a la API Claude de Anthropic para su análisis. <strong>VeriLex nunca almacena, registra ni retiene el contenido de los documentos en sus propios servidores.</strong> El resultado del análisis se muestra en su navegador y se descarta al cerrar la página o navegar fuera de ella.</p>
+<h3>Análisis de uso anónimo</h3>
+<p>VeriLex registra un pequeño conjunto de metadatos anonimizados de cada análisis para supervisar la salud del servicio y mejorar la herramienta. Cada entrada de registro contiene:</p>
+<ul>
+  <li>Marca de tiempo (fecha y hora UTC)</li>
+  <li>Idioma seleccionado</li>
+  <li>Nivel de conocimiento seleccionado (principiante / intermedio / experto)</li>
+  <li>Longitud aproximada del documento (solo recuento de caracteres)</li>
+  <li>Tipo de documento identificado por la IA (p. ej., “Contrato de arrendamiento”)</li>
+  <li>Si la solicitud tuvo éxito o falló</li>
+  <li>Ubicación, si eligió compartirla (p. ej., “Oakland, California”)</li>
+</ul>
+<p>Este registro <strong>no contiene contenido de documentos, direcciones IP, nombres ni identificadores personales.</strong> Se guarda en la memoria del servidor y se borra automáticamente cada vez que el servidor se reinicia (lo que ocurre con cada nueva implementación).</p>
+<h3>Comentarios que envía</h3>
+<p>Si envía comentarios a través del formulario de retroalimentación, el mensaje, la categoría y cualquier nombre o correo electrónico que proporcione opcionalmente se almacenan en la memoria del servidor. Estos datos también se borran al reiniciar el servidor y no se comparten con terceros.</p>
+<h3>Cookies y rastreo</h3>
+<p>VeriLex no utiliza <strong>cookies, píxeles de seguimiento ni scripts de análisis</strong>, ni ningún tipo de tecnología de seguimiento de terceros. Su idioma de interfaz preferido se guarda en el <code>localStorage</code> de su navegador; estos datos nunca salen de su dispositivo.</p>
+<h2>3. Procesadores de datos de terceros</h2>
+<h3>Anthropic (Claude AI)</h3>
+<p>El texto de su documento es procesado por la API Claude de Anthropic. Anthropic es una empresa de seguridad de IA con sede en EE. UU. Según la <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">política de privacidad de Anthropic</a> y sus términos de uso de la API, <strong>Anthropic no utiliza las entradas de la API para entrenar sus modelos de IA de manera predeterminada.</strong> Para conocer las prácticas de datos completas de Anthropic, consulte <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">anthropic.com/legal/privacy</a>.</p>
+<h3>Railway (Alojamiento de servidores)</h3>
+<p>VeriLex está alojado en <a href="https://railway.app" target="_blank" rel="noopener">Railway</a>, un proveedor de infraestructura en la nube. Los servidores están ubicados en los Estados Unidos. Para conocer las prácticas de privacidad de Railway, consulte <a href="https://railway.app/legal/privacy" target="_blank" rel="noopener">railway.app/legal/privacy</a>.</p>
+<h2>4. Documentos sensibles</h2>
+<p>VeriLex está diseñado para ayudar a los usuarios a comprender documentos que pueden ser sensibles, incluidos avisos de inmigración, notificaciones de desalojo y correspondencia financiera. Si su documento contiene información personal altamente sensible (números de Seguro Social, números de caso de inmigración, nombres legales completos combinados con fechas de nacimiento), recomendamos <strong>redactar esa información de identificación antes de cargar el documento</strong>. La sustancia legal del documento generalmente puede analizarse sin ella.</p>
+<p>Aunque VeriLex no almacena documentos, cualquier transmisión a un servicio de IA externo conlleva un riesgo inherente. Use su criterio sobre lo que comparte.</p>
+<h2>5. Resumen de retención de datos</h2>
+<ul>
+  <li><strong>Contenido del documento:</strong> Nunca almacenado. Procesado en tiempo real y descartado.</li>
+  <li><strong>Registro de análisis de uso:</strong> Solo en memoria. Se borra en cada reinicio del servidor.</li>
+  <li><strong>Envíos de comentarios:</strong> Solo en memoria. Se borra en cada reinicio del servidor.</li>
+  <li><strong>Preferencia de idioma de la interfaz:</strong> Almacenada en el localStorage de su navegador. Nunca se envía al servidor.</li>
+</ul>
+<h2>6. Privacidad de los niños</h2>
+<p>VeriLex no está dirigido a niños menores de 13 años y no recopila su información a sabiendas. Si cree que un niño menor de 13 años ha enviado información, contáctenos en <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a>.</p>
+<h2>7. Cambios en esta política</h2>
+<p>Esta política puede actualizarse con el tiempo. La fecha de “Última actualización” en la parte superior refleja cuándo fue revisada por última vez. El uso continuado de VeriLex después de que se publiquen los cambios constituye la aceptación de la política actualizada.</p>
+<h2>8. Contacto</h2>
+<p>Para preguntas, inquietudes o solicitudes sobre privacidad: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · Solo información legal, no asesoramiento jurídico.'
+  },
+
+  zh: {
+    back: '← 返回 VeriLex',
+    pageTitle: '隐私政策',
+    pageSubtitle: 'VeriLex 如何处理您的数据——以及如何不处理。',
+    prose: `<p class="updated">最后更新：2026年6月2日</p>
+<div class="notice-box"><strong>简短版本：</strong>VeriLex 不存储您的文档，无需账户，也不跟踪您。您的文档文本会发送至 Anthropic 的 Claude API 进行分析，不会保留在 VeriLex 的任何服务器上。</div>
+<h2>1. VeriLex 的运营者</h2>
+<p>VeriLex（verilex.org）是一款免费的法律文档辅助工具，由加利福尼亚大学伯克利分校法律研究专业学生 <strong>Tera Chen</strong> 开发和维护。VeriLex 不是律师事务所、法律服务公司或注册法律实体。</p>
+<p>联系方式：<a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>
+<h2>2. VeriLex 收集的信息</h2>
+<h3>您提交的文档内容</h3>
+<p>您粘贴的文本或上传的文件将通过安全连接（HTTPS）发送至 Anthropic 的 Claude API 进行分析。<strong>VeriLex 从不在自己的服务器上存储、记录或保留文档内容。</strong>分析结果将显示在您的浏览器中，当您关闭或离开页面时即被丢弃。</p>
+<h3>匿名使用数据</h3>
+<p>VeriLex 对每次分析记录少量匿名元数据，用于监控服务健康状况和改进工具。每条记录包含：</p>
+<ul>
+  <li>时间戳（日期和 UTC 时间）</li>
+  <li>所选语言</li>
+  <li>所选知识水平（初级 / 中级 / 高级）</li>
+  <li>文档大致长度（仅字符数）</li>
+  <li>AI 识别的文档类型（如“租赁协议”）</li>
+  <li>请求是否成功或失败</li>
+  <li>您选择分享的位置（如“加利福尼亚州奥克兰”）</li>
+</ul>
+<p>该记录<strong>不包含任何文档内容、IP 地址、姓名或个人标识符。</strong>数据保存在服务器内存中，每次服务器重启时（即每次新部署时）自动清除。</p>
+<h3>您提交的反馈</h3>
+<p>如果您通过反馈表单提交反馈，消息、类别以及您选择提供的姓名或电子邮件地址将存储在服务器内存中。这些数据也会在服务器重启时清除，不会与任何第三方共享。</p>
+<h3>Cookie 与跟踪</h3>
+<p>VeriLex <strong>不使用 Cookie、跟踪像素或分析脚本</strong>，也不使用任何第三方跟踪技术。您偏好的界面语言保存在浏览器的 <code>localStorage</code> 中——这些数据不会离开您的设备。</p>
+<h2>3. 第三方数据处理商</h2>
+<h3>Anthropic（Claude AI）</h3>
+<p>您的文档文本由 Anthropic 的 Claude API 处理。Anthropic 是一家总部位于美国的 AI 安全公司。根据 <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic 的隐私政策</a>及其 API 使用条款，<strong>Anthropic 默认不使用 API 输入来训练其 AI 模型。</strong>有关 Anthropic 的完整数据实践，请参阅 <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">anthropic.com/legal/privacy</a>。</p>
+<h3>Railway（服务器托管）</h3>
+<p>VeriLex 托管在云基础设施提供商 <a href="https://railway.app" target="_blank" rel="noopener">Railway</a> 上，服务器位于美国。有关 Railway 的隐私实践，请参阅 <a href="https://railway.app/legal/privacy" target="_blank" rel="noopener">railway.app/legal/privacy</a>。</p>
+<h2>4. 敏感文档</h2>
+<p>VeriLex 旨在帮助用户理解可能涉及敏感内容的文档，包括移民通知、驱逐申请和财务通信。如果您的文档包含高度敏感的个人信息（社会安全号码、移民案件号码、与出生日期组合的完整法定姓名），建议在上传前<strong>将这些识别信息魔离处理</strong>。通常无需这些信息即可分析文档的法律内容。</p>
+<p>虽然 VeriLex 不存储文档，但向外部 AI 服务的任何传输都存在固有风险。请根据您的判断决定分享哪些内容。</p>
+<h2>5. 数据保留摘要</h2>
+<ul>
+  <li><strong>文档内容：</strong>从不存储。实时处理后即丢弃。</li>
+  <li><strong>使用数据日志：</strong>仅保存在内存中，每次服务器重启时清除。</li>
+  <li><strong>反馈提交：</strong>仅保存在内存中，每次服务器重启时清除。</li>
+  <li><strong>界面语言偏好：</strong>存储在您的浏览器 localStorage 中，不会发送至服务器。</li>
+</ul>
+<h2>6. 儿童隐私</h2>
+<p>VeriLex 不面向 13 岁以下儿童，也不会故意收集 13 岁以下儿童的信息。如果您认为 13 岁以下儿童提交了信息，请联系我们：<a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a>。</p>
+<h2>7. 本政策的变更</h2>
+<p>本政策可能会不时更新。顶部的“最后更新”日期反映了最近一次修订的时间。在更改发布后继续使用 VeriLex 即视为接受更新后的政策。</p>
+<h2>8. 联系我们</h2>
+<p>如有隐私问题、疑虑或请求：<a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · 仅供法律信息参考，不构成法律建议。'
+  },
+
+  ko: {
+    back: '← VeriLex로 돌아가기',
+    pageTitle: '개인정보 처리방침',
+    pageSubtitle: 'VeriLex가 궀하의 데이터를 처리하는 방식과 처리하지 않는 방식.',
+    prose: `<p class="updated">최종 업데이트: 2026년 6월 2일</p>
+<div class="notice-box"><strong>요약:</strong> VeriLex는 궀하의 문서를 저장하지 않으며, 계정이 필요하지 않고, 궀하를 추적하지 않습니다. 문서 텍스트는 분석을 위해 Anthropic의 Claude API로 전송되며 VeriLex 서버 어디에도 보관되지 않습니다.</div>
+<h2>1. VeriLex 운영자</h2>
+<p>VeriLex(verilex.org)는 캠리포니아대학교 버클리 법학 전공 학생 <strong>Tera Chen</strong>이 개발하고 유지하는 무료 법률 문서 접근 도구입니다. VeriLex는 법률 사무소, 법률 서비스 회사 또는 등록된 법적 단체가 아닙니다.</p>
+<p>연락정보: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>
+<h2>2. VeriLex가 수집하는 정보</h2>
+<h3>궀하가 제출한 문서 내용</h3>
+<p>붙여넣기한 텍스트나 업로드한 파일은 분석을 위해 HTTPS를 통해 안전하게 Anthropic의 Claude API로 전송됩니다. <strong>VeriLex는 자체 서버에 문서 내용을 저장, 기록 또는 보유하지 않습니다.</strong> 분석 결과는 브라우저에 표시되며 페이지를 닫거나 다른 곳으로 이동하면 삭제됩니다.</p>
+<h3>익명 사용 분석</h3>
+<p>VeriLex는 서비스 상태를 모니터링하고 도구를 개선하기 위해 각 분석에 대한 소량의 익명화된 메타데이터를 기록합니다. 각 로그 항목에는 다음이 포함됩니다:</p>
+<ul>
+  <li>타임스킬프 (날짜 및 UTC 시간)</li>
+  <li>선택한 언어</li>
+  <li>선택한 지식 수준 (입문 / 중급 / 전문가)</li>
+  <li>문서 대략적 길이 (문자 수만)</li>
+  <li>AI가 식별한 문서 유형 (예: “임대 계약”)</li>
+  <li>요청 성공 또는 실패 여부</li>
+  <li>궀하가 공유를 선택한 경우 위치 (예: “케리포니아주 오클랜드”)</li>
+</ul>
+<p>이 로그에는 <strong>문서 내용, IP 주소, 이름 또는 개인 식별자가 포함되지 않습니다.</strong> 서버 메모리에 보관되며 서버가 재시작될 때마다 자동으로 삭제됩니다.</p>
+<h3>궀하가 제출한 피드백</h3>
+<p>피드백 양식을 통해 피드백을 제출하면 메시지, 카테고리, 선택적으로 제공한 이름 또는 이메일 주소가 서버 메모리에 저장됩니다. 이 데이터도 서버 재시작 시 삭제되며 제3자와 공유되지 않습니다.</p>
+<h3>쿠키 및 추적</h3>
+<p>VeriLex는 <strong>쿠키, 추적 픽셀, 분석 스크립트</strong> 또는 제3자 추적 기술을 일체 사용하지 않습니다. 선호하는 인터페이스 언어는 브라우저의 <code>localStorage</code>에 저장되며, 이 데이터는 궀하의 기기를 떠나지 않습니다.</p>
+<h2>3. 제3자 데이터 처리업체</h2>
+<h3>Anthropic (Claude AI)</h3>
+<p>궀하의 문서 텍스트는 Anthropic의 Claude API에 의해 처리됩니다. Anthropic은 미국 기반의 AI 안전 기업입니다. <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic의 개인정보 처리방침</a> 및 API 이용 약관에 따르면, <strong>Anthropic은 기본적으로 API 입력을 AI 모델 훈련에 사용하지 않습니다.</strong> Anthropic의 전체 데이터 관행은 <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">anthropic.com/legal/privacy</a>를 참조하세요.</p>
+<h3>Railway (서버 호스팅)</h3>
+<p>VeriLex는 클라우드 인프라 제공업체인 <a href="https://railway.app" target="_blank" rel="noopener">Railway</a>에 호스팅되어 있습니다. 서버는 미국에 위치합니다. Railway의 개인정보 보호 관행은 <a href="https://railway.app/legal/privacy" target="_blank" rel="noopener">railway.app/legal/privacy</a>를 참조하세요.</p>
+<h2>4. 민감한 문서</h2>
+<p>VeriLex는 이민 통지서, 퇴거 신청서, 금융 서신 등 민감할 수 있는 문서를 이해하는 데 도움을 주도록 설계되었습니다. 문서에 매우 민감한 개인 정보(사회 보장 번호, 이민 사건 번호, 생년월일과 결합된 법적 전체 이름)가 포함된 경우, 업로드 전에 <strong>해당 식별 정보를 삭제</strong>하는 것을 권장합니다. 문서의 법적 내용은 대개 그러한 정보 없이도 분석할 수 있습니다.</p>
+<p>VeriLex는 문서를 저장하지 않지만, 외부 AI 서비스로의 전송에는 고유한 위험이 있습니다. 공유하는 내용에 대해 스스로 판단하세요.</p>
+<h2>5. 데이터 보존 요약</h2>
+<ul>
+  <li><strong>문서 내용:</strong> 저장되지 않음. 실시간 처리 훈 즉시 삭제됨.</li>
+  <li><strong>사용 분석 로그:</strong> 메모리에만 보관. 서버 재시작 시 삭제됨.</li>
+  <li><strong>피드백 제출:</strong> 메모리에만 보관. 서버 재시작 시 삭제됨.</li>
+  <li><strong>인터페이스 언어 설정:</strong> 브라우저 localStorage에 저장됨. 서버로 전송되지 않음.</li>
+</ul>
+<h2>6. 아동 개인정보 보호</h2>
+<p>VeriLex는 13세 미만 아동을 대상으로 하지 않으며 13세 미만 아동의 정보를 의도적으로 수집하지 않습니다. 13세 미만 아동이 정보를 제출한 것으로 판단되면 <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a>로 연락해 주세요.</p>
+<h2>7. 본 방침의 변경</h2>
+<p>본 방침은 수시로 업데이트될 수 있습니다. 상단의 “최종 업데이트” 날짜는 마지막 수정 일자를 반영합니다. 변경 사항 게시 훈 VeriLex를 계속 사용하면 업데이트된 방침에 동의한 것으로 간주됩니다.</p>
+<h2>8. 연락처</h2>
+<p>개인정보 관련 문의, 우려 사항 또는 요청: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · 법률 정보 제공만, 법률 조언 아님.'
+  }
+
+};
+
+function setLang(code) {
+  var t = TRANSLATIONS[code] || TRANSLATIONS.en;
+  document.getElementById('backLink').innerHTML = t.back;
+  document.getElementById('pageTitle').innerHTML = t.pageTitle;
+  document.getElementById('pageSubtitle').innerHTML = t.pageSubtitle;
+  document.getElementById('proseCard').innerHTML = t.prose;
+  document.getElementById('ftCopy').innerHTML = t.ftCopy;
+  document.documentElement.lang = code;
+  document.documentElement.dir = 'ltr';
+  localStorage.setItem('verilex_lang', code);
+  document.querySelectorAll('.lang-opt').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.lang === code);
+  });
+  document.getElementById('langLabel').textContent = LANG_NAMES[code] || 'EN';
+}
+
+function toggleLang() {
+  document.getElementById('langMenu').classList.toggle('open');
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lang-wrap')) {
+    document.getElementById('langMenu').classList.remove('open');
+  }
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+  setLang(localStorage.getItem('verilex_lang') || 'en');
+});
+</script>
 </body>
 </html>

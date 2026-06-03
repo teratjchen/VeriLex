@@ -41,6 +41,31 @@
     }
     .back-link:hover { color: #fff; }
 
+    /* ── LANGUAGE SWITCHER ── */
+    .lang-wrap { position: relative; }
+    .lang-btn {
+      display: flex; align-items: center; gap: 5px;
+      background: transparent; border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px; padding: 3px 10px; cursor: pointer;
+      color: rgba(255,255,255,.65); font-size: 12px; font-weight: 500;
+      transition: border-color .2s, color .2s;
+    }
+    .lang-btn:hover { border-color: rgba(255,255,255,.5); color: #fff; }
+    .lang-menu {
+      display: none; position: absolute; top: calc(100% + 8px); right: 0;
+      background: #1e293b; border: 1px solid rgba(255,255,255,.12);
+      border-radius: 10px; overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,.35); min-width: 160px; z-index: 200;
+    }
+    .lang-menu.open { display: block; }
+    .lang-opt {
+      display: block; width: 100%; text-align: left;
+      padding: 8px 14px; background: none; border: none; cursor: pointer;
+      color: rgba(255,255,255,.75); font-size: 13px; transition: background .15s;
+    }
+    .lang-opt:hover { background: rgba(255,255,255,.07); color: #fff; }
+    .lang-opt.active { color: #2563eb; }
+
     /* ── PAGE HEADER ── */
     .page-header {
       background: linear-gradient(160deg, #0a1628 0%, #060f1e 100%);
@@ -123,31 +148,60 @@
 
 <div class="topbar">
   <a href="/" class="nav-logo">
-    <div class="logo-icon">⚖️</div>
+    <div class="logo-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="#0a0e1a" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="7.2" y1="18.8" x2="12.8" y2="18.8" stroke-width="1.7"/>
+        <line x1="8.5" y1="17.4" x2="11.5" y2="17.4" stroke-width="1.3"/>
+        <line x1="10" y1="4.6" x2="10" y2="17.4" stroke-width="1.25"/>
+        <line x1="8.8" y1="16.3" x2="11.2" y2="16.3" stroke-width="1.5"/>
+        <path d="M10 1.2 C11.1 2.1 11.3 3.3 10.6 3.9 Q10 4.5 9.4 3.9 C8.7 3.3 8.9 2.1 10 1.2 Z" fill="#0a0e1a" stroke="none"/>
+        <path d="M10 4.4 C8.2 4.5 6 5.3 4.2 7.2" stroke-width="1.25"/>
+        <path d="M10 4.4 C11.8 4.5 14 5.3 15.8 7.2" stroke-width="1.25"/>
+        <circle cx="4.2" cy="7.2" r="0.6" stroke-width="1.1"/>
+        <circle cx="15.8" cy="7.2" r="0.6" stroke-width="1.1"/>
+        <line x1="4.2" y1="7.8" x2="2" y2="12.5" stroke-width="1.15"/>
+        <line x1="4.2" y1="7.8" x2="6.4" y2="12.5" stroke-width="1.15"/>
+        <line x1="2" y1="12.5" x2="6.4" y2="12.5" stroke-width="1.3"/>
+        <path d="M2 12.5 Q4.2 14.3 6.4 12.5" stroke-width="1.3"/>
+        <line x1="15.8" y1="7.8" x2="13.6" y2="12.5" stroke-width="1.15"/>
+        <line x1="15.8" y1="7.8" x2="18" y2="12.5" stroke-width="1.15"/>
+        <line x1="13.6" y1="12.5" x2="18" y2="12.5" stroke-width="1.3"/>
+        <path d="M13.6 12.5 Q15.8 14.3 18 12.5" stroke-width="1.3"/>
+      </svg>
+    </div>
     <span class="logo-name">VeriLex</span>
   </a>
-  <a href="/" class="back-link">← Back to VeriLex</a>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="lang-wrap">
+      <button class="lang-btn" onclick="toggleLang()" aria-label="Select language">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span id="langLabel">EN</span>
+      </button>
+      <div class="lang-menu" id="langMenu">
+        <button class="lang-opt" data-lang="en" onclick="setLang('en')">English</button>
+        <button class="lang-opt" data-lang="es" onclick="setLang('es')">Español</button>
+        <button class="lang-opt" data-lang="zh" onclick="setLang('zh')">中文（简体）</button>
+        <button class="lang-opt" data-lang="ko" onclick="setLang('ko')">한국어</button>
+      </div>
+    </div>
+    <a href="/" id="backLink" class="back-link">← Back to VeriLex</a>
+  </div>
 </div>
 
 <div class="page-header">
   <div class="label">Legal</div>
-  <h1>Terms of Service</h1>
-  <p>What VeriLex is, what it isn't, and what you agree to when you use it.</p>
+  <h1 id="pageTitle">Terms of Service</h1>
+  <p id="pageSubtitle">What VeriLex is, what it isn't, and what you agree to when you use it.</p>
 </div>
 
 <div class="prose-wrap">
-  <div class="prose-card">
+  <div class="prose-card" id="proseCard">
     <p class="updated">Last updated: June 2, 2026</p>
-
     <div class="warn-box">
       <strong>Important:</strong> VeriLex provides legal <em>information</em> — not legal <em>advice</em>. Using VeriLex does not create an attorney-client relationship. Always consult a licensed attorney for advice about your specific situation.
     </div>
-
-    <!-- 1 -->
     <h2>1. Acceptance of Terms</h2>
     <p>By accessing or using VeriLex at verilex.org, you agree to these Terms of Service. If you do not agree, please do not use the service. These terms may be updated from time to time; continued use after changes are posted constitutes acceptance.</p>
-
-    <!-- 2 -->
     <h2>2. Legal Information, Not Legal Advice</h2>
     <p><strong>VeriLex provides legal information — not legal advice.</strong> These are meaningfully different:</p>
     <ul>
@@ -156,12 +210,8 @@
     </ul>
     <p>VeriLex is designed to help you understand what a document says and what laws may be relevant — not to tell you what to do. Nothing in any VeriLex analysis constitutes legal advice, and nothing should be relied upon as a substitute for consultation with a licensed attorney.</p>
     <p>For advice specific to your situation, consult a licensed attorney. Free legal aid is available in most states — visit <a href="https://lsc.gov/find-legal-aid" target="_blank" rel="noopener">lsc.gov/find-legal-aid</a> or <a href="https://lawhelp.org" target="_blank" rel="noopener">lawhelp.org</a>.</p>
-
-    <!-- 3 -->
     <h2>3. No Attorney-Client Relationship</h2>
     <p>Use of VeriLex does not create an attorney-client relationship between you and VeriLex, its operator (Tera Chen), or any other person or entity. No communication through VeriLex is privileged. VeriLex is not a law firm and is not authorized to practice law.</p>
-
-    <!-- 4 -->
     <h2>4. AI Accuracy — Verify Before Acting</h2>
     <p>VeriLex uses AI technology (Claude, by Anthropic) to analyze documents. AI can and does make mistakes. Specifically, you should be aware that:</p>
     <ul>
@@ -174,8 +224,6 @@
     <div class="notice-box">
       <strong>Always verify statute citations</strong> against official sources before relying on them — for example, <a href="https://leginfo.legislature.ca.gov" target="_blank" rel="noopener">leginfo.legislature.ca.gov</a> for California law or <a href="https://law.cornell.edu" target="_blank" rel="noopener">law.cornell.edu</a> for federal law. Laws change, and citations that were correct at the time of training may have since been amended.
     </div>
-
-    <!-- 5 -->
     <h2>5. No Warranty</h2>
     <p>VeriLex is provided <strong>"as is"</strong> and <strong>"as available,"</strong> without any warranty of any kind, express or implied. To the fullest extent permitted by law, VeriLex and its operator make no representations or warranties regarding:</p>
     <ul>
@@ -183,8 +231,6 @@
       <li>The fitness of the service for any particular purpose</li>
       <li>The continued availability or uninterrupted operation of the service</li>
     </ul>
-
-    <!-- 6 -->
     <h2>6. Limitation of Liability</h2>
     <p>To the maximum extent permitted by applicable law, Tera Chen and VeriLex shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising from:</p>
     <ul>
@@ -193,8 +239,6 @@
       <li>Any interruption, suspension, or termination of the service</li>
     </ul>
     <p>This limitation applies regardless of the theory of liability (contract, tort, negligence, or otherwise) and even if VeriLex has been advised of the possibility of such damages. Your sole remedy for dissatisfaction with the service is to stop using it.</p>
-
-    <!-- 7 -->
     <h2>7. Acceptable Use</h2>
     <p>You agree not to use VeriLex to:</p>
     <ul>
@@ -204,24 +248,14 @@
       <li>Scrape, crawl, or make automated requests that place unreasonable load on the service</li>
       <li>Attempt to circumvent rate limits, usage restrictions, or security features</li>
     </ul>
-
-    <!-- 8 -->
     <h2>8. No Endorsement</h2>
     <p>VeriLex has not been reviewed, certified, or endorsed by any bar association, state law licensing authority, legal aid organization, or regulatory body unless explicitly stated in writing. References to organizations (e.g., EBCLC, ILRC, Pro Bono Net) are provided as resources and do not imply any affiliation or endorsement by those organizations.</p>
-
-    <!-- 9 -->
     <h2>9. Service Availability</h2>
     <p>VeriLex is a free service operated by an individual. We make no guarantees of continuous availability, uptime, or data retention. The service may be modified, suspended, or discontinued at any time without prior notice. VeriLex is not a substitute for emergency legal help — if you have an urgent legal matter, contact a licensed attorney or legal aid organization immediately.</p>
-
-    <!-- 10 -->
     <h2>10. Third-Party Links and Resources</h2>
     <p>VeriLex may link to third-party websites and legal resources. These links are provided for convenience only. VeriLex has no control over and assumes no responsibility for the content, accuracy, or availability of third-party sites.</p>
-
-    <!-- 11 -->
     <h2>11. Governing Law</h2>
     <p>These Terms of Service are governed by the laws of the State of California, United States, without regard to conflict of law principles. Any disputes arising under these terms shall be subject to the exclusive jurisdiction of the courts located in Alameda County, California.</p>
-
-    <!-- 12 -->
     <h2>12. Contact</h2>
     <p>Questions about these terms: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>
   </div>
@@ -232,10 +266,307 @@
     <a href="/">Home</a>
     <a href="/privacy">Privacy Policy</a>
     <a href="/terms">Terms of Service</a>
-    <a href="mailto:terachen@berkeley.edu">Contact</a>
+    <a href="/#feedback-section">Contact</a>
   </div>
-  <div>© 2026 Tera Chen · VeriLex · Legal information only, not legal advice.</div>
+  <div id="ftCopy">© 2026 Tera Chen · VeriLex · Legal information only, not legal advice.</div>
 </footer>
 
+<script>
+const LANG_NAMES = { en:'EN', es:'ES', zh:'中文', ko:'한국어' };
+
+const TRANSLATIONS = {
+
+  en: {
+    back: '← Back to VeriLex',
+    pageTitle: 'Terms of Service',
+    pageSubtitle: 'What VeriLex is, what it isn't, and what you agree to when you use it.',
+    prose: `<p class="updated">Last updated: June 2, 2026</p>
+<div class="warn-box"><strong>Important:</strong> VeriLex provides legal <em>information</em> — not legal <em>advice</em>. Using VeriLex does not create an attorney-client relationship. Always consult a licensed attorney for advice about your specific situation.</div>
+<h2>1. Acceptance of Terms</h2>
+<p>By accessing or using VeriLex at verilex.org, you agree to these Terms of Service. If you do not agree, please do not use the service. These terms may be updated from time to time; continued use after changes are posted constitutes acceptance.</p>
+<h2>2. Legal Information, Not Legal Advice</h2>
+<p><strong>VeriLex provides legal information — not legal advice.</strong> These are meaningfully different:</p>
+<ul>
+  <li><strong>Legal information</strong> explains what a law or legal document generally says. VeriLex does this.</li>
+  <li><strong>Legal advice</strong> applies the law to your specific facts and circumstances, assesses your options, and recommends a course of action. Only a licensed attorney can do this.</li>
+</ul>
+<p>VeriLex is designed to help you understand what a document says and what laws may be relevant — not to tell you what to do. Nothing in any VeriLex analysis constitutes legal advice, and nothing should be relied upon as a substitute for consultation with a licensed attorney.</p>
+<p>For advice specific to your situation, consult a licensed attorney. Free legal aid is available in most states — visit <a href="https://lsc.gov/find-legal-aid" target="_blank" rel="noopener">lsc.gov/find-legal-aid</a> or <a href="https://lawhelp.org" target="_blank" rel="noopener">lawhelp.org</a>.</p>
+<h2>3. No Attorney-Client Relationship</h2>
+<p>Use of VeriLex does not create an attorney-client relationship between you and VeriLex, its operator (Tera Chen), or any other person or entity. No communication through VeriLex is privileged. VeriLex is not a law firm and is not authorized to practice law.</p>
+<h2>4. AI Accuracy — Verify Before Acting</h2>
+<p>VeriLex uses AI technology (Claude, by Anthropic) to analyze documents. AI can and does make mistakes. Specifically, you should be aware that:</p>
+<ul>
+  <li>Statute citations may be inaccurate, incomplete, or out of date</li>
+  <li>Case law citations may contain errors, misattributions, or may not exist</li>
+  <li>Legal summaries may miss important nuance or jurisdiction-specific rules</li>
+  <li>Analysis may not account for recent changes in the law</li>
+  <li>Important facts specific to your situation may affect the analysis in ways the AI cannot know</li>
+</ul>
+<div class="notice-box"><strong>Always verify statute citations</strong> against official sources before relying on them — for example, <a href="https://leginfo.legislature.ca.gov" target="_blank" rel="noopener">leginfo.legislature.ca.gov</a> for California law or <a href="https://law.cornell.edu" target="_blank" rel="noopener">law.cornell.edu</a> for federal law. Laws change, and citations that were correct at the time of training may have since been amended.</div>
+<h2>5. No Warranty</h2>
+<p>VeriLex is provided <strong>"as is"</strong> and <strong>"as available,"</strong> without any warranty of any kind, express or implied. To the fullest extent permitted by law, VeriLex and its operator make no representations or warranties regarding:</p>
+<ul>
+  <li>The accuracy, completeness, or reliability of any analysis or citation</li>
+  <li>The fitness of the service for any particular purpose</li>
+  <li>The continued availability or uninterrupted operation of the service</li>
+</ul>
+<h2>6. Limitation of Liability</h2>
+<p>To the maximum extent permitted by applicable law, Tera Chen and VeriLex shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising from:</p>
+<ul>
+  <li>Your use of or reliance on any VeriLex analysis or legal citation</li>
+  <li>Any inaccuracy in AI-generated content</li>
+  <li>Any interruption, suspension, or termination of the service</li>
+</ul>
+<p>This limitation applies regardless of the theory of liability (contract, tort, negligence, or otherwise) and even if VeriLex has been advised of the possibility of such damages. Your sole remedy for dissatisfaction with the service is to stop using it.</p>
+<h2>7. Acceptable Use</h2>
+<p>You agree not to use VeriLex to:</p>
+<ul>
+  <li>Violate any applicable law or regulation</li>
+  <li>Submit documents or text containing fabricated information with the intent to generate misleading legal analysis</li>
+  <li>Attempt to access, probe, or test the security of the service without authorization</li>
+  <li>Scrape, crawl, or make automated requests that place unreasonable load on the service</li>
+  <li>Attempt to circumvent rate limits, usage restrictions, or security features</li>
+</ul>
+<h2>8. No Endorsement</h2>
+<p>VeriLex has not been reviewed, certified, or endorsed by any bar association, state law licensing authority, legal aid organization, or regulatory body unless explicitly stated in writing. References to organizations (e.g., EBCLC, ILRC, Pro Bono Net) are provided as resources and do not imply any affiliation or endorsement by those organizations.</p>
+<h2>9. Service Availability</h2>
+<p>VeriLex is a free service operated by an individual. We make no guarantees of continuous availability, uptime, or data retention. The service may be modified, suspended, or discontinued at any time without prior notice. VeriLex is not a substitute for emergency legal help — if you have an urgent legal matter, contact a licensed attorney or legal aid organization immediately.</p>
+<h2>10. Third-Party Links and Resources</h2>
+<p>VeriLex may link to third-party websites and legal resources. These links are provided for convenience only. VeriLex has no control over and assumes no responsibility for the content, accuracy, or availability of third-party sites.</p>
+<h2>11. Governing Law</h2>
+<p>These Terms of Service are governed by the laws of the State of California, United States, without regard to conflict of law principles. Any disputes arising under these terms shall be subject to the exclusive jurisdiction of the courts located in Alameda County, California.</p>
+<h2>12. Contact</h2>
+<p>Questions about these terms: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · Legal information only, not legal advice.'
+  },
+
+  es: {
+    back: '← Volver a VeriLex',
+    pageTitle: 'Términos de Servicio',
+    pageSubtitle: 'Qué es VeriLex, qué no es, y a qué acuerda al usarlo.',
+    prose: `<p class="updated">Última actualización: 2 de junio de 2026</p>
+<div class="warn-box"><strong>Importante:</strong> VeriLex proporciona <em>información</em> legal, no <em>asesoramiento</em> jurídico. El uso de VeriLex no crea una relación abogado-cliente. Consulte siempre a un abogado autorizado para obtener asesoramiento sobre su situación específica.</div>
+<h2>1. Aceptación de los términos</h2>
+<p>Al acceder o utilizar VeriLex en verilex.org, usted acepta estos Términos de Servicio. Si no está de acuerdo, no utilice el servicio. Estos términos pueden actualizarse periódicamente; el uso continuado después de que se publiquen los cambios constituye su aceptación.</p>
+<h2>2. Información legal, no asesoramiento jurídico</h2>
+<p><strong>VeriLex proporciona información legal, no asesoramiento jurídico.</strong> Existe una diferencia importante entre ambos conceptos:</p>
+<ul>
+  <li><strong>Información legal:</strong> explica qué dice una ley o un documento legal en términos generales. Esto es lo que hace VeriLex.</li>
+  <li><strong>Asesoramiento jurídico:</strong> aplica la ley a sus hechos y circunstancias específicos, evalúa sus opciones y recomienda un curso de acción. Solo un abogado autorizado puede hacer esto.</li>
+</ul>
+<p>VeriLex está diseñado para ayudarle a comprender qué dice un documento y qué leyes pueden ser relevantes, no para decirle qué debe hacer. Nada en ningún análisis de VeriLex constituye asesoramiento jurídico, y nada debe tomarse como sustituto de la consulta con un abogado autorizado.</p>
+<p>Para obtener asesoramiento específico para su situación, consulte a un abogado autorizado. La asistencia legal gratuita está disponible en la mayoría de los estados: visite <a href="https://lsc.gov/find-legal-aid" target="_blank" rel="noopener">lsc.gov/find-legal-aid</a> o <a href="https://lawhelp.org" target="_blank" rel="noopener">lawhelp.org</a>.</p>
+<h2>3. Sin relación abogado-cliente</h2>
+<p>El uso de VeriLex no crea una relación abogado-cliente entre usted y VeriLex, su operador (Tera Chen), ni ninguna otra persona o entidad. Ninguna comunicación a través de VeriLex goza de privilegio legal. VeriLex no es un bufete de abogados y no está autorizado para ejercer la abogacía.</p>
+<h2>4. Exactitud de la IA — Verifique antes de actuar</h2>
+<p>VeriLex utiliza tecnología de IA (Claude, de Anthropic) para analizar documentos. La IA puede cometer y comete errores. En concreto, debe saber que:</p>
+<ul>
+  <li>Las citas de estatutos pueden ser inexactas, incompletas o desactualizadas</li>
+  <li>Las citas de jurisprudencia pueden contener errores, atribuciones incorrectas o pueden no existir</li>
+  <li>Los resúmenes legales pueden omitir matices importantes o reglas específicas de la jurisdicción</li>
+  <li>El análisis puede no tener en cuenta los cambios recientes en la ley</li>
+  <li>Hechos importantes específicos de su situación pueden afectar al análisis de maneras que la IA no puede conocer</li>
+</ul>
+<div class="notice-box"><strong>Verifique siempre las citas de estatutos</strong> en fuentes oficiales antes de basarse en ellas; por ejemplo, <a href="https://leginfo.legislature.ca.gov" target="_blank" rel="noopener">leginfo.legislature.ca.gov</a> para la ley de California o <a href="https://law.cornell.edu" target="_blank" rel="noopener">law.cornell.edu</a> para la ley federal. Las leyes cambian, y las citas que eran correctas en el momento del entrenamiento pueden haber sido modificadas desde entonces.</div>
+<h2>5. Sin garantía</h2>
+<p>VeriLex se proporciona <strong>"tal cual"</strong> y <strong>"según disponibilidad,"</strong> sin ninguna garantía de ningún tipo, expresa o implícita. En la máxima medida permitida por la ley, VeriLex y su operador no ofrecen ninguna representación ni garantía con respecto a:</p>
+<ul>
+  <li>La exactitud, integridad o fiabilidad de cualquier análisis o cita</li>
+  <li>La idoneidad del servicio para cualquier propósito particular</li>
+  <li>La disponibilidad continua o el funcionamiento ininterrumpido del servicio</li>
+</ul>
+<h2>6. Limitación de responsabilidad</h2>
+<p>En la máxima medida permitida por la ley aplicable, Tera Chen y VeriLex no serán responsables de ningún daño directo, indirecto, incidental, especial, consecuente o punitivo derivado de:</p>
+<ul>
+  <li>Su uso o dependencia de cualquier análisis o cita legal de VeriLex</li>
+  <li>Cualquier inexactitud en el contenido generado por IA</li>
+  <li>Cualquier interrupción, suspensión o terminación del servicio</li>
+</ul>
+<p>Esta limitación se aplica independientemente de la teoría de responsabilidad (contrato, agravio, negligencia u otro) e incluso si VeriLex ha sido advertido de la posibilidad de tales daños. Su único recurso en caso de insatisfacción con el servicio es dejar de utilizarlo.</p>
+<h2>7. Uso aceptable</h2>
+<p>Usted acepta no utilizar VeriLex para:</p>
+<ul>
+  <li>Violar cualquier ley o regulación aplicable</li>
+  <li>Enviar documentos o texto con información fabricada con la intención de generar análisis legal engañoso</li>
+  <li>Intentar acceder, sondear o probar la seguridad del servicio sin autorización</li>
+  <li>Realizar web scraping, rastreo o solicitudes automatizadas que impongan una carga irrazonable al servicio</li>
+  <li>Intentar eludir los límites de uso, restricciones de uso o funciones de seguridad</li>
+</ul>
+<h2>8. Sin respaldo</h2>
+<p>VeriLex no ha sido revisado, certificado ni respaldado por ningún colegio de abogados, autoridad estatal de licencias legales, organización de asistencia legal ni organismo regulador, salvo que se indique explícitamente por escrito. Las referencias a organizaciones (p. ej., EBCLC, ILRC, Pro Bono Net) se proporcionan como recursos y no implican ninguna afiliación ni respaldo por parte de dichas organizaciones.</p>
+<h2>9. Disponibilidad del servicio</h2>
+<p>VeriLex es un servicio gratuito operado por un individuo. No ofrecemos garantías de disponibilidad continua, tiempo de actividad ni retención de datos. El servicio puede modificarse, suspenderse o descontinuarse en cualquier momento sin previo aviso. VeriLex no es un sustituto de la ayuda legal urgente: si tiene un asunto legal urgente, comuníquese inmediatamente con un abogado autorizado o una organización de asistencia legal.</p>
+<h2>10. Enlaces y recursos de terceros</h2>
+<p>VeriLex puede enlazar a sitios web y recursos legales de terceros. Estos enlaces se proporcionan únicamente por conveniencia. VeriLex no tiene control sobre el contenido, la exactitud ni la disponibilidad de los sitios de terceros, y no asume ninguna responsabilidad al respecto.</p>
+<h2>11. Ley aplicable</h2>
+<p>Estos Términos de Servicio se rigen por las leyes del Estado de California, Estados Unidos, sin tener en cuenta los principios de conflicto de leyes. Cualquier disputa derivada de estos términos estará sujeta a la jurisdicción exclusiva de los tribunales ubicados en el condado de Alameda, California.</p>
+<h2>12. Contacto</h2>
+<p>Preguntas sobre estos términos: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · Solo información legal, no asesoramiento jurídico.'
+  },
+
+  zh: {
+    back: '← 返回 VeriLex',
+    pageTitle: '服务条款',
+    pageSubtitle: 'VeriLex 是什么、不是什么，以及您使用时所同意的内容。',
+    prose: `<p class="updated">最后更新：2026年6月2日</p>
+<div class="warn-box"><strong>重要提示：</strong>VeriLex 提供法律<em>信息</em>，而非法律<em>建议</em>。使用 VeriLex 不会建立律师-委托人关系。如需针对您具体情况的建议，请务必咨询持牌律师。</div>
+<h2>1. 接受条款</h2>
+<p>访问或使用 verilex.org 上的 VeriLex，即表示您同意本服务条款。如不同意，请勿使用本服务。本条款可能会不时更新；在更改发布后继续使用即视为接受。</p>
+<h2>2. 法律信息，而非法律建议</h2>
+<p><strong>VeriLex 提供法律信息，而非法律建议。</strong>两者存在实质性区别：</p>
+<ul>
+  <li><strong>法律信息：</strong>说明某项法律或法律文件通常规定的内容。这是 VeriLex 所做的事情。</li>
+  <li><strong>法律建议：</strong>将法律适用于您的具体事实和情况，评估您的选择，并推荐行动方案。只有持牌律师才能提供法律建议。</li>
+</ul>
+<p>VeriLex 旨在帮助您理解文件内容及可能适用的法律，而非告诉您应该做什么。VeriLex 的任何分析均不构成法律建议，任何内容均不应被视为咨询持牌律师的替代品。</p>
+<p>如需针对您具体情况的建议，请咨询持牌律师。大多数州均提供免费法律援助——请访问 <a href="https://lsc.gov/find-legal-aid" target="_blank" rel="noopener">lsc.gov/find-legal-aid</a> 或 <a href="https://lawhelp.org" target="_blank" rel="noopener">lawhelp.org</a>。</p>
+<h2>3. 不构成律师-委托人关系</h2>
+<p>使用 VeriLex 不会在您与 VeriLex、其运营者（Tera Chen）或任何其他个人或实体之间建立律师-委托人关系。通过 VeriLex 进行的任何通信均不受特权保护。VeriLex 不是律师事务所，也无权从事法律实务。</p>
+<h2>4. AI 准确性——采取行动前请核实</h2>
+<p>VeriLex 使用 AI 技术（Anthropic 的 Claude）分析文件。AI 可能会犯错，且确实会出错。具体而言，您应了解：</p>
+<ul>
+  <li>法规引用可能不准确、不完整或已过时</li>
+  <li>判例法引用可能存在错误、错误归因，或根本不存在</li>
+  <li>法律摘要可能遗漏重要细节或特定司法管辖区的规定</li>
+  <li>分析可能未考虑法律的近期变化</li>
+  <li>您情况特有的重要事实可能以 AI 无法预知的方式影响分析结果</li>
+</ul>
+<div class="notice-box"><strong>在依赖任何法规引用之前，请务必通过官方来源进行核实</strong>——例如，加利福尼亚州法律请参阅 <a href="https://leginfo.legislature.ca.gov" target="_blank" rel="noopener">leginfo.legislature.ca.gov</a>，联邦法律请参阅 <a href="https://law.cornell.edu" target="_blank" rel="noopener">law.cornell.edu</a>。法律会发生变化，训练时正确的引用可能已被修订。</div>
+<h2>5. 无担保声明</h2>
+<p>VeriLex 以<strong>"现状"</strong>和<strong>"可用时"</strong>的形式提供，不提供任何明示或暗示的担保。在法律允许的最大范围内，VeriLex 及其运营者不就以下方面作出任何陈述或担保：</p>
+<ul>
+  <li>任何分析或引用的准确性、完整性或可靠性</li>
+  <li>服务对任何特定目的的适用性</li>
+  <li>服务的持续可用性或不间断运行</li>
+</ul>
+<h2>6. 责任限制</h2>
+<p>在适用法律允许的最大范围内，Tera Chen 和 VeriLex 对因以下原因造成的任何直接、间接、附带、特殊、后果性或惩罚性损害不承担责任：</p>
+<ul>
+  <li>您使用或依赖 VeriLex 的任何分析或法律引用</li>
+  <li>AI 生成内容中的任何不准确之处</li>
+  <li>服务的任何中断、暂停或终止</li>
+</ul>
+<p>无论责任理论（合同、侵权、疏忽或其他）如何，即使 VeriLex 已被告知此类损害的可能性，此限制均适用。您对服务不满意的唯一救济措施是停止使用本服务。</p>
+<h2>7. 可接受的使用</h2>
+<p>您同意不使用 VeriLex 从事以下活动：</p>
+<ul>
+  <li>违反任何适用法律或法规</li>
+  <li>提交包含捏造信息的文件或文本，意图生成误导性法律分析</li>
+  <li>未经授权尝试访问、探测或测试服务的安全性</li>
+  <li>进行网络抓取、爬取或对服务造成不合理负担的自动化请求</li>
+  <li>尝试绕过速率限制、使用限制或安全功能</li>
+</ul>
+<h2>8. 无背书声明</h2>
+<p>除非有明确书面说明，VeriLex 未经任何律师协会、州法律许可机构、法律援助组织或监管机构的审查、认证或背书。提及相关组织（如 EBCLC、ILRC、Pro Bono Net）仅供参考，并不意味着这些组织对 VeriLex 有任何隶属关系或背书。</p>
+<h2>9. 服务可用性</h2>
+<p>VeriLex 是由个人运营的免费服务。我们不保证持续可用性、运行时间或数据保留。服务可能随时被修改、暂停或停止，恕不另行通知。VeriLex 不能替代紧急法律帮助——如果您有紧迫的法律事务，请立即联系持牌律师或法律援助组织。</p>
+<h2>10. 第三方链接和资源</h2>
+<p>VeriLex 可能链接到第三方网站和法律资源。这些链接仅为方便用户提供。VeriLex 对第三方网站的内容、准确性或可用性没有控制权，也不承担任何责任。</p>
+<h2>11. 适用法律</h2>
+<p>本服务条款受美国加利福尼亚州法律管辖，不考虑法律冲突原则。因本条款产生的任何争议均受加利福尼亚州阿拉米达县法院的专属管辖。</p>
+<h2>12. 联系我们</h2>
+<p>有关本条款的问题：<a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · 仅供法律信息参考，不构成法律建议。'
+  },
+
+  ko: {
+    back: '← VeriLex로 돌아가기',
+    pageTitle: '서비스 이용약관',
+    pageSubtitle: 'VeriLex가 무엇인지, 무엇이 아닌지, 사용 시 동의하는 내용.',
+    prose: `<p class="updated">최종 업데이트: 2026년 6월 2일</p>
+<div class="warn-box"><strong>중요:</strong> VeriLex는 법률 <em>정보</em>를 제공하며 법률 <em>조언</em>이 아닙니다. VeriLex를 사용해도 변호사-의뢰인 관계가 형성되지 않습니다. 귀하의 구체적인 상황에 대한 조언은 반드시 면허를 가진 변호사에게 문의하세요.</div>
+<h2>1. 약관 동의</h2>
+<p>verilex.org의 VeriLex에 접근하거나 사용함으로써 귀하는 본 서비스 이용약관에 동의합니다. 동의하지 않는 경우 서비스를 사용하지 마세요. 본 약관은 수시로 업데이트될 수 있으며, 변경 사항 게시 후 계속 사용하면 동의한 것으로 간주됩니다.</p>
+<h2>2. 법률 정보 — 법률 조언 아님</h2>
+<p><strong>VeriLex는 법률 정보를 제공하며 법률 조언이 아닙니다.</strong> 이 둘은 의미 있게 다릅니다:</p>
+<ul>
+  <li><strong>법률 정보:</strong> 법률 또는 법률 문서가 일반적으로 말하는 내용을 설명합니다. VeriLex가 하는 일입니다.</li>
+  <li><strong>법률 조언:</strong> 귀하의 구체적인 사실과 상황에 법률을 적용하고, 선택지를 평가하며, 행동 방침을 권고합니다. 면허를 가진 변호사만이 이를 제공할 수 있습니다.</li>
+</ul>
+<p>VeriLex는 문서의 내용과 관련 법률을 이해하는 데 도움을 주도록 설계되었으며, 무엇을 해야 할지 알려주기 위한 것이 아닙니다. VeriLex의 어떠한 분석도 법률 조언을 구성하지 않으며, 면허 변호사 상담의 대체물로 의존해서는 안 됩니다.</p>
+<p>귀하의 상황에 대한 구체적인 조언은 면허 변호사에게 문의하세요. 대부분의 주에서 무료 법률 지원이 제공됩니다 — <a href="https://lsc.gov/find-legal-aid" target="_blank" rel="noopener">lsc.gov/find-legal-aid</a> 또는 <a href="https://lawhelp.org" target="_blank" rel="noopener">lawhelp.org</a>를 방문하세요.</p>
+<h2>3. 변호사-의뢰인 관계 없음</h2>
+<p>VeriLex를 사용해도 귀하와 VeriLex, 운영자(Tera Chen) 또는 기타 개인이나 단체 사이에 변호사-의뢰인 관계가 형성되지 않습니다. VeriLex를 통한 어떠한 통신도 특권이 부여되지 않습니다. VeriLex는 법률 사무소가 아니며 법률 업무를 수행할 권한이 없습니다.</p>
+<h2>4. AI 정확성 — 행동하기 전에 확인</h2>
+<p>VeriLex는 AI 기술(Anthropic의 Claude)을 사용하여 문서를 분석합니다. AI는 실수를 할 수 있으며 실제로 합니다. 구체적으로 다음 사항을 인식해야 합니다:</p>
+<ul>
+  <li>법령 인용이 부정확하거나 불완전하거나 구식일 수 있습니다</li>
+  <li>판례 인용에 오류, 잘못된 귀속이 포함되거나 존재하지 않을 수 있습니다</li>
+  <li>법률 요약이 중요한 뉘앙스나 관할권별 규칙을 놓칠 수 있습니다</li>
+  <li>분석이 최근 법률 변경 사항을 반영하지 않을 수 있습니다</li>
+  <li>귀하의 상황에 고유한 중요한 사실이 AI가 알 수 없는 방식으로 분석에 영향을 미칠 수 있습니다</li>
+</ul>
+<div class="notice-box"><strong>법령 인용 내용은 의존하기 전에 반드시 공식 출처를 통해 확인하세요</strong> — 예를 들어 캘리포니아 법은 <a href="https://leginfo.legislature.ca.gov" target="_blank" rel="noopener">leginfo.legislature.ca.gov</a>, 연방법은 <a href="https://law.cornell.edu" target="_blank" rel="noopener">law.cornell.edu</a>에서 확인하세요. 법률은 변경되며, 훈련 당시 정확했던 인용이 이후 개정되었을 수 있습니다.</div>
+<h2>5. 무보증</h2>
+<p>VeriLex는 명시적 또는 묵시적 어떠한 종류의 보증도 없이 <strong>"있는 그대로"</strong> 및 <strong>"사용 가능한 상태로"</strong> 제공됩니다. 법률이 허용하는 최대 범위 내에서 VeriLex 및 운영자는 다음에 대해 어떠한 진술이나 보증도 하지 않습니다:</p>
+<ul>
+  <li>분석 또는 인용의 정확성, 완전성 또는 신뢰성</li>
+  <li>특정 목적에 대한 서비스의 적합성</li>
+  <li>서비스의 지속적 가용성 또는 중단 없는 운영</li>
+</ul>
+<h2>6. 책임 제한</h2>
+<p>적용 가능한 법률이 허용하는 최대 범위 내에서 Tera Chen 및 VeriLex는 다음으로 인한 직접적, 간접적, 부수적, 특별, 결과적 또는 징벌적 손해에 대해 책임을 지지 않습니다:</p>
+<ul>
+  <li>VeriLex 분석 또는 법률 인용에 대한 귀하의 사용 또는 의존</li>
+  <li>AI가 생성한 콘텐츠의 부정확성</li>
+  <li>서비스의 중단, 정지 또는 종료</li>
+</ul>
+<p>이 제한은 책임 이론(계약, 불법행위, 과실 또는 기타)에 관계없이 적용되며, VeriLex가 그러한 손해 가능성을 통지받은 경우에도 마찬가지입니다. 서비스에 불만족할 경우 귀하의 유일한 구제책은 사용을 중단하는 것입니다.</p>
+<h2>7. 허용 가능한 사용</h2>
+<p>귀하는 다음 목적으로 VeriLex를 사용하지 않을 것에 동의합니다:</p>
+<ul>
+  <li>적용 가능한 법률이나 규정 위반</li>
+  <li>오해의 소지가 있는 법적 분석을 생성할 목적으로 날조된 정보가 포함된 문서 또는 텍스트 제출</li>
+  <li>권한 없이 서비스 보안에 접근, 조사 또는 테스트 시도</li>
+  <li>서비스에 불합리한 부하를 주는 스크래핑, 크롤링 또는 자동화 요청</li>
+  <li>속도 제한, 사용 제한 또는 보안 기능 우회 시도</li>
+</ul>
+<h2>8. 보증 없음</h2>
+<p>VeriLex는 명시적으로 서면으로 명시되지 않는 한 어떤 변호사 협회, 주 법률 허가 기관, 법률 지원 기관 또는 규제 기관에 의해서도 검토, 인증 또는 보증되지 않았습니다. 조직(예: EBCLC, ILRC, Pro Bono Net)에 대한 언급은 참고 자료로 제공되며 해당 조직과의 제휴나 보증을 의미하지 않습니다.</p>
+<h2>9. 서비스 가용성</h2>
+<p>VeriLex는 개인이 운영하는 무료 서비스입니다. 지속적인 가용성, 가동 시간 또는 데이터 보존에 대한 어떠한 보장도 하지 않습니다. 서비스는 사전 통지 없이 언제든지 수정, 정지 또는 중단될 수 있습니다. VeriLex는 긴급 법률 지원의 대체물이 아닙니다 — 긴급한 법률 문제가 있으면 즉시 면허 변호사 또는 법률 지원 기관에 연락하세요.</p>
+<h2>10. 제3자 링크 및 리소스</h2>
+<p>VeriLex는 제3자 웹사이트 및 법률 리소스에 링크할 수 있습니다. 이 링크들은 편의를 위해서만 제공됩니다. VeriLex는 제3자 사이트의 콘텐츠, 정확성 또는 가용성에 대한 통제권이 없으며 어떠한 책임도 지지 않습니다.</p>
+<h2>11. 준거법</h2>
+<p>본 서비스 이용약관은 법률 충돌 원칙에 관계없이 미국 캘리포니아주 법률에 따라 규율됩니다. 본 약관에서 발생하는 모든 분쟁은 캘리포니아주 앨러미다 카운티 소재 법원의 전속 관할에 따릅니다.</p>
+<h2>12. 연락처</h2>
+<p>본 약관에 대한 문의: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · 법률 정보 제공만, 법률 조언 아님.'
+  }
+
+};
+
+function setLang(code) {
+  var t = TRANSLATIONS[code] || TRANSLATIONS.en;
+  document.getElementById('backLink').innerHTML = t.back;
+  document.getElementById('pageTitle').innerHTML = t.pageTitle;
+  document.getElementById('pageSubtitle').innerHTML = t.pageSubtitle;
+  document.getElementById('proseCard').innerHTML = t.prose;
+  document.getElementById('ftCopy').innerHTML = t.ftCopy;
+  document.documentElement.lang = code;
+  document.documentElement.dir = 'ltr';
+  localStorage.setItem('verilex_lang', code);
+  document.querySelectorAll('.lang-opt').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.lang === code);
+  });
+  document.getElementById('langLabel').textContent = LANG_NAMES[code] || 'EN';
+}
+
+function toggleLang() {
+  document.getElementById('langMenu').classList.toggle('open');
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lang-wrap')) {
+    document.getElementById('langMenu').classList.remove('open');
+  }
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+  setLang(localStorage.getItem('verilex_lang') || 'en');
+});
+</script>
 </body>
 </html>
