@@ -175,6 +175,9 @@
         <button class="lang-opt" data-lang="es" onclick="setLang('es')">Español</button>
         <button class="lang-opt" data-lang="zh" onclick="setLang('zh')">中文（简体）</button>
         <button class="lang-opt" data-lang="ko" onclick="setLang('ko')">한국어</button>
+        <button class="lang-opt" data-lang="pt" onclick="setLang('pt')">Português</button>
+        <button class="lang-opt" data-lang="fr" onclick="setLang('fr')">Français</button>
+        <button class="lang-opt" data-lang="tl" onclick="setLang('tl')">Filipino</button>
       </div>
     </div>
     <a href="/" id="backLink" class="back-link">← Back to VeriLex</a>
@@ -250,7 +253,7 @@
 </footer>
 
 <script>
-const LANG_NAMES = { en:'EN', es:'ES', zh:'中文', ko:'한국어' };
+const LANG_NAMES = { en:'EN', es:'ES', zh:'中文', ko:'한국어', pt:'PT', fr:'FR', tl:'TL' };
 
 const TRANSLATIONS = {
 
@@ -460,6 +463,162 @@ const TRANSLATIONS = {
 <h2>8. 연락처</h2>
 <p>개인정보 관련 문의, 우려 사항 또는 요청: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
     ftCopy: '© 2026 Tera Chen · VeriLex · 법률 정보 제공만, 법률 조언 아님.'
+  },
+
+  pt: {
+    back: '← Voltar para VeriLex',
+    pageTitle: 'Política de Privacidade',
+    pageSubtitle: 'Como o VeriLex lida com seus dados — e como não lida.',
+    prose: `<p class="updated">Última atualização: 2 de junho de 2026</p>
+<div class="notice-box"><strong>Versão resumida:</strong> O VeriLex não armazena seus documentos, não exige uma conta e não rastreia você. O texto do seu documento é enviado para a API Claude da Anthropic para análise e não é retido em nenhum servidor do VeriLex.</div>
+<h2>1. Quem opera o VeriLex</h2>
+<p>O VeriLex (verilex.org) é uma ferramenta gratuita de acessibilidade a documentos jurídicos, desenvolvida e mantida por <strong>Tera Chen</strong>, estudante de Estudos Jurídicos na Universidade da Califórnia, Berkeley. O VeriLex não é um escritório de advocacia, empresa de serviços jurídicos ou entidade legal registrada.</p>
+<p>Contato: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>
+<h2>2. Informações coletadas pelo VeriLex</h2>
+<h3>Conteúdo do documento que você envia</h3>
+<p>O texto que você cola ou os arquivos que você carrega são transmitidos com segurança (HTTPS) para a API Claude da Anthropic para análise. <strong>O VeriLex nunca armazena, registra ou retém o conteúdo de documentos em seus próprios servidores.</strong> O resultado da análise é exibido em seu navegador e descartado quando você fecha ou sai da página.</p>
+<h3>Análises de uso anônimas</h3>
+<p>O VeriLex registra um pequeno conjunto de metadados anonimizados de cada análise para monitorar a saúde do serviço e melhorar a ferramenta. Cada entrada de log contém:</p>
+<ul>
+  <li>Carimbo de data/hora (data e hora UTC)</li>
+  <li>Idioma selecionado</li>
+  <li>Nível de conhecimento selecionado (iniciante / intermediário / especialista)</li>
+  <li>Tamanho aproximado do documento (apenas contagem de caracteres)</li>
+  <li>Tipo de documento identificado pela IA (por exemplo, "Contrato de aluguel")</li>
+  <li>Se a solicitação foi bem-sucedida ou falhou</li>
+  <li>Localização, se você optou por compartilhar (por exemplo, "Oakland, Califórnia")</li>
+</ul>
+<p>Este log não contém <strong>nenhum conteúdo de documento, nenhum endereço IP, nenhum nome e nenhum identificador pessoal.</strong> Ele é mantido na memória do servidor e é apagado automaticamente a cada reinicialização do servidor (o que ocorre a cada nova implantação).</p>
+<h3>Feedback que você envia</h3>
+<p>Se você enviar feedback pelo formulário, a mensagem, a categoria e qualquer nome ou endereço de e-mail que você fornecer opcionalmente são armazenados na memória do servidor. Esses dados também são apagados na reinicialização do servidor. Não os compartilhamos com terceiros.</p>
+<h3>Cookies e rastreamento</h3>
+<p>O VeriLex não usa <strong>cookies, pixels de rastreamento nem scripts de análise</strong>, nem qualquer tipo de tecnologia de rastreamento de terceiros. Seu idioma de interface preferido é salvo no <code>localStorage</code> do seu navegador — esses dados nunca saem do seu dispositivo.</p>
+<h2>3. Processadores de dados de terceiros</h2>
+<h3>Anthropic (Claude AI)</h3>
+<p>O texto do seu documento é processado pela API Claude da Anthropic. A Anthropic é uma empresa americana de segurança em IA. De acordo com a <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">política de privacidade da Anthropic</a> e seus termos de uso da API, <strong>a Anthropic não usa entradas da API para treinar seus modelos de IA por padrão.</strong> Para conhecer as práticas completas de dados da Anthropic, consulte <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">anthropic.com/legal/privacy</a>.</p>
+<h3>Railway (Hospedagem de servidores)</h3>
+<p>O VeriLex está hospedado na <a href="https://railway.app" target="_blank" rel="noopener">Railway</a>, um provedor de infraestrutura em nuvem. Os servidores estão localizados nos Estados Unidos. Para conhecer as práticas de privacidade da Railway, consulte <a href="https://railway.app/legal/privacy" target="_blank" rel="noopener">railway.app/legal/privacy</a>.</p>
+<h2>4. Documentos sensíveis</h2>
+<p>O VeriLex foi projetado para ajudar usuários a compreender documentos que podem ser sensíveis — incluindo avisos de imigração, processos de despejo e correspondências financeiras. Se o seu documento contiver informações pessoais altamente sensíveis (números de Seguro Social, números de processo de imigração, nomes legais completos combinados com datas de nascimento), recomendamos <strong>ocultar essas informações de identificação antes de fazer o upload</strong>. A substância jurídica do documento geralmente pode ser analisada sem elas.</p>
+<p>Embora o VeriLex não armazene documentos, qualquer transmissão para um serviço de IA externo carrega riscos inerentes. Use seu julgamento sobre o que você compartilha.</p>
+<h2>5. Resumo de retenção de dados</h2>
+<ul>
+  <li><strong>Conteúdo do documento:</strong> Nunca armazenado. Processado em tempo real e descartado.</li>
+  <li><strong>Log de análise de uso:</strong> Somente na memória. Apagado a cada reinicialização do servidor.</li>
+  <li><strong>Envios de feedback:</strong> Somente na memória. Apagado a cada reinicialização do servidor.</li>
+  <li><strong>Preferência de idioma da interface:</strong> Armazenada no localStorage do seu navegador. Nunca enviada ao servidor.</li>
+</ul>
+<h2>6. Privacidade infantil</h2>
+<p>O VeriLex não é direcionado a crianças menores de 13 anos e não coleta conscientemente informações de crianças menores de 13 anos. Se você acredita que uma criança menor de 13 anos enviou informações, entre em contato conosco em <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a>.</p>
+<h2>7. Alterações nesta política</h2>
+<p>Esta política pode ser atualizada periodicamente. A data de "Última atualização" no topo reflete quando foi revisada pela última vez. O uso continuado do VeriLex após a publicação das alterações constitui a aceitação da política atualizada.</p>
+<h2>8. Contato</h2>
+<p>Para perguntas, preocupações ou solicitações sobre privacidade: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · Apenas informações jurídicas, não aconselhamento jurídico.'
+  },
+
+  fr: {
+    back: '← Retour à VeriLex',
+    pageTitle: 'Politique de Confidentialité',
+    pageSubtitle: 'Comment VeriLex traite vos données — et comment il ne les traite pas.',
+    prose: `<p class="updated">Dernière mise à jour : 2 juin 2026</p>
+<div class="notice-box"><strong>Version courte :</strong> VeriLex ne stocke pas vos documents, ne nécessite pas de compte et ne vous suit pas. Le texte de votre document est envoyé à l'API Claude d'Anthropic pour analyse et n'est conservé sur aucun serveur de VeriLex.</div>
+<h2>1. Qui exploite VeriLex</h2>
+<p>VeriLex (verilex.org) est un outil gratuit d'accessibilité aux documents juridiques, développé et maintenu par <strong>Tera Chen</strong>, étudiante en Études Juridiques à l'Université de Californie, Berkeley. VeriLex n'est pas un cabinet d'avocats, une société de services juridiques ni une entité légale enregistrée.</p>
+<p>Contact : <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>
+<h2>2. Informations collectées par VeriLex</h2>
+<h3>Contenu du document que vous soumettez</h3>
+<p>Le texte que vous collez ou les fichiers que vous téléchargez sont transmis en toute sécurité (HTTPS) à l'API Claude d'Anthropic pour analyse. <strong>VeriLex ne stocke, n'enregistre ni ne conserve jamais le contenu des documents sur ses propres serveurs.</strong> Le résultat de l'analyse est affiché dans votre navigateur et supprimé lorsque vous fermez la page ou naviguez ailleurs.</p>
+<h3>Analyses d'utilisation anonymes</h3>
+<p>VeriLex enregistre un petit ensemble de métadonnées anonymisées pour chaque analyse afin de surveiller la santé du service et d'améliorer l'outil. Chaque entrée de journal contient :</p>
+<ul>
+  <li>Horodatage (date et heure UTC)</li>
+  <li>Langue sélectionnée</li>
+  <li>Niveau de connaissance sélectionné (débutant / intermédiaire / expert)</li>
+  <li>Longueur approximative du document (nombre de caractères uniquement)</li>
+  <li>Type de document identifié par l'IA (par exemple, « Contrat de bail »)</li>
+  <li>Si la requête a réussi ou échoué</li>
+  <li>Localisation, si vous avez choisi de la partager (par exemple, « Oakland, Californie »)</li>
+</ul>
+<p>Ce journal ne contient <strong>aucun contenu de document, aucune adresse IP, aucun nom et aucun identifiant personnel.</strong> Il est conservé dans la mémoire du serveur et effacé automatiquement à chaque redémarrage du serveur (ce qui se produit à chaque nouveau déploiement).</p>
+<h3>Retours que vous envoyez</h3>
+<p>Si vous soumettez un retour via le formulaire, le message, la catégorie et tout nom ou adresse e-mail que vous fournissez facultativement sont stockés dans la mémoire du serveur. Ces données sont également effacées au redémarrage du serveur. Nous ne les partageons avec aucun tiers.</p>
+<h3>Cookies et suivi</h3>
+<p>VeriLex n'utilise <strong>aucun cookie, aucun pixel de suivi, aucun script d'analyse</strong> ni aucune technologie de suivi tiers. Votre langue d'interface préférée est enregistrée dans le <code>localStorage</code> de votre navigateur — ces données ne quittent jamais votre appareil.</p>
+<h2>3. Sous-traitants de données tiers</h2>
+<h3>Anthropic (Claude AI)</h3>
+<p>Le texte de votre document est traité par l'API Claude d'Anthropic. Anthropic est une société américaine spécialisée dans la sécurité de l'IA. Conformément à la <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">politique de confidentialité d'Anthropic</a> et à leurs conditions d'utilisation de l'API, <strong>Anthropic n'utilise pas les entrées de l'API pour entraîner ses modèles d'IA par défaut.</strong> Pour connaître l'intégralité des pratiques de données d'Anthropic, consultez <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">anthropic.com/legal/privacy</a>.</p>
+<h3>Railway (Hébergement de serveurs)</h3>
+<p>VeriLex est hébergé sur <a href="https://railway.app" target="_blank" rel="noopener">Railway</a>, un fournisseur d'infrastructure cloud. Les serveurs sont situés aux États-Unis. Pour connaître les pratiques de confidentialité de Railway, consultez <a href="https://railway.app/legal/privacy" target="_blank" rel="noopener">railway.app/legal/privacy</a>.</p>
+<h2>4. Documents sensibles</h2>
+<p>VeriLex est conçu pour aider les utilisateurs à comprendre des documents potentiellement sensibles — notamment les avis d'immigration, les procédures d'expulsion et les correspondances financières. Si votre document contient des informations personnelles très sensibles (numéros de sécurité sociale, numéros de dossier d'immigration, noms légaux complets combinés avec des dates de naissance), nous vous recommandons de <strong>supprimer ces informations d'identification avant de les télécharger</strong>. La substance juridique du document est généralement analysable sans elles.</p>
+<p>Bien que VeriLex ne stocke pas les documents, toute transmission à un service d'IA externe comporte des risques inhérents. Exercez votre jugement quant à ce que vous partagez.</p>
+<h2>5. Résumé de la conservation des données</h2>
+<ul>
+  <li><strong>Contenu du document :</strong> Jamais stocké. Traité en temps réel et supprimé.</li>
+  <li><strong>Journal d'analyse d'utilisation :</strong> En mémoire uniquement. Effacé à chaque redémarrage du serveur.</li>
+  <li><strong>Soumissions de retours :</strong> En mémoire uniquement. Effacé à chaque redémarrage du serveur.</li>
+  <li><strong>Préférence de langue d'interface :</strong> Stockée dans le localStorage de votre navigateur. Jamais envoyée au serveur.</li>
+</ul>
+<h2>6. Confidentialité des enfants</h2>
+<p>VeriLex n'est pas destiné aux enfants de moins de 13 ans et ne collecte pas sciemment d'informations auprès d'enfants de moins de 13 ans. Si vous pensez qu'un enfant de moins de 13 ans a soumis des informations, veuillez nous contacter à <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a>.</p>
+<h2>7. Modifications de cette politique</h2>
+<p>Cette politique peut être mise à jour périodiquement. La date de « Dernière mise à jour » en haut indique la date de la dernière révision. L'utilisation continue de VeriLex après la publication des modifications constitue une acceptation de la politique mise à jour.</p>
+<h2>8. Contact</h2>
+<p>Pour toute question, préoccupation ou demande concernant la confidentialité : <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · Informations juridiques uniquement, pas de conseil juridique.'
+  },
+
+  tl: {
+    back: '← Bumalik sa VeriLex',
+    pageTitle: 'Patakaran sa Privacy',
+    pageSubtitle: 'Paano pinamamahalaan ng VeriLex ang iyong data — at kung paano hindi.',
+    prose: `<p class="updated">Huling na-update: Hunyo 2, 2026</p>
+<div class="notice-box"><strong>Maikling bersyon:</strong> Hindi nag-iimbak ng iyong mga dokumento ang VeriLex, hindi nangangailangan ng account, at hindi ka sinusubaybayan. Ang teksto ng iyong dokumento ay ipinapadala sa Claude API ng Anthropic para sa pagsusuri at hindi ito nananatili sa anumang server ng VeriLex.</div>
+<h2>1. Sino ang nagpapatakbo ng VeriLex</h2>
+<p>Ang VeriLex (verilex.org) ay isang libreng tool para sa pag-access ng mga legal na dokumento, na binuo at pinapanatili ni <strong>Tera Chen</strong>, isang estudyante ng Legal Studies sa University of California, Berkeley. Ang VeriLex ay hindi isang law firm, kumpanya ng legal na serbisyo, o rehistradong legal na entidad.</p>
+<p>Makipag-ugnayan: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>
+<h2>2. Impormasyon na kinokolekta ng VeriLex</h2>
+<h3>Nilalaman ng dokumento na iyong isinumite</h3>
+<p>Ang tekstong ini-paste mo o mga file na ina-upload mo ay ligtas na ipinapadala (HTTPS) sa Claude API ng Anthropic para sa pagsusuri. <strong>Hindi kailanman nag-iimbak, nagtatala, o nagpapanatili ang VeriLex ng nilalaman ng dokumento sa sarili nitong mga server.</strong> Ang resulta ng pagsusuri ay ipinapakita sa iyong browser at tinatanggal kapag isinarado mo ang pahina o lumipat ka sa ibang pahina.</p>
+<h3>Hindi kilalang pagsusuri ng paggamit</h3>
+<p>Nagtatala ang VeriLex ng maliit na hanay ng anonymized na metadata para sa bawat pagsusuri upang subaybayan ang kalusugan ng serbisyo at mapabuti ang tool. Ang bawat entry ng log ay naglalaman ng:</p>
+<ul>
+  <li>Timestamp (petsa at oras ng UTC)</li>
+  <li>Piniling wika</li>
+  <li>Piniling antas ng kaalaman (baguhan / katamtaman / eksperto)</li>
+  <li>Tinatayang haba ng dokumento (bilang ng character lamang)</li>
+  <li>Uri ng dokumento na natukoy ng AI (hal., "Kasunduan sa Pag-upa")</li>
+  <li>Kung ang kahilingan ay nagtagumpay o nabigo</li>
+  <li>Lokasyon, kung pinili mong ibahagi (hal., "Oakland, California")</li>
+</ul>
+<p>Ang log na ito ay <strong>walang nilalaman ng dokumento, walang IP address, walang pangalan, at walang personal na identifier.</strong> Ito ay nakaimbak sa memorya ng server at awtomatikong nililinis sa tuwing mag-restart ang server (na nangyayari sa bawat bagong deployment).</p>
+<h3>Feedback na iyong isinumite</h3>
+<p>Kung magsumite ka ng feedback sa pamamagitan ng feedback form, ang mensahe, kategorya, at anumang pangalan o email address na iyong ibibigay ay nakaimbak sa memorya ng server. Ang data na ito ay nililinis din sa pag-restart ng server. Hindi namin ito ibinabahagi sa anumang third party.</p>
+<h3>Mga Cookie at pagsubaybay</h3>
+<p>Hindi gumagamit ang VeriLex ng <strong>mga cookie, tracking pixel, o analytics script</strong>, at walang anumang uri ng third-party tracking technology. Ang iyong piniling wika ng interface ay naka-save sa <code>localStorage</code> ng iyong browser — ang data na ito ay hindi kailanman lumalabas sa iyong device.</p>
+<h2>3. Mga Third-Party Data Processor</h2>
+<h3>Anthropic (Claude AI)</h3>
+<p>Ang teksto ng iyong dokumento ay pinoproseso ng Claude API ng Anthropic. Ang Anthropic ay isang kumpanya ng AI safety na nakabase sa US. Ayon sa <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">patakaran sa privacy ng Anthropic</a> at sa kanilang mga tuntunin sa paggamit ng API, <strong>hindi ginagamit ng Anthropic ang mga API input upang sanayin ang kanilang mga AI model bilang default.</strong> Para sa kumpletong mga kasanayan sa data ng Anthropic, tingnan ang <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">anthropic.com/legal/privacy</a>.</p>
+<h3>Railway (Pag-host ng Server)</h3>
+<p>Ang VeriLex ay naka-host sa <a href="https://railway.app" target="_blank" rel="noopener">Railway</a>, isang cloud infrastructure provider. Ang mga server ay matatagpuan sa United States. Para sa mga kasanayan sa privacy ng Railway, tingnan ang <a href="https://railway.app/legal/privacy" target="_blank" rel="noopener">railway.app/legal/privacy</a>.</p>
+<h2>4. Mga Sensitibong Dokumento</h2>
+<p>Ang VeriLex ay idinisenyo upang tulungan ang mga gumagamit na maunawaan ang mga dokumentong maaaring sensitibo — kabilang ang mga abiso sa imigrasyon, mga filing ng pagpapaalis, at mga sulat sa pananalapi. Kung ang iyong dokumento ay naglalaman ng lubos na sensitibong personal na impormasyon (mga numero ng Social Security, mga numero ng kaso sa imigrasyon, mga kumpletong legal na pangalan na sinamahan ng mga petsa ng kapanganakan), inirerekomenda namin ang <strong>pag-redact ng impormasyong nagpapakilala bago mag-upload</strong>. Ang legal na nilalaman ng dokumento ay karaniwang maaaring suriin nang wala ito.</p>
+<p>Bagama't hindi nag-iimbak ang VeriLex ng mga dokumento, ang anumang pagpapadala sa isang external na serbisyo ng AI ay may likas na panganib. Gamitin ang iyong pagpapasya sa kung ano ang ibinabahagi mo.</p>
+<h2>5. Buod ng Pag-iimbak ng Data</h2>
+<ul>
+  <li><strong>Nilalaman ng dokumento:</strong> Hindi kailanman naka-imbak. Pinoproseso sa real time at tinatanggal.</li>
+  <li><strong>Log ng pagsusuri ng paggamit:</strong> Sa memorya lamang. Nililinis sa bawat pag-restart ng server.</li>
+  <li><strong>Mga pagsusumite ng feedback:</strong> Sa memorya lamang. Nililinis sa bawat pag-restart ng server.</li>
+  <li><strong>Kagustuhan sa wika ng interface:</strong> Nakaimbak sa localStorage ng iyong browser. Hindi kailanman ipinapadala sa server.</li>
+</ul>
+<h2>6. Privacy ng mga Bata</h2>
+<p>Ang VeriLex ay hindi nakatuon sa mga batang wala pang 13 taong gulang at hindi sinasadyang nangongolekta ng impormasyon mula sa mga batang wala pang 13 taong gulang. Kung naniniwala kang may nagsumite ng impormasyon na isang batang wala pang 13 taong gulang, makipag-ugnayan sa amin sa <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a>.</p>
+<h2>7. Mga Pagbabago sa Patakarang Ito</h2>
+<p>Maaaring ma-update ang patakarang ito sa paglipas ng panahon. Ang petsa ng "Huling na-update" sa itaas ay nagpapakita kung kailan ito huling binago. Ang patuloy na paggamit ng VeriLex pagkatapos mai-post ang mga pagbabago ay bumubuo ng pagtanggap sa na-update na patakaran.</p>
+<h2>8. Makipag-ugnayan</h2>
+<p>Para sa mga tanong, alalahanin, o kahilingan tungkol sa privacy: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>`,
+    ftCopy: '© 2026 Tera Chen · VeriLex · Impormasyon lamang tungkol sa batas, hindi legal na payo.'
   }
 
 };
