@@ -202,9 +202,9 @@
       text-align: center; padding: 36px 28px;
       background: var(--bg); border-radius: var(--r); border: 1px solid var(--border);
       transition: transform .2s, box-shadow .2s; position: relative;
-      opacity: 0; transform: translateY(24px); transition: opacity .5s, transform .5s;
     }
-    .how-step.visible { opacity: 1; transform: translateY(0); }
+    .how-step.will-animate { opacity: 0; transform: translateY(24px); transition: opacity .5s, transform .5s; }
+    .how-step.will-animate.visible { opacity: 1; transform: translateY(0); }
     .how-step:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
     .step-num {
       position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
@@ -3321,12 +3321,16 @@ window.addEventListener('scroll', () => {
 });
 
 // ── Scroll animations ─────────────────────────────────────────────────────────
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-}, { threshold: 0.05, rootMargin: '0px 0px 60px 0px' });
-document.querySelectorAll('.how-step').forEach(el => observer.observe(el));
-// Fallback: ensure steps are always visible after 1.5s (guards against iOS Safari observer not firing)
-setTimeout(() => document.querySelectorAll('.how-step').forEach(el => el.classList.add('visible')), 1500);
+// Cards are visible by default. Only add the fade-in animation if IntersectionObserver is available.
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.05, rootMargin: '0px 0px 60px 0px' });
+  document.querySelectorAll('.how-step').forEach(el => {
+    el.classList.add('will-animate');
+    observer.observe(el);
+  });
+}
 
 // ── Input mode ────────────────────────────────────────────────────────────────
 function switchInput(mode, btn) {
