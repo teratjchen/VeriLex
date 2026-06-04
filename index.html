@@ -247,6 +247,7 @@
       background: var(--surface); cursor: pointer; transition: all .15s; white-space: nowrap;
     }
     .sample-btn:hover { border-color: var(--amber); color: var(--amber-dim); background: var(--amber-bg); }
+    .sample-btn.active { border-color: var(--amber); color: var(--amber-dim); background: var(--amber-bg); font-weight: 700; }
 
     /* Tabs */
     .input-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); padding: 0 28px; }
@@ -1358,7 +1359,7 @@
           <button class="upload-action-btn" id="cameraBtn" onclick="openCamera()">
             📷 <span id="cameraBtnLabel">Use Camera</span>
           </button>
-          <button class="upload-action-btn" id="driveBtn" onclick="openGoogleDrive()">
+          <button class="upload-action-btn" id="driveBtn" onclick="openGoogleDrive()" style="display:none">
             📂 <span id="driveBtnLabel">Google Drive</span>
           </button>
         </div>
@@ -1772,7 +1773,15 @@ let chatHistory = [];
 
 // Public config (Google Drive credentials etc.) fetched from server on load
 window.VERILEX_CONFIG = {};
-fetch('/config').then(r => r.json()).then(d => { window.VERILEX_CONFIG = d; }).catch(() => {});
+fetch('/config').then(r => r.json()).then(d => {
+  window.VERILEX_CONFIG = d;
+  // Show Drive button only when Google credentials are configured
+  const driveBtn = document.getElementById('driveBtn');
+  if (driveBtn) driveBtn.style.display = d.google_client_id ? '' : 'none';
+}).catch(() => {
+  const driveBtn = document.getElementById('driveBtn');
+  if (driveBtn) driveBtn.style.display = 'none';
+});
 
 async function requestLocation() {
   const btn = document.getElementById('locBtn');
@@ -3362,6 +3371,9 @@ function onTextInput() {
 function loadSample(key) {
   const text = SAMPLES[key];
   if (!text) return;
+  // Highlight the active sample button (both in sample-bar and hero chips)
+  document.querySelectorAll('.sample-btn, .doc-chip').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll(`[onclick="loadSample('${key}')"]`).forEach(b => b.classList.add('active'));
   // Make sure paste tab is active
   if (inputMode !== 'paste') {
     switchInput('paste', document.querySelector('.input-tab'));
@@ -4009,6 +4021,7 @@ function resetAll() {
   pdfText = '';
   ocrUsed = false;
   document.getElementById('pdfStatus').textContent = '';
+  document.querySelectorAll('.sample-btn, .doc-chip').forEach(b => b.classList.remove('active'));
   lastDocText = '';
   lastAnalysis = null;
   chatHistory = [];
