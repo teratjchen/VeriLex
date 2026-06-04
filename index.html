@@ -717,6 +717,40 @@
     }
     .attorney-cta-link:hover { text-decoration: underline; }
 
+    /* ── TRANSLATION FLAG MODAL ────────────────────────── */
+    .flag-modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,.45); align-items: center; justify-content: center;
+    }
+    .flag-modal-overlay.open { display: flex; }
+    .flag-modal {
+      background: var(--surface); border-radius: 14px; padding: 28px 28px 24px;
+      max-width: 420px; width: calc(100% - 48px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.22);
+    }
+    .flag-modal-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--ink); }
+    .flag-modal-desc  { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+    .flag-modal textarea {
+      width: 100%; border: 1.5px solid var(--border); border-radius: 8px;
+      padding: 10px 12px; font-size: 14px; font-family: inherit; color: var(--text);
+      background: var(--bg); resize: vertical; min-height: 90px; outline: none;
+    }
+    .flag-modal textarea:focus { border-color: var(--amber); }
+    .flag-modal-actions { display: flex; gap: 10px; margin-top: 14px; justify-content: flex-end; }
+    .btn-flag-submit {
+      background: var(--amber); color: #fff; border: none; border-radius: 8px;
+      padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-flag-submit:hover { background: var(--amber-dim); }
+    .btn-flag-cancel {
+      background: transparent; border: 1.5px solid var(--border); border-radius: 8px;
+      padding: 8px 14px; font-size: 13px; font-weight: 600; color: var(--muted);
+      cursor: pointer; transition: border-color .15s;
+    }
+    .btn-flag-cancel:hover { border-color: var(--ink-mid); }
+    .flag-modal-status { font-size: 13px; margin-top: 10px; min-height: 18px; }
+
     /* ── RESULT ACTIONS (Print / Copy) ────────────────── */
     .result-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
     .btn-result-action {
@@ -1339,6 +1373,7 @@
       <div class="result-actions">
         <button class="btn-result-action" id="btnPrint" onclick="window.print()">🖨️ Print results</button>
         <button class="btn-result-action" id="copySummaryBtn" onclick="copySummary()">📋 Copy summary</button>
+        <button class="btn-result-action" id="btnFlag" style="display:none" onclick="openFlagModal()">🚩 Flag translation</button>
       </div>
 
       <div class="result-section" id="summarySection"></div>
@@ -1806,6 +1841,7 @@ const TRANSLATIONS = {
     urgencyLow:'Low Urgency', urgencyMed:'Medium Urgency', urgencyHigh:'High Urgency', urgencyCrit:'Critical — Act Immediately',
     actionBoxTitle:'What to do right now',
     ctaTitle:'⚖️ Talk to a free attorney', ctaBody:'VeriLex explains what this document says. For advice on what to do in your specific situation, a free attorney can help.', ctaLink:'Find free legal aid',
+    flagBtn:'🚩 Flag translation', flagTitle:'Report a translation issue', flagDesc:'Describe what seems incorrect in this translation:', flagSubmit:'Send report', flagCancel:'Cancel', flagThanks:'Thank you — we\'ll review it.',
     emptyBreakdown:'No section breakdown available.', emptyLaws:'No statutes identified for this document.', emptyCases:'No case law identified for this document type.', emptyGlossary:'No glossary terms identified.', emptyRights:'No rights information or resources available.',
     sectionPrefix:'Section', localResources:'Local & National Legal Resources',
     viewLaw:'View Law ↗', searchCase:'Search ↗', websiteLink:'Website ↗',
@@ -1887,6 +1923,7 @@ const TRANSLATIONS = {
     urgencyLow:'Urgencia baja', urgencyMed:'Urgencia media', urgencyHigh:'Urgencia alta', urgencyCrit:'Crítico — Actúa de inmediato',
     actionBoxTitle:'Qué hacer ahora mismo',
     ctaTitle:'⚖️ Habla con un abogado gratis', ctaBody:'VeriLex explica lo que dice este documento. Para asesoramiento sobre qué hacer en su situación específica, un abogado de ayuda legal gratuita puede ayudar.', ctaLink:'Encontrar ayuda legal gratuita',
+    flagBtn:'🚩 Reportar traducción', flagTitle:'Reportar un problema de traducción', flagDesc:'Describe qué parece incorrecto en esta traducción:', flagSubmit:'Enviar reporte', flagCancel:'Cancelar', flagThanks:'Gracias — lo revisaremos.',
     emptyBreakdown:'No hay desglose de secciones disponible.', emptyLaws:'No se identificaron leyes para este documento.', emptyCases:'No se identificó jurisprudencia para este tipo de documento.', emptyGlossary:'No se identificaron términos de glosario.', emptyRights:'No hay información de derechos o recursos disponible.',
     sectionPrefix:'Sección', localResources:'Recursos legales locales y nacionales',
     viewLaw:'Ver ley ↗', searchCase:'Buscar ↗', websiteLink:'Sitio web ↗',
@@ -1968,6 +2005,7 @@ const TRANSLATIONS = {
     urgencyLow:'低紧迫性', urgencyMed:'中等紧迫性', urgencyHigh:'高紧迫性', urgencyCrit:'紧急 — 立即采取行动',
     actionBoxTitle:'现在需要做什么',
     ctaTitle:'⚖️ 咨询免费律师', ctaBody:'VeriLex 解释本文件的内容。如需针对您具体情况的建议，免费法律援助律师可以提供帮助。', ctaLink:'查找免费法律援助',
+    flagBtn:'🚩 标记翻译问题', flagTitle:'报告翻译问题', flagDesc:'请描述此翻译中似乎有误的内容：', flagSubmit:'提交报告', flagCancel:'取消', flagThanks:'谢谢 — 我们将进行审查。',
     emptyBreakdown:'无可用章节分析。', emptyLaws:'未识别到适用于本文件的法规。', emptyCases:'未识别到适用于本文件类型的判例法。', emptyGlossary:'未识别到术语表。', emptyRights:'无权利信息或资源可用。',
     sectionPrefix:'第', localResources:'本地及全国法律资源',
     viewLaw:'查看法律 ↗', searchCase:'搜索 ↗', websiteLink:'网站 ↗',
@@ -2049,6 +2087,7 @@ const TRANSLATIONS = {
     urgencyLow:'低緊迫性', urgencyMed:'中等緊迫性', urgencyHigh:'高緊迫性', urgencyCrit:'緊急 — 立即採取行動',
     actionBoxTitle:'現在需要做什麼',
     ctaTitle:'⚖️ 諮詢免費律師', ctaBody:'VeriLex 說明本文件的內容。如需針對您具體情況的建議，免費法律援助律師可以提供協助。', ctaLink:'尋找免費法律援助',
+    flagBtn:'🚩 標記翻譯問題', flagTitle:'回報翻譯問題', flagDesc:'請描述此翻譯中似乎有誤的內容：', flagSubmit:'提交報告', flagCancel:'取消', flagThanks:'謝謝 — 我們將進行審查。',
     emptyBreakdown:'無可用章節分析。', emptyLaws:'未識別到適用於本文件的法規。', emptyCases:'未識別到適用於本文件類型的判例法。', emptyGlossary:'未識別到術語表。', emptyRights:'無權利資訊或資源可用。',
     sectionPrefix:'第', localResources:'本地及全國法律資源',
     viewLaw:'查看法律 ↗', searchCase:'搜尋 ↗', websiteLink:'網站 ↗',
@@ -2130,6 +2169,7 @@ const TRANSLATIONS = {
     urgencyLow:'Mức độ khẩn cấp thấp', urgencyMed:'Mức độ khẩn cấp trung bình', urgencyHigh:'Mức độ khẩn cấp cao', urgencyCrit:'Khẩn cấp — Hành động ngay',
     actionBoxTitle:'Cần làm gì ngay bây giờ',
     ctaTitle:'⚖️ Nói chuyện với luật sư miễn phí', ctaBody:'VeriLex giải thích những gì tài liệu này nói. Để được tư vấn về việc phải làm trong tình huống cụ thể của bạn, luật sư hỗ trợ pháp lý miễn phí có thể giúp đỡ.', ctaLink:'Tìm hỗ trợ pháp lý miễn phí',
+    flagBtn:'🚩 Báo lỗi dịch thuật', flagTitle:'Báo cáo vấn đề dịch thuật', flagDesc:'Mô tả điều gì có vẻ không đúng trong bản dịch này:', flagSubmit:'Gửi báo cáo', flagCancel:'Hủy', flagThanks:'Cảm ơn — chúng tôi sẽ xem xét.',
     emptyBreakdown:'Không có phân tích mục nào.', emptyLaws:'Không xác định được luật cho tài liệu này.', emptyCases:'Không xác định được án lệ cho loại tài liệu này.', emptyGlossary:'Không xác định được thuật ngữ nào.', emptyRights:'Không có thông tin quyền hoặc tài nguyên.',
     sectionPrefix:'Mục', localResources:'Tài nguyên pháp lý địa phương & quốc gia',
     viewLaw:'Xem luật ↗', searchCase:'Tìm kiếm ↗', websiteLink:'Trang web ↗',
@@ -2211,6 +2251,7 @@ const TRANSLATIONS = {
     urgencyLow:'Mababang Urgensya', urgencyMed:'Katamtamang Urgensya', urgencyHigh:'Mataas na Urgensya', urgencyCrit:'Kritikal — Kumilos Agad',
     actionBoxTitle:'Ano ang gagawin ngayon',
     ctaTitle:'⚖️ Makipag-usap sa libreng abogado', ctaBody:'Ipinapaliwanag ng VeriLex kung ano ang sinasabi ng dokumentong ito. Para sa payo tungkol sa iyong tiyak na sitwasyon, maaaring tumulong ang isang libreng abogado.', ctaLink:'Hanapin ang libreng legal na tulong',
+    flagBtn:'🚩 I-flag ang salin', flagTitle:'Mag-ulat ng isyu sa pagsasalin', flagDesc:'Ilarawan kung ano ang mukhang mali sa salin na ito:', flagSubmit:'Ipadala ang ulat', flagCancel:'Kanselahin', flagThanks:'Salamat — susuriin namin ito.',
     emptyBreakdown:'Walang available na breakdown ng seksyon.', emptyLaws:'Walang natukoy na batas para sa dokumentong ito.', emptyCases:'Walang natukoy na case law para sa ganitong uri ng dokumento.', emptyGlossary:'Walang natukoy na mga termino.', emptyRights:'Walang available na impormasyon sa karapatan o mapagkukunan.',
     sectionPrefix:'Seksyon', localResources:'Lokal at Pambansang Legal na Mapagkukunan',
     viewLaw:'Tingnan ang Batas ↗', searchCase:'Maghanap ↗', websiteLink:'Website ↗',
@@ -2292,6 +2333,7 @@ const TRANSLATIONS = {
     urgencyLow:'낮은 긴급도', urgencyMed:'중간 긴급도', urgencyHigh:'높은 긴급도', urgencyCrit:'긴급 — 즉시 행동하세요',
     actionBoxTitle:'지금 당장 해야 할 일',
     ctaTitle:'⚖️ 무료 변호사와 상담하세요', ctaBody:'VeriLex는 이 문서가 무엇을 말하는지 설명합니다. 귀하의 특정 상황에서 어떻게 해야 할지에 대한 조언은 무료 법률 지원 변호사가 도움을 드릴 수 있습니다.', ctaLink:'무료 법률 지원 찾기',
+    flagBtn:'🚩 번역 오류 신고', flagTitle:'번역 문제 신고', flagDesc:'이 번역에서 잘못된 것 같은 내용을 설명해 주세요:', flagSubmit:'신고 보내기', flagCancel:'취소', flagThanks:'감사합니다 — 검토하겠습니다.',
     emptyBreakdown:'섹션 분석 없음.', emptyLaws:'이 문서에 해당하는 법령이 없습니다.', emptyCases:'이 문서 유형에 해당하는 판례가 없습니다.', emptyGlossary:'용어 정의 없음.', emptyRights:'권리 정보 또는 자료 없음.',
     sectionPrefix:'섹션', localResources:'지역 및 전국 법률 자료',
     viewLaw:'법률 보기 ↗', searchCase:'검색 ↗', websiteLink:'웹사이트 ↗',
@@ -2373,6 +2415,7 @@ const TRANSLATIONS = {
     urgencyLow:'أولوية منخفضة', urgencyMed:'أولوية متوسطة', urgencyHigh:'أولوية عالية', urgencyCrit:'حرج — تصرف فوراً',
     actionBoxTitle:'ما يجب فعله الآن',
     ctaTitle:'⚖️ تحدث إلى محامٍ مجاني', ctaBody:'يشرح VeriLex ما تقوله هذه الوثيقة. للحصول على مشورة حول ما يجب فعله في وضعك المحدد، يمكن لمحامٍ للمساعدة القانونية المجانية أن يساعدك.', ctaLink:'ابحث عن مساعدة قانونية مجانية',
+    flagBtn:'🚩 الإبلاغ عن خطأ في الترجمة', flagTitle:'الإبلاغ عن مشكلة في الترجمة', flagDesc:'صف ما يبدو غير صحيح في هذه الترجمة:', flagSubmit:'إرسال التقرير', flagCancel:'إلغاء', flagThanks:'شكراً — سنراجع ذلك.',
     emptyBreakdown:'لا يوجد تحليل للأقسام.', emptyLaws:'لم يتم تحديد أي قوانين لهذا المستند.', emptyCases:'لم يتم تحديد أي قانون للقضايا لهذا النوع.', emptyGlossary:'لم يتم تحديد أي مصطلحات.', emptyRights:'لا تتوفر معلومات حقوق أو موارد.',
     sectionPrefix:'قسم', localResources:'الموارد القانونية المحلية والوطنية',
     viewLaw:'عرض القانون ↗', searchCase:'بحث ↗', websiteLink:'الموقع ↗',
@@ -2454,6 +2497,7 @@ const TRANSLATIONS = {
     urgencyLow:'कम जरूरी', urgencyMed:'मध्यम जरूरी', urgencyHigh:'अधिक जरूरी', urgencyCrit:'अत्यंत जरूरी — अभी कार्रवाई करें',
     actionBoxTitle:'अभी क्या करें',
     ctaTitle:'⚖️ निःशुल्क वकील से बात करें', ctaBody:'VeriLex बताता है कि यह दस्तावेज़ क्या कहता है। आपकी विशेष स्थिति में क्या करना है इसके बारे में सलाह के लिए, एक निःशुल्क कानूनी सहायता वकील मदद कर सकता है।', ctaLink:'निःशुल्क कानूनी सहायता खोजें',
+    flagBtn:'🚩 अनुवाद में त्रुटि बताएं', flagTitle:'अनुवाद समस्या की रिपोर्ट करें', flagDesc:'इस अनुवाद में जो गलत लग रहा है उसका वर्णन करें:', flagSubmit:'रिपोर्ट भेजें', flagCancel:'रद्द करें', flagThanks:'धन्यवाद — हम इसकी समीक्षा करेंगे।',
     emptyBreakdown:'कोई अनुभाग विश्लेषण उपलब्ध नहीं।', emptyLaws:'इस दस्तावेज़ के लिए कोई कानून नहीं मिला।', emptyCases:'इस प्रकार के दस्तावेज़ के लिए कोई केस लॉ नहीं मिला।', emptyGlossary:'कोई शब्दावली नहीं मिली।', emptyRights:'कोई अधिकार जानकारी या संसाधन उपलब्ध नहीं।',
     sectionPrefix:'अनुभाग', localResources:'स्थानीय और राष्ट्रीय कानूनी संसाधन',
     viewLaw:'कानून देखें ↗', searchCase:'खोजें ↗', websiteLink:'वेबसाइट ↗',
@@ -2535,6 +2579,7 @@ const TRANSLATIONS = {
     urgencyLow:'Urgência baixa', urgencyMed:'Urgência média', urgencyHigh:'Urgência alta', urgencyCrit:'Crítico — Aja imediatamente',
     actionBoxTitle:'O que fazer agora',
     ctaTitle:'⚖️ Fale com um advogado gratuito', ctaBody:'O VeriLex explica o que este documento diz. Para aconselhamento sobre o que fazer na sua situação específica, um advogado de assistência jurídica gratuita pode ajudar.', ctaLink:'Encontrar assistência jurídica gratuita',
+    flagBtn:'🚩 Sinalizar tradução', flagTitle:'Reportar problema de tradução', flagDesc:'Descreva o que parece incorreto nesta tradução:', flagSubmit:'Enviar relatório', flagCancel:'Cancelar', flagThanks:'Obrigado — vamos rever.',
     emptyBreakdown:'Nenhuma análise de seção disponível.', emptyLaws:'Nenhum estatuto identificado para este documento.', emptyCases:'Nenhuma jurisprudência identificada para este tipo de documento.', emptyGlossary:'Nenhum termo do glossário identificado.', emptyRights:'Nenhuma informação de direitos ou recursos disponível.',
     sectionPrefix:'Seção', localResources:'Recursos Jurídicos Locais e Nacionais',
     viewLaw:'Ver lei ↗', searchCase:'Pesquisar ↗', websiteLink:'Site ↗',
@@ -2616,6 +2661,7 @@ const TRANSLATIONS = {
     urgencyLow:'Низкая срочность', urgencyMed:'Средняя срочность', urgencyHigh:'Высокая срочность', urgencyCrit:'Критично — Действуйте немедленно',
     actionBoxTitle:'Что делать прямо сейчас',
     ctaTitle:'⚖️ Поговорите с бесплатным юристом', ctaBody:'VeriLex объясняет, что говорится в этом документе. Для получения совета о том, что делать в вашей конкретной ситуации, бесплатный юрист по юридической помощи может помочь.', ctaLink:'Найти бесплатную юридическую помощь',
+    flagBtn:'🚩 Сообщить об ошибке перевода', flagTitle:'Сообщить о проблеме с переводом', flagDesc:'Опишите, что кажется неверным в этом переводе:', flagSubmit:'Отправить отчет', flagCancel:'Отмена', flagThanks:'Спасибо — мы проверим.',
     emptyBreakdown:'Нет доступного разбора разделов.', emptyLaws:'Законодательство для этого документа не определено.', emptyCases:'Прецеденты для этого типа документа не определены.', emptyGlossary:'Термины глоссария не определены.', emptyRights:'Нет информации о правах или ресурсах.',
     sectionPrefix:'Раздел', localResources:'Местные и национальные правовые ресурсы',
     viewLaw:'Смотреть закон ↗', searchCase:'Поиск ↗', websiteLink:'Сайт ↗',
@@ -2697,6 +2743,7 @@ const TRANSLATIONS = {
     urgencyLow:'Urgence faible', urgencyMed:'Urgence moyenne', urgencyHigh:'Urgence élevée', urgencyCrit:'Critique — Agissez immédiatement',
     actionBoxTitle:'Que faire maintenant',
     ctaTitle:'⚖️ Parlez à un avocat gratuit', ctaBody:'VeriLex explique ce que dit ce document. Pour des conseils sur ce qu\'il faut faire dans votre situation spécifique, un avocat d\'aide juridictionnelle gratuite peut vous aider.', ctaLink:'Trouver une aide juridique gratuite',
+    flagBtn:'🚩 Signaler une traduction', flagTitle:'Signaler un problème de traduction', flagDesc:'Décrivez ce qui semble incorrect dans cette traduction :', flagSubmit:'Envoyer le rapport', flagCancel:'Annuler', flagThanks:'Merci — nous allons vérifier.',
     emptyBreakdown:'Aucune analyse de section disponible.', emptyLaws:'Aucune loi identifiée pour ce document.', emptyCases:'Aucune jurisprudence identifiée pour ce type de document.', emptyGlossary:'Aucun terme de glossaire identifié.', emptyRights:'Aucune information sur les droits ou ressources disponible.',
     sectionPrefix:'Section', localResources:'Ressources juridiques locales et nationales',
     viewLaw:'Voir la loi ↗', searchCase:'Rechercher ↗', websiteLink:'Site web ↗',
@@ -2778,6 +2825,7 @@ const TRANSLATIONS = {
     urgencyLow:'Ijans ba', urgencyMed:'Ijans mwayen', urgencyHigh:'Ijans wo', urgencyCrit:'Kritik — Aji kounye a',
     actionBoxTitle:'Kisa pou fè kounye a',
     ctaTitle:'⚖️ Pale ak yon avoka gratis', ctaBody:'VeriLex eksplike sa dokiman sa a di. Pou konsèy sou sa pou fè nan sitiyasyon espesifik ou, yon avoka èd legal gratis ka ede ou.', ctaLink:'Jwenn èd legal gratis',
+    flagBtn:'🚩 Rapòte tradiksyon', flagTitle:'Rapòte yon pwoblèm tradiksyon', flagDesc:'Dekri sa ki sanble pa kòrèk nan tradiksyon sa a:', flagSubmit:'Voye rapò', flagCancel:'Anile', flagThanks:'Mèsi — nou pral revize li.',
     emptyBreakdown:'Pa gen analiz seksyon disponib.', emptyLaws:'Pa gen lwa idantifye pou dokiman sa a.', emptyCases:'Pa gen ka legal idantifye pou tip dokiman sa a.', emptyGlossary:'Pa gen tèm glosè idantifye.', emptyRights:'Pa gen enfòmasyon sou dwa oswa resous disponib.',
     sectionPrefix:'Seksyon', localResources:'Resous Legal Lokal ak Nasyonal',
     viewLaw:'Wè lwa ↗', searchCase:'Chèche ↗', websiteLink:'Sit wèb ↗',
@@ -2859,6 +2907,7 @@ const TRANSLATIONS = {
     urgencyLow:'ਘੱਟ ਜ਼ਰੂਰੀ', urgencyMed:'ਮੱਧਮ ਜ਼ਰੂਰੀ', urgencyHigh:'ਵੱਧ ਜ਼ਰੂਰੀ', urgencyCrit:'ਬਹੁਤ ਜ਼ਰੂਰੀ — ਹੁਣੇ ਕਾਰਵਾਈ ਕਰੋ',
     actionBoxTitle:'ਹੁਣੇ ਕੀ ਕਰਨਾ ਹੈ',
     ctaTitle:'⚖️ ਮੁਫ਼ਤ ਵਕੀਲ ਨਾਲ ਗੱਲ ਕਰੋ', ctaBody:'VeriLex ਦੱਸਦਾ ਹੈ ਕਿ ਇਹ ਦਸਤਾਵੇਜ਼ ਕੀ ਕਹਿੰਦਾ ਹੈ। ਤੁਹਾਡੀ ਖਾਸ ਸਥਿਤੀ ਵਿੱਚ ਕੀ ਕਰਨਾ ਹੈ ਇਸ ਬਾਰੇ ਸਲਾਹ ਲਈ, ਇੱਕ ਮੁਫ਼ਤ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਵਕੀਲ ਮਦਦ ਕਰ ਸਕਦਾ ਹੈ।', ctaLink:'ਮੁਫ਼ਤ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਲੱਭੋ',
+    flagBtn:'🚩 ਅਨੁਵਾਦ ਸਮੱਸਿਆ ਦੱਸੋ', flagTitle:'ਅਨੁਵਾਦ ਸਮੱਸਿਆ ਦੀ ਰਿਪੋਰਟ ਕਰੋ', flagDesc:'ਇਸ ਅਨੁਵਾਦ ਵਿੱਚ ਜੋ ਗਲਤ ਲੱਗਦਾ ਹੈ ਉਸਦਾ ਵਰਣਨ ਕਰੋ:', flagSubmit:'ਰਿਪੋਰਟ ਭੇਜੋ', flagCancel:'ਰੱਦ ਕਰੋ', flagThanks:'ਧੰਨਵਾਦ — ਅਸੀਂ ਇਸਦੀ ਸਮੀਖਿਆ ਕਰਾਂਗੇ।',
     emptyBreakdown:'ਕੋਈ ਅਨੁਭਾਗ ਵਿਸ਼ਲੇਸ਼ਣ ਉਪਲਬਧ ਨਹੀਂ।', emptyLaws:'ਇਸ ਦਸਤਾਵੇਜ਼ ਲਈ ਕੋਈ ਕਾਨੂੰਨ ਨਹੀਂ ਮਿਲਿਆ।', emptyCases:'ਇਸ ਕਿਸਮ ਲਈ ਕੋਈ ਕੇਸ ਕਾਨੂੰਨ ਨਹੀਂ ਮਿਲਿਆ।', emptyGlossary:'ਕੋਈ ਸ਼ਬਦਾਵਲੀ ਨਹੀਂ ਮਿਲੀ।', emptyRights:'ਕੋਈ ਅਧਿਕਾਰ ਜਾਣਕਾਰੀ ਜਾਂ ਸਰੋਤ ਉਪਲਬਧ ਨਹੀਂ।',
     sectionPrefix:'ਅਨੁਭਾਗ', localResources:'ਸਥਾਨਕ ਅਤੇ ਰਾਸ਼ਟਰੀ ਕਾਨੂੰਨੀ ਸਰੋਤ',
     viewLaw:'ਕਾਨੂੰਨ ਦੇਖੋ ↗', searchCase:'ਖੋਜੋ ↗', websiteLink:'ਵੈੱਬਸਾਈਟ ↗',
@@ -2940,6 +2989,7 @@ const TRANSLATIONS = {
     urgencyLow:'ዝቅተኛ አስቸኳይነት', urgencyMed:'መካከለኛ አስቸኳይነት', urgencyHigh:'ከፍተኛ አስቸኳይነት', urgencyCrit:'አሳሳቢ — አሁኑኑ ይስሩ',
     actionBoxTitle:'አሁን ምን ማድረግ እንዳለበት',
     ctaTitle:'⚖️ ነጻ ጠበቃ ጋር ይነጋገሩ', ctaBody:'VeriLex ይህ ሰነድ ምን እንደሚናገር ያብራራል። ለእርስዎ ልዩ ሁኔታ ምን ማድረግ እንዳለብዎ ምክር ለማግኘት፣ ነጻ የህግ ድጋፍ ጠበቃ ሊረዳዎ ይችላል።', ctaLink:'ነጻ የህግ ድጋፍ ፈልጉ',
+    flagBtn:'🚩 ትርጉም ጉድለት ሪፖርት አድርጉ', flagTitle:'የትርጉም ችግር ሪፖርት አድርጉ', flagDesc:'በዚህ ትርጉም ውስጥ የሚመስለው ስህተት ምን እንደሆነ ይግለጹ፡', flagSubmit:'ሪፖርት ላኩ', flagCancel:'ሰርዝ', flagThanks:'እናመሰግናለን — እንፈትሸዋለን።',
     emptyBreakdown:'ምንም የክፍል ትንታኔ የለም።', emptyLaws:'ለዚህ ሰነድ ምንም ሕግ አልተገኘም።', emptyCases:'ለዚህ ሰነድ አይነት ምንም ጉዳይ ሕግ አልተገኘም።', emptyGlossary:'ምንም ቃላት አልተገኙም።', emptyRights:'ምንም የሕግ መብቶች ወይም ሀብቶች አልተገኙም።',
     sectionPrefix:'ክፍል', localResources:'የአካባቢ እና ብሔራዊ የሕግ ሀብቶች',
     viewLaw:'ሕግ ይመልከቱ ↗', searchCase:'ፈልጉ ↗', websiteLink:'ድረ-ገጽ ↗',
@@ -3483,6 +3533,13 @@ function render(d) {
   renderGlossary(d.glossary || []);
   renderRights(d.rights_under_law || [], d.local_resources || []);
   switchTab('breakdown', document.querySelector('.pill-tab'));
+  const flagBtn = document.getElementById('btnFlag');
+  if (uiLang !== 'en') {
+    flagBtn.textContent = T().flagBtn || '🚩 Flag translation';
+    flagBtn.style.display = '';
+  } else {
+    flagBtn.style.display = 'none';
+  }
 }
 
 // ── Follow-up chat ─────────────────────────────────────────────────────────────
@@ -3736,6 +3793,46 @@ async function submitFeedback() {
   }
 }
 
+// ── Translation flag modal ─────────────────────────────────────────────────────
+function openFlagModal() {
+  const t = T();
+  document.getElementById('flagModalTitle').textContent  = t.flagTitle  || 'Report a translation issue';
+  document.getElementById('flagModalDesc').textContent   = t.flagDesc   || 'Describe what seems incorrect in this translation:';
+  document.getElementById('flagModalCancel').textContent = t.flagCancel || 'Cancel';
+  document.getElementById('flagModalSubmit').textContent = t.flagSubmit || 'Send report';
+  document.getElementById('flagModalText').value = '';
+  document.getElementById('flagModalStatus').textContent = '';
+  document.getElementById('flagModalStatus').style.color = 'var(--muted)';
+  document.getElementById('flagModalOverlay').classList.add('open');
+  document.getElementById('flagModalText').focus();
+}
+function closeFlagModal() {
+  document.getElementById('flagModalOverlay').classList.remove('open');
+}
+async function submitFlagReport() {
+  const t = T();
+  const msg = document.getElementById('flagModalText').value.trim();
+  const status = document.getElementById('flagModalStatus');
+  if (!msg) { status.style.color = '#dc2626'; status.textContent = '⚠️'; return; }
+  document.getElementById('flagModalSubmit').disabled = true;
+  try {
+    const res = await fetch('/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ category: 'translation', message: `[${uiLang.toUpperCase()} translation issue] ${msg}` }),
+    });
+    if (!res.ok) throw new Error();
+    status.style.color = '#16a34a';
+    status.textContent = t.flagThanks || 'Thank you — we\'ll review it.';
+    setTimeout(closeFlagModal, 2000);
+  } catch {
+    status.style.color = '#dc2626';
+    status.textContent = 'Something went wrong. Please try again.';
+  } finally {
+    document.getElementById('flagModalSubmit').disabled = false;
+  }
+}
+
 // ── Reset ──────────────────────────────────────────────────────────────────────
 function resetAll() {
   setUI('none');
@@ -3788,5 +3885,19 @@ function esc(s)  { return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;
 function escA(s) { return s ? String(s).replace(/['"<>&\s]/g, c => ({'\'':'&#39;','"':'&quot;','<':'&lt;','>':'&gt;','&':'&amp;',' ':'-'}[c]||c)) : ''; }
 function emptyState(msg) { return `<div class="empty-state"><span class="es-icon">🔍</span>${esc(msg)}</div>`; }
 </script>
+
+<!-- Translation flag modal -->
+<div class="flag-modal-overlay" id="flagModalOverlay" onclick="if(event.target===this)closeFlagModal()">
+  <div class="flag-modal">
+    <div class="flag-modal-title" id="flagModalTitle">Report a translation issue</div>
+    <div class="flag-modal-desc" id="flagModalDesc">Describe what seems incorrect in this translation:</div>
+    <textarea id="flagModalText" rows="4" placeholder="e.g. The word for 'eviction' is incorrect…"></textarea>
+    <div class="flag-modal-status" id="flagModalStatus"></div>
+    <div class="flag-modal-actions">
+      <button class="btn-flag-cancel" id="flagModalCancel" onclick="closeFlagModal()">Cancel</button>
+      <button class="btn-flag-submit" id="flagModalSubmit" onclick="submitFlagReport()">Send report</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
