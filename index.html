@@ -702,6 +702,20 @@
     }
     .action-box.critical .action-step-num { background: var(--crit); }
     .action-box.high     .action-step-num { background: var(--high); }
+    .attorney-cta {
+      background: rgba(255,255,255,.75); border-radius: 8px;
+      padding: 14px 16px; margin-bottom: 18px;
+      display: flex; flex-direction: column; gap: 7px;
+      border: 1px solid rgba(0,0,0,.08);
+    }
+    .attorney-cta-title { font-weight: 700; font-size: 14px; color: var(--ink); }
+    .attorney-cta-body  { font-size: 13px; line-height: 1.55; color: var(--ink-mid); }
+    .attorney-cta-link  {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 13px; font-weight: 600; color: var(--amber);
+      text-decoration: none;
+    }
+    .attorney-cta-link:hover { text-decoration: underline; }
 
     /* ── RESULT ACTIONS (Print / Copy) ────────────────── */
     .result-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
@@ -1791,6 +1805,7 @@ const TRANSLATIONS = {
     charCountSuffix:' characters',
     urgencyLow:'Low Urgency', urgencyMed:'Medium Urgency', urgencyHigh:'High Urgency', urgencyCrit:'Critical — Act Immediately',
     actionBoxTitle:'What to do right now',
+    ctaTitle:'⚖️ Talk to a free attorney', ctaBody:'VeriLex explains what this document says. For advice on what to do in your specific situation, a free attorney can help.', ctaLink:'Find free legal aid',
     emptyBreakdown:'No section breakdown available.', emptyLaws:'No statutes identified for this document.', emptyCases:'No case law identified for this document type.', emptyGlossary:'No glossary terms identified.', emptyRights:'No rights information or resources available.',
     sectionPrefix:'Section', localResources:'Local & National Legal Resources',
     viewLaw:'View Law ↗', searchCase:'Search ↗', websiteLink:'Website ↗',
@@ -1871,6 +1886,7 @@ const TRANSLATIONS = {
     charCountSuffix:' caracteres',
     urgencyLow:'Urgencia baja', urgencyMed:'Urgencia media', urgencyHigh:'Urgencia alta', urgencyCrit:'Crítico — Actúa de inmediato',
     actionBoxTitle:'Qué hacer ahora mismo',
+    ctaTitle:'⚖️ Habla con un abogado gratis', ctaBody:'VeriLex explica lo que dice este documento. Para asesoramiento sobre qué hacer en su situación específica, un abogado de ayuda legal gratuita puede ayudar.', ctaLink:'Encontrar ayuda legal gratuita',
     emptyBreakdown:'No hay desglose de secciones disponible.', emptyLaws:'No se identificaron leyes para este documento.', emptyCases:'No se identificó jurisprudencia para este tipo de documento.', emptyGlossary:'No se identificaron términos de glosario.', emptyRights:'No hay información de derechos o recursos disponible.',
     sectionPrefix:'Sección', localResources:'Recursos legales locales y nacionales',
     viewLaw:'Ver ley ↗', searchCase:'Buscar ↗', websiteLink:'Sitio web ↗',
@@ -1951,6 +1967,7 @@ const TRANSLATIONS = {
     charCountSuffix:' 个字符',
     urgencyLow:'低紧迫性', urgencyMed:'中等紧迫性', urgencyHigh:'高紧迫性', urgencyCrit:'紧急 — 立即采取行动',
     actionBoxTitle:'现在需要做什么',
+    ctaTitle:'⚖️ 咨询免费律师', ctaBody:'VeriLex 解释本文件的内容。如需针对您具体情况的建议，免费法律援助律师可以提供帮助。', ctaLink:'查找免费法律援助',
     emptyBreakdown:'无可用章节分析。', emptyLaws:'未识别到适用于本文件的法规。', emptyCases:'未识别到适用于本文件类型的判例法。', emptyGlossary:'未识别到术语表。', emptyRights:'无权利信息或资源可用。',
     sectionPrefix:'第', localResources:'本地及全国法律资源',
     viewLaw:'查看法律 ↗', searchCase:'搜索 ↗', websiteLink:'网站 ↗',
@@ -2031,6 +2048,7 @@ const TRANSLATIONS = {
     charCountSuffix:' 個字元',
     urgencyLow:'低緊迫性', urgencyMed:'中等緊迫性', urgencyHigh:'高緊迫性', urgencyCrit:'緊急 — 立即採取行動',
     actionBoxTitle:'現在需要做什麼',
+    ctaTitle:'⚖️ 諮詢免費律師', ctaBody:'VeriLex 說明本文件的內容。如需針對您具體情況的建議，免費法律援助律師可以提供協助。', ctaLink:'尋找免費法律援助',
     emptyBreakdown:'無可用章節分析。', emptyLaws:'未識別到適用於本文件的法規。', emptyCases:'未識別到適用於本文件類型的判例法。', emptyGlossary:'未識別到術語表。', emptyRights:'無權利資訊或資源可用。',
     sectionPrefix:'第', localResources:'本地及全國法律資源',
     viewLaw:'查看法律 ↗', searchCase:'搜尋 ↗', websiteLink:'網站 ↗',
@@ -2111,6 +2129,7 @@ const TRANSLATIONS = {
     charCountSuffix:' ký tự',
     urgencyLow:'Mức độ khẩn cấp thấp', urgencyMed:'Mức độ khẩn cấp trung bình', urgencyHigh:'Mức độ khẩn cấp cao', urgencyCrit:'Khẩn cấp — Hành động ngay',
     actionBoxTitle:'Cần làm gì ngay bây giờ',
+    ctaTitle:'⚖️ Nói chuyện với luật sư miễn phí', ctaBody:'VeriLex giải thích những gì tài liệu này nói. Để được tư vấn về việc phải làm trong tình huống cụ thể của bạn, luật sư hỗ trợ pháp lý miễn phí có thể giúp đỡ.', ctaLink:'Tìm hỗ trợ pháp lý miễn phí',
     emptyBreakdown:'Không có phân tích mục nào.', emptyLaws:'Không xác định được luật cho tài liệu này.', emptyCases:'Không xác định được án lệ cho loại tài liệu này.', emptyGlossary:'Không xác định được thuật ngữ nào.', emptyRights:'Không có thông tin quyền hoặc tài nguyên.',
     sectionPrefix:'Mục', localResources:'Tài nguyên pháp lý địa phương & quốc gia',
     viewLaw:'Xem luật ↗', searchCase:'Tìm kiếm ↗', websiteLink:'Trang web ↗',
@@ -2191,6 +2210,7 @@ const TRANSLATIONS = {
     charCountSuffix:' mga karakter',
     urgencyLow:'Mababang Urgensya', urgencyMed:'Katamtamang Urgensya', urgencyHigh:'Mataas na Urgensya', urgencyCrit:'Kritikal — Kumilos Agad',
     actionBoxTitle:'Ano ang gagawin ngayon',
+    ctaTitle:'⚖️ Makipag-usap sa libreng abogado', ctaBody:'Ipinapaliwanag ng VeriLex kung ano ang sinasabi ng dokumentong ito. Para sa payo tungkol sa iyong tiyak na sitwasyon, maaaring tumulong ang isang libreng abogado.', ctaLink:'Hanapin ang libreng legal na tulong',
     emptyBreakdown:'Walang available na breakdown ng seksyon.', emptyLaws:'Walang natukoy na batas para sa dokumentong ito.', emptyCases:'Walang natukoy na case law para sa ganitong uri ng dokumento.', emptyGlossary:'Walang natukoy na mga termino.', emptyRights:'Walang available na impormasyon sa karapatan o mapagkukunan.',
     sectionPrefix:'Seksyon', localResources:'Lokal at Pambansang Legal na Mapagkukunan',
     viewLaw:'Tingnan ang Batas ↗', searchCase:'Maghanap ↗', websiteLink:'Website ↗',
@@ -2271,6 +2291,7 @@ const TRANSLATIONS = {
     charCountSuffix:' 자',
     urgencyLow:'낮은 긴급도', urgencyMed:'중간 긴급도', urgencyHigh:'높은 긴급도', urgencyCrit:'긴급 — 즉시 행동하세요',
     actionBoxTitle:'지금 당장 해야 할 일',
+    ctaTitle:'⚖️ 무료 변호사와 상담하세요', ctaBody:'VeriLex는 이 문서가 무엇을 말하는지 설명합니다. 귀하의 특정 상황에서 어떻게 해야 할지에 대한 조언은 무료 법률 지원 변호사가 도움을 드릴 수 있습니다.', ctaLink:'무료 법률 지원 찾기',
     emptyBreakdown:'섹션 분석 없음.', emptyLaws:'이 문서에 해당하는 법령이 없습니다.', emptyCases:'이 문서 유형에 해당하는 판례가 없습니다.', emptyGlossary:'용어 정의 없음.', emptyRights:'권리 정보 또는 자료 없음.',
     sectionPrefix:'섹션', localResources:'지역 및 전국 법률 자료',
     viewLaw:'법률 보기 ↗', searchCase:'검색 ↗', websiteLink:'웹사이트 ↗',
@@ -2351,6 +2372,7 @@ const TRANSLATIONS = {
     charCountSuffix:' حرف',
     urgencyLow:'أولوية منخفضة', urgencyMed:'أولوية متوسطة', urgencyHigh:'أولوية عالية', urgencyCrit:'حرج — تصرف فوراً',
     actionBoxTitle:'ما يجب فعله الآن',
+    ctaTitle:'⚖️ تحدث إلى محامٍ مجاني', ctaBody:'يشرح VeriLex ما تقوله هذه الوثيقة. للحصول على مشورة حول ما يجب فعله في وضعك المحدد، يمكن لمحامٍ للمساعدة القانونية المجانية أن يساعدك.', ctaLink:'ابحث عن مساعدة قانونية مجانية',
     emptyBreakdown:'لا يوجد تحليل للأقسام.', emptyLaws:'لم يتم تحديد أي قوانين لهذا المستند.', emptyCases:'لم يتم تحديد أي قانون للقضايا لهذا النوع.', emptyGlossary:'لم يتم تحديد أي مصطلحات.', emptyRights:'لا تتوفر معلومات حقوق أو موارد.',
     sectionPrefix:'قسم', localResources:'الموارد القانونية المحلية والوطنية',
     viewLaw:'عرض القانون ↗', searchCase:'بحث ↗', websiteLink:'الموقع ↗',
@@ -2431,6 +2453,7 @@ const TRANSLATIONS = {
     charCountSuffix:' अक्षर',
     urgencyLow:'कम जरूरी', urgencyMed:'मध्यम जरूरी', urgencyHigh:'अधिक जरूरी', urgencyCrit:'अत्यंत जरूरी — अभी कार्रवाई करें',
     actionBoxTitle:'अभी क्या करें',
+    ctaTitle:'⚖️ निःशुल्क वकील से बात करें', ctaBody:'VeriLex बताता है कि यह दस्तावेज़ क्या कहता है। आपकी विशेष स्थिति में क्या करना है इसके बारे में सलाह के लिए, एक निःशुल्क कानूनी सहायता वकील मदद कर सकता है।', ctaLink:'निःशुल्क कानूनी सहायता खोजें',
     emptyBreakdown:'कोई अनुभाग विश्लेषण उपलब्ध नहीं।', emptyLaws:'इस दस्तावेज़ के लिए कोई कानून नहीं मिला।', emptyCases:'इस प्रकार के दस्तावेज़ के लिए कोई केस लॉ नहीं मिला।', emptyGlossary:'कोई शब्दावली नहीं मिली।', emptyRights:'कोई अधिकार जानकारी या संसाधन उपलब्ध नहीं।',
     sectionPrefix:'अनुभाग', localResources:'स्थानीय और राष्ट्रीय कानूनी संसाधन',
     viewLaw:'कानून देखें ↗', searchCase:'खोजें ↗', websiteLink:'वेबसाइट ↗',
@@ -2511,6 +2534,7 @@ const TRANSLATIONS = {
     charCountSuffix:' caracteres',
     urgencyLow:'Urgência baixa', urgencyMed:'Urgência média', urgencyHigh:'Urgência alta', urgencyCrit:'Crítico — Aja imediatamente',
     actionBoxTitle:'O que fazer agora',
+    ctaTitle:'⚖️ Fale com um advogado gratuito', ctaBody:'O VeriLex explica o que este documento diz. Para aconselhamento sobre o que fazer na sua situação específica, um advogado de assistência jurídica gratuita pode ajudar.', ctaLink:'Encontrar assistência jurídica gratuita',
     emptyBreakdown:'Nenhuma análise de seção disponível.', emptyLaws:'Nenhum estatuto identificado para este documento.', emptyCases:'Nenhuma jurisprudência identificada para este tipo de documento.', emptyGlossary:'Nenhum termo do glossário identificado.', emptyRights:'Nenhuma informação de direitos ou recursos disponível.',
     sectionPrefix:'Seção', localResources:'Recursos Jurídicos Locais e Nacionais',
     viewLaw:'Ver lei ↗', searchCase:'Pesquisar ↗', websiteLink:'Site ↗',
@@ -2591,6 +2615,7 @@ const TRANSLATIONS = {
     charCountSuffix:' символов',
     urgencyLow:'Низкая срочность', urgencyMed:'Средняя срочность', urgencyHigh:'Высокая срочность', urgencyCrit:'Критично — Действуйте немедленно',
     actionBoxTitle:'Что делать прямо сейчас',
+    ctaTitle:'⚖️ Поговорите с бесплатным юристом', ctaBody:'VeriLex объясняет, что говорится в этом документе. Для получения совета о том, что делать в вашей конкретной ситуации, бесплатный юрист по юридической помощи может помочь.', ctaLink:'Найти бесплатную юридическую помощь',
     emptyBreakdown:'Нет доступного разбора разделов.', emptyLaws:'Законодательство для этого документа не определено.', emptyCases:'Прецеденты для этого типа документа не определены.', emptyGlossary:'Термины глоссария не определены.', emptyRights:'Нет информации о правах или ресурсах.',
     sectionPrefix:'Раздел', localResources:'Местные и национальные правовые ресурсы',
     viewLaw:'Смотреть закон ↗', searchCase:'Поиск ↗', websiteLink:'Сайт ↗',
@@ -2671,6 +2696,7 @@ const TRANSLATIONS = {
     charCountSuffix:' caractères',
     urgencyLow:'Urgence faible', urgencyMed:'Urgence moyenne', urgencyHigh:'Urgence élevée', urgencyCrit:'Critique — Agissez immédiatement',
     actionBoxTitle:'Que faire maintenant',
+    ctaTitle:'⚖️ Parlez à un avocat gratuit', ctaBody:'VeriLex explique ce que dit ce document. Pour des conseils sur ce qu\'il faut faire dans votre situation spécifique, un avocat d\'aide juridictionnelle gratuite peut vous aider.', ctaLink:'Trouver une aide juridique gratuite',
     emptyBreakdown:'Aucune analyse de section disponible.', emptyLaws:'Aucune loi identifiée pour ce document.', emptyCases:'Aucune jurisprudence identifiée pour ce type de document.', emptyGlossary:'Aucun terme de glossaire identifié.', emptyRights:'Aucune information sur les droits ou ressources disponible.',
     sectionPrefix:'Section', localResources:'Ressources juridiques locales et nationales',
     viewLaw:'Voir la loi ↗', searchCase:'Rechercher ↗', websiteLink:'Site web ↗',
@@ -2751,6 +2777,7 @@ const TRANSLATIONS = {
     charCountSuffix:' karaktè',
     urgencyLow:'Ijans ba', urgencyMed:'Ijans mwayen', urgencyHigh:'Ijans wo', urgencyCrit:'Kritik — Aji kounye a',
     actionBoxTitle:'Kisa pou fè kounye a',
+    ctaTitle:'⚖️ Pale ak yon avoka gratis', ctaBody:'VeriLex eksplike sa dokiman sa a di. Pou konsèy sou sa pou fè nan sitiyasyon espesifik ou, yon avoka èd legal gratis ka ede ou.', ctaLink:'Jwenn èd legal gratis',
     emptyBreakdown:'Pa gen analiz seksyon disponib.', emptyLaws:'Pa gen lwa idantifye pou dokiman sa a.', emptyCases:'Pa gen ka legal idantifye pou tip dokiman sa a.', emptyGlossary:'Pa gen tèm glosè idantifye.', emptyRights:'Pa gen enfòmasyon sou dwa oswa resous disponib.',
     sectionPrefix:'Seksyon', localResources:'Resous Legal Lokal ak Nasyonal',
     viewLaw:'Wè lwa ↗', searchCase:'Chèche ↗', websiteLink:'Sit wèb ↗',
@@ -2831,6 +2858,7 @@ const TRANSLATIONS = {
     charCountSuffix:' ਅੱਖਰ',
     urgencyLow:'ਘੱਟ ਜ਼ਰੂਰੀ', urgencyMed:'ਮੱਧਮ ਜ਼ਰੂਰੀ', urgencyHigh:'ਵੱਧ ਜ਼ਰੂਰੀ', urgencyCrit:'ਬਹੁਤ ਜ਼ਰੂਰੀ — ਹੁਣੇ ਕਾਰਵਾਈ ਕਰੋ',
     actionBoxTitle:'ਹੁਣੇ ਕੀ ਕਰਨਾ ਹੈ',
+    ctaTitle:'⚖️ ਮੁਫ਼ਤ ਵਕੀਲ ਨਾਲ ਗੱਲ ਕਰੋ', ctaBody:'VeriLex ਦੱਸਦਾ ਹੈ ਕਿ ਇਹ ਦਸਤਾਵੇਜ਼ ਕੀ ਕਹਿੰਦਾ ਹੈ। ਤੁਹਾਡੀ ਖਾਸ ਸਥਿਤੀ ਵਿੱਚ ਕੀ ਕਰਨਾ ਹੈ ਇਸ ਬਾਰੇ ਸਲਾਹ ਲਈ, ਇੱਕ ਮੁਫ਼ਤ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਵਕੀਲ ਮਦਦ ਕਰ ਸਕਦਾ ਹੈ।', ctaLink:'ਮੁਫ਼ਤ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਲੱਭੋ',
     emptyBreakdown:'ਕੋਈ ਅਨੁਭਾਗ ਵਿਸ਼ਲੇਸ਼ਣ ਉਪਲਬਧ ਨਹੀਂ।', emptyLaws:'ਇਸ ਦਸਤਾਵੇਜ਼ ਲਈ ਕੋਈ ਕਾਨੂੰਨ ਨਹੀਂ ਮਿਲਿਆ।', emptyCases:'ਇਸ ਕਿਸਮ ਲਈ ਕੋਈ ਕੇਸ ਕਾਨੂੰਨ ਨਹੀਂ ਮਿਲਿਆ।', emptyGlossary:'ਕੋਈ ਸ਼ਬਦਾਵਲੀ ਨਹੀਂ ਮਿਲੀ।', emptyRights:'ਕੋਈ ਅਧਿਕਾਰ ਜਾਣਕਾਰੀ ਜਾਂ ਸਰੋਤ ਉਪਲਬਧ ਨਹੀਂ।',
     sectionPrefix:'ਅਨੁਭਾਗ', localResources:'ਸਥਾਨਕ ਅਤੇ ਰਾਸ਼ਟਰੀ ਕਾਨੂੰਨੀ ਸਰੋਤ',
     viewLaw:'ਕਾਨੂੰਨ ਦੇਖੋ ↗', searchCase:'ਖੋਜੋ ↗', websiteLink:'ਵੈੱਬਸਾਈਟ ↗',
@@ -2911,6 +2939,7 @@ const TRANSLATIONS = {
     charCountSuffix:' ቁምፊዎች',
     urgencyLow:'ዝቅተኛ አስቸኳይነት', urgencyMed:'መካከለኛ አስቸኳይነት', urgencyHigh:'ከፍተኛ አስቸኳይነት', urgencyCrit:'አሳሳቢ — አሁኑኑ ይስሩ',
     actionBoxTitle:'አሁን ምን ማድረግ እንዳለበት',
+    ctaTitle:'⚖️ ነጻ ጠበቃ ጋር ይነጋገሩ', ctaBody:'VeriLex ይህ ሰነድ ምን እንደሚናገር ያብራራል። ለእርስዎ ልዩ ሁኔታ ምን ማድረግ እንዳለብዎ ምክር ለማግኘት፣ ነጻ የህግ ድጋፍ ጠበቃ ሊረዳዎ ይችላል።', ctaLink:'ነጻ የህግ ድጋፍ ፈልጉ',
     emptyBreakdown:'ምንም የክፍል ትንታኔ የለም።', emptyLaws:'ለዚህ ሰነድ ምንም ሕግ አልተገኘም።', emptyCases:'ለዚህ ሰነድ አይነት ምንም ጉዳይ ሕግ አልተገኘም።', emptyGlossary:'ምንም ቃላት አልተገኙም።', emptyRights:'ምንም የሕግ መብቶች ወይም ሀብቶች አልተገኙም።',
     sectionPrefix:'ክፍል', localResources:'የአካባቢ እና ብሔራዊ የሕግ ሀብቶች',
     viewLaw:'ሕግ ይመልከቱ ↗', searchCase:'ፈልጉ ↗', websiteLink:'ድረ-ገጽ ↗',
@@ -3513,9 +3542,15 @@ function renderActionSteps(d) {
   if (!['high','critical'].includes(u) || !steps.length) { sec.style.display = 'none'; return; }
   sec.style.display = 'block';
   const icon = u === 'critical' ? '🚨' : '⚠️';
+  const t = T();
   sec.innerHTML = `
     <div class="action-box ${u}">
-      <div class="action-box-title">${icon} ${T().actionBoxTitle}</div>
+      <div class="action-box-title">${icon} ${t.actionBoxTitle}</div>
+      <div class="attorney-cta">
+        <div class="attorney-cta-title">${esc(t.ctaTitle)}</div>
+        <div class="attorney-cta-body">${esc(t.ctaBody)}</div>
+        <a class="attorney-cta-link" href="https://www.lsc.gov/find-legal-aid" target="_blank" rel="noopener">${esc(t.ctaLink)} ↗</a>
+      </div>
       <ul class="action-steps-list">
         ${steps.map((s,i) => `
           <li>
