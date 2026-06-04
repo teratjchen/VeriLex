@@ -174,7 +174,7 @@ class FollowUpRequest(BaseModel):
     conversation: list[ChatMessage] = []
 
 
-@app.get("/")
+@app.api_route("/", methods=["GET", "HEAD"])
 async def root():
     return FileResponse("index.html")
 
