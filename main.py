@@ -4,15 +4,17 @@ import html as html_lib
 import io
 import json
 import os
+import re
 from pathlib import Path
 
 from dotenv import load_dotenv
 load_dotenv(override=True)  # override shell env so .env always wins
 
 import anthropic
+from anthropic import AsyncAnthropic
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
 app = FastAPI(title="VeriLex")
@@ -119,6 +121,24 @@ def _ocr_quality_ok(text: str) -> bool:
     return True
 
 
+# JSON key names in schema order — used to emit phase labels while streaming.
+_STREAM_PHASES = [
+    (re.compile(r'"document_type"\s*:'),   "Reading document…"),
+    (re.compile(r'"plain_summary"\s*:'),   "Summarizing content…"),
+    (re.compile(r'"applicable_laws"\s*:'), "Finding applicable laws…"),
+    (re.compile(r'"glossary"\s*:'),        "Building glossary…"),
+    (re.compile(r'"local_resources"\s*:'), "Locating resources…"),
+]
+
+def _detect_phase(buf: str) -> str | None:
+    """Return the label of the last JSON phase whose key has appeared in buf."""
+    last = None
+    for pattern, label in _STREAM_PHASES:
+        if pattern.search(buf):
+            last = label
+    return last
+
+
 # In-memory feedback store (persists until server restarts).
 feedback_db: list[dict] = []
 
@@ -181,6 +201,11 @@ async def get_config():
         "google_client_id": os.environ.get("GOOGLE_CLIENT_ID", ""),
         "google_api_key":   os.environ.get("GOOGLE_API_KEY", ""),
     })
+
+
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
 
 
 @app.post("/analyze")
@@ -275,6 +300,114 @@ async def analyze(req: AnalyzeRequest):
             "success": False,
         })
         raise HTTPException(status_code=502, detail=f"AI service error: {e}")
+
+
+@app.post("/analyze-stream")
+async def analyze_stream(req: AnalyzeRequest):
+    """
+    Streaming version of /analyze. Returns Server-Sent Events.
+    Event types:
+      phase  — data: {"phase": "<label>"}     fires up to 5 times as Claude writes each JSON section
+      result — data: <full analysis JSON>     fires once when complete
+      error  — data: {"detail": "<message>"}  fires on failure
+    """
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        raise HTTPException(
+            status_code=500,
+            detail="Server configuration error: ANTHROPIC_API_KEY is not set."
+        )
+
+    text = req.text.strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="No document text provided.")
+    if len(text) > 60_000:
+        raise HTTPException(
+            status_code=400,
+            detail="Document too long (max ~40 pages). Try pasting a specific section."
+        )
+
+    persona_ctx = PERSONA_INSTRUCTIONS.get(req.persona, PERSONA_INSTRUCTIONS["intermediate"])
+    location_ctx = (
+        f"USER LOCATION: {req.user_location}. "
+        f"Prioritize legal aid organizations, court resources, and statutes specific to this location. "
+        f"In local_resources, include real organizations that serve this area, with accurate phone numbers and URLs.\n\n"
+        if req.user_location else
+        "USER LOCATION: Unknown. Include a mix of national resources and note that local resources may vary by state.\n\n"
+    )
+    if req.language.lower() in ("auto-detect", "auto"):
+        lang_instruction = (
+            "Detect the language of the document text and respond entirely in that same language "
+            "throughout every field of your JSON response. If the document is in Spanish, respond in Spanish. "
+            "If it is in Chinese, respond in Chinese. Match the document's language exactly."
+        )
+    else:
+        lang_instruction = (
+            f"The document below may be written in any language. Analyze it fully regardless of the document's language, "
+            f"then respond entirely in {req.language}."
+        )
+
+    user_msg = (
+        f"{persona_ctx}\n\n"
+        f"{location_ctx}"
+        f"{lang_instruction}\n\n"
+        f"DOCUMENT:\n{text}"
+    )
+
+    async def event_stream():
+        buf = ""
+        last_phase = None
+        log_entry = {
+            "timestamp": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
+            "date": datetime.datetime.utcnow().strftime("%Y-%m-%d"),
+            "language": req.language,
+            "persona": req.persona,
+            "location": req.user_location or "Unknown",
+            "doc_length": len(text),
+            "document_type": "unknown",
+            "success": False,
+        }
+        try:
+            client = AsyncAnthropic(api_key=api_key)
+            async with client.messages.stream(
+                model="claude-sonnet-4-6",
+                max_tokens=8192,
+                system=[{"type": "text", "text": SYSTEM_PROMPT, "cache_control": {"type": "ephemeral"}}],
+                messages=[{"role": "user", "content": user_msg}],
+            ) as stream:
+                async for chunk in stream.text_stream:
+                    buf += chunk
+                    phase = _detect_phase(buf)
+                    if phase and phase != last_phase:
+                        last_phase = phase
+                        yield f"event: phase\ndata: {json.dumps({'phase': phase})}\n\n"
+
+            result = _extract_json(buf)
+            log_entry.update(document_type=result.get("document_type", "unknown"), success=True)
+            usage_log.append(log_entry)
+            yield f"event: result\ndata: {json.dumps(result, ensure_ascii=False)}\n\n"
+
+        except (json.JSONDecodeError, ValueError) as e:
+            log_entry["document_type"] = "parse_error"
+            usage_log.append(log_entry)
+            yield f"event: error\ndata: {json.dumps({'detail': f'Failed to parse response: {e}'})}\n\n"
+        except anthropic.APIError as e:
+            log_entry["document_type"] = "api_error"
+            usage_log.append(log_entry)
+            yield f"event: error\ndata: {json.dumps({'detail': f'AI service error: {e}'})}\n\n"
+        except Exception as e:
+            log_entry["document_type"] = "unknown_error"
+            usage_log.append(log_entry)
+            yield f"event: error\ndata: {json.dumps({'detail': str(e)})}\n\n"
+
+    return StreamingResponse(
+        event_stream(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",  # disables nginx proxy buffering on Railway
+        },
+    )
 
 
 FOLLOWUP_SYSTEM = """\

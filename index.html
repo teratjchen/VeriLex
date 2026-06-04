@@ -3356,24 +3356,63 @@ async function analyze() {
   }, 1000);
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 120_000); // 2-min hard timeout
+  // Extended to 4 min — large docs legitimately take 130–150 s.
+  const timeoutId = setTimeout(() => controller.abort(), 240_000);
 
   try {
-    const res = await fetch('/analyze', {
+    const res = await fetch('/analyze-stream', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text, language: lang, persona, user_location: userLocation }),
       signal: controller.signal,
     });
-    clearTimeout(timeoutId);
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.detail || 'Analysis failed');
-    clearInterval(loadInterval);
-    clearInterval(timerInterval);
-    timeEl.textContent = '';
-    render(data);
-    setUI('results');
-    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: 'Analysis failed' }));
+      throw new Error(err.detail || 'Analysis failed');
+    }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let sseBuffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      sseBuffer += decoder.decode(value, { stream: true });
+
+      let boundary;
+      while ((boundary = sseBuffer.indexOf('\n\n')) !== -1) {
+        const message = sseBuffer.slice(0, boundary);
+        sseBuffer   = sseBuffer.slice(boundary + 2);
+        let eventType = 'message', dataLine = '';
+        for (const line of message.split('\n')) {
+          if (line.startsWith('event: ')) eventType = line.slice(7).trim();
+          if (line.startsWith('data: '))  dataLine  = line.slice(6);
+        }
+        if (!dataLine) continue;
+
+        if (eventType === 'phase') {
+          const { phase } = JSON.parse(dataLine);
+          document.getElementById('loadingMsg').textContent = phase;
+          clearInterval(loadInterval);  // phase events replace the cycling interval
+          loadInterval = null;
+        } else if (eventType === 'result') {
+          clearTimeout(timeoutId);
+          clearInterval(loadInterval);
+          clearInterval(timerInterval);
+          timeEl.textContent = '';
+          render(JSON.parse(dataLine));
+          setUI('results');
+          document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        } else if (eventType === 'error') {
+          throw new Error(JSON.parse(dataLine).detail || 'Analysis failed');
+        }
+      }
+    }
+    throw new Error('Stream ended unexpectedly. Please try again.');
+
   } catch (e) {
     clearTimeout(timeoutId);
     clearInterval(loadInterval);
