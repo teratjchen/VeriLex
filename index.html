@@ -3292,6 +3292,16 @@ function setUILang(code) {
   if (chatInput && t.chatPlaceholder) chatInput.placeholder = t.chatPlaceholder;
   document.documentElement.dir = code === 'ar' ? 'rtl' : 'ltr';
   document.getElementById('uiLangLabel').textContent = LANG_LABELS[code] || code.toUpperCase();
+  // If there's an active analysis, sync the flag button visibility to the new language
+  if (lastAnalysis) {
+    const flagBtn = document.getElementById('btnFlag');
+    if (code !== 'en') {
+      flagBtn.textContent = (TRANSLATIONS[code] || TRANSLATIONS.en).flagBtn || '🚩 Flag translation';
+      flagBtn.style.display = '';
+    } else {
+      flagBtn.style.display = 'none';
+    }
+  }
 }
 
 function toggleUILang() {
