@@ -200,7 +200,7 @@
 
 <div class="prose-wrap">
   <div class="prose-card" id="proseCard">
-    <p class="updated">Last updated: June 2, 2026</p>
+    <p class="updated">Last updated: June 4, 2026</p>
     <div class="notice-box">
       <strong>Short version:</strong> VeriLex does not store your documents, does not require an account, and does not track you. Your document text is sent to Anthropic's Claude API for analysis and is not retained anywhere on VeriLex's servers.
     </div>
@@ -231,6 +231,11 @@
     <p>Your document text is processed by Anthropic's Claude API. Anthropic is a US-based AI safety company. Per <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic's privacy policy</a> and their API usage terms, <strong>Anthropic does not use API inputs to train their AI models by default.</strong> For Anthropic's full data practices, see <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">anthropic.com/legal/privacy</a>.</p>
     <h3>Railway (Server Hosting)</h3>
     <p>VeriLex is hosted on <a href="https://railway.app" target="_blank" rel="noopener">Railway</a>, a cloud infrastructure provider. Servers are located in the United States. For Railway's privacy practices, see <a href="https://railway.app/legal/privacy" target="_blank" rel="noopener">railway.app/legal/privacy</a>.</p>
+    <h3>Google (Google Drive Integration — Optional)</h3>
+    <p>VeriLex offers an optional Google Drive integration. If you choose to use it, you will be asked to sign in with your Google account and grant VeriLex <strong>read-only access to files you select</strong>. This access is used solely to download the specific file you choose so it can be analyzed.</p>
+    <p>VeriLex does not store your Google account information (name, email address, or profile data), does not access any files you did not explicitly select, and does not retain access to your Google Drive after the session ends. The OAuth access token issued by Google is held in browser memory only and is discarded when you leave the page.</p>
+    <p>The content of the file you select is processed exactly like any directly uploaded file — sent to Anthropic's Claude API for analysis and not stored on VeriLex's servers. For Google's data practices, see <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</p>
+    <p>Use of Google Drive through VeriLex is governed by the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
     <h2>4. Sensitive Documents</h2>
     <p>VeriLex is designed to help users understand documents that may be sensitive — including immigration notices, eviction filings, and financial correspondence. If your document contains highly sensitive personal information (Social Security numbers, immigration case numbers, full legal names combined with dates of birth), we recommend <strong>redacting that identifying information before uploading</strong>. The legal substance of the document is usually analyzable without it.</p>
     <p>While VeriLex does not store documents, any transmission to an external AI service carries inherent risk. Use your judgment about what you share.</p>
@@ -240,6 +245,8 @@
       <li><strong>Usage analytics log:</strong> In memory only. Cleared on each server restart.</li>
       <li><strong>Feedback submissions:</strong> In memory only. Cleared on each server restart.</li>
       <li><strong>Interface language preference:</strong> Stored in your browser's localStorage. Never sent to the server.</li>
+      <li><strong>Google OAuth access token:</strong> Browser memory only. Not stored on our servers. Discarded when you leave the page.</li>
+      <li><strong>Google account information:</strong> Not collected or stored by VeriLex.</li>
     </ul>
     <h2>6. Children's Privacy</h2>
     <p>VeriLex is not directed at children under 13 and does not knowingly collect information from children under 13. If you believe a child under 13 has submitted information, please contact us at <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a>.</p>
@@ -271,7 +278,7 @@ const TRANSLATIONS = {
     back: '← Back to VeriLex',
     pageTitle: 'Privacy Policy',
     pageSubtitle: 'How VeriLex handles your data — and how it doesn’t.',
-    prose: `<p class="updated">Last updated: June 2, 2026</p>
+    prose: `<p class="updated">Last updated: June 4, 2026</p>
 <div class="notice-box"><strong>Short version:</strong> VeriLex does not store your documents, does not require an account, and does not track you. Your document text is sent to Anthropic’s Claude API for analysis and is not retained anywhere on VeriLex’s servers.</div>
 <h2>1. Who Operates VeriLex</h2>
 <p>VeriLex (verilex.org) is a free legal document accessibility tool built and maintained by <strong>Tera Chen</strong>, a Legal Studies student at the University of California, Berkeley. VeriLex is not a law firm, legal services company, or registered legal entity.</p>
@@ -300,6 +307,11 @@ const TRANSLATIONS = {
 <p>Your document text is processed by Anthropic’s Claude API. Anthropic is a US-based AI safety company. Per <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic’s privacy policy</a> and their API usage terms, <strong>Anthropic does not use API inputs to train their AI models by default.</strong> For Anthropic’s full data practices, see <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">anthropic.com/legal/privacy</a>.</p>
 <h3>Railway (Server Hosting)</h3>
 <p>VeriLex is hosted on <a href="https://railway.app" target="_blank" rel="noopener">Railway</a>, a cloud infrastructure provider. Servers are located in the United States. For Railway’s privacy practices, see <a href="https://railway.app/legal/privacy" target="_blank" rel="noopener">railway.app/legal/privacy</a>.</p>
+<h3>Google (Google Drive Integration — Optional)</h3>
+<p>VeriLex offers an optional Google Drive integration. If you choose to use it, you will be asked to sign in with your Google account and grant VeriLex <strong>read-only access to files you select</strong>. This access is used solely to download the specific file you choose so it can be analyzed.</p>
+<p>VeriLex does not store your Google account information (name, email address, or profile data), does not access any files you did not explicitly select, and does not retain access to your Google Drive after the session ends. The OAuth access token issued by Google is held in browser memory only and is discarded when you leave the page.</p>
+<p>The content of the file you select is processed exactly like any directly uploaded file — sent to Anthropic\’s Claude API for analysis and not stored on VeriLex\’s servers. For Google\’s data practices, see <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</p>
+<p>Use of Google Drive through VeriLex is governed by the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
 <h2>4. Sensitive Documents</h2>
 <p>VeriLex is designed to help users understand documents that may be sensitive — including immigration notices, eviction filings, and financial correspondence. If your document contains highly sensitive personal information (Social Security numbers, immigration case numbers, full legal names combined with dates of birth), we recommend <strong>redacting that identifying information before uploading</strong>. The legal substance of the document is usually analyzable without it.</p>
 <p>While VeriLex does not store documents, any transmission to an external AI service carries inherent risk. Use your judgment about what you share.</p>
@@ -309,6 +321,8 @@ const TRANSLATIONS = {
   <li><strong>Usage analytics log:</strong> In memory only. Cleared on each server restart.</li>
   <li><strong>Feedback submissions:</strong> In memory only. Cleared on each server restart.</li>
   <li><strong>Interface language preference:</strong> Stored in your browser’s localStorage. Never sent to the server.</li>
+  <li><strong>Google OAuth access token:</strong> Browser memory only. Not stored on our servers. Discarded when you leave the page.</li>
+  <li><strong>Google account information:</strong> Not collected or stored by VeriLex.</li>
 </ul>
 <h2>6. Children’s Privacy</h2>
 <p>VeriLex is not directed at children under 13 and does not knowingly collect information from children under 13. If you believe a child under 13 has submitted information, please contact us at <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a>.</p>
