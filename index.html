@@ -3458,37 +3458,65 @@ async function openGoogleDrive() {
     alert('Google Drive integration is not yet configured on this server.\n\nTo enable it, add GOOGLE_CLIENT_ID and GOOGLE_API_KEY to the Railway environment variables.');
     return;
   }
-  // Load Google Identity Services if not already loaded
-  if (!window.google?.accounts) {
-    await new Promise((resolve, reject) => {
-      const s = document.createElement('script');
-      s.src = 'https://accounts.google.com/gsi/client';
-      s.onload = resolve; s.onerror = reject;
-      document.head.appendChild(s);
-    });
-  }
-  // Load Google API (picker) if not already loaded
-  if (!window.gapi) {
-    await new Promise((resolve, reject) => {
-      const s = document.createElement('script');
-      s.src = 'https://apis.google.com/js/api.js';
-      s.onload = resolve; s.onerror = reject;
-      document.head.appendChild(s);
-    });
-  }
-  await new Promise(res => gapi.load('picker', res));
+  const st = document.getElementById('pdfStatus');
+  st.style.color = '#64748b';
+  st.textContent = '⏳ Connecting to Google Drive…';
 
-  // Request OAuth token
-  const tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: window.VERILEX_CONFIG.google_client_id,
-    scope: 'https://www.googleapis.com/auth/drive.readonly',
-    callback: (resp) => {
-      if (resp.error) return;
-      driveAccessToken = resp.access_token;
-      showDrivePicker();
+  try {
+    // Load Google Identity Services if not already loaded
+    if (!window.google?.accounts) {
+      await new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://accounts.google.com/gsi/client';
+        s.onload = resolve;
+        s.onerror = () => reject(new Error('Failed to load Google Identity Services. Check your internet connection.'));
+        document.head.appendChild(s);
+      });
     }
-  });
-  tokenClient.requestAccessToken({ prompt: '' });
+    // Load Google API (picker) if not already loaded
+    if (!window.gapi) {
+      await new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://apis.google.com/js/api.js';
+        s.onload = resolve;
+        s.onerror = () => reject(new Error('Failed to load Google API script.'));
+        document.head.appendChild(s);
+      });
+    }
+    await new Promise((resolve, reject) => {
+      gapi.load('picker', { callback: resolve, onerror: () => reject(new Error('Failed to load Google Picker API. Make sure it is enabled in Google Cloud Console.')) });
+    });
+
+    st.textContent = '⏳ Waiting for Google sign-in…';
+
+    // Request OAuth token
+    await new Promise((resolve, reject) => {
+      const tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: window.VERILEX_CONFIG.google_client_id,
+        scope: 'https://www.googleapis.com/auth/drive.readonly',
+        error_callback: (err) => {
+          reject(new Error(err.type === 'popup_blocked_by_browser'
+            ? 'Popup was blocked — please allow popups for verilex.org and try again.'
+            : `Google sign-in failed: ${err.type || err.message || 'unknown error'}`));
+        },
+        callback: (resp) => {
+          if (resp.error) {
+            reject(new Error(`Google auth error: ${resp.error_description || resp.error}`));
+            return;
+          }
+          driveAccessToken = resp.access_token;
+          resolve();
+        }
+      });
+      tokenClient.requestAccessToken({ prompt: '' });
+    });
+
+    st.textContent = '';
+    showDrivePicker();
+  } catch (e) {
+    st.style.color = 'var(--crit)';
+    st.textContent = `✗ ${e.message}`;
+  }
 }
 
 function showDrivePicker() {
