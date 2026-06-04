@@ -750,6 +750,20 @@
     }
     .btn-flag-cancel:hover { border-color: var(--ink-mid); }
     .flag-modal-status { font-size: 13px; margin-top: 10px; min-height: 18px; }
+    .urgency-caveat {
+      font-size: 12px; color: var(--muted); margin-top: 8px;
+      padding: 0 2px; font-style: italic;
+    }
+    .ocr-warning {
+      display: flex; align-items: flex-start; gap: 8px;
+      background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px;
+      padding: 10px 14px; font-size: 13px; color: #92400e;
+      margin-bottom: 12px; line-height: 1.5;
+    }
+    .laws-verify-note {
+      font-size: 12px; color: var(--muted); font-style: italic;
+      margin-bottom: 12px; padding: 0 2px;
+    }
 
     /* ── RESULT ACTIONS (Print / Copy) ────────────────── */
     .result-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
@@ -1719,6 +1733,7 @@ Court: San Francisco Superior Court — Traffic Division
 // ── State ────────────────────────────────────────────────────────────────────
 let inputMode = 'paste';
 let pdfText = '';
+let ocrUsed = false;
 let persona = 'novice';
 let userLocation = ''; // e.g. "Oakland, California, United States"
 let lastDocText = '';
@@ -1842,6 +1857,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'What to do right now',
     ctaTitle:'⚖️ Talk to a free attorney', ctaBody:'VeriLex explains what this document says. For advice on what to do in your specific situation, a free attorney can help.', ctaLink:'Find free legal aid',
     flagBtn:'🚩 Flag translation', flagTitle:'Report a translation issue', flagDesc:'Describe what seems incorrect in this translation:', flagSubmit:'Send report', flagCancel:'Cancel', flagThanks:'Thank you — we\'ll review it.',
+    urgencyCaveat:'AI urgency estimate — verify any deadlines against the original document before acting.',
+    ocrWarning:'This document was read with AI image recognition. Dates, numbers, and names should be verified against the original document before relying on this analysis.',
+    lawsVerifyNote:'Always verify citations at the official source before relying on them.',
     emptyBreakdown:'No section breakdown available.', emptyLaws:'No statutes identified for this document.', emptyCases:'No case law identified for this document type.', emptyGlossary:'No glossary terms identified.', emptyRights:'No rights information or resources available.',
     sectionPrefix:'Section', localResources:'Local & National Legal Resources',
     viewLaw:'View Law ↗', searchCase:'Search ↗', websiteLink:'Website ↗',
@@ -1924,6 +1942,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'Qué hacer ahora mismo',
     ctaTitle:'⚖️ Habla con un abogado gratis', ctaBody:'VeriLex explica lo que dice este documento. Para asesoramiento sobre qué hacer en su situación específica, un abogado de ayuda legal gratuita puede ayudar.', ctaLink:'Encontrar ayuda legal gratuita',
     flagBtn:'🚩 Reportar traducción', flagTitle:'Reportar un problema de traducción', flagDesc:'Describe qué parece incorrecto en esta traducción:', flagSubmit:'Enviar reporte', flagCancel:'Cancelar', flagThanks:'Gracias — lo revisaremos.',
+    urgencyCaveat:'Estimación de urgencia por IA — verifique los plazos en el documento original antes de actuar.',
+    ocrWarning:'Este documento fue leído con reconocimiento de imágenes por IA. Las fechas, números y nombres deben verificarse en el documento original antes de actuar según este análisis.',
+    lawsVerifyNote:'Verifique siempre las citas en la fuente oficial antes de depender de ellas.',
     emptyBreakdown:'No hay desglose de secciones disponible.', emptyLaws:'No se identificaron leyes para este documento.', emptyCases:'No se identificó jurisprudencia para este tipo de documento.', emptyGlossary:'No se identificaron términos de glosario.', emptyRights:'No hay información de derechos o recursos disponible.',
     sectionPrefix:'Sección', localResources:'Recursos legales locales y nacionales',
     viewLaw:'Ver ley ↗', searchCase:'Buscar ↗', websiteLink:'Sitio web ↗',
@@ -2006,6 +2027,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'现在需要做什么',
     ctaTitle:'⚖️ 咨询免费律师', ctaBody:'VeriLex 解释本文件的内容。如需针对您具体情况的建议，免费法律援助律师可以提供帮助。', ctaLink:'查找免费法律援助',
     flagBtn:'🚩 标记翻译问题', flagTitle:'报告翻译问题', flagDesc:'请描述此翻译中似乎有误的内容：', flagSubmit:'提交报告', flagCancel:'取消', flagThanks:'谢谢 — 我们将进行审查。',
+    urgencyCaveat:'AI 紧迫性估计 — 采取行动前请核对原始文件中的任何截止日期。',
+    ocrWarning:'本文件通过 AI 图像识别读取。在依赖此分析之前，请对照原始文件核实日期、数字和姓名。',
+    lawsVerifyNote:'依赖任何引用前，请务必在官方来源核实。',
     emptyBreakdown:'无可用章节分析。', emptyLaws:'未识别到适用于本文件的法规。', emptyCases:'未识别到适用于本文件类型的判例法。', emptyGlossary:'未识别到术语表。', emptyRights:'无权利信息或资源可用。',
     sectionPrefix:'第', localResources:'本地及全国法律资源',
     viewLaw:'查看法律 ↗', searchCase:'搜索 ↗', websiteLink:'网站 ↗',
@@ -2088,6 +2112,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'現在需要做什麼',
     ctaTitle:'⚖️ 諮詢免費律師', ctaBody:'VeriLex 說明本文件的內容。如需針對您具體情況的建議，免費法律援助律師可以提供協助。', ctaLink:'尋找免費法律援助',
     flagBtn:'🚩 標記翻譯問題', flagTitle:'回報翻譯問題', flagDesc:'請描述此翻譯中似乎有誤的內容：', flagSubmit:'提交報告', flagCancel:'取消', flagThanks:'謝謝 — 我們將進行審查。',
+    urgencyCaveat:'AI 緊迫性估計 — 採取行動前請核對原始文件中的任何截止日期。',
+    ocrWarning:'本文件透過 AI 影像辨識讀取。在依賴此分析之前，請對照原始文件核實日期、數字和姓名。',
+    lawsVerifyNote:'依賴任何引用前，請務必在官方來源核實。',
     emptyBreakdown:'無可用章節分析。', emptyLaws:'未識別到適用於本文件的法規。', emptyCases:'未識別到適用於本文件類型的判例法。', emptyGlossary:'未識別到術語表。', emptyRights:'無權利資訊或資源可用。',
     sectionPrefix:'第', localResources:'本地及全國法律資源',
     viewLaw:'查看法律 ↗', searchCase:'搜尋 ↗', websiteLink:'網站 ↗',
@@ -2170,6 +2197,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'Cần làm gì ngay bây giờ',
     ctaTitle:'⚖️ Nói chuyện với luật sư miễn phí', ctaBody:'VeriLex giải thích những gì tài liệu này nói. Để được tư vấn về việc phải làm trong tình huống cụ thể của bạn, luật sư hỗ trợ pháp lý miễn phí có thể giúp đỡ.', ctaLink:'Tìm hỗ trợ pháp lý miễn phí',
     flagBtn:'🚩 Báo lỗi dịch thuật', flagTitle:'Báo cáo vấn đề dịch thuật', flagDesc:'Mô tả điều gì có vẻ không đúng trong bản dịch này:', flagSubmit:'Gửi báo cáo', flagCancel:'Hủy', flagThanks:'Cảm ơn — chúng tôi sẽ xem xét.',
+    urgencyCaveat:'Ước tính mức độ khẩn cấp bằng AI — hãy xác minh bất kỳ thời hạn nào trong tài liệu gốc trước khi hành động.',
+    ocrWarning:'Tài liệu này được đọc bằng nhận dạng hình ảnh AI. Các ngày, số và tên nên được xác minh với tài liệu gốc trước khi dựa vào phân tích này.',
+    lawsVerifyNote:'Luôn xác minh các trích dẫn tại nguồn chính thức trước khi dựa vào chúng.',
     emptyBreakdown:'Không có phân tích mục nào.', emptyLaws:'Không xác định được luật cho tài liệu này.', emptyCases:'Không xác định được án lệ cho loại tài liệu này.', emptyGlossary:'Không xác định được thuật ngữ nào.', emptyRights:'Không có thông tin quyền hoặc tài nguyên.',
     sectionPrefix:'Mục', localResources:'Tài nguyên pháp lý địa phương & quốc gia',
     viewLaw:'Xem luật ↗', searchCase:'Tìm kiếm ↗', websiteLink:'Trang web ↗',
@@ -2252,6 +2282,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'Ano ang gagawin ngayon',
     ctaTitle:'⚖️ Makipag-usap sa libreng abogado', ctaBody:'Ipinapaliwanag ng VeriLex kung ano ang sinasabi ng dokumentong ito. Para sa payo tungkol sa iyong tiyak na sitwasyon, maaaring tumulong ang isang libreng abogado.', ctaLink:'Hanapin ang libreng legal na tulong',
     flagBtn:'🚩 I-flag ang salin', flagTitle:'Mag-ulat ng isyu sa pagsasalin', flagDesc:'Ilarawan kung ano ang mukhang mali sa salin na ito:', flagSubmit:'Ipadala ang ulat', flagCancel:'Kanselahin', flagThanks:'Salamat — susuriin namin ito.',
+    urgencyCaveat:'Pagtatantya ng AI sa pagkamadalian — i-verify ang anumang mga deadline sa orihinal na dokumento bago kumilos.',
+    ocrWarning:'Ang dokumentong ito ay nabasa gamit ang AI na pagkilala ng imahe. Ang mga petsa, numero, at pangalan ay dapat i-verify sa orihinal na dokumento bago umasa sa pagsusuring ito.',
+    lawsVerifyNote:'Palaging i-verify ang mga sipi sa opisyal na pinagmulan bago umasa sa mga ito.',
     emptyBreakdown:'Walang available na breakdown ng seksyon.', emptyLaws:'Walang natukoy na batas para sa dokumentong ito.', emptyCases:'Walang natukoy na case law para sa ganitong uri ng dokumento.', emptyGlossary:'Walang natukoy na mga termino.', emptyRights:'Walang available na impormasyon sa karapatan o mapagkukunan.',
     sectionPrefix:'Seksyon', localResources:'Lokal at Pambansang Legal na Mapagkukunan',
     viewLaw:'Tingnan ang Batas ↗', searchCase:'Maghanap ↗', websiteLink:'Website ↗',
@@ -2334,6 +2367,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'지금 당장 해야 할 일',
     ctaTitle:'⚖️ 무료 변호사와 상담하세요', ctaBody:'VeriLex는 이 문서가 무엇을 말하는지 설명합니다. 귀하의 특정 상황에서 어떻게 해야 할지에 대한 조언은 무료 법률 지원 변호사가 도움을 드릴 수 있습니다.', ctaLink:'무료 법률 지원 찾기',
     flagBtn:'🚩 번역 오류 신고', flagTitle:'번역 문제 신고', flagDesc:'이 번역에서 잘못된 것 같은 내용을 설명해 주세요:', flagSubmit:'신고 보내기', flagCancel:'취소', flagThanks:'감사합니다 — 검토하겠습니다.',
+    urgencyCaveat:'AI 긴급도 추정 — 행동하기 전에 원본 문서에서 마감일을 직접 확인하세요.',
+    ocrWarning:'이 문서는 AI 이미지 인식으로 읽혔습니다. 이 분석을 신뢰하기 전에 원본 문서에서 날짜, 숫자, 이름을 확인하세요.',
+    lawsVerifyNote:'이 인용문을 사용하기 전에 항상 공식 출처에서 확인하세요.',
     emptyBreakdown:'섹션 분석 없음.', emptyLaws:'이 문서에 해당하는 법령이 없습니다.', emptyCases:'이 문서 유형에 해당하는 판례가 없습니다.', emptyGlossary:'용어 정의 없음.', emptyRights:'권리 정보 또는 자료 없음.',
     sectionPrefix:'섹션', localResources:'지역 및 전국 법률 자료',
     viewLaw:'법률 보기 ↗', searchCase:'검색 ↗', websiteLink:'웹사이트 ↗',
@@ -2416,6 +2452,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'ما يجب فعله الآن',
     ctaTitle:'⚖️ تحدث إلى محامٍ مجاني', ctaBody:'يشرح VeriLex ما تقوله هذه الوثيقة. للحصول على مشورة حول ما يجب فعله في وضعك المحدد، يمكن لمحامٍ للمساعدة القانونية المجانية أن يساعدك.', ctaLink:'ابحث عن مساعدة قانونية مجانية',
     flagBtn:'🚩 الإبلاغ عن خطأ في الترجمة', flagTitle:'الإبلاغ عن مشكلة في الترجمة', flagDesc:'صف ما يبدو غير صحيح في هذه الترجمة:', flagSubmit:'إرسال التقرير', flagCancel:'إلغاء', flagThanks:'شكراً — سنراجع ذلك.',
+    urgencyCaveat:'تقدير درجة الإلحاح بالذكاء الاصطناعي — تحقق من أي مواعيد نهائية في المستند الأصلي قبل التصرف.',
+    ocrWarning:'تمت قراءة هذا المستند باستخدام التعرف الآلي على الصور. يجب التحقق من التواريخ والأرقام والأسماء في المستند الأصلي قبل الاعتماد على هذا التحليل.',
+    lawsVerifyNote:'تحقق دائماً من الاستشهادات في المصدر الرسمي قبل الاعتماد عليها.',
     emptyBreakdown:'لا يوجد تحليل للأقسام.', emptyLaws:'لم يتم تحديد أي قوانين لهذا المستند.', emptyCases:'لم يتم تحديد أي قانون للقضايا لهذا النوع.', emptyGlossary:'لم يتم تحديد أي مصطلحات.', emptyRights:'لا تتوفر معلومات حقوق أو موارد.',
     sectionPrefix:'قسم', localResources:'الموارد القانونية المحلية والوطنية',
     viewLaw:'عرض القانون ↗', searchCase:'بحث ↗', websiteLink:'الموقع ↗',
@@ -2498,6 +2537,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'अभी क्या करें',
     ctaTitle:'⚖️ निःशुल्क वकील से बात करें', ctaBody:'VeriLex बताता है कि यह दस्तावेज़ क्या कहता है। आपकी विशेष स्थिति में क्या करना है इसके बारे में सलाह के लिए, एक निःशुल्क कानूनी सहायता वकील मदद कर सकता है।', ctaLink:'निःशुल्क कानूनी सहायता खोजें',
     flagBtn:'🚩 अनुवाद में त्रुटि बताएं', flagTitle:'अनुवाद समस्या की रिपोर्ट करें', flagDesc:'इस अनुवाद में जो गलत लग रहा है उसका वर्णन करें:', flagSubmit:'रिपोर्ट भेजें', flagCancel:'रद्द करें', flagThanks:'धन्यवाद — हम इसकी समीक्षा करेंगे।',
+    urgencyCaveat:'AI द्वारा अनुमानित तात्कालिकता — कोई भी कार्रवाई करने से पहले मूल दस्तावेज़ में किसी भी समय-सीमा की जांच करें।',
+    ocrWarning:'यह दस्तावेज़ AI इमेज पहचान द्वारा पढ़ा गया था। इस विश्लेषण पर निर्भर होने से पहले मूल दस्तावेज़ में दिनांक, संख्याएं और नाम सत्यापित करें।',
+    lawsVerifyNote:'किसी भी उद्धरण पर भरोसा करने से पहले उसे आधिकारिक स्रोत पर सत्यापित करें।',
     emptyBreakdown:'कोई अनुभाग विश्लेषण उपलब्ध नहीं।', emptyLaws:'इस दस्तावेज़ के लिए कोई कानून नहीं मिला।', emptyCases:'इस प्रकार के दस्तावेज़ के लिए कोई केस लॉ नहीं मिला।', emptyGlossary:'कोई शब्दावली नहीं मिली।', emptyRights:'कोई अधिकार जानकारी या संसाधन उपलब्ध नहीं।',
     sectionPrefix:'अनुभाग', localResources:'स्थानीय और राष्ट्रीय कानूनी संसाधन',
     viewLaw:'कानून देखें ↗', searchCase:'खोजें ↗', websiteLink:'वेबसाइट ↗',
@@ -2580,6 +2622,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'O que fazer agora',
     ctaTitle:'⚖️ Fale com um advogado gratuito', ctaBody:'O VeriLex explica o que este documento diz. Para aconselhamento sobre o que fazer na sua situação específica, um advogado de assistência jurídica gratuita pode ajudar.', ctaLink:'Encontrar assistência jurídica gratuita',
     flagBtn:'🚩 Sinalizar tradução', flagTitle:'Reportar problema de tradução', flagDesc:'Descreva o que parece incorreto nesta tradução:', flagSubmit:'Enviar relatório', flagCancel:'Cancelar', flagThanks:'Obrigado — vamos rever.',
+    urgencyCaveat:'Estimativa de urgência por IA — verifique os prazos no documento original antes de agir.',
+    ocrWarning:'Este documento foi lido com reconhecimento de imagem por IA. Datas, números e nomes devem ser verificados no documento original antes de confiar nesta análise.',
+    lawsVerifyNote:'Verifique sempre as citações na fonte oficial antes de confiar nelas.',
     emptyBreakdown:'Nenhuma análise de seção disponível.', emptyLaws:'Nenhum estatuto identificado para este documento.', emptyCases:'Nenhuma jurisprudência identificada para este tipo de documento.', emptyGlossary:'Nenhum termo do glossário identificado.', emptyRights:'Nenhuma informação de direitos ou recursos disponível.',
     sectionPrefix:'Seção', localResources:'Recursos Jurídicos Locais e Nacionais',
     viewLaw:'Ver lei ↗', searchCase:'Pesquisar ↗', websiteLink:'Site ↗',
@@ -2662,6 +2707,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'Что делать прямо сейчас',
     ctaTitle:'⚖️ Поговорите с бесплатным юристом', ctaBody:'VeriLex объясняет, что говорится в этом документе. Для получения совета о том, что делать в вашей конкретной ситуации, бесплатный юрист по юридической помощи может помочь.', ctaLink:'Найти бесплатную юридическую помощь',
     flagBtn:'🚩 Сообщить об ошибке перевода', flagTitle:'Сообщить о проблеме с переводом', flagDesc:'Опишите, что кажется неверным в этом переводе:', flagSubmit:'Отправить отчет', flagCancel:'Отмена', flagThanks:'Спасибо — мы проверим.',
+    urgencyCaveat:'Оценка срочности выполнена ИИ — проверьте все сроки в оригинальном документе перед принятием решений.',
+    ocrWarning:'Этот документ был прочитан с помощью ИИ-распознавания изображений. Перед использованием этого анализа проверьте даты, числа и имена в оригинальном документе.',
+    lawsVerifyNote:'Всегда проверяйте ссылки в официальном источнике, прежде чем полагаться на них.',
     emptyBreakdown:'Нет доступного разбора разделов.', emptyLaws:'Законодательство для этого документа не определено.', emptyCases:'Прецеденты для этого типа документа не определены.', emptyGlossary:'Термины глоссария не определены.', emptyRights:'Нет информации о правах или ресурсах.',
     sectionPrefix:'Раздел', localResources:'Местные и национальные правовые ресурсы',
     viewLaw:'Смотреть закон ↗', searchCase:'Поиск ↗', websiteLink:'Сайт ↗',
@@ -2744,6 +2792,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'Que faire maintenant',
     ctaTitle:'⚖️ Parlez à un avocat gratuit', ctaBody:'VeriLex explique ce que dit ce document. Pour des conseils sur ce qu\'il faut faire dans votre situation spécifique, un avocat d\'aide juridictionnelle gratuite peut vous aider.', ctaLink:'Trouver une aide juridique gratuite',
     flagBtn:'🚩 Signaler une traduction', flagTitle:'Signaler un problème de traduction', flagDesc:'Décrivez ce qui semble incorrect dans cette traduction :', flagSubmit:'Envoyer le rapport', flagCancel:'Annuler', flagThanks:'Merci — nous allons vérifier.',
+    urgencyCaveat:'Estimation d\'urgence par IA — vérifiez les délais dans le document original avant d\'agir.',
+    ocrWarning:'Ce document a été lu par reconnaissance d\'image IA. Les dates, chiffres et noms doivent être vérifiés dans le document original avant de se fier à cette analyse.',
+    lawsVerifyNote:'Vérifiez toujours les citations à la source officielle avant de vous y fier.',
     emptyBreakdown:'Aucune analyse de section disponible.', emptyLaws:'Aucune loi identifiée pour ce document.', emptyCases:'Aucune jurisprudence identifiée pour ce type de document.', emptyGlossary:'Aucun terme de glossaire identifié.', emptyRights:'Aucune information sur les droits ou ressources disponible.',
     sectionPrefix:'Section', localResources:'Ressources juridiques locales et nationales',
     viewLaw:'Voir la loi ↗', searchCase:'Rechercher ↗', websiteLink:'Site web ↗',
@@ -2826,6 +2877,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'Kisa pou fè kounye a',
     ctaTitle:'⚖️ Pale ak yon avoka gratis', ctaBody:'VeriLex eksplike sa dokiman sa a di. Pou konsèy sou sa pou fè nan sitiyasyon espesifik ou, yon avoka èd legal gratis ka ede ou.', ctaLink:'Jwenn èd legal gratis',
     flagBtn:'🚩 Rapòte tradiksyon', flagTitle:'Rapòte yon pwoblèm tradiksyon', flagDesc:'Dekri sa ki sanble pa kòrèk nan tradiksyon sa a:', flagSubmit:'Voye rapò', flagCancel:'Anile', flagThanks:'Mèsi — nou pral revize li.',
+    urgencyCaveat:'Estimasyon ijans AI — verifye nenpòt dat limit nan dokiman orijinal la anvan ou aji.',
+    ocrWarning:'Dokiman sa a te li ak rekonesans imaj AI. Dat, chif, ak non yo dwe verifye nan dokiman orijinal la anvan ou konte sou analiz sa a.',
+    lawsVerifyNote:'Toujou verifye sitasyon yo nan sous ofisyèl la anvan ou konte sou yo.',
     emptyBreakdown:'Pa gen analiz seksyon disponib.', emptyLaws:'Pa gen lwa idantifye pou dokiman sa a.', emptyCases:'Pa gen ka legal idantifye pou tip dokiman sa a.', emptyGlossary:'Pa gen tèm glosè idantifye.', emptyRights:'Pa gen enfòmasyon sou dwa oswa resous disponib.',
     sectionPrefix:'Seksyon', localResources:'Resous Legal Lokal ak Nasyonal',
     viewLaw:'Wè lwa ↗', searchCase:'Chèche ↗', websiteLink:'Sit wèb ↗',
@@ -2908,6 +2962,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'ਹੁਣੇ ਕੀ ਕਰਨਾ ਹੈ',
     ctaTitle:'⚖️ ਮੁਫ਼ਤ ਵਕੀਲ ਨਾਲ ਗੱਲ ਕਰੋ', ctaBody:'VeriLex ਦੱਸਦਾ ਹੈ ਕਿ ਇਹ ਦਸਤਾਵੇਜ਼ ਕੀ ਕਹਿੰਦਾ ਹੈ। ਤੁਹਾਡੀ ਖਾਸ ਸਥਿਤੀ ਵਿੱਚ ਕੀ ਕਰਨਾ ਹੈ ਇਸ ਬਾਰੇ ਸਲਾਹ ਲਈ, ਇੱਕ ਮੁਫ਼ਤ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਵਕੀਲ ਮਦਦ ਕਰ ਸਕਦਾ ਹੈ।', ctaLink:'ਮੁਫ਼ਤ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਲੱਭੋ',
     flagBtn:'🚩 ਅਨੁਵਾਦ ਸਮੱਸਿਆ ਦੱਸੋ', flagTitle:'ਅਨੁਵਾਦ ਸਮੱਸਿਆ ਦੀ ਰਿਪੋਰਟ ਕਰੋ', flagDesc:'ਇਸ ਅਨੁਵਾਦ ਵਿੱਚ ਜੋ ਗਲਤ ਲੱਗਦਾ ਹੈ ਉਸਦਾ ਵਰਣਨ ਕਰੋ:', flagSubmit:'ਰਿਪੋਰਟ ਭੇਜੋ', flagCancel:'ਰੱਦ ਕਰੋ', flagThanks:'ਧੰਨਵਾਦ — ਅਸੀਂ ਇਸਦੀ ਸਮੀਖਿਆ ਕਰਾਂਗੇ।',
+    urgencyCaveat:'AI ਦੁਆਰਾ ਅਨੁਮਾਨਿਤ ਜ਼ਰੂਰੀਅਤ — ਕੋਈ ਕਾਰਵਾਈ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਅਸਲ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਕਿਸੇ ਵੀ ਸਮਾਂ-ਸੀਮਾ ਦੀ ਜਾਂਚ ਕਰੋ।',
+    ocrWarning:'ਇਹ ਦਸਤਾਵੇਜ਼ AI ਚਿੱਤਰ ਪਛਾਣ ਦੁਆਰਾ ਪੜ੍ਹਿਆ ਗਿਆ ਸੀ। ਇਸ ਵਿਸ਼ਲੇਸ਼ਣ 'ਤੇ ਭਰੋਸਾ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਅਸਲ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਤਾਰੀਖਾਂ, ਸੰਖਿਆਵਾਂ ਅਤੇ ਨਾਮ ਤਸਦੀਕ ਕਰੋ।',
+    lawsVerifyNote:'ਕਿਸੇ ਵੀ ਹਵਾਲੇ 'ਤੇ ਭਰੋਸਾ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਹਮੇਸ਼ਾ ਅਧਿਕਾਰਿਕ ਸਰੋਤ 'ਤੇ ਤਸਦੀਕ ਕਰੋ।',
     emptyBreakdown:'ਕੋਈ ਅਨੁਭਾਗ ਵਿਸ਼ਲੇਸ਼ਣ ਉਪਲਬਧ ਨਹੀਂ।', emptyLaws:'ਇਸ ਦਸਤਾਵੇਜ਼ ਲਈ ਕੋਈ ਕਾਨੂੰਨ ਨਹੀਂ ਮਿਲਿਆ।', emptyCases:'ਇਸ ਕਿਸਮ ਲਈ ਕੋਈ ਕੇਸ ਕਾਨੂੰਨ ਨਹੀਂ ਮਿਲਿਆ।', emptyGlossary:'ਕੋਈ ਸ਼ਬਦਾਵਲੀ ਨਹੀਂ ਮਿਲੀ।', emptyRights:'ਕੋਈ ਅਧਿਕਾਰ ਜਾਣਕਾਰੀ ਜਾਂ ਸਰੋਤ ਉਪਲਬਧ ਨਹੀਂ।',
     sectionPrefix:'ਅਨੁਭਾਗ', localResources:'ਸਥਾਨਕ ਅਤੇ ਰਾਸ਼ਟਰੀ ਕਾਨੂੰਨੀ ਸਰੋਤ',
     viewLaw:'ਕਾਨੂੰਨ ਦੇਖੋ ↗', searchCase:'ਖੋਜੋ ↗', websiteLink:'ਵੈੱਬਸਾਈਟ ↗',
@@ -2990,6 +3047,9 @@ const TRANSLATIONS = {
     actionBoxTitle:'አሁን ምን ማድረግ እንዳለበት',
     ctaTitle:'⚖️ ነጻ ጠበቃ ጋር ይነጋገሩ', ctaBody:'VeriLex ይህ ሰነድ ምን እንደሚናገር ያብራራል። ለእርስዎ ልዩ ሁኔታ ምን ማድረግ እንዳለብዎ ምክር ለማግኘት፣ ነጻ የህግ ድጋፍ ጠበቃ ሊረዳዎ ይችላል።', ctaLink:'ነጻ የህግ ድጋፍ ፈልጉ',
     flagBtn:'🚩 ትርጉም ጉድለት ሪፖርት አድርጉ', flagTitle:'የትርጉም ችግር ሪፖርት አድርጉ', flagDesc:'በዚህ ትርጉም ውስጥ የሚመስለው ስህተት ምን እንደሆነ ይግለጹ፡', flagSubmit:'ሪፖርት ላኩ', flagCancel:'ሰርዝ', flagThanks:'እናመሰግናለን — እንፈትሸዋለን።',
+    urgencyCaveat:'የ AI አስቸኳይነት ግምት — ከማንኛውም እርምጃ በፊት በዋናው ሰነድ ውስጥ ያሉ የጊዜ ገደቦችን ያረጋግጡ።',
+    ocrWarning:'ይህ ሰነድ በ AI ምስል ማወቂያ ተነቦ ነበር። በዚህ ትንታኔ ላይ ከመተማመንዎ በፊት ቀኖቹን፣ ቁጥሮቹን እና ስሞቹን ከዋናው ሰነድ ያረጋግጡ።',
+    lawsVerifyNote:'ከማንኛውም ጥቅስ ላይ ከመተማመንዎ በፊት ሁልጊዜ በይፋዊ ምንጭ ያረጋግጡ።',
     emptyBreakdown:'ምንም የክፍል ትንታኔ የለም።', emptyLaws:'ለዚህ ሰነድ ምንም ሕግ አልተገኘም።', emptyCases:'ለዚህ ሰነድ አይነት ምንም ጉዳይ ሕግ አልተገኘም።', emptyGlossary:'ምንም ቃላት አልተገኙም።', emptyRights:'ምንም የሕግ መብቶች ወይም ሀብቶች አልተገኙም።',
     sectionPrefix:'ክፍል', localResources:'የአካባቢ እና ብሔራዊ የሕግ ሀብቶች',
     viewLaw:'ሕግ ይመልከቱ ↗', searchCase:'ፈልጉ ↗', websiteLink:'ድረ-ገጽ ↗',
@@ -3383,6 +3443,7 @@ async function onFileUpload(file) {
     const data = await res.json();
     if (!res.ok) throw new Error(data.detail);
     pdfText = data.text;
+    ocrUsed = isImage || data.method === 'ocr';
     st.style.color = 'var(--low)';
     if (isImage) {
       st.textContent = `✓ Image read with AI — ready to analyze`;
@@ -3624,10 +3685,12 @@ const PERSONA_LABEL = { novice:'🌱 Simplified', intermediate:'📚 Standard', 
 
 function renderSummary(d) {
   const u = (d.urgency || 'low').toLowerCase();
+  const t = T();
   document.getElementById('summarySection').innerHTML = `
+    ${ocrUsed ? `<div class="ocr-warning">⚠️ ${esc(t.ocrWarning)}</div>` : ''}
     <div class="summary-card">
       <div class="doc-meta">
-        <span class="badge badge-type">${esc(d.document_type || T().defaultDocType)}</span>
+        <span class="badge badge-type">${esc(d.document_type || t.defaultDocType)}</span>
         <span class="badge badge-${u}">${URGENCY_ICON[u] || '⚪'} ${urgLabel(u)}</span>
         <span class="badge" style="background:rgba(0,0,0,.05);color:var(--muted)">${PERSONA_LABEL[persona] || ''}</span>
       </div>
@@ -3635,6 +3698,7 @@ function renderSummary(d) {
         <span class="urgency-icon">${URGENCY_ICON[u] || '⚪'}</span>
         <span>${esc(d.urgency_reason || '')}</span>
       </div>
+      <div class="urgency-caveat">${esc(t.urgencyCaveat)}</div>
       <p class="plain-summary">${esc(d.plain_summary || '')}</p>
     </div>`;
 }
@@ -3676,7 +3740,7 @@ function toggleAcc(i) {
 function renderLaws(laws) {
   document.getElementById('cnt-laws').textContent = laws.length;
   if (!laws.length) { document.getElementById('tab-laws').innerHTML = emptyState(T().emptyLaws); return; }
-  document.getElementById('tab-laws').innerHTML = laws.map(l => `
+  document.getElementById('tab-laws').innerHTML = `<div class="laws-verify-note">${esc(T().lawsVerifyNote)}</div>` + laws.map(l => `
     <div class="content-card">
       <div class="law-head">
         <div>
@@ -3839,6 +3903,7 @@ function resetAll() {
   document.getElementById('docText').value = '';
   document.getElementById('charCount').textContent = '0' + (T().charCountSuffix || ' characters');
   pdfText = '';
+  ocrUsed = false;
   document.getElementById('pdfStatus').textContent = '';
   lastDocText = '';
   lastAnalysis = null;
