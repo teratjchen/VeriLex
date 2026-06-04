@@ -769,6 +769,23 @@
       text-align: center; line-height: 1.5; margin-top: 2px;
     }
     .analyze-privacy-note a { color: inherit; text-decoration: underline; }
+    .soft-attorney-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 18px 20px; margin-bottom: 16px;
+      display: flex; flex-direction: column; gap: 8px;
+      animation: fadeInUp .4s ease both;
+    }
+    .soft-attorney-card-title { font-size: 14px; font-weight: 700; color: var(--ink); }
+    .soft-attorney-card-body  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .soft-attorney-card-link  {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 13px; font-weight: 600; color: var(--amber); text-decoration: none;
+    }
+    .soft-attorney-card-link:hover { text-decoration: underline; }
+    .resources-attorney-note {
+      font-size: 13px; color: var(--muted); margin-bottom: 14px;
+      line-height: 1.55; font-style: italic;
+    }
 
     /* ── RESULT ACTIONS (Print / Copy) ────────────────── */
     .result-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
@@ -1864,6 +1881,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'What to do right now',
     ctaTitle:'⚖️ Talk to a free attorney', ctaBody:'VeriLex explains what this document says. For advice on what to do in your specific situation, a free attorney can help.', ctaLink:'Find free legal aid',
     flagBtn:'🚩 Flag translation', flagTitle:'Report a translation issue', flagDesc:'Describe what seems incorrect in this translation:', flagSubmit:'Send report', flagCancel:'Cancel', flagThanks:'Thank you — we\'ll review it.',
+    softCtaTitle:'⚖️ Still worth talking to a free attorney', softCtaBody:'No urgent deadlines were detected in this document. A free attorney can still review your situation and advise on options you may have.', resourcesNote:'Many of these organizations offer free consultations — consider reaching out even if your document doesn\'t seem urgent.',
     urgencyCaveat:'AI urgency estimate — verify any deadlines against the original document before acting.',
     ocrWarning:'This document was read with AI image recognition. Dates, numbers, and names should be verified against the original document before relying on this analysis.',
     lawsVerifyNote:'Always verify citations at the official source before relying on them.',
@@ -1950,6 +1968,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'Qué hacer ahora mismo',
     ctaTitle:'⚖️ Habla con un abogado gratis', ctaBody:'VeriLex explica lo que dice este documento. Para asesoramiento sobre qué hacer en su situación específica, un abogado de ayuda legal gratuita puede ayudar.', ctaLink:'Encontrar ayuda legal gratuita',
     flagBtn:'🚩 Reportar traducción', flagTitle:'Reportar un problema de traducción', flagDesc:'Describe qué parece incorrecto en esta traducción:', flagSubmit:'Enviar reporte', flagCancel:'Cancelar', flagThanks:'Gracias — lo revisaremos.',
+    softCtaTitle:'⚖️ Vale la pena hablar con un abogado gratis', softCtaBody:'No se detectaron plazos urgentes en este documento. Un abogado de ayuda legal gratuita puede revisar su situación y asesorarle sobre las opciones disponibles.', resourcesNote:'Muchas de estas organizaciones ofrecen consultas gratuitas — considere contactarlas aunque su documento no parezca urgente.',
     urgencyCaveat:'Estimación de urgencia por IA — verifique los plazos en el documento original antes de actuar.',
     ocrWarning:'Este documento fue leído con reconocimiento de imágenes por IA. Las fechas, números y nombres deben verificarse en el documento original antes de actuar según este análisis.',
     lawsVerifyNote:'Verifique siempre las citas en la fuente oficial antes de depender de ellas.',
@@ -2036,6 +2055,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'现在需要做什么',
     ctaTitle:'⚖️ 咨询免费律师', ctaBody:'VeriLex 解释本文件的内容。如需针对您具体情况的建议，免费法律援助律师可以提供帮助。', ctaLink:'查找免费法律援助',
     flagBtn:'🚩 标记翻译问题', flagTitle:'报告翻译问题', flagDesc:'请描述此翻译中似乎有误的内容：', flagSubmit:'提交报告', flagCancel:'取消', flagThanks:'谢谢 — 我们将进行审查。',
+    softCtaTitle:'⚖️ 仍值得咨询免费律师', softCtaBody:'本文件未检测到紧急截止日期。免费法律援助律师仍可审查您的情况并就您可能拥有的选择提供建议。', resourcesNote:'这些组织中许多提供免费咨询 — 即使您的文件看起来不紧急，也可以考虑联系他们。',
     urgencyCaveat:'AI 紧迫性估计 — 采取行动前请核对原始文件中的任何截止日期。',
     ocrWarning:'本文件通过 AI 图像识别读取。在依赖此分析之前，请对照原始文件核实日期、数字和姓名。',
     lawsVerifyNote:'依赖任何引用前，请务必在官方来源核实。',
@@ -2122,6 +2142,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'現在需要做什麼',
     ctaTitle:'⚖️ 諮詢免費律師', ctaBody:'VeriLex 說明本文件的內容。如需針對您具體情況的建議，免費法律援助律師可以提供協助。', ctaLink:'尋找免費法律援助',
     flagBtn:'🚩 標記翻譯問題', flagTitle:'回報翻譯問題', flagDesc:'請描述此翻譯中似乎有誤的內容：', flagSubmit:'提交報告', flagCancel:'取消', flagThanks:'謝謝 — 我們將進行審查。',
+    softCtaTitle:'⚖️ 仍值得諮詢免費律師', softCtaBody:'本文件未偵測到緊急截止日期。免費法律援助律師仍可審查您的情況並就您可能擁有的選項提供建議。', resourcesNote:'這些組織中許多提供免費諮詢 — 即使您的文件看起來不緊急，也可以考慮聯繫他們。',
     urgencyCaveat:'AI 緊迫性估計 — 採取行動前請核對原始文件中的任何截止日期。',
     ocrWarning:'本文件透過 AI 影像辨識讀取。在依賴此分析之前，請對照原始文件核實日期、數字和姓名。',
     lawsVerifyNote:'依賴任何引用前，請務必在官方來源核實。',
@@ -2208,6 +2229,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'Cần làm gì ngay bây giờ',
     ctaTitle:'⚖️ Nói chuyện với luật sư miễn phí', ctaBody:'VeriLex giải thích những gì tài liệu này nói. Để được tư vấn về việc phải làm trong tình huống cụ thể của bạn, luật sư hỗ trợ pháp lý miễn phí có thể giúp đỡ.', ctaLink:'Tìm hỗ trợ pháp lý miễn phí',
     flagBtn:'🚩 Báo lỗi dịch thuật', flagTitle:'Báo cáo vấn đề dịch thuật', flagDesc:'Mô tả điều gì có vẻ không đúng trong bản dịch này:', flagSubmit:'Gửi báo cáo', flagCancel:'Hủy', flagThanks:'Cảm ơn — chúng tôi sẽ xem xét.',
+    softCtaTitle:'⚖️ Vẫn nên nói chuyện với luật sư miễn phí', softCtaBody:'Không phát hiện thời hạn khẩn cấp trong tài liệu này. Luật sư hỗ trợ pháp lý miễn phí vẫn có thể xem xét tình huống của bạn và tư vấn về các lựa chọn có thể có.', resourcesNote:'Nhiều tổ chức trong số này cung cấp tư vấn miễn phí — hãy cân nhắc liên hệ ngay cả khi tài liệu của bạn có vẻ không khẩn cấp.',
     urgencyCaveat:'Ước tính mức độ khẩn cấp bằng AI — hãy xác minh bất kỳ thời hạn nào trong tài liệu gốc trước khi hành động.',
     ocrWarning:'Tài liệu này được đọc bằng nhận dạng hình ảnh AI. Các ngày, số và tên nên được xác minh với tài liệu gốc trước khi dựa vào phân tích này.',
     lawsVerifyNote:'Luôn xác minh các trích dẫn tại nguồn chính thức trước khi dựa vào chúng.',
@@ -2294,6 +2316,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'Ano ang gagawin ngayon',
     ctaTitle:'⚖️ Makipag-usap sa libreng abogado', ctaBody:'Ipinapaliwanag ng VeriLex kung ano ang sinasabi ng dokumentong ito. Para sa payo tungkol sa iyong tiyak na sitwasyon, maaaring tumulong ang isang libreng abogado.', ctaLink:'Hanapin ang libreng legal na tulong',
     flagBtn:'🚩 I-flag ang salin', flagTitle:'Mag-ulat ng isyu sa pagsasalin', flagDesc:'Ilarawan kung ano ang mukhang mali sa salin na ito:', flagSubmit:'Ipadala ang ulat', flagCancel:'Kanselahin', flagThanks:'Salamat — susuriin namin ito.',
+    softCtaTitle:'⚖️ Sulit pa ring makipag-usap sa libreng abogado', softCtaBody:'Walang urgent na deadline na natukoy sa dokumentong ito. Ang isang libreng abogado ay maaari pa ring suriin ang iyong sitwasyon at magbigay ng payo sa mga pagpipiliang maaari mong mayroon.', resourcesNote:'Marami sa mga organisasyong ito ay nag-aalok ng libreng konsultasyon — isaalang-alang ang pakikipag-ugnayan kahit na hindi mukhang urgent ang iyong dokumento.',
     urgencyCaveat:'Pagtatantya ng AI sa pagkamadalian — i-verify ang anumang mga deadline sa orihinal na dokumento bago kumilos.',
     ocrWarning:'Ang dokumentong ito ay nabasa gamit ang AI na pagkilala ng imahe. Ang mga petsa, numero, at pangalan ay dapat i-verify sa orihinal na dokumento bago umasa sa pagsusuring ito.',
     lawsVerifyNote:'Palaging i-verify ang mga sipi sa opisyal na pinagmulan bago umasa sa mga ito.',
@@ -2380,6 +2403,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'지금 당장 해야 할 일',
     ctaTitle:'⚖️ 무료 변호사와 상담하세요', ctaBody:'VeriLex는 이 문서가 무엇을 말하는지 설명합니다. 귀하의 특정 상황에서 어떻게 해야 할지에 대한 조언은 무료 법률 지원 변호사가 도움을 드릴 수 있습니다.', ctaLink:'무료 법률 지원 찾기',
     flagBtn:'🚩 번역 오류 신고', flagTitle:'번역 문제 신고', flagDesc:'이 번역에서 잘못된 것 같은 내용을 설명해 주세요:', flagSubmit:'신고 보내기', flagCancel:'취소', flagThanks:'감사합니다 — 검토하겠습니다.',
+    softCtaTitle:'⚖️ 무료 변호사와 상담해 볼 가치가 있습니다', softCtaBody:'이 문서에서 긴급한 마감일이 발견되지 않았습니다. 무료 법률 지원 변호사가 귀하의 상황을 검토하고 가능한 선택지에 대해 조언해 드릴 수 있습니다.', resourcesNote:'이 기관들 중 많은 곳이 무료 상담을 제공합니다 — 문서가 긴급하지 않더라도 연락해 보는 것을 고려하세요.',
     urgencyCaveat:'AI 긴급도 추정 — 행동하기 전에 원본 문서에서 마감일을 직접 확인하세요.',
     ocrWarning:'이 문서는 AI 이미지 인식으로 읽혔습니다. 이 분석을 신뢰하기 전에 원본 문서에서 날짜, 숫자, 이름을 확인하세요.',
     lawsVerifyNote:'이 인용문을 사용하기 전에 항상 공식 출처에서 확인하세요.',
@@ -2466,6 +2490,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'ما يجب فعله الآن',
     ctaTitle:'⚖️ تحدث إلى محامٍ مجاني', ctaBody:'يشرح VeriLex ما تقوله هذه الوثيقة. للحصول على مشورة حول ما يجب فعله في وضعك المحدد، يمكن لمحامٍ للمساعدة القانونية المجانية أن يساعدك.', ctaLink:'ابحث عن مساعدة قانونية مجانية',
     flagBtn:'🚩 الإبلاغ عن خطأ في الترجمة', flagTitle:'الإبلاغ عن مشكلة في الترجمة', flagDesc:'صف ما يبدو غير صحيح في هذه الترجمة:', flagSubmit:'إرسال التقرير', flagCancel:'إلغاء', flagThanks:'شكراً — سنراجع ذلك.',
+    softCtaTitle:'⚖️ لا يزال من المفيد التحدث مع محامٍ مجاني', softCtaBody:'لم يتم اكتشاف مواعيد نهائية عاجلة في هذه الوثيقة. يمكن لمحامٍ مجاني للمساعدة القانونية مراجعة وضعك وتقديم المشورة بشأن الخيارات المتاحة لك.', resourcesNote:'كثير من هذه المنظمات تقدم استشارات مجانية — فكر في التواصل معها حتى لو لم يبدُ مستندك عاجلاً.',
     urgencyCaveat:'تقدير درجة الإلحاح بالذكاء الاصطناعي — تحقق من أي مواعيد نهائية في المستند الأصلي قبل التصرف.',
     ocrWarning:'تمت قراءة هذا المستند باستخدام التعرف الآلي على الصور. يجب التحقق من التواريخ والأرقام والأسماء في المستند الأصلي قبل الاعتماد على هذا التحليل.',
     lawsVerifyNote:'تحقق دائماً من الاستشهادات في المصدر الرسمي قبل الاعتماد عليها.',
@@ -2552,6 +2577,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'अभी क्या करें',
     ctaTitle:'⚖️ निःशुल्क वकील से बात करें', ctaBody:'VeriLex बताता है कि यह दस्तावेज़ क्या कहता है। आपकी विशेष स्थिति में क्या करना है इसके बारे में सलाह के लिए, एक निःशुल्क कानूनी सहायता वकील मदद कर सकता है।', ctaLink:'निःशुल्क कानूनी सहायता खोजें',
     flagBtn:'🚩 अनुवाद में त्रुटि बताएं', flagTitle:'अनुवाद समस्या की रिपोर्ट करें', flagDesc:'इस अनुवाद में जो गलत लग रहा है उसका वर्णन करें:', flagSubmit:'रिपोर्ट भेजें', flagCancel:'रद्द करें', flagThanks:'धन्यवाद — हम इसकी समीक्षा करेंगे।',
+    softCtaTitle:'⚖️ फिर भी निःशुल्क वकील से बात करना उचित है', softCtaBody:'इस दस्तावेज़ में कोई तत्काल समय-सीमा नहीं मिली। एक निःशुल्क कानूनी सहायता वकील फिर भी आपकी स्थिति की समीक्षा कर सकता है और उपलब्ध विकल्पों पर सलाह दे सकता है।', resourcesNote:'इनमें से कई संगठन निःशुल्क परामर्श प्रदान करते हैं — भले ही दस्तावेज़ तत्काल न लगे, संपर्क करने पर विचार करें।',
     urgencyCaveat:'AI द्वारा अनुमानित तात्कालिकता — कोई भी कार्रवाई करने से पहले मूल दस्तावेज़ में किसी भी समय-सीमा की जांच करें।',
     ocrWarning:'यह दस्तावेज़ AI इमेज पहचान द्वारा पढ़ा गया था। इस विश्लेषण पर निर्भर होने से पहले मूल दस्तावेज़ में दिनांक, संख्याएं और नाम सत्यापित करें।',
     lawsVerifyNote:'किसी भी उद्धरण पर भरोसा करने से पहले उसे आधिकारिक स्रोत पर सत्यापित करें।',
@@ -2638,6 +2664,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'O que fazer agora',
     ctaTitle:'⚖️ Fale com um advogado gratuito', ctaBody:'O VeriLex explica o que este documento diz. Para aconselhamento sobre o que fazer na sua situação específica, um advogado de assistência jurídica gratuita pode ajudar.', ctaLink:'Encontrar assistência jurídica gratuita',
     flagBtn:'🚩 Sinalizar tradução', flagTitle:'Reportar problema de tradução', flagDesc:'Descreva o que parece incorreto nesta tradução:', flagSubmit:'Enviar relatório', flagCancel:'Cancelar', flagThanks:'Obrigado — vamos rever.',
+    softCtaTitle:'⚖️ Ainda vale a pena falar com um advogado gratuito', softCtaBody:'Não foram detetados prazos urgentes neste documento. Um advogado de assistência jurídica gratuita pode ainda assim rever a sua situação e aconselhar sobre as opções disponíveis.', resourcesNote:'Muitas destas organizações oferecem consultas gratuitas — considere entrar em contacto mesmo que o seu documento não pareça urgente.',
     urgencyCaveat:'Estimativa de urgência por IA — verifique os prazos no documento original antes de agir.',
     ocrWarning:'Este documento foi lido com reconhecimento de imagem por IA. Datas, números e nomes devem ser verificados no documento original antes de confiar nesta análise.',
     lawsVerifyNote:'Verifique sempre as citações na fonte oficial antes de confiar nelas.',
@@ -2724,6 +2751,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'Что делать прямо сейчас',
     ctaTitle:'⚖️ Поговорите с бесплатным юристом', ctaBody:'VeriLex объясняет, что говорится в этом документе. Для получения совета о том, что делать в вашей конкретной ситуации, бесплатный юрист по юридической помощи может помочь.', ctaLink:'Найти бесплатную юридическую помощь',
     flagBtn:'🚩 Сообщить об ошибке перевода', flagTitle:'Сообщить о проблеме с переводом', flagDesc:'Опишите, что кажется неверным в этом переводе:', flagSubmit:'Отправить отчет', flagCancel:'Отмена', flagThanks:'Спасибо — мы проверим.',
+    softCtaTitle:'⚖️ Всё равно стоит поговорить с бесплатным юристом', softCtaBody:'В этом документе не обнаружено срочных сроков. Бесплатный юрист по юридической помощи всё равно может рассмотреть вашу ситуацию и дать совет о возможных вариантах.', resourcesNote:'Многие из этих организаций предлагают бесплатные консультации — рассмотрите обращение, даже если документ не кажется срочным.',
     urgencyCaveat:'Оценка срочности выполнена ИИ — проверьте все сроки в оригинальном документе перед принятием решений.',
     ocrWarning:'Этот документ был прочитан с помощью ИИ-распознавания изображений. Перед использованием этого анализа проверьте даты, числа и имена в оригинальном документе.',
     lawsVerifyNote:'Всегда проверяйте ссылки в официальном источнике, прежде чем полагаться на них.',
@@ -2810,6 +2838,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'Que faire maintenant',
     ctaTitle:'⚖️ Parlez à un avocat gratuit', ctaBody:'VeriLex explique ce que dit ce document. Pour des conseils sur ce qu\'il faut faire dans votre situation spécifique, un avocat d\'aide juridictionnelle gratuite peut vous aider.', ctaLink:'Trouver une aide juridique gratuite',
     flagBtn:'🚩 Signaler une traduction', flagTitle:'Signaler un problème de traduction', flagDesc:'Décrivez ce qui semble incorrect dans cette traduction :', flagSubmit:'Envoyer le rapport', flagCancel:'Annuler', flagThanks:'Merci — nous allons vérifier.',
+    softCtaTitle:'⚖️ Cela vaut toujours la peine de parler à un avocat gratuit', softCtaBody:'Aucun délai urgent n\'a été détecté dans ce document. Un avocat d\'aide juridictionnelle gratuite peut quand même examiner votre situation et vous conseiller sur les options disponibles.', resourcesNote:'Beaucoup de ces organisations proposent des consultations gratuites — envisagez de les contacter même si votre document ne semble pas urgent.',
     urgencyCaveat:'Estimation d\'urgence par IA — vérifiez les délais dans le document original avant d\'agir.',
     ocrWarning:'Ce document a été lu par reconnaissance d\'image IA. Les dates, chiffres et noms doivent être vérifiés dans le document original avant de se fier à cette analyse.',
     lawsVerifyNote:'Vérifiez toujours les citations à la source officielle avant de vous y fier.',
@@ -2896,6 +2925,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'Kisa pou fè kounye a',
     ctaTitle:'⚖️ Pale ak yon avoka gratis', ctaBody:'VeriLex eksplike sa dokiman sa a di. Pou konsèy sou sa pou fè nan sitiyasyon espesifik ou, yon avoka èd legal gratis ka ede ou.', ctaLink:'Jwenn èd legal gratis',
     flagBtn:'🚩 Rapòte tradiksyon', flagTitle:'Rapòte yon pwoblèm tradiksyon', flagDesc:'Dekri sa ki sanble pa kòrèk nan tradiksyon sa a:', flagSubmit:'Voye rapò', flagCancel:'Anile', flagThanks:'Mèsi — nou pral revize li.',
+    softCtaTitle:'⚖️ Li toujou vo lapèn pale ak yon avoka gratis', softCtaBody:'Pa gen dat limit ijan ki detekte nan dokiman sa a. Yon avoka èd legal gratis ka toujou revize sitiyasyon ou epi ba ou konsèy sou opsyon ou ka genyen.', resourcesNote:'Anpil nan òganizasyon sa yo ofri konsiltasyon gratis — konsidere kontakte yo menm si dokiman ou pa sanble ijan.',
     urgencyCaveat:'Estimasyon ijans AI — verifye nenpòt dat limit nan dokiman orijinal la anvan ou aji.',
     ocrWarning:'Dokiman sa a te li ak rekonesans imaj AI. Dat, chif, ak non yo dwe verifye nan dokiman orijinal la anvan ou konte sou analiz sa a.',
     lawsVerifyNote:'Toujou verifye sitasyon yo nan sous ofisyèl la anvan ou konte sou yo.',
@@ -2982,6 +3012,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'ਹੁਣੇ ਕੀ ਕਰਨਾ ਹੈ',
     ctaTitle:'⚖️ ਮੁਫ਼ਤ ਵਕੀਲ ਨਾਲ ਗੱਲ ਕਰੋ', ctaBody:'VeriLex ਦੱਸਦਾ ਹੈ ਕਿ ਇਹ ਦਸਤਾਵੇਜ਼ ਕੀ ਕਹਿੰਦਾ ਹੈ। ਤੁਹਾਡੀ ਖਾਸ ਸਥਿਤੀ ਵਿੱਚ ਕੀ ਕਰਨਾ ਹੈ ਇਸ ਬਾਰੇ ਸਲਾਹ ਲਈ, ਇੱਕ ਮੁਫ਼ਤ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਵਕੀਲ ਮਦਦ ਕਰ ਸਕਦਾ ਹੈ।', ctaLink:'ਮੁਫ਼ਤ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਲੱਭੋ',
     flagBtn:'🚩 ਅਨੁਵਾਦ ਸਮੱਸਿਆ ਦੱਸੋ', flagTitle:'ਅਨੁਵਾਦ ਸਮੱਸਿਆ ਦੀ ਰਿਪੋਰਟ ਕਰੋ', flagDesc:'ਇਸ ਅਨੁਵਾਦ ਵਿੱਚ ਜੋ ਗਲਤ ਲੱਗਦਾ ਹੈ ਉਸਦਾ ਵਰਣਨ ਕਰੋ:', flagSubmit:'ਰਿਪੋਰਟ ਭੇਜੋ', flagCancel:'ਰੱਦ ਕਰੋ', flagThanks:'ਧੰਨਵਾਦ — ਅਸੀਂ ਇਸਦੀ ਸਮੀਖਿਆ ਕਰਾਂਗੇ।',
+    softCtaTitle:'⚖️ ਫਿਰ ਵੀ ਮੁਫ਼ਤ ਵਕੀਲ ਨਾਲ ਗੱਲ ਕਰਨਾ ਯੋਗ ਹੈ', softCtaBody:'ਇਸ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਕੋਈ ਤੁਰੰਤ ਸਮਾਂ-ਸੀਮਾ ਨਹੀਂ ਮਿਲੀ। ਇੱਕ ਮੁਫ਼ਤ ਕਾਨੂੰਨੀ ਸਹਾਇਤਾ ਵਕੀਲ ਫਿਰ ਵੀ ਤੁਹਾਡੀ ਸਥਿਤੀ ਦੀ ਸਮੀਖਿਆ ਕਰ ਸਕਦਾ ਹੈ ਅਤੇ ਉਪਲਬਧ ਵਿਕਲਪਾਂ ਬਾਰੇ ਸਲਾਹ ਦੇ ਸਕਦਾ ਹੈ।', resourcesNote:'ਇਹਨਾਂ ਵਿੱਚੋਂ ਕਈ ਸੰਸਥਾਵਾਂ ਮੁਫ਼ਤ ਸਲਾਹ ਪ੍ਰਦਾਨ ਕਰਦੀਆਂ ਹਨ — ਭਾਵੇਂ ਦਸਤਾਵੇਜ਼ ਤੁਰੰਤ ਨਾ ਲੱਗੇ, ਸੰਪਰਕ ਕਰਨ ਬਾਰੇ ਵਿਚਾਰ ਕਰੋ।',
     urgencyCaveat:'AI ਦੁਆਰਾ ਅਨੁਮਾਨਿਤ ਜ਼ਰੂਰੀਅਤ — ਕੋਈ ਕਾਰਵਾਈ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਅਸਲ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਕਿਸੇ ਵੀ ਸਮਾਂ-ਸੀਮਾ ਦੀ ਜਾਂਚ ਕਰੋ।',
     ocrWarning:'ਇਹ ਦਸਤਾਵੇਜ਼ AI ਚਿੱਤਰ ਪਛਾਣ ਦੁਆਰਾ ਪੜ੍ਹਿਆ ਗਿਆ ਸੀ। ਇਸ ਵਿਸ਼ਲੇਸ਼ਣ 'ਤੇ ਭਰੋਸਾ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਅਸਲ ਦਸਤਾਵੇਜ਼ ਵਿੱਚ ਤਾਰੀਖਾਂ, ਸੰਖਿਆਵਾਂ ਅਤੇ ਨਾਮ ਤਸਦੀਕ ਕਰੋ।',
     lawsVerifyNote:'ਕਿਸੇ ਵੀ ਹਵਾਲੇ 'ਤੇ ਭਰੋਸਾ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਹਮੇਸ਼ਾ ਅਧਿਕਾਰਿਕ ਸਰੋਤ 'ਤੇ ਤਸਦੀਕ ਕਰੋ।',
@@ -3068,6 +3099,7 @@ const TRANSLATIONS = {
     actionBoxTitle:'አሁን ምን ማድረግ እንዳለበት',
     ctaTitle:'⚖️ ነጻ ጠበቃ ጋር ይነጋገሩ', ctaBody:'VeriLex ይህ ሰነድ ምን እንደሚናገር ያብራራል። ለእርስዎ ልዩ ሁኔታ ምን ማድረግ እንዳለብዎ ምክር ለማግኘት፣ ነጻ የህግ ድጋፍ ጠበቃ ሊረዳዎ ይችላል።', ctaLink:'ነጻ የህግ ድጋፍ ፈልጉ',
     flagBtn:'🚩 ትርጉም ጉድለት ሪፖርት አድርጉ', flagTitle:'የትርጉም ችግር ሪፖርት አድርጉ', flagDesc:'በዚህ ትርጉም ውስጥ የሚመስለው ስህተት ምን እንደሆነ ይግለጹ፡', flagSubmit:'ሪፖርት ላኩ', flagCancel:'ሰርዝ', flagThanks:'እናመሰግናለን — እንፈትሸዋለን።',
+    softCtaTitle:'⚖️ ነጻ ጠበቃ ጋር ማነጋገር አሁንም ጠቃሚ ነው', softCtaBody:'በዚህ ሰነድ ውስጥ አስቸኳይ የጊዜ ገደቦች አልተገኙም። ነጻ የህግ ድጋፍ ጠበቃ አሁንም ሁኔታዎን ሊፈትሽ እና ሊኖሩዎት ስለሚችሉ አማራጮች ምክር ሊሰጥዎ ይችላል።', resourcesNote:'ከዚህ ድርጅቶች ብዙዎቹ ነጻ ምክክር ያቀርባሉ — ሰነዱ አስቸኳይ ካልሆነም ለማነጋገር ያስቡ።',
     urgencyCaveat:'የ AI አስቸኳይነት ግምት — ከማንኛውም እርምጃ በፊት በዋናው ሰነድ ውስጥ ያሉ የጊዜ ገደቦችን ያረጋግጡ።',
     ocrWarning:'ይህ ሰነድ በ AI ምስል ማወቂያ ተነቦ ነበር። በዚህ ትንታኔ ላይ ከመተማመንዎ በፊት ቀኖቹን፣ ቁጥሮቹን እና ስሞቹን ከዋናው ሰነድ ያረጋግጡ።',
     lawsVerifyNote:'ከማንኛውም ጥቅስ ላይ ከመተማመንዎ በፊት ሁልጊዜ በይፋዊ ምንጭ ያረጋግጡ።',
@@ -3679,7 +3711,17 @@ function renderActionSteps(d) {
   const sec = document.getElementById('actionSection');
   const u = (d.urgency || 'low').toLowerCase();
   const steps = d.action_steps || [];
-  if (!['high','critical'].includes(u) || !steps.length) { sec.style.display = 'none'; return; }
+  if (!['high','critical'].includes(u) || !steps.length) {
+    const t = T();
+    sec.style.display = 'block';
+    sec.innerHTML = `
+      <div class="soft-attorney-card">
+        <div class="soft-attorney-card-title">${esc(t.softCtaTitle)}</div>
+        <div class="soft-attorney-card-body">${esc(t.softCtaBody)}</div>
+        <a class="soft-attorney-card-link" href="https://www.lsc.gov/find-legal-aid" target="_blank" rel="noopener">${esc(t.ctaLink)} ↗</a>
+      </div>`;
+    return;
+  }
   sec.style.display = 'block';
   const icon = u === 'critical' ? '🚨' : '⚠️';
   const t = T();
@@ -3813,7 +3855,8 @@ function renderRights(rights, resources) {
   let html = '';
   if (rights.length) html += `<ul class="rights-list">${rights.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>`;
   if (resources.length) html += `
-    <div class="dates-title" style="margin-top:28px;margin-bottom:10px">${esc(T().localResources)}</div>
+    <div class="dates-title" style="margin-top:28px;margin-bottom:6px">${esc(T().localResources)}</div>
+    <div class="resources-attorney-note">${esc(T().resourcesNote)}</div>
     <div class="resource-grid">
       ${resources.map(r=>`
         <div class="resource-card">
