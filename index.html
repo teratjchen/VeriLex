@@ -764,6 +764,11 @@
       font-size: 12px; color: var(--muted); font-style: italic;
       margin-bottom: 12px; padding: 0 2px;
     }
+    .analyze-privacy-note {
+      width: 100%; font-size: 11.5px; color: var(--muted);
+      text-align: center; line-height: 1.5; margin-top: 2px;
+    }
+    .analyze-privacy-note a { color: inherit; text-decoration: underline; }
 
     /* ── RESULT ACTIONS (Print / Copy) ────────────────── */
     .result-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
@@ -1362,6 +1367,7 @@
         <button class="btn-analyze" id="analyzeBtn" onclick="analyze()">
           Explain Document &nbsp;→
         </button>
+        <p class="analyze-privacy-note" id="analyzePrivacyNote">🔒 Sent to Anthropic's Claude API for analysis — not stored, not used for training. <a href="/privacy">Privacy Policy</a></p>
       </div>
     </div>
 
@@ -1851,7 +1857,8 @@ const TRANSLATIONS = {
     faq6a:'First, paste or upload the document to VeriLex to understand exactly what it says and what your rights are. Pay close attention to the <strong>Key Dates &amp; Deadlines</strong> section — missing a deadline can seriously harm your case. For high-urgency notices, VeriLex will show a “What to do right now” action box. Then reach out to a legal aid organization immediately. In the Bay Area: <a href="https://ebclc.org" target="_blank" rel="noopener" style="color:var(--sky)">East Bay Community Law Center</a> (510) 548-4040 and <a href="https://baylegal.org" target="_blank" rel="noopener" style="color:var(--sky)">Bay Area Legal Aid</a> (415) 982-1300 offer free help.',
     loadStep1:'Reading your document…', loadStep2:'Identifying applicable laws…', loadStep3:'Finding relevant court cases…', loadStep4:'Extracting key dates and deadlines…', loadStep5:'Composing plain-language explanations…',
     loadTimeEst:'Usually takes 30–60 seconds', loadTimeStill:'Still working…',
-    uploadPrivacyNote:'🔒 Your file is processed by Claude AI and never stored on our servers.',
+    uploadPrivacyNote:'🔒 Your file is sent to Anthropic\'s Claude API and never stored on our servers.',
+    analyzePrivacyNote:'🔒 Sent to Anthropic\'s Claude API for analysis — not stored, not used for training. <a href="/privacy" style="color:inherit;text-decoration:underline">Privacy Policy</a>',
     charCountSuffix:' characters',
     urgencyLow:'Low Urgency', urgencyMed:'Medium Urgency', urgencyHigh:'High Urgency', urgencyCrit:'Critical — Act Immediately',
     actionBoxTitle:'What to do right now',
@@ -1937,6 +1944,7 @@ const TRANSLATIONS = {
     loadStep1:'Leyendo tu documento…', loadStep2:'Identificando leyes aplicables…', loadStep3:'Buscando casos judiciales relevantes…', loadStep4:'Extrayendo fechas y plazos clave…', loadStep5:'Redactando explicaciones en lenguaje claro…',
     loadTimeEst:'Generalmente tarda 30–60 segundos', loadTimeStill:'Aún trabajando…',
     uploadPrivacyNote:'🔒 Tu archivo es procesado por Claude AI y nunca se almacena en nuestros servidores.',
+    analyzePrivacyNote:'🔒 Enviado a la API Claude de Anthropic para análisis — no se almacena, no se usa para entrenamiento. <a href="/privacy" style="color:inherit;text-decoration:underline">Política de privacidad</a>',
     charCountSuffix:' caracteres',
     urgencyLow:'Urgencia baja', urgencyMed:'Urgencia media', urgencyHigh:'Urgencia alta', urgencyCrit:'Crítico — Actúa de inmediato',
     actionBoxTitle:'Qué hacer ahora mismo',
@@ -2022,6 +2030,7 @@ const TRANSLATIONS = {
     loadStep1:'正在阅读您的文件…', loadStep2:'识别适用法律…', loadStep3:'查找相关法院案例…', loadStep4:'提取关键日期和截止日期…', loadStep5:'撰写通俗易懂的解释…',
     loadTimeEst:'通常需要 30–60 秒', loadTimeStill:'仍在处理中…',
     uploadPrivacyNote:'🔒 您的文件由 Claude AI 处理，从不存储在我们的服务器上。',
+    analyzePrivacyNote:'🔒 发送至 Anthropic 的 Claude API 进行分析 — 不存储，不用于训练。<a href="/privacy" style="color:inherit;text-decoration:underline">隐私政策</a>',
     charCountSuffix:' 个字符',
     urgencyLow:'低紧迫性', urgencyMed:'中等紧迫性', urgencyHigh:'高紧迫性', urgencyCrit:'紧急 — 立即采取行动',
     actionBoxTitle:'现在需要做什么',
@@ -2107,6 +2116,7 @@ const TRANSLATIONS = {
     loadStep1:'正在閱讀您的文件…', loadStep2:'識別適用法律…', loadStep3:'查找相關法院案例…', loadStep4:'提取關鍵日期和截止日期…', loadStep5:'撰寫通俗易懂的解釋…',
     loadTimeEst:'通常需要 30–60 秒', loadTimeStill:'仍在處理中…',
     uploadPrivacyNote:'🔒 您的檔案由 Claude AI 處理，從不儲存於我們的伺服器。',
+    analyzePrivacyNote:'🔒 傳送至 Anthropic 的 Claude API 進行分析 — 不儲存，不用於訓練。<a href="/privacy" style="color:inherit;text-decoration:underline">隱私政策</a>',
     charCountSuffix:' 個字元',
     urgencyLow:'低緊迫性', urgencyMed:'中等緊迫性', urgencyHigh:'高緊迫性', urgencyCrit:'緊急 — 立即採取行動',
     actionBoxTitle:'現在需要做什麼',
@@ -2192,6 +2202,7 @@ const TRANSLATIONS = {
     loadStep1:'Đang đọc tài liệu của bạn…', loadStep2:'Xác định luật áp dụng…', loadStep3:'Tìm kiếm án lệ liên quan…', loadStep4:'Trích xuất ngày quan trọng và thời hạn…', loadStep5:'Soạn giải thích bằng ngôn ngữ đơn giản…',
     loadTimeEst:'Thường mất 30–60 giây', loadTimeStill:'Vẫn đang xử lý…',
     uploadPrivacyNote:'🔒 Tệp của bạn được xử lý bởi Claude AI và không bao giờ được lưu trữ trên máy chủ của chúng tôi.',
+    analyzePrivacyNote:'🔒 Gửi đến API Claude của Anthropic để phân tích — không lưu trữ, không dùng cho huấn luyện. <a href="/privacy" style="color:inherit;text-decoration:underline">Chính sách bảo mật</a>',
     charCountSuffix:' ký tự',
     urgencyLow:'Mức độ khẩn cấp thấp', urgencyMed:'Mức độ khẩn cấp trung bình', urgencyHigh:'Mức độ khẩn cấp cao', urgencyCrit:'Khẩn cấp — Hành động ngay',
     actionBoxTitle:'Cần làm gì ngay bây giờ',
@@ -2277,6 +2288,7 @@ const TRANSLATIONS = {
     loadStep1:'Binabasa ang iyong dokumento…', loadStep2:'Tinutukoy ang naaangkop na mga batas…', loadStep3:'Naghahanap ng mga kaugnay na kaso…', loadStep4:'Kinukuha ang mga mahahalagang petsa at deadline…', loadStep5:'Gumagawa ng mga paliwanag sa simpleng wika…',
     loadTimeEst:'Karaniwang tumatagal ng 30–60 segundo', loadTimeStill:'Nagtatrabaho pa…',
     uploadPrivacyNote:'🔒 Ang iyong file ay pinoproseso ng Claude AI at hindi kailanman naiimbak sa aming mga server.',
+    analyzePrivacyNote:'🔒 Ipinadala sa Anthropic\'s Claude API para sa pagsusuri — hindi naiimbak, hindi ginagamit para sa pagsasanay. <a href="/privacy" style="color:inherit;text-decoration:underline">Patakaran sa Privacy</a>',
     charCountSuffix:' mga karakter',
     urgencyLow:'Mababang Urgensya', urgencyMed:'Katamtamang Urgensya', urgencyHigh:'Mataas na Urgensya', urgencyCrit:'Kritikal — Kumilos Agad',
     actionBoxTitle:'Ano ang gagawin ngayon',
@@ -2362,6 +2374,7 @@ const TRANSLATIONS = {
     loadStep1:'문서를 읽는 중…', loadStep2:'적용 가능한 법률 식별 중…', loadStep3:'관련 판례 검색 중…', loadStep4:'주요 날짜 및 마감일 추출 중…', loadStep5:'쉬운 언어로 설명 작성 중…',
     loadTimeEst:'보통 30–60초 소요', loadTimeStill:'아직 처리 중…',
     uploadPrivacyNote:'🔒 귀하의 파일은 Claude AI로 처리되며 서버에 저장되지 않습니다.',
+    analyzePrivacyNote:'🔒 분석을 위해 Anthropic의 Claude API로 전송 — 저장되지 않으며 훈련에 사용되지 않습니다. <a href="/privacy" style="color:inherit;text-decoration:underline">개인정보처리방침</a>',
     charCountSuffix:' 자',
     urgencyLow:'낮은 긴급도', urgencyMed:'중간 긴급도', urgencyHigh:'높은 긴급도', urgencyCrit:'긴급 — 즉시 행동하세요',
     actionBoxTitle:'지금 당장 해야 할 일',
@@ -2447,6 +2460,7 @@ const TRANSLATIONS = {
     loadStep1:'جاري قراءة مستندك…', loadStep2:'تحديد القوانين المطبقة…', loadStep3:'البحث عن القضايا ذات الصلة…', loadStep4:'استخراج التواريخ والمواعيد النهائية الرئيسية…', loadStep5:'صياغة شروحات بلغة بسيطة…',
     loadTimeEst:'عادةً يستغرق 30–60 ثانية', loadTimeStill:'لا يزال يعمل…',
     uploadPrivacyNote:'🔒 ملفك تتم معالجته بواسطة Claude AI ولا يُخزَّن أبدًا على خوادمنا.',
+    analyzePrivacyNote:'🔒 يُرسل إلى Claude API من Anthropic للتحليل — لا يُخزَّن، ولا يُستخدم للتدريب. <a href="/privacy" style="color:inherit;text-decoration:underline">سياسة الخصوصية</a>',
     charCountSuffix:' حرف',
     urgencyLow:'أولوية منخفضة', urgencyMed:'أولوية متوسطة', urgencyHigh:'أولوية عالية', urgencyCrit:'حرج — تصرف فوراً',
     actionBoxTitle:'ما يجب فعله الآن',
@@ -2532,6 +2546,7 @@ const TRANSLATIONS = {
     loadStep1:'आपका दस्तावेज़ पढ़ा जा रहा है…', loadStep2:'लागू कानूनों की पहचान हो रही है…', loadStep3:'प्रासंगिक अदालती मामले खोजे जा रहे हैं…', loadStep4:'मुख्य तिथियाँ और समय-सीमाएँ निकाली जा रही हैं…', loadStep5:'सरल भाषा में स्पष्टीकरण तैयार हो रहे हैं…',
     loadTimeEst:'आमतौर पर 30–60 सेकंड लगते हैं', loadTimeStill:'अभी भी काम चल रहा है…',
     uploadPrivacyNote:'🔒 आपकी फ़ाइल Claude AI द्वारा प्रोसेस की जाती है और हमारे सर्वर पर कभी संग्रहीत नहीं होती।',
+    analyzePrivacyNote:'🔒 विश्लेषण के लिए Anthropic के Claude API को भेजा गया — संग्रहीत नहीं, प्रशिक्षण के लिए उपयोग नहीं। <a href="/privacy" style="color:inherit;text-decoration:underline">गोपनीयता नीति</a>',
     charCountSuffix:' अक्षर',
     urgencyLow:'कम जरूरी', urgencyMed:'मध्यम जरूरी', urgencyHigh:'अधिक जरूरी', urgencyCrit:'अत्यंत जरूरी — अभी कार्रवाई करें',
     actionBoxTitle:'अभी क्या करें',
@@ -2617,6 +2632,7 @@ const TRANSLATIONS = {
     loadStep1:'Lendo seu documento…', loadStep2:'Identificando leis aplicáveis…', loadStep3:'Buscando casos judiciais relevantes…', loadStep4:'Extraindo datas e prazos importantes…', loadStep5:'Redigindo explicações em linguagem simples…',
     loadTimeEst:'Geralmente leva 30–60 segundos', loadTimeStill:'Ainda processando…',
     uploadPrivacyNote:'🔒 O seu ficheiro é processado pelo Claude AI e nunca é armazenado nos nossos servidores.',
+    analyzePrivacyNote:'🔒 Enviado para a API Claude da Anthropic para análise — não armazenado, não usado para treino. <a href="/privacy" style="color:inherit;text-decoration:underline">Política de Privacidade</a>',
     charCountSuffix:' caracteres',
     urgencyLow:'Urgência baixa', urgencyMed:'Urgência média', urgencyHigh:'Urgência alta', urgencyCrit:'Crítico — Aja imediatamente',
     actionBoxTitle:'O que fazer agora',
@@ -2702,6 +2718,7 @@ const TRANSLATIONS = {
     loadStep1:'Читаем ваш документ…', loadStep2:'Определяем применимые законы…', loadStep3:'Ищем соответствующие судебные дела…', loadStep4:'Извлекаем ключевые даты и сроки…', loadStep5:'Составляем объяснения на понятном языке…',
     loadTimeEst:'Обычно занимает 30–60 секунд', loadTimeStill:'Всё ещё обрабатывается…',
     uploadPrivacyNote:'🔒 Ваш файл обрабатывается Claude AI и никогда не хранится на наших серверах.',
+    analyzePrivacyNote:'🔒 Отправляется в Claude API от Anthropic для анализа — не хранится, не используется для обучения. <a href="/privacy" style="color:inherit;text-decoration:underline">Политика конфиденциальности</a>',
     charCountSuffix:' символов',
     urgencyLow:'Низкая срочность', urgencyMed:'Средняя срочность', urgencyHigh:'Высокая срочность', urgencyCrit:'Критично — Действуйте немедленно',
     actionBoxTitle:'Что делать прямо сейчас',
@@ -2787,6 +2804,7 @@ const TRANSLATIONS = {
     loadStep1:'Lecture de votre document…', loadStep2:'Identification des lois applicables…', loadStep3:'Recherche de jurisprudence pertinente…', loadStep4:'Extraction des dates et délais clés…', loadStep5:"Rédaction d'explications en langage clair…",
     loadTimeEst:'Prend généralement 30–60 secondes', loadTimeStill:'Toujours en cours…',
     uploadPrivacyNote:'🔒 Votre fichier est traité par Claude AI et n\'est jamais stocké sur nos serveurs.',
+    analyzePrivacyNote:'🔒 Envoyé à l\'API Claude d\'Anthropic pour analyse — non stocké, non utilisé pour l\'entraînement. <a href="/privacy" style="color:inherit;text-decoration:underline">Politique de confidentialité</a>',
     charCountSuffix:' caractères',
     urgencyLow:'Urgence faible', urgencyMed:'Urgence moyenne', urgencyHigh:'Urgence élevée', urgencyCrit:'Critique — Agissez immédiatement',
     actionBoxTitle:'Que faire maintenant',
@@ -2872,6 +2890,7 @@ const TRANSLATIONS = {
     loadStep1:'Ap li dokiman ou…', loadStep2:'Ap idantifye lwa ki aplike…', loadStep3:'Ap chèche ka legal ki enpòtan…', loadStep4:'Ap ekstrè dat ak dat limit kle…', loadStep5:'Ap konpoze eksplikasyon an lang senp…',
     loadTimeEst:'Pran anviwon 30–60 segonn', loadTimeStill:'Toujou ap travay…',
     uploadPrivacyNote:'🔒 Fichye ou a trete pa Claude AI epi li pa janm stoke sou sèvè nou yo.',
+    analyzePrivacyNote:'🔒 Voye bay API Claude Anthropic pou analiz — pa estoke, pa itilize pou fòmasyon. <a href="/privacy" style="color:inherit;text-decoration:underline">Règleman sou Konfidansyalite</a>',
     charCountSuffix:' karaktè',
     urgencyLow:'Ijans ba', urgencyMed:'Ijans mwayen', urgencyHigh:'Ijans wo', urgencyCrit:'Kritik — Aji kounye a',
     actionBoxTitle:'Kisa pou fè kounye a',
@@ -2957,6 +2976,7 @@ const TRANSLATIONS = {
     loadStep1:'ਤੁਹਾਡਾ ਦਸਤਾਵੇਜ਼ ਪੜ੍ਹਿਆ ਜਾ ਰਿਹਾ ਹੈ…', loadStep2:'ਲਾਗੂ ਕਾਨੂੰਨਾਂ ਦੀ ਪਛਾਣ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ…', loadStep3:'ਸੰਬੰਧਿਤ ਅਦਾਲਤੀ ਕੇਸ ਲੱਭੇ ਜਾ ਰਹੇ ਹਨ…', loadStep4:'ਮੁੱਖ ਤਾਰੀਖਾਂ ਅਤੇ ਸਮਾਂ-ਸੀਮਾਵਾਂ ਕੱਢੀਆਂ ਜਾ ਰਹੀਆਂ ਹਨ…', loadStep5:'ਸਰਲ ਭਾਸ਼ਾ ਵਿੱਚ ਵਿਆਖਿਆਵਾਂ ਤਿਆਰ ਕੀਤੀਆਂ ਜਾ ਰਹੀਆਂ ਹਨ…',
     loadTimeEst:'ਆਮਤੌਰ ਤੇ 30–60 ਸਕਿੰਟ ਲੱਗਦੇ ਹਨ', loadTimeStill:'ਅਜੇ ਵੀ ਕੰਮ ਚੱਲ ਰਿਹਾ ਹੈ…',
     uploadPrivacyNote:'🔒 ਤੁਹਾਡੀ ਫਾਈਲ Claude AI ਦੁਆਰਾ ਪ੍ਰੋਸੈਸ ਕੀਤੀ ਜਾਂਦੀ ਹੈ ਅਤੇ ਕਦੇ ਵੀ ਸਾਡੇ ਸਰਵਰਾਂ ਤੇ ਸਟੋਰ ਨਹੀਂ ਹੁੰਦੀ।',
+    analyzePrivacyNote:'🔒 ਵਿਸ਼ਲੇਸ਼ਣ ਲਈ Anthropic ਦੇ Claude API ਨੂੰ ਭੇਜਿਆ ਗਿਆ — ਸੰਗ੍ਰਿਹਿਤ ਨਹੀਂ, ਸਿਖਲਾਈ ਲਈ ਵਰਤਿਆ ਨਹੀਂ। <a href="/privacy" style="color:inherit;text-decoration:underline">ਗੋਪਨੀਯਤਾ ਨੀਤੀ</a>',
     charCountSuffix:' ਅੱਖਰ',
     urgencyLow:'ਘੱਟ ਜ਼ਰੂਰੀ', urgencyMed:'ਮੱਧਮ ਜ਼ਰੂਰੀ', urgencyHigh:'ਵੱਧ ਜ਼ਰੂਰੀ', urgencyCrit:'ਬਹੁਤ ਜ਼ਰੂਰੀ — ਹੁਣੇ ਕਾਰਵਾਈ ਕਰੋ',
     actionBoxTitle:'ਹੁਣੇ ਕੀ ਕਰਨਾ ਹੈ',
@@ -3042,6 +3062,7 @@ const TRANSLATIONS = {
     loadStep1:'ሰነድዎን እያነበብን ነው…', loadStep2:'ተፈፃሚ ሕጎችን እንለያለን…', loadStep3:'ተዛማጅ ፍርድ ቤት ጉዳዮችን እንፈልጋለን…', loadStep4:'ዋና ቀናቶች እና የመጨረሻ ቀናቶች እናወጣለን…', loadStep5:'በቀላል ቋንቋ ማብራሪያ እናዘጋጃለን…',
     loadTimeEst:'አብዛኛውን ጊዜ 30–60 ሰከንድ ይወስዳል', loadTimeStill:'አሁንም እየሰራ ነው…',
     uploadPrivacyNote:'🔒 ፋይልዎ በ Claude AI ይሠራል እና በሰርቨሮቻችን ላይ ፈጽሞ አይቀመጥም።',
+    analyzePrivacyNote:'🔒 ለትንታኔ ወደ Anthropic የ Claude API ይላካል — አይከማችም፣ ለስልጠና አይውልም። <a href="/privacy" style="color:inherit;text-decoration:underline">የግላዊነት ፖሊሲ</a>',
     charCountSuffix:' ቁምፊዎች',
     urgencyLow:'ዝቅተኛ አስቸኳይነት', urgencyMed:'መካከለኛ አስቸኳይነት', urgencyHigh:'ከፍተኛ አስቸኳይነት', urgencyCrit:'አሳሳቢ — አሁኑኑ ይስሩ',
     actionBoxTitle:'አሁን ምን ማድረግ እንዳለበት',
@@ -3089,6 +3110,7 @@ const UI_ELEMENTS = [
   { id:'pdfDzText', key:'pdfDzText', html:true },
   { id:'pdfDzNote', key:'pdfDzNote' },
   { id:'uploadPrivacyNote', key:'uploadPrivacyNote' },
+  { id:'analyzePrivacyNote', key:'analyzePrivacyNote', html:true },
   { id:'cameraBtnLabel', key:'cameraBtn' },
   { id:'driveBtnLabel',  key:'driveBtn'  },
   { id:'cameraTitle',    key:'cameraTitle' },
