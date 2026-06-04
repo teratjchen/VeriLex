@@ -194,6 +194,11 @@ async def terms():
     return FileResponse("terms.html")
 
 
+@app.get("/transparency")
+async def transparency():
+    return FileResponse("transparency.html")
+
+
 @app.get("/config")
 async def get_config():
     """Returns public client-side config (never secrets like the Anthropic key)."""

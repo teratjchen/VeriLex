@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transparency & Accountability — VeriLex</title>
+  <meta name="description" content="How VeriLex works, what it claims and doesn't claim, known limitations, and how errors are reported.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #0f172a; --ink-mid: #1e293b;
+      --amber: #2563eb; --amber-dim: #1d4ed8; --amber-bg: #eff6ff;
+      --bg: #f8f7f4; --surface: #ffffff; --border: #e5e1d8;
+      --text: #1a1a2e; --muted: #64748b; --r: 12px;
+      --shadow: 0 2px 12px rgba(0,0,0,.07);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    .topbar {
+      background: #060f1e; padding: 0 32px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, #2563eb 0%, #0891b2 100%);
+      display: flex; align-items: center; justify-content: center; font-size: 16px;
+    }
+    .logo-name { font-size: 19px; font-weight: 800; color: #fff; letter-spacing: -.3px; }
+    .back-link {
+      font-size: 13px; font-weight: 600; color: rgba(255,255,255,.55);
+      text-decoration: none; transition: color .15s;
+    }
+    .back-link:hover { color: #fff; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: linear-gradient(160deg, #0a1628 0%, #060f1e 100%);
+      padding: 56px 24px 48px; text-align: center;
+    }
+    .page-header .label {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .12em; color: #67e8f9;
+      margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-size: clamp(28px, 4vw, 40px); font-weight: 900;
+      color: #fff; letter-spacing: -.5px; margin-bottom: 10px;
+    }
+    .page-header p {
+      font-size: 15px; color: rgba(255,255,255,.5); max-width: 520px; margin: 0 auto;
+    }
+
+    /* ── PROSE ── */
+    .prose-wrap {
+      max-width: 740px; margin: 0 auto; padding: 56px 24px 96px;
+    }
+    .prose-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--r); box-shadow: var(--shadow);
+      padding: 40px 44px;
+    }
+    @media (max-width: 600px) { .prose-card { padding: 28px 20px; } }
+
+    .prose-card h2 {
+      font-size: 18px; font-weight: 800; color: var(--ink);
+      margin: 40px 0 10px; padding-top: 36px;
+      border-top: 1px solid var(--border);
+    }
+    .prose-card h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .prose-card p { font-size: 15px; color: var(--text); line-height: 1.75; margin-bottom: 14px; }
+    .prose-card p:last-child { margin-bottom: 0; }
+    .prose-card ul {
+      margin: 8px 0 14px 20px; font-size: 15px; color: var(--text); line-height: 1.75;
+    }
+    .prose-card ul li { margin-bottom: 6px; }
+    .prose-card a { color: var(--amber); text-decoration: none; }
+    .prose-card a:hover { text-decoration: underline; }
+    .prose-card strong { font-weight: 700; color: var(--ink); }
+
+    .notice-box {
+      background: #eff6ff; border: 1px solid rgba(37,99,235,.25);
+      border-radius: 8px; padding: 16px 18px; margin: 20px 0;
+      font-size: 14px; color: #1e40af; line-height: 1.65;
+    }
+    .notice-box strong { color: #1e3a8a; }
+
+    .warning-box {
+      background: #fff7ed; border: 1px solid #fdba74;
+      border-radius: 8px; padding: 16px 18px; margin: 20px 0;
+      font-size: 14px; color: #92400e; line-height: 1.65;
+    }
+    .warning-box strong { color: #7c2d12; }
+
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 16px 20px; margin-bottom: 32px;
+      font-size: 14px;
+    }
+    .toc-title { font-weight: 700; color: var(--ink); margin-bottom: 8px; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+    .toc ol { margin-left: 18px; }
+    .toc li { margin-bottom: 4px; }
+    .toc a { color: var(--amber); text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060f1e; padding: 32px 24px; text-align: center;
+      font-size: 13px; color: rgba(255,255,255,.4);
+    }
+    footer a { color: rgba(255,255,255,.5); text-decoration: none; margin: 0 8px; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="nav-logo">
+    <div class="logo-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="#0a0e1a" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="7.2" y1="18.8" x2="12.8" y2="18.8" stroke-width="1.7"/>
+        <line x1="8.5" y1="17.4" x2="11.5" y2="17.4" stroke-width="1.3"/>
+        <line x1="10" y1="4.6" x2="10" y2="17.4" stroke-width="1.25"/>
+        <line x1="8.8" y1="16.3" x2="11.2" y2="16.3" stroke-width="1.5"/>
+        <path d="M10 1.2 C11.1 2.1 11.3 3.3 10.6 3.9 Q10 4.5 9.4 3.9 C8.7 3.3 8.9 2.1 10 1.2 Z" fill="#0a0e1a" stroke="none"/>
+        <path d="M10 4.4 C8.2 4.5 6 5.3 4.2 7.2" stroke-width="1.25"/>
+        <path d="M10 4.4 C11.8 4.5 14 5.3 15.8 7.2" stroke-width="1.25"/>
+        <circle cx="4.2" cy="7.2" r="0.6" stroke-width="1.1"/>
+        <circle cx="15.8" cy="7.2" r="0.6" stroke-width="1.1"/>
+        <line x1="4.2" y1="7.8" x2="2" y2="12.5" stroke-width="1.15"/>
+        <line x1="4.2" y1="7.8" x2="6.4" y2="12.5" stroke-width="1.15"/>
+        <line x1="2" y1="12.5" x2="6.4" y2="12.5" stroke-width="1.3"/>
+        <path d="M2 12.5 Q4.2 14.3 6.4 12.5" stroke-width="1.3"/>
+        <line x1="15.8" y1="7.8" x2="13.6" y2="12.5" stroke-width="1.15"/>
+        <line x1="15.8" y1="7.8" x2="18" y2="12.5" stroke-width="1.15"/>
+        <line x1="13.6" y1="12.5" x2="18" y2="12.5" stroke-width="1.3"/>
+        <path d="M13.6 12.5 Q15.8 14.3 18 12.5" stroke-width="1.3"/>
+      </svg>
+    </div>
+    <span class="logo-name">VeriLex</span>
+  </a>
+  <a href="/" class="back-link">← Back to VeriLex</a>
+</div>
+
+<div class="page-header">
+  <div class="label">Accountability</div>
+  <h1>Transparency</h1>
+  <p>Who built VeriLex, what it claims and doesn't claim, known limitations, and how errors are handled.</p>
+</div>
+
+<div class="prose-wrap">
+  <div class="prose-card">
+
+    <div class="toc">
+      <div class="toc-title">On this page</div>
+      <ol>
+        <li><a href="#who">Who built this</a></li>
+        <li><a href="#scope">What VeriLex does and doesn't do</a></li>
+        <li><a href="#limitations">Known limitations</a></li>
+        <li><a href="#errors">Reporting an error</a></li>
+        <li><a href="#oversight">Oversight: current state and what we're working toward</a></li>
+        <li><a href="#orgs">For legal aid organizations</a></li>
+      </ol>
+    </div>
+
+    <h2 id="who">Who built this</h2>
+    <p>VeriLex was built by a UC Berkeley undergraduate student pursuing a pre-law track, with a summer internship at Kirkland &amp; Ellis. It is a free, non-commercial tool with no investors, no revenue model, and no data collection.</p>
+    <p>The motivation was straightforward: low-income individuals, immigrants, and tenants routinely receive legal documents they cannot afford to have professionally reviewed. Eviction notices, immigration forms, court summons — documents with serious consequences — sit unread or misunderstood because legal help is expensive and legal aid is underfunded. VeriLex was built to close that gap, not to replace attorneys.</p>
+    <p>Questions or concerns about VeriLex can be directed to <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a>.</p>
+
+    <h2 id="scope">What VeriLex does and doesn't do</h2>
+
+    <p><strong>What it does:</strong></p>
+    <ul>
+      <li>Reads a legal document and explains what it says in plain language</li>
+      <li>Identifies statutes and regulations that appear relevant to the document type</li>
+      <li>Extracts explicit dates and deadlines stated in the document</li>
+      <li>Provides a glossary of legal terms found in the document</li>
+      <li>Lists free legal aid organizations relevant to the user's location</li>
+      <li>Operates in 15 languages</li>
+    </ul>
+
+    <p><strong>What it does not do:</strong></p>
+    <ul>
+      <li>Give legal advice — it does not tell users what to do about their specific situation</li>
+      <li>Create an attorney-client relationship of any kind</li>
+      <li>Store, log, or retain any document content</li>
+      <li>Make predictions about legal outcomes</li>
+      <li>Substitute for consultation with a licensed attorney</li>
+    </ul>
+
+    <div class="notice-box">
+      <strong>Legal information vs. legal advice:</strong> Legal information describes what the law says in general. Legal advice applies the law to a specific person's situation and is the exclusive domain of licensed attorneys. VeriLex provides only the former.
+    </div>
+
+    <h2 id="limitations">Known limitations</h2>
+    <p>We believe users and referring organizations deserve an honest accounting of where VeriLex can fail. The following limitations are real and should inform how the tool is used.</p>
+
+    <p><strong>AI accuracy:</strong> VeriLex uses Claude AI (Anthropic) to analyze documents. AI can misread text, misidentify applicable statutes, miscalculate urgency, and occasionally generate plausible-sounding but incorrect information. Every result includes a reminder to verify deadlines against the original document. Statute citations link directly to official sources so users can check them independently.</p>
+
+    <p><strong>OCR and image quality:</strong> When a document is uploaded as a scanned PDF or photo, AI image recognition is used to read the text. Blurry, low-contrast, or handwritten documents are prone to misreads — particularly of dates and numbers. Results from scanned documents include a visible warning.</p>
+
+    <p><strong>Non-English output:</strong> VeriLex's AI output in non-English languages has not been reviewed by bilingual attorneys or certified legal translators. While the underlying AI model is capable in 15 languages, legal translation is a specialized discipline and errors are possible. Users viewing results in non-English can flag translation issues directly from the results page.</p>
+
+    <p><strong>No attorney supervision:</strong> No licensed attorney currently reviews VeriLex's outputs before users see them. There is no retraction mechanism for an analysis already acted upon. This is described further in the <a href="#oversight">oversight section</a> below.</p>
+
+    <p><strong>Local resources:</strong> Legal aid organizations listed in results are drawn from the AI's training knowledge and may be outdated. Phone numbers are omitted when uncertain. Users should independently verify that organizations are currently operating before relying on contact information.</p>
+
+    <p><strong>Jurisdiction:</strong> VeriLex handles documents from all U.S. jurisdictions but was built with California context in mind. Federal immigration documents, out-of-state matters, and multi-jurisdictional situations may receive less precise analysis.</p>
+
+    <div class="warning-box">
+      <strong>Use accordingly:</strong> VeriLex is most reliable as a first-pass orientation tool — helping a user understand what a document is, what laws are generally relevant, and what questions to bring to a legal aid attorney. It is least reliable when used as a substitute for that attorney conversation.
+    </div>
+
+    <h2 id="errors">Reporting an error</h2>
+    <p>If you believe VeriLex provided incorrect legal information — a wrong statute, a misread deadline, a mistranslated term, or any other factual error — please report it.</p>
+    <p><strong>How to report:</strong> Email <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a> with a description of the error and, if possible, the document type and language. You can also use the feedback button on any results page.</p>
+    <p><strong>What happens:</strong> All error reports are reviewed personally. Confirmed errors are used to improve the system prompt, the translation quality, or the UI warnings that appear in similar situations. We aim to respond to all reports within 48 hours.</p>
+    <p>We do not have a mechanism to correct an analysis that a specific user has already acted upon. This is a known gap. If a time-sensitive error is reported, we will prioritize it and respond the same day.</p>
+
+    <h2 id="oversight">Oversight: current state and what we're working toward</h2>
+    <p>We want to be direct about this: <strong>VeriLex does not currently have a supervising attorney.</strong> No licensed attorney reviews outputs before users see them, and no attorney has formally endorsed the tool's methodology.</p>
+    <p>We believe this limitation should be named explicitly rather than obscured by disclaimers.</p>
+    <p>What we have done to compensate:</p>
+    <ul>
+      <li>The system prompt contains strict rules distinguishing legal information from legal advice, reviewed and refined through extensive testing</li>
+      <li>Action steps are framed as questions to bring to an attorney, never as personal directives</li>
+      <li>Every result — regardless of urgency level — contains a referral to free legal aid resources</li>
+      <li>High and critical urgency results surface the attorney referral prominently above any other content</li>
+      <li>An error reporting process is in place with a personal response commitment</li>
+    </ul>
+    <p><strong>What we are working toward:</strong> We are actively pursuing a review of VeriLex's methodology by a faculty member or clinical attorney at UC Berkeley School of Law. The goal is a written endorsement of the tool's information/advice framing — not review of individual outputs, but attestation that the approach is legally sound. We expect to have more to report on this within the coming months.</p>
+    <p>We are also open to feedback from legal aid organizations about what oversight or process changes would make VeriLex appropriate to recommend to clients.</p>
+
+    <h2 id="orgs">For legal aid organizations</h2>
+    <p>VeriLex was built with your clients in mind. The populations most likely to receive a legal document they cannot afford to have reviewed are the same populations you serve: low-income tenants, immigrant communities, workers without employer legal benefits.</p>
+    <p>We are not asking organizations to endorse VeriLex's accuracy or take on any accountability for its outputs. We are asking to be listed as a supplementary resource — a tool that helps a client understand what their document says before they come to you, or helps them understand a document when they cannot reach you.</p>
+    <p>If you have questions, concerns about specific outputs, or suggestions for how VeriLex could better serve your clients, we want to hear them. This is an early-stage tool and feedback from practitioners is the most valuable input we can receive.</p>
+    <p>Contact: <a href="mailto:terachen@berkeley.edu">terachen@berkeley.edu</a></p>
+    <p style="font-size:13px;color:var(--muted);margin-top:28px;padding-top:20px;border-top:1px solid var(--border)">Last updated: June 2026</p>
+
+  </div>
+</div>
+
+<footer>
+  <a href="/">VeriLex</a>
+  <a href="/privacy">Privacy Policy</a>
+  <a href="/terms">Terms of Service</a>
+  <a href="/transparency">Transparency</a>
+  <div style="margin-top:12px">Legal information only — not legal advice.</div>
+</footer>
+
+</body>
+</html>
