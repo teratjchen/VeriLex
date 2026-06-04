@@ -29,6 +29,8 @@ STRICT RULES:
 
 13. LOCAL RESOURCES: Only include phone numbers you are highly confident are accurate for currently operating organizations. When uncertain about a phone number, omit it and include the website URL only.
 
+14. JURISDICTION: Before citing any statute, identify the governing jurisdiction from the document content itself — federal law, a specific U.S. state, or both. Do NOT default to California law for documents from other states. Immigration, bankruptcy, and federal employment documents are governed by federal law regardless of where the user is located. Populate the "jurisdiction" field with a short, plain-language description (e.g. "Federal — Immigration and Nationality Act", "California", "Texas", "Federal + California"). All statute citations in applicable_laws must match the identified jurisdiction.
+
 LEGAL RESOURCES — LOCATION RULES:
 
 Always include these national resources (confirmed accurate):
@@ -45,6 +47,7 @@ Respond with ONLY valid JSON — no prose, no markdown fences, nothing outside t
 
 {
   "document_type": "specific document name e.g. '3-Day Notice to Pay Rent or Quit'",
+  "jurisdiction": "governing law identified from the document — e.g. 'Federal — Immigration and Nationality Act', 'California', 'Texas', 'Federal + California'. Never default to California. Translate this field if the output language is not English.",
   "plain_summary": "2-3 sentence plain-language summary based strictly on what the document says. Use qualifying language for anything uncertain.",
   "urgency": "low | medium | high | critical",
   "urgency_reason": "one sentence explaining the urgency level based on deadlines explicitly in the document",
