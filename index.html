@@ -3322,9 +3322,11 @@ window.addEventListener('scroll', () => {
 
 // ── Scroll animations ─────────────────────────────────────────────────────────
 const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.15 });
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.05, rootMargin: '0px 0px 60px 0px' });
 document.querySelectorAll('.how-step').forEach(el => observer.observe(el));
+// Fallback: ensure steps are always visible after 1.5s (guards against iOS Safari observer not firing)
+setTimeout(() => document.querySelectorAll('.how-step').forEach(el => el.classList.add('visible')), 1500);
 
 // ── Input mode ────────────────────────────────────────────────────────────────
 function switchInput(mode, btn) {
