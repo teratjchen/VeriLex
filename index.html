@@ -3520,13 +3520,20 @@ async function openGoogleDrive() {
 }
 
 function showDrivePicker() {
-  const view = new google.picker.View(google.picker.ViewId.DOCS);
-  view.setMimeTypes('application/pdf,image/jpeg,image/png,image/webp');
+  // Scroll to top so picker is always visible
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Show all files — no MIME filter so users can browse everything
+  const allView = new google.picker.DocsView()
+    .setIncludeFolders(false)
+    .setSelectFolderEnabled(false);
+
   new google.picker.PickerBuilder()
-    .addView(view)
+    .addView(allView)
     .setOAuthToken(driveAccessToken)
     .setDeveloperKey(window.VERILEX_CONFIG.google_api_key)
     .setCallback(drivePickerCallback)
+    .setTitle('Select a document to analyze')
     .build()
     .setVisible(true);
 }
@@ -3538,11 +3545,43 @@ async function drivePickerCallback(data) {
   st.style.color = '#64748b';
   st.textContent = `⏳ Downloading "${picked.name}" from Drive…`;
   try {
+    const mimeType = picked.mimeType || '';
+
+    // Google Docs → export as plain text, load into paste panel
+    if (mimeType === 'application/vnd.google-apps.document') {
+      const url = `https://www.googleapis.com/drive/v3/files/${picked.id}/export?mimeType=text/plain`;
+      const res = await fetch(url, { headers: { Authorization: `Bearer ${driveAccessToken}` } });
+      if (!res.ok) throw new Error('Could not export Google Doc. Make sure it contains text.');
+      const text = await res.text();
+      switchInput('paste', document.getElementById('itab-paste'));
+      document.getElementById('docText').value = text.slice(0, 100000);
+      onTextInput();
+      st.style.color = 'var(--low)';
+      st.textContent = `✓ "${picked.name}" imported from Drive — ready to analyze`;
+      return;
+    }
+
+    // Other Google Workspace types (Sheets, Slides, Forms, etc.) — not supported
+    if (mimeType.startsWith('application/vnd.google-apps.')) {
+      const typeName = mimeType.replace('application/vnd.google-apps.', '');
+      throw new Error(`Google ${typeName} files aren't supported. Try a Google Doc, PDF, or image.`);
+    }
+
+    // PDF, images, and other files — download directly
     const url = `https://www.googleapis.com/drive/v3/files/${picked.id}?alt=media`;
     const res = await fetch(url, { headers: { Authorization: `Bearer ${driveAccessToken}` } });
-    if (!res.ok) throw new Error('Could not download file from Drive.');
+    if (!res.ok) throw new Error(`Could not download "${picked.name}" from Drive.`);
     const blob = await res.blob();
-    const file = new File([blob], picked.name, { type: picked.mimeType });
+
+    const isImage = mimeType.startsWith('image/');
+    const isPdf = mimeType === 'application/pdf';
+
+    if (!isImage && !isPdf) {
+      // For unsupported types like Word docs, show a helpful message
+      throw new Error(`"${picked.name}" is not a supported type. Please use a PDF, image, or Google Doc.`);
+    }
+
+    const file = new File([blob], picked.name, { type: mimeType });
     inputMode = 'upload';
     onFileUpload(file);
   } catch (e) {
