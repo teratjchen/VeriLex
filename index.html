@@ -761,6 +761,12 @@
       padding: 10px 14px; font-size: 13px; color: #92400e;
       margin-bottom: 12px; line-height: 1.5;
     }
+    .verify-warning {
+      display: flex; align-items: flex-start; gap: 8px;
+      background: #fff7ed; border: 1px solid #fdba74; border-radius: 8px;
+      padding: 10px 14px; font-size: 13px; color: #9a3412;
+      margin-bottom: 12px; line-height: 1.5;
+    }
     .laws-verify-note {
       font-size: 12px; color: var(--muted); font-style: italic;
       margin-bottom: 12px; padding: 0 2px;
@@ -3869,6 +3875,7 @@ function renderSummary(d) {
   const t = T();
   document.getElementById('summarySection').innerHTML = `
     ${ocrUsed ? `<div class="ocr-warning">⚠️ ${esc(t.ocrWarning)}</div>` : ''}
+    ${(d._warnings || []).map(w => `<div class="verify-warning">⚠ ${esc(w)}</div>`).join('')}
     <div class="summary-card">
       <div class="doc-meta">
         <span class="badge badge-type">${esc(d.document_type || t.defaultDocType)}</span>

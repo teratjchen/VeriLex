@@ -1,0 +1,45 @@
+name: VeriLex Health Monitor
+
+# Runs every 5 minutes. On failure, triggers a Railway redeploy.
+# Required GitHub repository secrets:
+#   RAILWAY_TOKEN       — Railway account API token
+#                         (Railway dashboard → Account Settings → Tokens → New Token)
+#   RAILWAY_SERVICE_ID  — the service UUID for verilex
+#                         (Railway dashboard → your project → service → Settings → Service ID)
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:   # allows manual trigger from the Actions tab
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping health endpoint
+        id: ping
+        run: |
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 https://verilex.org/health || echo "000")
+          echo "status=$HTTP_STATUS" >> "$GITHUB_OUTPUT"
+          echo "Health check returned: $HTTP_STATUS"
+
+      - name: Trigger Railway redeploy on failure
+        if: steps.ping.outputs.status != '200'
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
+        run: |
+          echo "Health check failed (status: ${{ steps.ping.outputs.status }}). Triggering redeploy..."
+          RESPONSE=$(curl -s -X POST \
+            -H "Authorization: Bearer $RAILWAY_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data "{\"query\":\"mutation { serviceInstanceRedeploy(serviceId: \\\"$RAILWAY_SERVICE_ID\\\") }\"}" \
+            https://backboard.railway.app/graphql/v2)
+          echo "Railway response: $RESPONSE"
+          echo "Redeploy triggered at $(date -u)"
+
+      - name: Mark job failed so the failure is visible in Actions history
+        if: steps.ping.outputs.status != '200'
+        run: |
+          echo "::error::VeriLex is down (HTTP ${{ steps.ping.outputs.status }}). Redeploy triggered."
+          exit 1

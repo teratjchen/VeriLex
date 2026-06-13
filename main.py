@@ -139,6 +139,61 @@ def _detect_phase(buf: str) -> str | None:
     return last
 
 
+# Domains that VeriLex is allowed to cite — anything else is a hallucination signal.
+_ALLOWED_STATUTE_DOMAINS = {"leginfo.legislature.ca.gov", "law.cornell.edu"}
+
+
+def _should_verify(result: dict) -> bool:
+    """Return True when the analysis warrants a second-pass accuracy check."""
+    if result.get("case_citations"):          # must always be []
+        return True
+    if result.get("urgency_level") in ("critical", "high"):
+        return True
+    for law in result.get("applicable_laws", []):
+        if law.get("url"):                    # has statute URL — worth checking
+            return True
+    return False
+
+
+async def _verify_result(result: dict, api_key: str) -> tuple[bool, list[str]]:
+    """
+    Lightweight second-pass accuracy check via Haiku.
+    Returns (passed: bool, issues: list[str]).
+    Never raises — a verification failure never blocks the user.
+    """
+    check_payload = {
+        "document_type": result.get("document_type"),
+        "urgency_level": result.get("urgency_level"),
+        "key_dates": result.get("key_dates", []),
+        "applicable_laws": result.get("applicable_laws", []),
+        "case_citations": result.get("case_citations", []),
+    }
+    verify_prompt = (
+        "Check this legal document analysis for rule violations.\n\n"
+        "RULES:\n"
+        "1. case_citations must be an empty array. Flag any non-empty value.\n"
+        "2. urgency_level 'critical' or 'high' requires at least one entry in key_dates.\n"
+        "3. applicable_laws URLs must only use leginfo.legislature.ca.gov or law.cornell.edu. "
+        "Flag any other domains. An empty URL string is acceptable.\n"
+        "4. urgency_level must be exactly one of: critical, high, medium, low.\n\n"
+        f"ANALYSIS:\n{json.dumps(check_payload, ensure_ascii=False)}\n\n"
+        'Respond with ONLY valid JSON: {"pass": true, "issues": []} or '
+        '{"pass": false, "issues": ["description of issue"]}'
+    )
+    try:
+        client = AsyncAnthropic(api_key=api_key)
+        response = await client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=256,
+            messages=[{"role": "user", "content": verify_prompt}],
+        )
+        raw = response.content[0].text.strip()
+        parsed = _extract_json(raw)
+        return bool(parsed.get("pass", True)), list(parsed.get("issues", []))
+    except Exception:
+        return True, []  # verification failure never blocks the user
+
+
 # In-memory feedback store (persists until server restarts).
 feedback_db: list[dict] = []
 
@@ -315,6 +370,18 @@ async def analyze(req: AnalyzeRequest):
         )
         raw = response.content[0].text.strip()
         result = _extract_json(raw)
+
+        v_triggered = _should_verify(result)
+        v_passed, v_issues = True, []
+        if v_triggered:
+            v_passed, v_issues = await _verify_result(result, api_key)
+            if not v_passed:
+                result["_warnings"] = [
+                    "Some parts of this analysis could not be fully verified. "
+                    "Please cross-check specific statute references and deadlines "
+                    "with official sources before acting."
+                ]
+
         usage_log.append({
             "timestamp": datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
             "date": datetime.datetime.utcnow().strftime("%Y-%m-%d"),
@@ -324,6 +391,8 @@ async def analyze(req: AnalyzeRequest):
             "doc_length": len(text),
             "document_type": result.get("document_type", "unknown"),
             "success": True,
+            "verification_triggered": v_triggered,
+            "verification_passed": v_passed,
         })
         return JSONResponse(content=result)
 
@@ -434,7 +503,24 @@ async def analyze_stream(req: AnalyzeRequest):
                         yield f"event: phase\ndata: {json.dumps({'phase': phase})}\n\n"
 
             result = _extract_json(buf)
-            log_entry.update(document_type=result.get("document_type", "unknown"), success=True)
+
+            v_triggered = _should_verify(result)
+            v_passed, v_issues = True, []
+            if v_triggered:
+                v_passed, v_issues = await _verify_result(result, api_key)
+                if not v_passed:
+                    result["_warnings"] = [
+                        "Some parts of this analysis could not be fully verified. "
+                        "Please cross-check specific statute references and deadlines "
+                        "with official sources before acting."
+                    ]
+
+            log_entry.update(
+                document_type=result.get("document_type", "unknown"),
+                success=True,
+                verification_triggered=v_triggered,
+                verification_passed=v_passed,
+            )
             usage_log.append(log_entry)
             yield f"event: result\ndata: {json.dumps(result, ensure_ascii=False)}\n\n"
 
@@ -737,6 +823,8 @@ async def admin_view(key: str = ""):
     week_analyses    = sum(1 for u in usage_log if u["date"] >= week_ago)
     successful       = sum(1 for u in usage_log if u["success"])
     success_rate     = f"{100 * successful // total_analyses}%" if total_analyses else "—"
+    v_triggered      = sum(1 for u in usage_log if u.get("verification_triggered"))
+    v_flagged        = sum(1 for u in usage_log if u.get("verification_triggered") and not u.get("verification_passed", True))
 
     # Counts by field
     def top_counts(field: str, n: int = 5) -> list[tuple[str, int]]:
@@ -831,6 +919,8 @@ async def admin_view(key: str = ""):
     <div class="card"><div class="num">{week_analyses}</div><div class="lbl">Last 7 days</div></div>
     <div class="card"><div class="num">{success_rate}</div><div class="lbl">Success rate</div></div>
     <div class="card"><div class="num">{len(feedback_db)}</div><div class="lbl">Feedback items</div></div>
+    <div class="card"><div class="num">{v_triggered}</div><div class="lbl">Verifications run</div></div>
+    <div class="card"><div class="num" style="color:{'#b91c1c' if v_flagged else '#15803d'}">{v_flagged}</div><div class="lbl">Verification flags</div></div>
   </div>
 
   <h2>🕐 Recent Analyses</h2>
