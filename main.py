@@ -14,7 +14,7 @@ import anthropic
 from anthropic import AsyncAnthropic
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, StreamingResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, Response, StreamingResponse
 from pydantic import BaseModel
 
 app = FastAPI(title="VeriLex")
@@ -177,6 +177,52 @@ class FollowUpRequest(BaseModel):
 @app.api_route("/", methods=["GET", "HEAD"])
 async def root():
     return FileResponse("index.html")
+
+
+@app.get("/robots.txt")
+async def robots():
+    content = (
+        "User-agent: *\n"
+        "Allow: /\n"
+        "Disallow: /admin\n"
+        "Disallow: /analyze\n"
+        "Disallow: /analyze-stream\n"
+        "Disallow: /followup\n"
+        "Disallow: /extract-pdf\n"
+        "Disallow: /extract-image\n"
+        "Disallow: /feedback\n"
+        "\n"
+        "Sitemap: https://verilex.org/sitemap.xml\n"
+    )
+    return Response(content=content, media_type="text/plain")
+
+
+@app.get("/sitemap.xml")
+async def sitemap():
+    content = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://verilex.org/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://verilex.org/privacy</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://verilex.org/terms</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://verilex.org/transparency</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>"""
+    return Response(content=content, media_type="application/xml")
 
 
 @app.get("/og-image.png")
